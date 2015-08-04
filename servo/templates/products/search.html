@@ -1,0 +1,20 @@
+{% extends "two_column_layout.html" %}
+{% load i18n %}
+
+{% block first_column %}
+    <input type="text" class="input-large search-query filter" placeholder="{% trans "Filter results" %}"/>
+{% endblock first_column %}
+
+{% block second_column %}
+    {% if products %}
+        {% include "products/list.html" %}
+        {% include "pagination.html" with items=products %}
+    {% else %}
+        <h1 class="muted text-center">{% trans "No products found" %}</h1>
+    {% endif %}
+{% endblock second_column %}
+
+{% block crumbs %}
+    <li><a href="{% url 'products-list_products' %}">{% trans "Products" %}</a> <span class="divider">/</span></li>
+    <li class="active">{{ title }}</li>
+{% endblock crumbs %}

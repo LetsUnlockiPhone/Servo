@@ -1,0 +1,45 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+  {% trans "Search for customer" %}
+{% endblock header %}
+
+{% block body %}
+<form action="{{ action }}" method="post" accept-charset="utf-8" id="search-form" data-target="#search-results" style="margin:0">
+  {% csrf_token %}
+  <div class="input-prepend">
+    <div class="btn-group">
+      <button class="btn dropdown-toggle" data-toggle="dropdown" type="button" style="width:120px">
+        <span id="filter-label">{% trans "Search" %}</span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li class="active"><a href="#" data-search="all">{% trans "All" %}</a></li>
+        <li><a href="#" data-search="companies">{% trans "Companies" %}</a></li>
+        <li><a href="#" data-search="contacts">{% trans "People" %}</a></li>
+      </ul>
+    </div>
+    <input type="text" name="name" style="width:390px" autocomplete="off" id="customer_name" placeholder="{% trans "Name, email or phone number" %}"/>
+    <input type="hidden" name="kind" value="all" id="value-kind"/>
+  </div>
+</form>
+<div id="search-results" style="height:250px"><p class="empty muted" style="line-height:250px">{% trans "Enter search query" %}</p></div>
+{% endblock body %}
+
+{% block footer %}
+  <a id="create_customer" href="{% url 'customers-create_customer' group='all' %}" class="btn">{% trans "New Customer" %}</a>
+  <a class="btn btn-primary submit-search" href="#">{% trans "Search" %}</a>
+  <script type="text/javascript">
+    $('.dropdown-menu li a').click(function(e){
+      $('.dropdown-menu li').removeClass('active');
+      $(this).parent().addClass('active');
+      $('#filter-label').text($(this).text());
+      $('#value-kind').val($(this).data('search'));
+    });
+    $('.submit-search').click(function(e){
+      $('#search-form').submit();
+      e.preventDefault();
+    });
+  </script>
+{% endblock footer %}

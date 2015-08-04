@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs">
+{% for k, v in form.tabs %}
+    <li><a href="#tab{{ forloop.counter }}" data-toggle="tab">{{ k }}</a></li>
+{% endfor %}
+</ul>
+<div class="tab-content">
+{% for k, v in form.tabs %}
+    <div class="tab-pane" id="tab{{ forloop.counter }}">
+        <fieldset>
+            {% include "form_snippet.html" with form=v %}
+        </fieldset>
+    </div>
+{% endfor %}
+</div>

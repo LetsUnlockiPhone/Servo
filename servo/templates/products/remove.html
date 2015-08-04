@@ -1,0 +1,13 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% blocktrans with code=product.code %}Really delete product "{{ code }}"?{% endblocktrans %}
+{% endblock header %}
+
+{% block footer %}
+    <form action="{{ action }}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</buttom>
+    </form>
+{% endblock footer %}

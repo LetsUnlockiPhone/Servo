@@ -1,0 +1,12 @@
+{% extends "snippets/modal.html" %}
+
+{% block header %}
+    {{ title }}
+{% endblock header %}
+
+{% block body %}
+    <form method="post" action="{{ action }}" accept-charset="utf-8" class="form-horizontal">
+        {% csrf_token %}
+        {% include "form_snippet.html" %}
+    </form>
+{% endblock body %}

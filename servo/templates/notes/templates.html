@@ -1,0 +1,10 @@
+<div class="btn-group pull-left">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-comment"></i> <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu template-select">
+    {% for t in templates %}
+        <li><a href="{{ t.get_absolute_url }}">{{ t.title }}</a></li>
+    {% endfor %}
+    </ul>
+</div>

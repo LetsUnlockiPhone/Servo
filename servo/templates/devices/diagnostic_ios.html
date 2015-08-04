@@ -1,0 +1,20 @@
+<dl class="dl-horizontal">
+{% for k, v in diagnostics.diags.result.items %}
+  <dt>{{ k }}</dt>
+  <dd>{{ v }}</dd>
+{% endfor %}
+</dl>
+
+<dl class="dl-horizontal">
+{% for k, v in diagnostics.diags.profile.items %}
+  <dt>{{ k }}</dt>
+  <dd>{{ v }}</dd>
+{% endfor %}
+</dl>
+
+<dl class="dl-horizontal">
+{% for k, v in diagnostics.diags.report.items %}
+  <dt>{{ k }}</dt>
+  <dd>{{ v }}</dd>
+{% endfor %}
+</dl>

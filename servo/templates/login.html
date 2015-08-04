@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
+  <link rel="apple-touch-icon" type="image/png" href="{{ STATIC_URL }}images/apple-touch-icon.png">
+  <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+  <script src="{{ STATIC_URL }}js/bootstrap/js/bootstrap.min.js"></script>
+  <link href="{{ STATIC_URL }}js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/login.css" rel="stylesheet">
+  <title>{{ title }} | Servo</title>
+</head>
+<body>
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-block alert-{{ message.tags }}">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <i class="icon-warning-sign"></i> <strong>{{ message }}</strong>
+    </div>
+    {% endfor %}
+  {% endif %}
+  <div class="login-container">
+  {% block content %}{% endblock content %}
+  </div>
+</body>
+</html>

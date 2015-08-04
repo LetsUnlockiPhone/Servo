@@ -1,0 +1,8 @@
+{% extends "modal.html" %}
+
+{% block body %}
+<form action="{{ request.path }}" method="post" class="form-horizontal">
+    {% csrf_token %}
+    {% include "form_snippet.html" %}
+</form> 
+{% endblock body %}

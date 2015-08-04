@@ -1,0 +1,11 @@
+<div class="btn-group">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+        {{ menu.title }}
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+    {% for i in menu.items %}
+        <li><a tabindex="-1" href="{{ i.href }}">{{ i.title }}</a></li>      
+    {% endfor %}
+    </ul>
+</div>

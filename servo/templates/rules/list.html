@@ -1,0 +1,6 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block toolbar %}
+  <a class="btn" href="{% url 'rules-create' %}"><i class="icon-plus"></i> {% trans "New Rule" %}</a>
+{% endblock toolbar %}

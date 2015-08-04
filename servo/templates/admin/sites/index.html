@@ -1,0 +1,23 @@
+{% extends "admin/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+    <a href="{% url 'admin-create_site' %}" class="btn btn-inverse"><i class="fa fa-plus icon-white"></i> {% trans "New Site" %}</a>
+{% endblock toolbar %}
+
+{% block second_column %}
+<div class="span3">
+    <ul class="nav nav-list">
+        <li class="nav-header">{% trans "Sites" %}</li>
+    {% for i in sites %}
+        <li class="{% active request "sites" i.pk %}"><a href="{% url 'admin-edit_site' i.pk %}">{{ i.name }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+<div class="span9">
+    {% block detail_block %}
+    <h1 class="text-muted">{% trans "No site selected" %}</h1>
+    {% endblock detail_block %}
+</div>
+{% endblock second_column %}

@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+  {% trans "Complete the GSX repair?" %}
+{% endblock header %}
+
+{% block body %}
+  {% trans "The GSX repair will no longer be editable." %}
+{% endblock body %}
+
+{% block footer %}
+  <form method="post" action="close/">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger spin">{% trans "Complete" %}</button>
+  </form>
+{% endblock footer %}

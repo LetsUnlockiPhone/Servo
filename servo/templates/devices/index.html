@@ -1,0 +1,78 @@
+{% extends "default.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+{% if model %}
+<a href="{% url 'devices-create_device' product_line=product_line model=model %}" class="btn"><i class="icon-plus"></i> {% trans "New Device" %}</a>
+<a href="{% url 'devices-model_parts' product_line=product_line model=model %}" class="btn"><i class="icon-wrench"></i> {% trans "Show Parts" %}</a>
+{% else %}
+<a href="#" class="btn disabled"><i class="icon-plus"></i> {% trans "New Device" %}</a>
+<a href="#" class="btn disabled"><i class="icon-wrench"></i> {% trans "Show Parts" %}</a>
+{% endif %}
+<a href="{% url 'devices-upload_devices' %}" class="btn" data-modal="#modal"><i class="icon-upload"></i> {% trans "Upload" %}</a>
+{% endblock toolbar %}
+
+{% block content %}
+
+<ul class="nav nav-tabs" style="margin-top:30px">
+  <li class="active"><a href="{% url 'devices-list' %}">{% trans "Browse" %}</a></li>
+  <li><a href="{% url 'devices-find' %}">{% trans "Search" %}</a></li>
+</ul>
+
+<div class="row-fluid">
+  <div class="span2">
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans "Product Line" %}</li>
+    {% for k, v in product_lines.items %}
+      <li {% if k == product_line %}class="active"{% endif %}><a href="{% url 'devices-list_devices' product_line=k %}">{{ v.name }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+
+  <div class="span2">
+    {% block second_column %}
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans "Model" %}</li>
+    {% for k, v in models.items %}
+      <li {% if k == model %}class="active"{% endif %}><a href="{% url 'devices-list_devices' product_line=product_line model=k %}">{{ v }}</a></li>
+    {% empty %}
+      <li class="disabled"><a href="">{% trans "No Product Line selected" %}</a></li>
+      {% endfor %}
+    </ul>
+    {% endblock second_column %}
+  </div>
+
+  <div class="span2">
+    {% block third_column %}
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans "Device" %}</li>
+      {% for i in devices %}
+      <li {% if i.pk == device.pk %}class="active"{% endif %}>
+        <a href="{% url 'devices-view_device' product_line=product_line model=model pk=i.pk %}">
+          <strong>{{ i.sn }}</strong><br/>
+          <small>{{ i.get_warranty_status_display|truncatechars:30 }}</small>
+        </a>
+      </li>
+      {% empty %}
+      <li class="disabled"><a href="">{% trans "No devices found" %}</a></li>
+      {% endfor %}
+    </ul>
+    {% endblock third_column %}
+  </div>
+  <div class="span6">
+    {% block fourth_column %}
+    {% if query %}
+    {% include "devices/parts.html" %}
+    {% else %}
+    <h2 class="muted text-center">{% trans "No device selected" %}</h2>
+    {% endif %}
+    {% endblock fourth_column %}
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block crumbs %}
+  <li><a href="{% url 'devices-list' %}">{% trans "Devices" %}</a></li>{% block path %}{% endblock path %}
+{% endblock crumbs %}

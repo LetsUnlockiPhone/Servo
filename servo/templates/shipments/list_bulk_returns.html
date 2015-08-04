@@ -1,0 +1,37 @@
+{% extends "shipments/list_returns.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block second_column %}
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>{% trans "ID" %}</th>
+      <th>{% trans "Tracking ID" %}</th>
+      <th>{% trans "Tracking URL" %}</th>
+      <th>{% trans "Parts" %}</th>
+      <th>{% trans "Returned" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in returns %}
+    <tr>
+    {% if i.return_id %}
+      <td><a href="{% url 'shipments-view_packing_list' pk=i.pk %}" class="window">{{ i.return_id }}</a></td>
+      {% else %}
+      <td></td>
+    {% endif %}
+      <td>{{ i.tracking_id }}</td>
+      <td><a href="{{ i.tracking_url }}">{{ i.get_carrier_display }}</a></td>
+      <td>{{ i.num_parts }}</td>
+      <td>{{ i.dispatched_by }}<br/><small class="muted">{{ i.dispatched_at|date:"SHORT_DATETIME_FORMAT" }}</small></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% include "pagination.html" with items=returns %}
+{% endblock second_column %}
+
+{% block breadcrumb %}
+<li class="active"><span class="divider">/</span> {% trans "Browse Returns" %}</li>
+{% endblock breadcrumb %}

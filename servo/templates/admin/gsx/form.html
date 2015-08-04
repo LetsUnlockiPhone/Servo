@@ -1,0 +1,20 @@
+{% extends "admin/gsx/index.html" %}
+{% load i18n %}
+
+{% block third_column %}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#" data-toggle="tab">{% trans "General" %}</a></li>
+</ul>
+<form method="post" action="" accept-charset="utf-8" class="form-horizontal">
+  {% csrf_token %}
+  {% include "form_snippet.html" %}
+  <div class="form-actions">
+    {% if act.pk %}
+    <a class="btn btn-danger" data-modal="#modal" href="{% url 'admin-delete_gsx_account' act.pk %}">{% trans "Delete" %}</a>
+    {% else %}
+    <a class="btn btn-danger disabled">{% trans "Delete" %}</a>
+    {% endif %}
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+  </div>
+</form>
+{% endblock third_column %}

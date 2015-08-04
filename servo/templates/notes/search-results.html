@@ -1,0 +1,25 @@
+{% load i18n %}
+{% load humanize %}
+{% load servo_tags %}
+
+<ul class="media-list">
+  {% for note in notes %}
+  <li class="media">
+    <a class="pull-left" href="#">
+      <img src="{{ note.created_by.get_avatar }}" alt="{{ note.created_by }}" title="{{ note.created_by }}" class="img-rounded avatar"/>
+    </a>
+    <div class="media-body">
+      <h5 class="media-heading">{{ note.get_sender_name }} {{ note.created_at|naturaltime }}{% if note.order %} <a href="{% url 'orders-edit' note.order.pk %}#note-{{ note.pk }}"><i class="icon-share-alt"></i></a>{% endif %}</h5>
+      {{ note.body|markdown }}
+      {% for a in note.attachments.all %}
+      <a class="label label-info window" href="{{ a.content.url }}"><i class="icon-download icon-white"></i> {{ a }}</a>
+      {% endfor %}
+    </div>
+    <hr/>
+  </li>
+  {% empty %}
+  <li class="muted empty">{% trans "No notes found" %}</li>
+  {% endfor %}
+</ul>
+
+{% include "pagination.html" with items=notes %}

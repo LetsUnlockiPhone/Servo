@@ -1,0 +1,410 @@
+"0":
+    category: General
+    symptoms:
+        000: Not Applicable
+
+"E":
+    category: iPod
+    symptoms:
+        E01: Repairable accidental damage (OOW) - Customer Satisfaction codes
+        E02: Controls not responding (wheel-button-touch screen)
+        E03: Any Battery issue
+        E04: Any Display issue
+        E05: Input Output issue (audio-video-USB-WiFi)
+        E06: Alert messages appearing on screen or computer
+        E07: Will not boot-dead-no power-unusually hot
+        E08: Fails Service diagnostics
+        E09: Issue with accessories
+        Z46: REP iPod Swollen battery
+
+"B":
+    category: iPhone
+    symptoms:
+        B08: No Service - dropped calls # No service or data connection at all. Do not use for dropped calls or activation issues.
+        B09: Issue with Accessory # Issue With Accessory
+        B0A: Rear/iSight Camera Issue # Problems with the iPhone built in Rear/iSight camera, taking photos.
+        B0J: iTunes Connection Issue # Not seen by computer, content transfer via USB cable. Not able to connect/restore via iTunes. Issue is caused by accessory use B09.
+        B0M: Unusual Noise or Temperature # Temperature or noise related issues. Unusual temperature, unusually noise device.
+        B0N: Front / FaceTime Camera # Problems with the iPhone built in Front/FaceTime camera, taking photos.
+        B26: Frozen - At Apple Logo # Frozen at Apple Logo, system wide freezing.
+        B32: Vibration Motor # No vibration felt when selecting settings> sounds>vibrate. For Ringer switch issues use B37.
+        B33: SIM # SIM card not recognized, SIM card issues. Do not use for activation issues.
+        B35: Touch ID # Cannot enroll, not reading fingerprint, not unlocking phone. For Home button issues, use B36.
+        B36: Button/Switch - Home # Tactility or mechanical issues
+        B37: Button/Switch - Ringer/Side switch # Tactility or mechanical issues
+        B38: Button/Switch - Sleep/Wake # Tactility or mechanical issues
+        B39: Button/Switch - Volume # Tactility or mechanical issues
+        B45: WiFi/Bluetooth # WiFi/Bluetooth related issues
+        B54: Display - Image Quality # Bad colors, out of focus, white screen, ambient light sensor issues, lines/blocks.
+        B56: Display - Multi Touch # All or specific area not recognizing touch, too sensitive to touch
+        B57: Display - Pixels/Foreign Material # Stuck, missing, or dead pixels. Or foreign material in the display.
+        B5B: Sensors - Proximity Sensor Issue # Proximity Sensor does not function properly
+        B5C: Sensors - Accelerometer/Gyroscope # Issues related to compass and other location based symptoms such as GPS
+        B5H: Display - Blank/Black Screen # Device has power, is recognized by iTunes, but display remains black.
+        B5J: Any Apple Pay issues related to the iPhone hardware
+        B63: Sound - Internal Speaker # Sound issues related to the built-in speaker
+        B64: Sound - Internal Microphone # Issues related to built-in microphones
+        B68: Sound - Headset Jack # Sound related issues related to the headset/ headphone jack on the device
+        B7A: Receiver / Calls - Audio Quality # Audio issues related to Receiver or on phone calls. Poor or low audio, distortion, etc.
+        B7B: Dropped Calls / Signal Strength # All cellular connection related issues where a signal is present.
+        B81: Power - Unexpected Power Off # Device unexpectedly powers off or restarts at random. Do not replace if related to an app or any software.
+        B83: Power - Will Not Power On # No power at all, not recognized by iTunes, not a blank/black display issue, shows no signs of power.
+        B8A: Power - Any Battery Issue # Any Battery related issue including battery life too short, battery won’t charge, etc.
+        B90: Physical Damage - Liquid Damage # Liquid damage related issues
+        B91: Physical Damage - Other # Damage to phone modules (for example, camera lens, headphone jack, dock connector). Not for display or enclosure damage.
+        B92: Physical Damage - Multiple Cracks # Multiple cracks on display
+        B95: Physical Damage - Enclosure # Any enclosure damage related issues. Chips, scratches, dings, cracks in the housing/enclosure. Includes clicking or noise caused by physical damage.
+        B98: Physical Damage - Glass Single Crack # Single hairline crack on display with no point of impact.
+        Z47: REP iPhone Swollen battery
+        Z52: REP iPhone5 Sleep/Wake Button
+        Z53: REP Sleep/Wake Button (Multi Issue)
+        Z54: REP Sleep/Wake Button (Distributor)
+        Z55: REP iPhone 5 SWB Loaner
+        Z56: REP iPhone 5 Loaner Return No Power
+        Z57: REP European 5W USB power adapter
+        Z58: REP European iPhone 5 Battery Replacement
+
+"F":
+    category: iPad
+    symptoms:
+        F0A: LCI - Liquid Contamination Indicator On
+        F0B: Oxidation/Corrosion - No LCI Activated
+        F1A: Physical Damage - Enclosure
+        F1B: Physical Damage - LCD/Display
+        F1C: Engraving Issue
+        F1D: Cosmetic - Enclosure
+        F1E: Cosmetic - Display
+        F2B: Touch/Multi-Touch Control Issues
+        F2C: Sensor - Accelerometer, ALS, Gyro, Hall Issue
+        F2D: Home Button Issue
+        F2E: Sleep/Wake/Power Button Issue
+        F2F: Volume/Vibrate Button Issue
+        F2G: Touch ID Functionality
+        F3B: Charging Issue
+        F3C: Failed Battery Diagnostic
+        F3D: Battery Run Time Issue
+        F4B: Light Leakage Issue
+        F4C: Vertical, Horizontal lines or band on display
+        F4D: Video Noise/Flickering Issue
+        F4E: Blank Screen
+        F4F: Display - Other Functional Issue
+        F5A: Connectivity - USB
+        F5B: Connectivity - Cellular Data Issue
+        F5J: Audio Sound - Headset Jack
+        F5K: Audio Sound - Internal Speaker
+        F5L: Microphone Issue
+        F5M: Front Camera Issue
+        F5N: Rear Camera Issue
+        F5P: Connectivity - Wi-Fi 2.4GHz Issue
+        F5Q: Connectivity - Wi-Fi 5GHz Issue
+        F5H: Connectivity - Bluetooth
+        F6A: Alert Messages On Screen or Computer
+        F7C: Won't Boot - Has Power
+        F7D: No Power/Dead Issue
+        F7E: Unexpected Power Off/Reboot
+        F7B: Unusually hot
+        F7F: Can't Restore/Activate
+        F8A: Fails Functional Test
+        F9B: Issue with Power Adapter
+        F9C: Issue with USB Charging Cable
+        F9D: Issue with Other Accessories
+        Z45: REP iPad Swollen Battery
+        F9Z: iPad Enterprise Entitlement Replacement
+
+"5":
+    category: Logic Boards (MLB/MPU/Video Boards)
+    symptoms:
+        M01: No Power/No Light
+        M02: Has Power/Light But Will Not Boot
+        M03: Caused No Video
+        M04: Caused Video Distortion
+        M05: Hang/Freeze Up
+        M06: Kernel Panic-Restart Required Message
+        M07: Memory Errors/Not Recognized
+        M08: Random Shutdown w/Reset During Use
+        M09: Caused Audio Issue
+        M10: Ethernet Port/Device Issue
+        M11: Airport/Bluetooth
+        M12: Firewire Port/Device Issues
+        M13: Caused Camera Issue
+        M14: Modem Issues
+        M15: USB Port/Device Issues (Not Power)
+        M16: Caused Keyboard/Trackpad Issue
+        M17: I/O Expansion Slot
+        M18: Caused Fan/Thermal Issue
+        M19: Cannot Detect Hard/Optical Drive
+        M20: Does Not Detect/Charge Battery
+        M21: Won't Detect Working Power Adapter
+        M22: Sleep/Wake Issue
+        M23: Sensors Test Failed
+        M24: Connectors - Broken/Damaged
+        M25: No Backlight/Has Boot Image
+        M26: No Video to External Video
+        M27: SD Card Issue
+        M28: HDMI Issue
+        M29: Caused Whole Screen Flicker
+        M30: No Power/No Adapter LED
+        M31: Video Distortion On External Display
+        M32: Thunderbolt Display Functionality Issue
+        M33: Thunderbolt Port Inoperative
+        M34: Thunderbolt not passing enough power
+        M35: Airport Not Recognized
+        M36: Bluetooth Not Recognized
+        M37: USB Device Not Detected
+        M38: USB Port Has Insufficient Power
+        M39: Boots To 3 Beeps-Memory not recog
+        M85: Unusually Hot - Overheat
+        M90: Liquid Spill/LSI Tripped
+        M99: Un-Categorized Symptom
+        Z03: MB Pro NVIDIA Issue
+        Z04: MB Pro NVIDIA Issue (Multiple Issues)
+        Z17: ATI 2600 XT-No Video
+        Z18: ATI 2600 XT-No Video/multi-issue
+        Z19: ATI 2600 XT-Distorted Video
+        Z20: ATI 2600 XT-Distorted Video/multi-issue
+        Z33: MBPRO 15 Kernel Panic
+        Z34: MBPRO 15 Kernel Panic (multi-issue)
+        Z48: REP iMac 2011 Video Card (Radeon 6970M)
+        Z49: REP iMac 2011 Video (multi-issue depot)
+        Z62: REP MBP 2011 Graphics
+        Z63: REP MBP 2011 Graphics (Multi Issue)
+        Z64: REP MBPr 2012/2013 MLB
+        Z65: REP MBPr 2012/2013 MLB (Multi Issue)
+
+"3":
+    category: Mass Storage (HDD/ODD and SSD)
+    symptoms:
+        J01: Optical Drive Won't Accept Optical Media
+        J02: Optical Drive Won't Eject Optical Media
+        J03: Optical Media Read/Write Data Error
+        J04: Optical Drive Noisy
+        J05: Optical Drive Physical Damage
+        J06: Optical Video Problems
+        J07: Optical Drive Not Performing To Spec
+        J08: Firmware Issues
+        J09: Optical Drive Not Recognized
+        H01: Hard Drive Not Recognized/Mount
+        H02: Hard Drive Can't Boot
+        H03: Hard Drive Read/Write Problem
+        H04: Drive - Pins/Connector bent/broken
+        H05: Hard Drive Bad Sector/Defective
+        H06: Hard Drive Operational But Noisy
+        H07: Hard Drive Formatting Issues
+        H08: Hard Drive Firmware Issues
+        H90: Liquid Spill/LSI Tripped
+        H99: Un-Categorized Symptom
+        Z29: iMac (Mid 2011) Hard Drive Program
+        Z30: iMac (Mid 2011) Hard Drive Program (multiple issues)
+        Z40: REP HDD (iMac 09/10)
+        Z43: REP HDD (iMac 09/10) (multi-issue)
+        Z50: REP SSD (MacBook Air 2012)
+        Z51: REP SSD (MacBook Air 2012) (multi-issue)
+        Z66: REP 3TB HDD (iMac 2012)
+        Z67: REP 3TB HDD (iMac 2012) (Multi Issue)
+
+"9":
+    category: Communication/Networking Devices (Airport / Bluetooth)
+    symptoms:
+        N01: No Power/Dead Unit
+        N02: TimeCapsule - Internal HDD Not Mounting/Seen
+        N03: Overheating/Fan in Full Speed
+        N04: No/Poor WiFi Signal
+        N05: Backup Issues
+        N06: Can't Configure or Upgrade Firmware
+        N07: Amber LED Flashes
+        N08: USB Connection Issue/Ext USB Devices
+        N09: Random Disconnect/Network Connection Issues
+        N10: Wireless Distribution Setup Issue
+        N11: Audio Issue
+        N13: Kernel Panic/Freeze
+        N14: Performance Issue/Slow Connection
+        N15: Bluetooth Issue
+        N16: Modem - Defective
+        N17: Mechanical Damage/Cosmetic Issues
+        N18: Airport Card - Not Recognized
+        N19: Can't Connect
+        N20: Firmware Update/Restore Issue
+        N21: Cosmetic Issue
+        N85: Unusually Hot - Overheat
+        N90: Liquid Spill/LSI Tripped
+        N99: Un-Categorized Symptom
+        Z13: Time Capsule Power Supply
+        Z14: TC PS Multiple Issues
+
+"8":
+    category: Multi-function Devices (Apple TV, future devices)
+    symptoms:
+        T01: No Power/Dead Unit
+        T02: AppleTV - No Video Output
+        T03: AppleTV - Distorted Video
+        T04: AppleTV - No/Poor Wireless Signal
+        T05: AppleTV - Won't Sync
+        T06: AppleTV - No Audio
+        T07: AppleTV - No Audio in HDMI
+        T08: Won't Boot Up
+        T09: System Hang/Freeze Up
+        T10: Distorted or Cracking Audio
+        T11: Unusually Hot - Overheat
+        T13: Mechanical/Cosmetic Issue
+        T14: Ethernet Connectivity Issue
+        T15: Wireless (Wi-Fi) Connectivity Issue
+        T16: Cosmetic Issue
+        T90: Liquid Spill/LSI Tripped
+        T99: Un-Categorized Symptom
+        Z44: REP Apple TV (2012) Wi-Fi Issue
+
+"4":
+    category: Input Devices (Standalone and Built-In)
+    symptoms:
+        K01: Specific Key(s) Do Not Work
+        K02: No Mouse/Trackpad Response
+        K03: Built-In Keyboard Locks Up
+        K04: Wrong Keyboard Language
+        K05: Sticky Keys
+        K06: Defective Mouse Jogball
+        K07: Wireless Input Device - Can't Pair
+        K08: Wireless Input Device - Lost Connection
+        K09: Wireless Keyboard - No Green LED/No Power
+        K10: Built-In Keyboard - No/Dim Backlight
+        K11: Built-In Keyboard - Not Recognized
+        K12: Trackpad Cursor Not Tracking Properly
+        K13: Trackpad Click Not Recognized
+        K14: Mouse Clicking Issue
+        K15: Device Not Recognized
+        K16: Mechanical/Physical Damage
+        K17: Key Caps - Wrong/Missing/Fall Off
+        K18: Touch/Multi-Touch Gesture Issue
+        K19: Power Button Issue
+        K20: Power Issue, Not due to Power Button
+        K21: Cosmetic Issue
+        K22: Port Functionality Issue
+        K23: Trackpad Cursor Not Responding
+        K24: Trackpad Requires High Click Force
+        K25: Trackpad Click Oversensitive
+        K26: Mouse Issue
+        K27: Key(s) Missing/Falling Off
+        K28: Backlight Uneven Across Keyboard
+        K90: Liquid Spill/LSI Tripped
+        K99: Un-Categorized Symptom
+        Z07: MB Top Case Cracking
+        Z08: MB Top Case Cracking (Multiple Issues)
+
+"2":
+    category: Displays
+    symptoms:
+        L01: No Power/Power Light Issue
+        L02: Incorrect Colors Or Tinting
+        L03: Has Power/Blank/No Video
+        L04: Distorted/Blurred/Non-Focus Video
+        L05: Vertical/Horizontal Lines
+        L06: Full Screen Flicker/Flash
+        L07: Can't Control Brightness
+        L09: No Backlight/Has Video
+        L10: Can't Change Resolution
+        L11: Built In Audio Device Problem
+        L14: Connector/Port/Cable Issue
+        L15: Sleep Function Not Working
+        L16: Wireless Function Not Working
+        L17: Camera Image/Detect Issue
+        L18: Mechanical/Physical Damages
+        L19: Cosmetic Defects
+        L20: Dead Pixels/Foreign Material
+        L21: Bad Spots (Mura)
+        L22: Wake Function Issues
+        L23: Bluetooth Function Not Working
+        L24: Clamshell Misalignment
+        L25: Image Sticking/Ghost
+        L26: Horizontal Lines Or Bands
+        L27: Vertical Lines Or Bands
+        L90: Liquid Spill/LSI Tripped
+        L99: Un-Categorized Symptom
+        Z09: MBAir Hinge Cracking
+        Z10: MBAir Hinge Cracking (Multiple Issues)
+        Z35: LCD Contamination
+
+"6":
+    category: Power Adapter/Supply/Battery
+    symptoms:
+        P01: No Power/Dead Unit
+        P02: PSupply Causes Unexpected Reset/Shutdown
+        P03: No LED/LED Indicated Errors
+        P04: Noise/Hum/Vibration
+        P05: Audio Alarm/Prefailure Notice
+        P06: Power Supply - Fan Not Working/Noisy
+        P07: Wrong Voltage Selector
+        P08: Burnt Smell/Odor
+        P09: Battery Runtime Too Short, Fails Diag
+        P10: Battery Won't Charge At All
+        P11: Battery - Not Recognized
+        P12: Battery Recognized-Won't Run Unit
+        P13: Battery - Leakage/Swollen
+        P14: Adapter - Won't Run on AC alone
+        P15: Adapter Pins Stuck/Broken/Burnt
+        P16: Mechanical - Connector/Cable/Duckhead Damaged
+        P17: Unusually Hot - Overheat
+        P18: Out-of-Warranty Battery Replacement
+        P19: Battery Diagnostic Reported Failure
+        P21: Cosmetic Issue
+        P22: Battery Runtime Too Short, Passes Diag
+        P23: Adapter No Power/Not Damaged
+        P90: Liquid Spill/LSI Tripped
+        P99: Un-Categorized Symptom
+        Z25: Battery single part repair
+        Z26: Battery multi-part repair
+
+"1":
+    category: Other Devices (Internal Cables, Memory Module, etc.)
+    symptoms:
+        X01: Memory Caused Kernel Panic
+        X02: Memory Caused No Boot
+        X03: Cables - Defective
+        X04: Remote - Inoperable
+        X05: Remote - Battery Life Too Short
+        X06: Memory Module (RAM) - Issues
+        X08: Internal Speaker - No Audio
+        X09: Internal Speaker - Distorted Audio/Sound
+        X10: Thermal Module Defective
+        X12: Enclosure - Defective Latch/Hinge
+        X13: Enclosure - Mechanical/Cosmetic Damaged
+        X14: Enclosure - Reset/Power Button Stuck
+        X15: Enclosure - Wobble/Uneven
+        X17: Remote - Specific Button Not Working
+        X19: Microphone - Defective
+        X20: Camera - Video/Image Distortion
+        X21: Camera - No Video
+        X22: Fan Dead
+        X23: Fan Sound Abnormal (tick, whine, grind)
+        X24: Interface Card/Cage Issue
+        X26: Damaged Smart Cable
+        X27: Thunderbolt Firmware Update
+        X90: Liquid Spill/LSI Tripped
+        X99: Un-Categorized Symptom
+        Z21: Bottom Case Delamination
+        Z22: Bottom Case Delamination multiple issues
+
+"G":
+    category: Beats products
+    symptoms:
+        G1A: Audio - Sound quality issue
+        G1B: Audio - Sound input issue
+        G1C: Audio - Headset jack
+        G1D: Microphone issue
+        G1E: Noise Cancellation (ANC) issue
+        G2A: Controls not responding
+        G3A: Liquid damage
+        G3B: Enclosure Physical Damage
+        G3C: Other Physical Damage
+        G3D: Battery Physical Damage
+        G3E: Speaker Physical Damage
+        G4A: Connectivity - Bluetooth
+        G4B: Connectivity - NFC
+        G5A: Will not power up / dead / no power
+        G5B: Unexpected power off / reboot
+        G5C: Battery charge issue
+        G5D: Battery runtime life issue
+        G5E: Issue with power adapter
+        G5F: Firmware/SW apply fail
+        G5G: USB Charge-out issue
+        G6A: Issue with Accessory
+        G7A: Unusually hot
+        G8A: Sensor/indicator issue

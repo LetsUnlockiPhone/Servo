@@ -1,0 +1,46 @@
+{% extends "products/index.html" %}
+{% load i18n %}
+{% load servo_tags %}
+
+{% block toolbar %}{% endblock toolbar %}
+
+{% block content %}
+<div class="row-fluid row-header">
+  <div class="span12">
+    <form class="form-search pull-right">
+      <div class="input-append">
+        <input type="text" class="search-query filter" placeholder="{% trans "Filter results" %}"/>
+        <button type="button" class="btn" data-toggle="collapse" data-target="#collapsable"><i class="icon-search"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
+{% include "products/tabs.html" %}
+
+<div class="row-fluid">
+  {% block second_row %}
+  <div class="span3">
+  {% block first_column %}
+    <ul class="nav nav-list">
+      <li class="{% active request "incoming" %}">
+        <a href="{% url 'shipments-list_incoming' %}">{% trans "Incoming" %} <span class="badge pull-right">{{ counts.incoming }}</span></a>
+      </li>
+      <li class="{% active request "returns/pending" %}">
+        <a href="{% url 'shipments-edit_bulk_return' %}">{% trans "Parts Pending Return" %} <span class="badge pull-right">{{ counts.pending_return }}</span></a>
+      </li>
+      <li class="{% active request 'returns/list' %}"><a href="{% url 'shipments-list_bulk_returns' %}">{% trans "Browse Returns" %} <span class="badge pull-right">{{ counts.returns }}</span></a></li>
+      {% endblock first_column %}
+    </ul>
+  </div>
+  <div class="span9">
+    {% block second_column %}
+    {% endblock second_column %}
+  </div>
+  {% endblock second_row %}
+</div>
+
+{% endblock content %}
+
+{% block breadcrumb %}
+
+{% endblock breadcrumb %}

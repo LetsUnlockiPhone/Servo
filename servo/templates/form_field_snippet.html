@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load servo_tags %}
+<div class="control-group{% for e in field.errors %} error{% endfor %} {{ classes }}">
+{% if field|widget_is:"CheckboxInput" %}
+  <div class="controls">
+    <label class="checkbox" for="{{ field.id }}">
+      {{ field }} {% trans field.label %}
+      {% if field.help_text %}
+      <span class="help-block">{% trans field.help_text %}</span>
+      {% endif %}
+    </label>
+  </div>
+{% elif field|widget_is:"CheckboxSelectMultiple" %}
+  <label class="control-label {{ field.css_classes }}">{% trans field.label %}</label>
+  <div class="controls">
+    {{ field }}
+  </div>
+{% else %}
+  <label class="control-label {{ field.css_classes }}" for="{{ field.id }}">{% trans field.label %}</label>
+  <div class="controls">
+    {{ field }}
+    {% if field.help_text %}
+    <span class="help-block">{% trans field.help_text %}</span>
+    {% endif %}
+    {% for e in field.errors %}
+    <span class="help-inline">{{ e }}</span>
+    {% endfor %}
+  </div>
+{% endif %}
+</div>

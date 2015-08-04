@@ -1,0 +1,59 @@
+{% extends "modal.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block header %}
+{% trans "Product Info" %}
+{% endblock header %}
+
+{% block body %}
+<div class="media">
+  <a class="pull-left" href="#">
+    <img class="media-object" src="{{ product.get_photo }}" data-src="{{ product.get_photo }}" width="64px"/>
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">{{ product.code }}</h4>
+    <p>{{ product.title }}</p>
+    <p>{{ product.description|default:"" }}</p>
+  </div>
+</div>
+<dl class="dl-horizontal">
+  <dt>{% trans "Stock Price" %}</dt>
+  <dd>{{ product.price_sales_stock|currency }}</dd>
+  <dt>{% trans "Exchange Price" %}</dt>
+  <dd>{{ product.price_sales_exchange|currency }}</dd>
+  {% if product.component_code %}
+  <dt>{% trans "Component Group" %}</dt>
+  <dd>{{ product.get_component_code_display }} ({{ product.get_part_type_display }})</dd>
+  {% endif %}
+</dl>
+<dl class="dl-horizontal">
+  <dt>{% trans "EEE Code" %}</dt>
+  <dd>{{ product.eee_code|default:"-"|addspace }}</dd>
+</dl>
+{% for i in inventory %}
+{% ifchanged i.location.id %}
+<hr/>
+<h4>{{ i.location.title }}</h4>
+{% endifchanged %}
+<dl class="dl-horizontal">
+  <dt>{% trans "Stocked" %}</dt>
+  <dd>{{ i.amount_stocked }}</dd>
+  <dt>{% trans "Ordered" %}</dt>
+  <dd>{{ i.amount_ordered|default:"-" }}</dd>
+  <dt>{% trans "Reserved" %}</dt>
+  <dd>{{ i.amount_reserved|default:"-" }}</dd>
+</dl>
+{% empty %}
+  <hr/>
+  <div class="muted text-center">{% trans "Product not in inventory" %}</div>
+{% endfor %}
+{% endblock body %}
+
+{% block footer %}
+{% if product.pk %}
+  <a class="btn btn-default" href="{{ product.get_absolute_url }}">{% trans "View" %}</a>
+  <a class="btn btn-default" href="{% url 'products-edit_product' pk=product.pk group='all' %}">{% trans "Edit" %}</a>
+{% endif %}
+  <button type="submit" class="btn btn-primary" data-dismiss="modal">{% trans "Done" %}</button>
+{% endblock footer %}

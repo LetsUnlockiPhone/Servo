@@ -1,0 +1,17 @@
+{% extends "snippets/modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {{ title }}
+{% endblock header %}
+
+{% block body %}
+    {% trans "This will also delete all events in this calendar" %}
+{% endblock body %}
+
+{% block footer %}
+    <form method="post" action="{{ action }}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    </form>
+{% endblock footer %}

@@ -1,0 +1,31 @@
+{% extends "admin/checklist/index.html" %}
+{% load i18n %}
+
+{% block third_column %}
+<form method="post" action="" accept-charset="utf-8" class="form-horizontal">
+  {% csrf_token %}
+  {{ formset.management_form }}
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{% trans "Tasks" %}</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      {% include "form_snippet.html" %}
+    </div>
+    <div class="tab-pane" id="tab2">
+    {% for f in formset %}
+      {% include "form_snippet.html" with form=f %}
+    {% endfor %}
+    </div>
+  </div>
+  <div class="form-actions">
+    {% if checklist.pk %}
+    <a class="btn btn-danger" data-modal="#modal" href="{% url 'admin-delete_checklist' checklist.pk %}">{% trans "Delete" %}</a>
+    {% else %}
+    <a class="btn btn-danger disabled">{% trans "Delete" %}</a>
+    {% endif %}
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+  </div>
+</form>
+{% endblock third_column %}

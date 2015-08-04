@@ -1,0 +1,205 @@
+{% extends "products/index.html" %}
+{% load servo_tags %}
+{% load mptt_tags %}
+{% load i18n %}
+
+{% block second_column %}
+{% block category_block %}
+<div class="span3">
+  <ul class="nav nav-list">
+    <li class="nav-header">{% trans "Categories" %}</li>
+    <li class="{% active request 'all' %}"><a href="{% url 'products-list_products' %}">{% trans "All" %}</a></li>
+    {% recursetree categories %}
+    <li class="{% active request 'products' node.slug '/' %}">
+      <a href="{% url 'products-list_products' group=node.slug %}">{{ node.title }}</a>
+      {% if not node.is_leaf_node %}
+      <ul class="nav nav-list">{{ children }}</ul>
+      {% endif %}
+    </li>
+    {% endrecursetree %}
+  </ul>
+</div>
+{% endblock category_block %}
+<div class="span3">
+  <ul class="nav nav-list">
+    <li class="nav-header">{% trans "Products" %}</li>
+    {% for i in products %}
+    <li class="{% active request group.slug i.pk %}">
+      <a href="{% url 'products-view_product' pk=i.pk group=group.slug %}">
+        <strong>{{ i.code }}</strong><span class="pull-right">{{ i.price_sales_stock|currency }}</span>
+        <br/>
+        <small>{{ i.title|truncatechars:30 }}</small>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% include "pagination.html" with items=products %}
+</div>
+{% endblock second_column %}
+
+{% block third_column %}
+<div class="span6">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{% trans "Product" %}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{% trans "Sales" %}</a></li>
+    <li><a href="#tab3" data-toggle="tab">{% trans "Purchases" %}</a></li>
+    <li><a href="#tab4" data-toggle="tab">{% trans "Invoices" %}</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <div class="media">
+        <a class="pull-left" href="#">
+          <img class="media-object" src="{{ product.get_photo }}" data-src="{{ product.get_photo }}" width="64px"/>
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading">{{ product.code }}</h4>
+          <p>{{ product.title }}</p>
+          <p>{{ product.description|default:"" }}</p>
+        </div>
+      </div>
+      <hr/>
+      <dl class="dl-horizontal">
+        <dt>{% trans "Stock Price" %}</dt>
+        <dd>{{ product.price_sales_stock|currency }}</dd>
+        <dt>{% trans "Exchange Price" %}</dt>
+        <dd>{{ product.price_sales_exchange|currency }}</dd>
+        {% if product.component_code %}
+        <dt>{% trans "Component Group" %}</dt>
+        <dd>{{ product.get_component_code_display }} ({{ product.get_part_type_display }})</dd>
+        {% endif %}
+        <dt>&nbsp;</dt>
+        <dd>
+      {% for t in product.tags.all %}
+        <span class="label">{{ t.tag }}</span>
+      {% endfor %}
+        </dd>
+      {% for i in inventory %}
+      {% ifchanged i.location.id %}
+      <hr/>
+      <h4>{{ i.location.title }}</h4>
+      {% endifchanged %}
+      <dl class="dl-horizontal">
+        <dt>{% trans "Stocked" %}</dt>
+        <dd>{{ i.amount_stocked }}</dd>
+        <dt>{% trans "Ordered" %}</dt>
+        <dd>{{ i.amount_ordered|default:"-" }}</dd>
+        <dt>{% trans "Reserved" %}</dt>
+        <dd>{{ i.amount_reserved|default:"-" }}</dd>
+      </dl>
+      {% endfor %}
+      <hr/>
+      {% with request.session.current_order_id as co %}
+      {% if co and product.pk %}
+      <a href="{% url 'orders-add_product' co product.pk %}" class="btn btn-primary"><i class="icon-share-alt icon-white"></i> {% trans "Use in" %} #{{ request.session.current_order_code }}</a>
+      {% endif %}
+      {% endwith %}
+      <a href="{% url 'orders-create_with_product' product.pk %}" class="btn">{% trans "Create Sales Order" %}</a>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-cog"></i> <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+        {% if perms.servo.change_product %}
+          {% if product.can_update_price %}
+          <li><a href="{% url 'products-update_price' product.pk %}">{% trans "Update Price" %}</a></li>
+          {% else %}
+          <li class="disabled"><a href="#">{% trans "Update Price" %}</a></li>
+          {% endif %}
+          <li class="divider"></li>
+          <li><a href="{% url 'products-delete_product' pk=product.pk group=group.slug %}" data-modal="#modal"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+        {% else %}
+          <li><a href="#" class="disabled">{% trans "Update Price" %}</a></li>
+          <li class="divider"></li>
+          <li><a href="#" class="disabled"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+        {% endif %}
+        </ul>
+      </div>
+      <div class="pull-right">
+        {% if perms.servo.change_product %}
+          <a href="{% url 'products-edit_product' pk=product.pk group=group.slug %}" class="btn">{% trans "Edit" %}</a>
+        {% else %}
+          <a href="#" class="btn disabled">{% trans "Edit" %}</a>
+        {% endif %}
+        </div>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans "Order" %}</th>
+            <th>{% trans "Customer" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th>{% trans "Created" %}</th>
+            <th>{% trans "Dispatched" %}</th>
+          </tr>
+        </thead>
+        {% for i in product.serviceorderitem_set.all reversed %}
+          <tr>
+            {% with i.order as order %}
+            <td><a href="{{ order.get_absolute_url }}">{{ order.code }}</a></td>
+            <td>{{ order.customer_name|default:"-" }}</td>
+            <td>{{ i.price|currency }}</td>
+            <td>{{ i.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+            <td>{{ i.dispatched_at|date:"SHORT_DATE_FORMAT" }}</td>
+            {% endwith %}
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="empty muted">{% trans "No Sales Orders" %}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="tab-pane" id="tab3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans "Order" %}</th>
+            <th>{% trans "Created" %}</th>
+            <th>{% trans "Price" %}</th>
+            <th>{% trans "Received" %}</th>
+          </tr>
+        </thead>
+        {% for i in product.purchaseorderitem_set.all reversed %}
+          <tr>
+            {% with i.purchase_order as order %}
+            <td><a href="{{ order.get_absolute_url }}">{{ order.pk }}</a></td>
+            <td>{{ i.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+            <td>{{ i.price|currency }}</td>
+            <td>{{ i.received_at|date:"SHORT_DATE_FORMAT" }}</td>
+            {% endwith %}
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="empty muted">{% trans "No Purchase Orders" %}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="tab-pane" id="tab4">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans "Invoice" %}</th>
+            <th>{% trans "Order" %}</th>
+            <th>{% trans "Created" %}</th>
+            <th>{% trans "Price" %}</th>
+          </tr>
+        </thead>
+        {% for i in product.invoiceitem_set.all reversed %}
+          <tr>
+            <td><a href="{{ i.invoice.get_absolute_url }}">{{ i.invoice.pk }}</a></td>
+            {% with i.invoice.order as order %}
+            <td><a href="{{ order.get_absolute_url }}">{{ order.code }}</a></td>
+            {% endwith %}
+            <td>{{ i.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+            <td>{{ i.price|currency }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="empty muted">{% trans "No invoices" %}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock third_column %}
+
+{% block breadcrumb %}
+<li class="active"><span class="divider">/</span>{{ product.title }}</li>
+{% endblock breadcrumb %}

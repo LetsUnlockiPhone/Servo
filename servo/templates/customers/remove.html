@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans 'Delete' %} {{ customer.name }}?
+{% endblock header %}
+
+{% block body %}
+    <p>{% trans "This will also delete all customer's contacts. Customer's orders will not be deleted" %}</p>
+{% endblock body %}
+
+{% block footer %}
+    <form action="{{ action }}" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">{% trans "Delete" %}</button>
+    </form>
+{% endblock footer %}

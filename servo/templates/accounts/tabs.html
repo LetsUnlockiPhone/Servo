@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load servo_tags %}
+
+<ul class="nav nav-tabs">
+{% with request.user.username as username %}
+  <li class="{% active request "orders" %}">
+    <a href="{% url 'accounts-list_orders' username=username %}">{% trans "Orders" %}</a>
+  </li>
+  <li class="{% active request "updates" %}">
+    <a href="{% url 'accounts-updates' username=username %}">{% trans "Updates" %}</a>
+  </li>
+  <li class="{% active request "calendars" %}">
+    <a href="{% url 'calendars-list' username=username %}">{% trans "Calendars" %}</a>
+  </li>
+  <li class="{% active request "stats" %}">
+    <a href="{% url 'accounts-stats' username=username %}">{% trans "Statistics" %}</a>
+  </li>
+  <li class="{% active request "settings" %}">
+    <a href="{% url 'accounts-settings' username=username %}">{% trans "Settings" %}</a>
+  </li>
+{% endwith %}
+</ul>

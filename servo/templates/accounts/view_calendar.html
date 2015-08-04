@@ -1,0 +1,66 @@
+{% extends "accounts/calendars.html" %}
+{% load i18n %}
+{% load servo_tags %}
+
+{% block detail_view %}
+
+<div class="text-center">
+{% block view_block %}
+<div class="btn-group">
+    <a class="btn {% active request 'day' %}" href="{{ calendar.get_absolute_url }}day/">{% trans "Day" %}</a>
+    <a class="btn {% active request 'week' %}" href="{{ calendar.get_absolute_url }}week/">{% trans "Week" %}</a>
+    <a class="btn {% active request 'month' %}" href="{{ calendar.get_absolute_url }}month/">{% trans "Month" %}</a>
+</div>
+{% endblock view_block %}
+
+{% block browse_block %}
+<div class="btn-group pull-right">
+    <a href="{% url 'calendars-view_calendar' username=request.user.username pk=calendar.pk view=view start_date=previous|date:'Y-m-d' %}" class="btn"><i class="icon-chevron-left"></i></a>
+    <a href="{{ base_url }}" class="btn">{% trans "Today" %}</a>
+    <a href="{% url 'calendars-view_calendar' username=request.user.username pk=calendar.pk view=view start_date=next|date:'Y-m-d' %}" class="btn"><i class="icon-chevron-right"></i></a>
+</div>
+{% endblock browse_block %}
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans "Date" %}</th>
+            <th>{% trans "Started At" %}</th>
+            <th>{% trans "Finished At" %}</th>
+            <th>{% trans "Duration" %}</th>
+            <th>{% trans "Notes" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for i in events %}
+        <tr>
+            <td>{% ifchanged i.started_at|date %}{{ i.started_at|date:"SHORT_DATE_FORMAT" }}{% endifchanged %}</td>
+            <td>{{ i.started_at|time:"TIME_FORMAT" }}</td>
+            <td>{{ i.finished_at|time:"TIME_FORMAT"|default:"-" }}</td>
+            <td>{{ i.get_duration }}</td>
+            <td>{{ i.notes|default:'' }}</td>
+            <td style="text-align:right">
+                <div class="btn-group">
+                {% if i.finished_at %}
+                    <a href="" class="btn disabled"><i class="icon-time"></i></a>
+                {% else %}
+                    <a href="{{ calendar.get_absolute_url }}events/{{ i.pk }}/finish/" class="btn"><i class="icon-time"></i></a>
+                {% endif %}
+                    <a href="{{ calendar.get_absolute_url }}events/{{ i.pk }}/edit/" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a>
+                    <a href="{{ calendar.get_absolute_url }}events/{{ i.pk }}/delete/" class="btn btn-danger" data-modal="#modal"><i class="icon-trash icon-white"></i></a>
+                </div>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="6" class="muted empty">{% trans "No events found" %}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock detail_view %}
+
+{% block crumbs %}
+    <li><a href="{% url 'calendars-list' username=request.user.username %}">{% trans "Calendars" %}</a> <span class="divider">/</span></li>
+    <li class="active">{{ calendar.title }}</li>
+{% endblock crumbs %}

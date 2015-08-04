@@ -1,0 +1,8 @@
+{% load i18n %}
+<ul class="nav nav-pills nav-stacked">
+{% for c in customers %}
+    <li><a href="{% url 'orders-select_customer' pk=order_id customer_id=c.id %}"><i class="{{ c.get_icon }}"></i> <strong>{{ c.fullname }}</strong><br/>{{ c.email }}, {{ c.phone }}</a></li>
+{% empty %}
+    <li class="text-center muted">{% trans "No customers found" %}</li>
+{% endfor %}
+</ul>

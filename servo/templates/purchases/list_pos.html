@@ -1,0 +1,132 @@
+{% extends "default.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+<div class="btn-group">
+  <a href="{% url 'purchases-create_po' %}" class="btn"><i class="icon-plus"></i> {% trans "New" %}</a>
+</div>
+{% endblock toolbar %}
+
+{% block content %}
+
+<div class="row-fluid row-header">
+  <div class="span12">
+    <form class="form-search pull-right">
+      
+    </form>
+  </div>
+</div>
+
+{% include "products/tabs.html" %}
+
+{% block filter_bar %}
+<div class="row-fluid">
+  <div class="span12 well">
+    <form action="" method="post" class="form-inline">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="control-group pull-left">
+        <label class="control-label">{{ field.label }}</label>
+        <div class="controls">{{ field }}</div>
+      </div>
+      {% endfor %}
+      <div class="control-group">
+        <label class="control-label">&nbsp;</label>
+        <div class="controls">
+          <button class="btn btn-primary pull-right" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock filter_bar %}
+
+<div class="row-fluid">
+  <div class="span12">
+    {% block detail_view %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{% trans "Created" %}</th>
+          <th>{% trans "Ordered" %}</th>
+          <th>{% trans "Reference" %}</th>
+          <th>{% trans "Confirmation" %}</th>
+          <th>{% trans "Received" %}</th>
+          <th>{% trans "Order" %}</th>
+          <th>{% trans "Products" %}</th>
+          <th>{% trans "Total" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for po in orders %}
+        <tr>
+          <td><a href="{{ po.get_absolute_url }}">{{ po.id|safe }}</a></td>
+          <td>{{ po.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+          <td>{{ po.submitted_at|date:"SHORT_DATE_FORMAT" }}</td>
+          <td>{{ po.reference|default:"" }}</td>
+          <td>{{ po.confirmation|default:"" }}</td>
+          <td>{{ po.date_arrived }}</td>
+          {% if po.sales_order %}
+          <td><a href="{% url 'orders-edit' po.sales_order.pk %}">{{ po.sales_order.code }}</a></td>
+          {% else %}
+          <td></td>
+          {% endif %}
+          <td>{{ po.amount }}</td>
+          <td>{{ po.sum|currency }}</td>
+          <td>
+            <div class="btn-group pull-right">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="icon-cog"></i> <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                {% if po.can_create_gsx_stock %}
+                <li><a href="{% url 'purchases-submit_stock_order' po.id %}" data-modal="#modal">{% trans "Create GSX Stocking Order" %}</a></li>
+                {% else %}
+                <li class="disabled"><a href="#">{% trans "Create GSX Stocking Order" %}</a></li>
+                {% endif %}
+                <li class="divider"></li>
+                {% if perms.servo.change_purchaseorder and po.is_editable %}
+                <li><a href="{{ po.get_absolute_url }}">{% trans "Edit" %}</a></li>
+                {% else %}
+                <li class="disabled"><a href="#">{% trans "Edit" %}</a></li>
+                {% endif %}
+                {% if perms.servo.delete_purchaseorder and po.is_editable %}
+                <li><a href="{% url 'purchases-delete_po' po.id %}">{% trans "Delete" %}</a></li>
+                {% else %}
+                <li class="disabled"><a href="#">{% trans "Delete" %}</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="10" class="empty muted">{% trans "No Purchase Orders" %}</td></tr>
+      {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><strong>{{ total.total__sum|currency|default:"" }}</strong></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    {% include "pagination.html" with items=orders %}
+    {% endblock detail_view %}
+  </div>
+</div>
+{% endblock content %}
+
+{% block crumbs %}
+<li><a href="{% url 'purchases-list_pos' %}">{% trans "Purchase Orders" %}</a></li>
+{% endblock crumbs %}

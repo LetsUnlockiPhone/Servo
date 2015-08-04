@@ -1,0 +1,17 @@
+{% extends "admin/tags/index.html" %}
+{% load i18n %}
+
+{% block third_column %}
+<form action="" method="post" class="form-horizontal">
+    {% csrf_token %}
+    {% include "form_snippet.html" %}
+    <div class="form-actions">
+    {% if tag.pk %}
+        <a class="btn btn-danger" data-modal="#modal" href="{% url 'admin-delete_tag' tag.pk %}">{% trans "Delete" %}</a>
+    {% else %}
+        <a class="btn btn-danger disabled">{% trans "Delete" %}</a>
+    {% endif %}
+        <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    </div>
+</form>	
+{% endblock third_column %}

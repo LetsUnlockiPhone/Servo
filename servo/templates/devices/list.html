@@ -1,0 +1,38 @@
+{% load i18n %}
+
+<table class="table">
+  <tbody class="searchable">
+  {% for device in devices %}
+    <tr>
+      <td><a href="{{ device.get_absolute_url }}">{{ device.sn }}</a></td>
+      <td>{{ device.description }}</td>
+      <td>{{ device.purchased_on|default:"-" }}</td>
+      <td>{{ device.get_warranty_status_display }}</td>
+      <td>
+        <div class="btn-group pull-right">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-cog"></i> <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+          {% with request.session.current_order_id as co %}
+            {% if co %}
+            <li><a href="{% url 'orders-add_device' co device.pk %}">{% trans "Use in" %} #{{ request.session.current_order_code }}</a></li>
+            <li class="divider"></li>
+            {% endif %}
+          {% endwith %}
+            <li><a href="{% url 'orders-create_with_device' device_id=device.pk %}">{% trans "Create Service Order" %}</a></li>
+            <li {% if device.order_set.count < 1 %}class="disabled"{% endif %}><a href="{% url 'orders-index' %}?device={{ device.pk|safe }}">{% trans "Show Service Orders" %}</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ device.get_absolute_url }}">{% trans "View" %}</a></li>
+            <li><a href="{{ device.get_absolute_url }}edit/">{% trans "Edit" %}</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ device.get_absolute_url }}delete/" data-modal="#modal"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5" class="empty muted">{% trans "No devices found" %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% blocktrans with sn=device.sn%}Delete device {{ sn }}"?{% endblocktrans %}
+{% endblock header %}
+
+{% block body %}
+    {% trans "This will also remove it from all service orders." %}
+{% endblock body %}
+
+{% block footer %}
+    <form action="{{ action }}" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    </form>    
+{% endblock footer %}

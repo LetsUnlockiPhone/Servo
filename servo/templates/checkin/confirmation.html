@@ -1,0 +1,13 @@
+{% extends "checkin/index.html" %}
+{% load i18n %}
+
+{% block main %}
+<div class="page-header">
+  <h2>{% trans "Confirmation" %}</h2>
+</div>
+<form method="post" action="">
+  {% csrf_token %}
+  {% include "form_snippet.html" %}
+  <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+</form>
+{% endblock main %}

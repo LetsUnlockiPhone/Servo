@@ -1,0 +1,101 @@
+{% extends "shipments/list_returns.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+  <a href="{% url 'shipments-pick_for_return' shipment.pk %}" class="btn" data-modal="#modal"><i class="icon-plus"></i> {% trans "Add Part" %}</a>
+<!--
+  {% if formset|length %}
+    <a href="{% url 'shipments-verify' shipment.pk %}" class="btn"><i class="icon-ok"></i> {% trans "Verify" %}</a>
+  {% else %}
+    <a href="#" class="btn disabled"><i class="icon-ok"></i> {% trans "Verify" %}</a>
+  {% endif %}
+//-->
+{% endblock toolbar %}
+
+{% block second_column %}
+<ul class="nav nav-tabs">
+  {% for k, v in accounts %}
+  <li class="{% active request k %}"><a href="{% url 'shipments-edit_bulk_return' ship_to=k %}">{{ v }}</a></li>
+  {% endfor %}
+</ul>
+<form method="post" action="">
+  <div class="span3">
+    {% block return_info %}
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <div class="control-group">
+      <label class="control-label">{% trans "Carrier" %}</label>
+      <div class="controls">
+        {{ form.carrier }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">{% trans "Tracking" %}</label>
+      <div class="controls">
+        {{ form.tracking_id }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">{% trans "Dimensions" %}</label>
+      <div class="controls">
+        {{ form.length }} {{ form.width }} {{ form.height }}
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">{% trans "Weight" %}</label>
+      <div class="controls">
+        {{ form.weight }}
+      </div>
+    </div>
+    {% endblock return_info %}
+  </div>
+  <div class="span9">
+    <table class="table">
+      <thead>
+        <th>{% trans "Part" %}</th>
+        <th>{% trans "Reference" %}</th>
+        <th style="width:100px">{% trans "Return Order" %}</th>
+        <th>{% trans "Overpack" %}</th>
+        <th></th>
+      </thead>
+      <tbody>
+      {% block return_parts %}
+        {% for f in formset %}
+        <tr>
+          {{ f.id }}
+          {{ f.part_number }}
+          {{ f.part_title }}
+          {{ f.service_order }}
+          {{ f.return_order }}
+        {% with f.instance as p %}
+          <td><strong>{{ p.part_number }}</strong><br/>{{ p.part_title }}</td>
+        {% if p.order_item %}
+          <td><a href="{{ p.order_item.order.get_absolute_url }}">{{ p.reference }}</a></td>
+        {% else %}
+          <td>{{ p.reference }}</td>
+        {% endif %}
+          <td>{{ f.return_order.value }}</td>
+          <td>{% include "snippets/control_group.html" with field=f.box_number %}</td>
+          <td><a href="{% url 'shipments-remove_from_return' shipment.pk p.pk %}" class="btn"><i class="icon-trash"></i></td>
+        {% endwith %}
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="empty muted">{% trans "No parts registered for this shipment" %}</td>
+        </tr>
+        {% endfor %}
+        {% endblock return_parts %}
+      </tbody>
+    </table>
+    {% block form_controls %}
+    <div class="form-actions">
+      <label class="checkbox pull-left">
+        <input type="checkbox" name="confirm" id="id_confirm"> {% trans "Confirm" %}
+      </label>
+      <button type="submit" class="btn pull-right spin" id="save-bulk-return" data-placeholder="{% trans "Submit" %}">{% trans "Save" %}</button>
+    </div>
+    {% endblock form_controls %}
+  </div>
+</form>
+{% endblock second_column %}

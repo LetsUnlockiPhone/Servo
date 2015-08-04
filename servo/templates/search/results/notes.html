@@ -1,0 +1,20 @@
+{% extends "search/spotlight.html" %}
+{% load servo_tags %}
+{% load humanize %}
+
+{% block second_column %}
+<ul class="media-list">
+  {% for note in notes %}
+  <li class="media">
+    <a class="pull-left" href="#">
+      <img src="{{ note.created_by.get_avatar }}" alt="{{ note.created_by }}" title="{{ note.created_by }}" class="img-rounded avatar"/>
+    </a>
+    <div class="media-body">
+      <h5 class="media-heading">{{ note.get_sender_name }} {{ note.created_at|naturaltime }}{% if note.order %} <a href="{% url 'orders-edit' note.order.pk %}#note-{{ note.pk }}"><i class="icon-share-alt"></i></a>{% endif %}</h5>
+      {{ note.body|markdown }}
+    </div>
+    <hr/>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock second_column %}

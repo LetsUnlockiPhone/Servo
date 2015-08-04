@@ -1,0 +1,8 @@
+{% load i18n %}
+<form action="/fields/remove/" method="post" accept-charset="utf-8" rel="fields">
+  {% csrf_token %}
+  <input type="hidden" name="id" value="{{ id }}" />
+  <img src="/static/images/alert_48.png" alt="alert" class="alert" />
+  <h2>{% trans "Are you sure you want to delete this field?" %}</h2>
+  <p>{% trans "This action cannot be undone." %}</p>
+</form>

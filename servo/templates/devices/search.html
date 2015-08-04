@@ -1,0 +1,15 @@
+{% extends "two_column_layout.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block first_column %}
+<input type="text" class="input-large search-query filter" placeholder="{% trans "Filter results" %}"/>
+{% endblock first_column %}
+
+{% block second_column %}
+{% include "devices/list.html" %}
+{% endblock second_column %}
+
+{% block crumbs %}
+<li><a href="{% url 'devices-list' %}">{% trans "Devices" %}</a></li><li class="active"><span class="divider">/</span>{{ title }}</li>
+{% endblock crumbs %}

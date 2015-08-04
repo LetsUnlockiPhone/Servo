@@ -1,0 +1,94 @@
+{% extends "default.html" %}
+{% load staticfiles %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+{% with order.status_title as stat %}
+  <h3 style="margin-top:0px;line-height:30px" title="{{ title }}">{{ title|truncatechars:40 }}<br/>
+  <img src="{% static order.get_status_img %}" title="{{ stat }}" alt="{{ stat }}"/><small style="padding-left:5px">{{ order.get_title }} {% if order.user %}({{ order.user.get_full_name }}){% endif %}</small></h3>
+{% endwith %}
+</div>
+<ul class="nav nav-tabs">
+  {% block tabs %}
+  {% include "orders/tabs.html" %}
+  {% endblock tabs %}
+</ul>
+
+<div class="row-fluid">
+  <form method="post" accept-charset="utf-8" action="#" class="form-horizontal spin" enctype="multipart/form-data" id="repair_form">
+    <div class="span3">
+      {% csrf_token %}
+      {{ repair_form.device }}
+      <strong>{{ device.description }}</strong>
+      <p>
+        <small class="muted">{{ device.get_warranty_status_display }}</small><br/>
+        <small class="muted">{{ device.configuration }}</small><br/>
+        <small class="muted"><i class="icon-barcode"></i> {{ device.sn }}</small>
+      </p>
+      <hr/>
+      <strong>{% trans "Parts" %}</strong>
+      <div class="async" data-url="{% url 'repairs-check_parts' repair.pk %}"><p class="text-center muted">{% trans "Checking warranty" %}...</p></div>
+      <hr/>
+      <strong>{% trans "Total" %}:</strong>
+      <span class="pull-right"><strong>{{ order.gross_total|currency }}</strong></span>
+    </div>
+    <div class="span9">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">{% trans "Repair" %}</a></li>
+        <li><a href="#tab2" data-toggle="tab">{% trans "Details" %}</a></li>
+        {% if component_form %}
+        <li><a href="#tab4" data-toggle="tab">{% trans "Components" %}</a></li>
+        {% endif %}
+        <li><a href="#tab3" data-toggle="tab">{% trans "Customer" %}</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+          {% include "form_field_snippet.html" with field=repair_form.symptom %}
+          {% include "form_field_snippet.html" with field=repair_form.diagnosis %}
+          {% include "form_field_snippet.html" with field=repair_form.tech_id %}
+        </div>
+        <div class="tab-pane" id="tab2">
+          {% include "form_field_snippet.html" with field=repair_form.notes %}
+          {% include "form_field_snippet.html" with field=repair_form.unit_received_at %}
+          {% include "form_field_snippet.html" with field=repair_form.attachment %}
+          {% include "form_field_snippet.html" with field=repair_form.reference %}
+          {% include "form_field_snippet.html" with field=repair_form.consumer_law %}
+          {% include "form_field_snippet.html" with field=repair_form.request_review %}
+        {% if repair.can_mark_complete %}
+          {% include "form_field_snippet.html" with field=repair_form.replacement_sn %}
+          {% include "form_field_snippet.html" with field=repair_form.mark_complete %}
+        {% endif %}
+        </div>
+        <div class="tab-pane" id="tab3">
+          {% include "form_snippet.html" with form=customer_form %}
+        </div>
+        <div class="tab-pane" id="tab4">
+          {% include "form_snippet.html" with form=component_form %}
+        </div>
+      </div>
+      <div class="form-actions">
+        <label class="checkbox pull-left">
+          <input type="checkbox" name="confirm" id="id_confirm"> {% trans "Confirm" %}
+        </label>
+        <div class="pull-right">
+        {% if repair.pk %}
+          <a class="btn btn-danger" href="{% url 'repairs-delete_repair' repair.pk %}" data-modal="#modal">{% trans "Delete" %}</a>
+        {% endif %}
+          <button type="submit" class="btn" id="save-bulk-return" data-placeholder="{% trans "Submit" %}">{% trans "Save" %}</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+{% block crumbs %}
+<li><a href="{{ order.get_queue_url }}">{{ order.get_queue_title }}</a> <span class="divider">/</span></li>
+<li class="active">{% trans "Order" %} {{ order.code }}</li>
+{% endblock crumbs %}
+
+{% block media %}
+{{ repair_form.media }}
+{% endblock media %}

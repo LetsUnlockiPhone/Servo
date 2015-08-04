@@ -1,0 +1,46 @@
+{% extends "orders/print_confirmation.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block title %}
+  {% blocktrans with invoice.pk as number %}Receipt {{ number }}{% endblocktrans %}
+{% endblock title %}
+
+{% block customer_details %}
+  <strong>{{ invoice.customer_name }}</strong><br/>
+  {% trans "Daytime Phone" %}: {{ invoice.customer_phone|default:"-" }}<br/>
+  {% trans "Email Address" %}: {{ invoice.customer_email|default:"-" }}
+  {% if invoice.customer_address %}
+  <br/>
+  {% trans "Address" %}: {{ invoice.customer_address }}
+  {% endif %}
+{% endblock customer_details %}
+
+{% block list_products %}
+{% for i in invoice.invoiceitem_set.all %}
+  <tr>
+    <td style="width:80px">{{ i.code }}</td>
+    <td>{{ i.title }}{% if i.sn %}<br/><span class="muted">{% trans "SN" %}: {{ i.sn }} {% if i.imei %}{% trans "IMEI" %}: {{ i.imei }}{% endif %}{% endif %}</span></td>
+    <td>{{ i.product.get_warranty_display|default:"" }}</td>
+    <td>{{ i.product.pct_vat|floatformat:"0" }}%</td>
+    <td>{{ i.amount }}</td>
+    <td>{{ i.price_notax|currency }}</td>
+    <td>{{ i.price|currency }}</td>
+    <td>{{ i.total_gross|currency }}</td>
+  </tr>
+{% endfor %}
+{% endblock list_products %}
+
+{% block order_total %}
+  {{ invoice.total_gross|currency }}
+{% endblock order_total %}
+
+{% block customer_pickup %}
+<p class="text-right">
+  <strong>{% trans "Date of invoice" %}: {{ invoice.created_at|date:"SHORT_DATE_FORMAT" }}</strong><br/>
+  <strong>{% trans "Payment method" %}: {{ invoice.get_payment_methods|join:", " }}</strong><br/>
+  <strong>{% trans "Sales Person" %}: {{ invoice.created_by.get_full_name }}</strong><br/>
+</p>
+{% endblock customer_pickup %}
+
+{% block tos %}{% endblock tos %}

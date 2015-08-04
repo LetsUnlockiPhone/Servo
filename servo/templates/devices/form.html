@@ -1,0 +1,44 @@
+{% extends "devices/view.html" %}
+{% load i18n %}
+
+{% block fourth_column %}
+<form method="post" action="" accept-charset="utf-8" class="form-horizontal" enctype="multipart/form-data">
+  {% csrf_token %}
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{% trans "Details" %}</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      {% include "form_field_snippet.html" with field=form.description %}
+      {% include "form_field_snippet.html" with field=form.sn %}
+      {% include "form_field_snippet.html" with field=form.warranty_status %}
+      {% include "form_field_snippet.html" with field=form.username %}
+      {% include "form_field_snippet.html" with field=form.password %}
+    </div>
+    <div class="tab-pane" id="tab2">
+      {% include "form_field_snippet.html" with field=form.purchased_on %}
+      {% include "form_field_snippet.html" with field=form.brand %}
+      {% include "form_field_snippet.html" with field=form.reseller %}
+      {% include "form_field_snippet.html" with field=form.product_line %}
+      {% include "form_field_snippet.html" with field=form.configuration %}
+      <div class="control-group">
+        <label class="control-label">{% trans "Tags" %}</label>
+        <div class="controls">
+        <input type="text" name="tag" class="input typeahead" placeholder="{% trans "Enter tag" %}" data-provide="typeahead" data-source="{% url 'api-tags' %}?type=device" autocomplete="off"/>
+          <div class="clearfix" style="margin-top:10px">
+          {% for t in device.tags.all %}
+            <span class="label"><div class="pull-left">{{ t.tag }}</div><a class="close" href="{% url 'tags-clear' t.pk %}"><i class="icon-remove icon-white"></i></a></span>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% include "form_field_snippet.html" with field=form.photo %}
+      {% include "form_field_snippet.html" with field=form.notes %}
+      {% include "form_field_snippet.html" with field=form.has_onsite %}
+      {% include "form_field_snippet.html" with field=form.is_vintage %}
+    </div>
+  </div>
+  {% include "form_buttons.html" %}
+</form>
+{% endblock fourth_column %}

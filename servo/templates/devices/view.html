@@ -1,0 +1,83 @@
+{% extends "devices/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block fourth_column %}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#tab1" data-toggle="tab">{% trans "Device" %}</a></li>
+  <li><a href="#tab2" data-toggle="tab">{% trans "Orders" %}</a></li>
+  {% if device.is_apple_device %}
+  <li><a href="#tab3" data-toggle="tab">{% trans "GSX Repairs" %}</a></li>
+  {% else %}
+  <li class="disabled"><a href="#" data-toggle="tab">{% trans "GSX Repairs" %}</a></li>
+  {% endif %}
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="tab1">
+    {% include "devices/summary.html" %}
+    <hr/>
+  {% if request.session.current_order_id and device.id %}
+    <a href="{% url 'orders-add_device' request.session.current_order_id device.id %}" class="btn btn-primary"><i class="icon-share-alt icon-white"></i> {% trans "Use in" %} #{{ request.session.current_order_code }}</a>
+  {% else %}
+    <a href="#" class="btn btn-primary disabled"><i class="icon-share-alt icon-white"></i> {% trans "Use in current order" %}</a>
+  {% endif %}
+    {% if device.pk %}
+    <a href="{% url 'devices-create_order' device.pk %}" class="btn"><i class="icon-plus"></i> {% trans "Create Service Order" %}</a>
+    {% endif %}
+    <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-cog"></i> <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+      {% if device.manual_url %}
+        <li><a href="{{ device.manual_url }}">{% trans "Service Manual" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">{% trans "Service Manual" %}</a></li>
+      {% endif %}
+      {% if device.exploded_view_url %}
+        <li><a href="{{ device.exploded_view_url }}">{% trans "Exploded View" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">{% trans "Exploded View" %}</a></li>
+      {% endif %}
+        <li class="divider"></li>
+      {% if device.is_apple_device %}
+        <li><a href="{% url 'devices-update_gsx_details' device.pk %}" class="spin">{% trans "Update Warranty Status" %}</a></li>
+        <li><a href="{% url 'devices-diagnostics' pk=device.id %}?a=get" data-modal="#modal">{% trans "Fetch Diagnostics" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#" class="spin">{% trans "Update Warranty Status" %}</a></li>
+        <li class="disabled"><a href="#" data-modal="#modal">{% trans "Fetch Diagnostics" %}</a></li>
+      {% endif %}
+        <li class="divider"></li>
+      {% if perms.servo.change_device %}
+        <li><a href="delete/" data-modal="#modal"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+      {% endif %}
+      </ul>
+    </div>
+    <div class="pull-right">
+      {% if perms.servo.change_device %}
+      <a href="edit/" class="btn">{% trans "Edit" %}</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="tab-pane" id="tab2">
+    {% include "orders/list.html" with orders=device.order_set.all %}
+  </div>
+  {% if device.is_apple_device %}
+  <div class="tab-pane" id="tab3">
+    <div id="gsx-container" data-source="{% url 'devices-search_gsx' what='repairs' param='serialNumber' query=device.sn %}">
+      <div class="progress active">
+        <div class="bar" style="width:100%;" data-progress="0"></div>
+      </div>
+      <p class="text-center muted">{% trans "Fetching repairs..." %}</p>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock fourth_column %}
+</div>
+
+{% block path %}
+  <li class="active"><span class="divider">/</span> {{ device.description }}</li>
+{% endblock path %}

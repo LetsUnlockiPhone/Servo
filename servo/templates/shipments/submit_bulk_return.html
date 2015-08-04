@@ -1,0 +1,15 @@
+{% extends "modal.html" %}
+{% load i18n %}
+{% block header %}
+    {% trans "Submit the bulk return?" %}
+{% endblock header %}
+
+{% block body %}
+    
+{% endblock body %}
+
+{% block footer %}
+    <form method="post" action="{{ action }}">
+        <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+    </form>
+{% endblock footer %}

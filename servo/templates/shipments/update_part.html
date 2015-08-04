@@ -1,0 +1,14 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {{ title }}
+{% endblock header %}
+
+{% block body %}
+{{ msg }}
+<form action="{{ action }}" method="post" class="form-horizontal">
+    {% csrf_token %}
+    {% include "form_snippet.html" %}
+</form>
+{% endblock body %}

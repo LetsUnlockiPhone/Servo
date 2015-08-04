@@ -1,0 +1,6 @@
+{% extends "generic/admin_list.html" %}
+{% load i18n %}
+
+{% block toolbar %}
+    <a href="{% url 'admin-create_status' %}" class="btn btn-default navbar-btn"><i class="icon-plus"></i> {% trans "New Status" %}</a>
+{% endblock toolbar %}

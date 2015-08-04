@@ -1,0 +1,40 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}{% trans "Manage Accessories" %}{% endblock header %}
+
+{% block body %}
+<form method="post" action="{{ action }}" class="form-search" id="acc-form">
+  {% csrf_token %}
+  <input type="text" id="filter-acc" autocomplete="off" name="name" style="width:500px"/>
+  <div id="acc-choices" style="margin-top:10px">
+    {% for a in selected %}
+    <div class="row-fluid">
+      <div class="span10">{{ a.name }}</div>
+      <div class="span1">
+      <a href="{{ action }}{{ a.id|safe }}/delete/" class="btn btn-small delete">{% trans "Remove" %}</a>
+      </div>
+    </div>
+    {% empty %}
+    <p class="empty muted">{% trans "No accessories added" %}</p>
+    {% endfor %}
+  </div>
+</form>
+<script type="text/javascript">
+  $(function() {
+    $('#acc-choices').on('click', 'a.delete', function() {
+      $('#acc-choices').load($(this).attr('href') + ' #acc-choices');
+      return false;
+    });
+    $('#filter-acc').typeahead({source: {{ choices_json }}});
+    $('#acc-form').submit(function(e) {
+      e.preventDefault();
+      url = $(this).attr('action');
+      $('#acc-choices').load(url + ' #acc-choices', $(this).serializeArray(),
+        function() {
+          $('#filter-acc').val('');
+        });
+    });
+  });
+</script>
+{% endblock body %}

@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load servo_tags %}
+
+<div id="products">
+    <ul class="unstyled" data-url="{% url 'orders-list_products' order.pk %}">
+    {% for p in order.products %}
+        <li>
+            <small><strong>{{ p.code }}</strong></small><small class="pull-right">{{ p.price|currency }}</small>
+            <br/>
+            <small class="muted">{{ p.title }} - {{ p.get_price_category_display }}</small><br/>
+        {% if p.kbb_sn %}
+            <i class="icon-barcode"></i> <a href="#" class="sn" title="{% trans 'Click to select EEE code' %}">{{ p.kbb_sn }}</a>
+        {% endif %}
+        </li>
+    {% empty %}
+        <li class="muted text-center" style="padding:10px">{% trans "No products added" %}</li>
+    {% endfor %}
+    </ul>
+    <hr/>
+    <strong>{% trans "Total" %}:</strong>
+    <span class="pull-right"><strong>{{ order.gross_total|currency }}</strong></span>
+</div>

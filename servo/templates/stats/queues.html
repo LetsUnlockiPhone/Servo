@@ -1,0 +1,29 @@
+{% extends "stats/index.html" %}
+{% load i18n %}
+
+{% block tabs %}
+    <li><a href="{% url 'stats-index' %}">{% trans "Technicians" %}</a></li>
+    <li><a href="{% url 'stats-locations' %}">{% trans "Locations" %}</a></li>
+    <li class="active"><a href="{% url 'stats-queues' %}">{% trans "Queues" %}</a></li>
+    <li><a href="{% url 'stats-repairs' %}">{% trans "Repairs" %}</a></li>
+    <li><a href="{% url 'stats-statuses' %}">{% trans "Statuses" %}</a></li>
+    <li><a href="{% url 'stats-sales' %}">{% trans "Sales" %}</a></li>
+{% endblock tabs %}
+
+{% block stats %}
+    <h2>{% trans "Orders Created" %}</h2>
+    <p>{% trans "This is your total number of orders per queue in the specified time period" %}</p>
+    {% include "stats/plot_snippet.html" with url="/stats/data/orders/count/" %}
+    <hr/>
+    <h2>{% trans "Orders Closed" %}</h2>
+    <p>{% trans "Shows you how many orders have been closed in each queue." %}</p>
+    {% include "stats/plot_snippet.html" with url="/stats/data/closed/queue/" %}
+    <hr/>
+    <h2>{% trans "Average Turnaround" %}</h2>
+    <p>{% trans "Shows how many hours it takes to complete an order in each queue." %}</p>
+    {% include "stats/plot_snippet.html" with url="/stats/data/orders/turnaround/" %}
+    <hr/>
+    <h2>{% trans "Work Distribution" %}</h2>
+    <p>{% trans "This shows your total ratio of orders over the time period distributed over each queue." %}</p>
+    <div class="plot plot-pie pull-left" data-source="/stats/data/orders/queues/"></div>
+{% endblock stats %}

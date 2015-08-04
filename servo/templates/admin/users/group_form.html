@@ -1,0 +1,23 @@
+{% extends "admin/users/groups.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block third_column %}
+<div class="row-fluid">
+  <div class="span3">
+    <ul class="nav nav-pills nav-stacked">
+    {% for o in object_list %}
+      <li class="{% active_url request o.get_admin_url %}"><a href="{% url 'admin-edit_group' o.pk %}">{{ o.name }}</a></li>
+    {% endfor %}
+      </ul>
+    </ul>
+  </div>
+  <div class="span9">
+    <form action="" method="post" accept-charset="utf-8" class="form-horizontal">
+      {% csrf_token %}
+      {% include "form_snippet.html" %}
+      {% include "form_buttons.html" %}
+    </form>
+  </div>
+</div>
+{% endblock third_column %}

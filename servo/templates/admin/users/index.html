@@ -1,0 +1,51 @@
+{% extends "admin/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+<div class="btn-group">
+  <a class="btn" href="{% url 'admin-create_user' %}"><i class="icon-plus"></i> {% trans "New User" %}</a>
+  <a class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown" href="#">
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'admin-create_group' %}">{% trans "New Group" %}</a></li>
+    <li><a href="{% url 'admin-upload_users' %}" data-modal="#modal">{% trans "Upload Users" %}</a></li>
+  </ul>
+</div>
+{% endblock toolbar %}
+
+{% block second_column %}
+<div class="row-fluid">
+  {% include "admin/users/tabs.html" %}
+</div>
+
+<div class="row-fluid">
+  <div class="span3">
+    <div class="btn-group">
+      <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-search"></i>
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+      {% for l in locations %}
+        <li><a href="?l={{ l.pk|safe }}">{{ l }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+    <ul class="nav nav-pills nav-stacked">
+    {% for o in object_list %}
+    {% if o.is_active %}
+      <li class="{% active_url request o.get_admin_url %}"><a href="{{ o.get_admin_url }}"><i class="{{ o.get_icon }}"></i> {{ o.get_name|truncatechars:"25" }}</a></li>
+    {% else %}
+      <li class="{% active_url request o.get_admin_url %}"><a href="{{ o.get_admin_url }}" class="muted"><i class="{{ o.get_icon }}"></i> {{ o.get_name }}</a></li>
+    {% endif %}
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="span9">
+    {% block third_column %}
+    {% endblock third_column %}
+  </div>
+</div>
+{% endblock second_column %}

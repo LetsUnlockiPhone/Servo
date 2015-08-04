@@ -1,0 +1,26 @@
+{% extends "search/spotlight.html" %}
+{% load i18n %}
+
+{% block second_column %}
+    {% if customers %}
+        {% for i in customers %}
+            <address>
+                <strong><a href="{% url 'customers-view_customer' i.pk %}">{{ i.name }}</a></strong><br>
+            {% if i.street_address %}
+                {{ i.street_address }}<br/>
+                {{ i.zip_code }}, {{ i.city }}<br/>
+            {% endif %}
+                {% if i.phone %}
+                    <abbr title="{% trans "Phone" %}">P:</abbr> {{ i.phone }}
+                {% endif %}
+                {% if i.email %}
+                    <br/>
+                    <a href="{% url 'notes-create_to_customer' customer=i.pk %}"><i class="icon-envelope"></i> {{ i.email }}</a>
+                {% endif %}
+            </address>
+            <hr/>
+        {% endfor %}
+    {% else %}
+        <h1 class="muted text-center">{% trans "No customers found" %}</h1>
+    {% endif %}
+{% endblock second_column %}

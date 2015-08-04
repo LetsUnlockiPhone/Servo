@@ -1,0 +1,16 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}{% trans "Initiate iOS diagnostics" %}{% endblock header %}
+
+{% block body %}
+  <form action="{{ url }}?a=init" method="post" class="form-horizontal">{% csrf_token %}
+    <input type="hidden" name="order" value="{{ order.pk|safe }}"/>
+    <div class="control-group">
+      <label class="control-label" for="id_email">{% trans "Email" %}</label>
+      <div class="controls">
+        <input id="id_email" maxlength="128" name="email" type="email" value="{{ customer.email }}"/>
+      </div>
+    </div>
+  </form>
+{% endblock body %}

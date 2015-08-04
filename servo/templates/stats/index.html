@@ -1,0 +1,68 @@
+{% extends "default.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<ul class="nav nav-tabs" style="margin-top:30px">
+{% block tabs %}
+  <li class="active"><a href="{% url 'stats-index' %}">{% trans "Technicians" %}</a></li>
+  <li><a href="{% url 'stats-locations' %}">{% trans "Locations" %}</a></li>
+  <li><a href="{% url 'stats-queues' %}">{% trans "Queues" %}</a></li>
+  <li><a href="{% url 'stats-repairs' %}">{% trans "Repairs" %}</a></li>
+  <li><a href="{% url 'stats-statuses' %}">{% trans "Statuses" %}</a></li>
+  <li><a href="{% url 'stats-sales' %}">{% trans "Sales" %}</a></li>
+{% endblock tabs %}
+</ul>
+
+<div class="row-fluid">
+  <div class="span12 well">
+  {% block filter_block %}
+    <form action="#" method="post" class="form-inline" id="stats-form">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="control-group pull-left">
+        <label class="control-label">{{ field.label }}</label>
+        <div class="controls">{{ field }}</div>
+      </div>
+      {% endfor %}
+      <div class="control-group">
+        <label class="control-label">&nbsp;</label>
+        <div class="controls">
+          <button class="btn btn-primary pull-right" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+        </div>
+      </div>
+    </form>
+  {% endblock filter_block %}
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="span12">
+    {% block stats %}
+    <h2>{% trans "Orders Assigned" %}</h2>
+    <p>{% trans "Shows how many new orders have been assigned to each technician over the given time period." %}</p>
+    {% include "stats/plot_snippet.html" with url="/stats/data/orders/runrate/" %}
+    <hr/>
+    <h2>{% trans "Orders Created" %}</h2>
+    <p>{% trans "This graph shows how many orders are checked in by each user." %}</p>
+    {% include "stats/plot_snippet.html" with url="/stats/data/created/user/" %}
+    <hr/>
+    <h2>{% trans "Work Distribution" %}</h2>
+    <p>{% trans "Shows you how the total number of service orders is distributed across the technicians at this location." %}</p>
+    <div class="plot plot-pie pull-left" data-source="/stats/data/orders/techs/"></div>
+    {% endblock stats %}
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block crumbs %}
+<li class="active">{% trans "Statistics" %}</li>
+{% endblock crumbs %}
+
+{% block media %}
+<script src="{{ STATIC_URL }}js/flot/jquery.flot.min.js"></script>
+<script src="{{ STATIC_URL }}js/flot/jquery.flot.time.min.js"></script>
+<script src="{{ STATIC_URL }}js/flot/jquery.flot.pie.min.js"></script>
+<script src="{{ STATIC_URL }}js/flot/jquery.flot.resize.min.js"></script>
+<script src="{{ STATIC_URL }}js/stats.js" type="text/javascript"></script>
+{% endblock media %}

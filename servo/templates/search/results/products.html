@@ -1,0 +1,10 @@
+{% extends "search/spotlight.html" %}
+{% load i18n %}
+
+{% block second_column %}
+    {% if products %}
+        {% include "products/list.html" %}
+    {% else %}
+        <h1 class="muted text-center">{% trans "No products found" %}</h1>
+    {% endif %}
+{% endblock second_column %}

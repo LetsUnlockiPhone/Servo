@@ -1,0 +1,42 @@
+{% extends "devices/index.html" %}
+{% load mptt_tags %}
+{% load i18n %}
+
+{% block navtabs %}
+<ul class="nav nav-tabs" id="navtabs">
+    <li><a href="/devices/">{% trans "All" %}</a></li>
+    <li><a href="/devices/specs/">{% trans "Specs" %}</a></li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans "Tagi" %} <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            {% for t in  tags %}
+                <li><a href="/customers/index/tag/{{ t.id }}/">{{ t.title }}</a></li>
+            {% endfor %}
+        </ul>
+  </li>
+  <li class="pull-right"><a href="/devices/specs/new/">{% trans "Luo malli" %}</a></li>
+</ul>
+{% endblock navtabs %}
+
+{% block content %}
+<div class="row">
+<div class="span3">
+    <ul>
+        {% recursetree specs %}
+            <li><a href="/devices/specs/{{ node.id }}/">{{ node.title }}</a>
+                {% if not node.is_leaf_node %}
+                    <ul class="children">
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
+    </ul>
+    </div>
+
+    <div class="span9">
+        {% block specs %}
+        {% endblock specs %}
+    </div>
+</div>
+{% endblock content %}

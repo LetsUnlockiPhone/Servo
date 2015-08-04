@@ -1,0 +1,63 @@
+{% extends "orders/edit.html" %}
+{% load i18n %}
+
+{% block toolbar %}
+{% if repair.is_open %}
+<a href="{% url 'repairs-complete_repair' order.pk repair.pk %}" class="btn" data-modal="#modal"><i class="icon-ok"></i> {% trans "Complete Repair" %}</a>
+{% else %}
+<a href="#" class="btn disabled" data-modal="#modal"><i class="icon-ok"></i> {% trans "Complete Repair" %}</a>
+{% endif %}
+<a class="btn" href="{% url 'repairs-copy_repair' repair.pk %}"><i class="icon-plus-sign"></i> {% trans "Copy" %}</a>
+{% endblock toolbar %}
+
+{% block second_column %}
+<h3>{{ status }}</h3>
+<dl class="dl-horizontal">
+  <dt>{% trans "Symptom" %}</dt>
+  <dd>{{ repair.symptom }}</dd>
+  <dt>{% trans "Diagnosis" %}</dt>
+  <dd>{{ repair.diagnosis }}</dd>
+  <dt>{% trans "Request Review" %}</dt>
+  <dd>{{ repair.request_review|yesno }}</dd>
+{% if repair.attachment %}
+  <dt>{% trans "Attachment" %}</dt>
+  {% with repair.attachment as a %}
+  <dd><a class="label label-info window" href="{{ a.url }}"><i class="icon-download icon-white"></i> {{ a }}</a></dd>
+  {% endwith %}
+{% endif %}
+  <dt>{% trans "Confirmation" %}</dt>
+  <dd>{{ repair.confirmation }}</dd>
+  <dt>{% trans "Reference" %}</dt>
+  <dd>{{ repair.reference }}</dd>
+  <dt>{% trans "Notes" %}</dt>
+  <dd>{{ notes|default:"-"|linebreaks }}</dd>
+</dl>
+<table class="table">
+  <tbody>
+  {% for part in parts %}
+    <tr>
+      <td>
+        <a href="{% url 'products-view_product' pk=part.order_item.product_id %}"><strong>{{ part.part_number }}</strong></a>
+        <br/>
+        {{ part.part_title }}<br/>
+        <small>{{ part.get_symptom_code_display }} - {{ part.get_symptom_modifier_display }}</small>
+      </td>
+      <td><br/>{{ part.coverage_description|default:"-" }}</td>
+    {% if part.order_status_code == 'OSHP' %}
+      <td><br/><a href="{{ part.carrier_url }}" class="window">{{ part.order_status }}</a></td>
+    {% else %}
+      <td><br/>{{ part.order_status|default:"-" }}</td>
+    {% endif %}
+      <td style="vertical-align:middle">
+        <div class="btn-group pull-right">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-cog"></i> <span class="caret"></span>
+          </a>
+          {% include "repairs/part_menu.html" %}
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock second_column %}

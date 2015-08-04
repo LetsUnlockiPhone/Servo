@@ -1,0 +1,81 @@
+{% extends "admin/queues/index.html" %}
+{% load i18n %}
+
+{% block third_column %}
+<form method="post" action="" accept-charset="utf-8" class="form-horizontal" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ formset.management_form }}
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{% trans "Statuses" %}</a></li>
+    <li><a href="#tab5" data-toggle="tab">{% trans "Defaults" %}</a></li>
+    <li><a href="#tab3" data-toggle="tab">{% trans "GSX" %}</a></li>
+    <li><a href="#tab4" data-toggle="tab">{% trans "Templates" %}</a></li>
+    <li><a href="#tab6" data-toggle="tab">{% trans "Users" %}</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      {% include "form_field_snippet.html" with field=form.title %}
+      {% include "form_field_snippet.html" with field=form.priority %}
+      {% include "form_field_snippet.html" with field=form.description %}
+      <!--{% include "form_field_snippet.html" with field=form.keywords %}//-->
+      {% include "form_field_snippet.html" with field=form.locations %}
+    </div>
+    <div class="tab-pane" id="tab2">
+      <table class="table table-condensed" id="table-queue-status">
+        <thead>
+          <tr>
+            <th>{% trans "Status" %}</th>
+            <th colspan="3">{% trans "Time limits" %}</th>
+            <th style="width:30px" class="text-center">{% trans "Delete" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for form in formset %}
+          <tr class="form">
+          {% for field in form %}
+          {% if field.is_hidden %}
+            {{ field }}
+          {% else %}
+            <td>{{ field }}</td>
+          {% endif %}
+          {% endfor %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <a class="btn" id="add_more"><i class="icon-plus"></i> {% trans "Add Status" %}</a>
+    </div>
+    <div class="tab-pane" id="tab5">
+      {% include "form_field_snippet.html" with field=form.status_created %}
+      {% include "form_field_snippet.html" with field=form.status_assigned %}
+      {% include "form_field_snippet.html" with field=form.status_products_ordered %}
+      {% include "form_field_snippet.html" with field=form.status_products_received %}
+      {% include "form_field_snippet.html" with field=form.status_repair_completed %}
+      {% include "form_field_snippet.html" with field=form.status_dispatched %}
+      {% include "form_field_snippet.html" with field=form.status_closed %}
+    </div>
+    <div class="tab-pane" id="tab3">
+      {% include "form_field_snippet.html" with field=form.gsx_soldto %}
+    </div>
+    <div class="tab-pane" id="tab4">
+      {% include "form_field_snippet.html" with field=form.order_template %}
+      {% include "form_field_snippet.html" with field=form.quote_template %}
+      {% include "form_field_snippet.html" with field=form.receipt_template %}
+      {% include "form_field_snippet.html" with field=form.dispatch_template %}
+    </div>
+    <div class="tab-pane" id="tab6">
+      {% include "form_field_snippet.html" with field=form.users %}
+    </div>
+  </div>
+  {% include "form_buttons.html" %}
+</form>
+{% endblock third_column %}
+
+{% block media %}
+<script type="text/javascript">
+  $('#add_more').click(function() {
+    cloneMore('tr.form:last', 'queuestatus_set', true);
+  });
+</script>
+{% endblock media %}

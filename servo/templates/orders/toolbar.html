@@ -1,0 +1,116 @@
+{% load cache %}
+{% load i18n %}
+
+<div class="btn-group">
+{% if order.is_editable %}
+  <a class="btn" href="{% url 'orders-add_note' order.pk %}"><i class="icon-file"></i> {% trans "Add Note" %}</a>
+{% else %}
+  <a class="btn disabled" href="#"><i class="icon-file"></i> {% trans "Add Note" %}</a>
+{% endif %}
+  <a class="btn dropdown-toggle {% if not order.is_editable %}disabled{% endif %}" data-toggle="dropdown" href="#">
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'devices-choose' order.pk %}" data-modal="#modal">{% trans "Add Device" %}...</a></li>
+    <li><a href="{% url 'products-choose' order_id=order.pk %}" data-modal="#modal">{% trans "Add Product" %}...</a></li>
+    <li><a href="{% url 'orders-choose_customer' order.pk %}" data-modal="#modal">{% trans "Choose Customer" %}...</a></li>
+  </ul>
+</div>
+<div class="btn-group">
+  <a href="{% url 'orders-print_order' order.pk 'confirmation' %}" class="btn window" title="{% trans 'Print' %}"><i class="icon-print"></i> {% trans "Print" %}</a>
+  <button class="btn dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'orders-print_order' order.pk 'quote' %}" class="window">{% trans "Cost Estimate" %}</a></li>
+  {% if order.invoice_set.count %}
+    <li><a href="{% url 'orders-print_order' order.pk 'receipt' %}" class="window">{% trans "Receipt" %}</a></li>
+    <li><a href="{% url 'orders-print_order' order.pk 'dispatch' %}" class="window">{% trans "Dispatch" context "noun" %}</a></li>
+  {% endif %}
+  </ul>
+</div>
+<div class="btn-group">
+  <a class="btn dropdown-toggle {% if not order.is_editable %}disabled{% endif %}" data-toggle="dropdown" href="#">
+    <i class="icon-inbox"></i> {{ order.get_queue }} <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+  {% for i in queues %}
+    <li{% if i == order.queue %} class="active"{% endif %}><a href="{% url 'orders-update' order.pk 'queue' i.pk %}">{{ i }}</a></li>
+  {% endfor %}
+    <li class="divider"></li>
+  {% if order.queue %}
+    <li><a href="{% url 'orders-update' order.pk 'queue' 0 %}">{% trans "Remove Queue" %}</a></li>
+  {% else %}
+    <li class="disabled"><a href="#">{% trans "Remove Queue" %}</a></li>
+  {% endif %}
+  </ul>
+</div>
+<div class="btn-group">
+  <a class="btn dropdown-toggle {% if not order.queue or not order.is_editable or statuses|length < 1 %}disabled{% endif %}" data-toggle="dropdown" href="#">
+    <i class="icon-tasks"></i> {{ order.get_status|truncatechars:25 }} <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+  {% for i in statuses %}
+    <li{% if i == order.status %} class="active"{% endif %}><a href="{% url 'orders-update' order.pk 'status' i.pk %}">{{ i }}</a></li>
+  {% endfor %}
+    <li class="divider"></li>
+    <li><a href="{% url 'orders-update' order.pk 'status' 0 %}">{% trans "Remove Status" %}</a></li>
+  </ul>
+</div>
+<div class="btn-group">
+{% if order.can_dispatch %}
+  <a class="btn" href="{% url 'orders-dispatch' order.pk %}">{% trans "Dispatch" %}</a>
+{% else %}
+  <a class="btn disabled" href="#">{% trans "Dispatch" %}</a>
+{% endif %}
+{% if perms.servo.change_order and order.can_close %}
+  <a class="btn" href="{% url 'orders-close' order.pk %}" data-modal="#modal"><i class="icon-lock"></i> {% trans "Close" %}</a>
+{% elif perms.servo.delete_order and order.is_closed %}
+  <a class="btn" href="{% url 'orders-reopen_order' order.pk %}"><i class="icon-lock"></i> {% trans "Reopen" %}</a>
+{% else %}
+  <a class="btn disabled" href="#"><i class="icon-lock"></i> {% trans "Close" %}</a>
+{% endif %}
+</div>
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    <i class="icon-cog"></i> <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+  {% if request.user in order.followed_by.all %}
+    <li><a href="{% url 'orders-toggle_follow' order.pk %}">{% trans "Unfollow Order" %}</a></li>
+  {% else %}
+    <li><a href="{% url 'orders-toggle_follow' order.pk %}">{% trans "Follow Order" %}</a></li>
+  {% endif %}
+  {% if perms.servo.add_order and perms.servo.copy_order %}
+    <li><a href="{% url 'orders-copy_order' order.pk %}">{% trans "Copy Order" %}</a></li>
+  {% else %}
+    <li><a class="disabled" href="#">{% trans "Copy Order" %}</a></li>
+  {% endif %}
+    <li><a href="{% url 'barcodes-view' order.code %}?f=svg" target="_blank">{% trans "Show Barcode" %}</a></li>
+    <li class="divider"></li>
+    <li class="dropdown-submenu">
+      <a tabindex="-1" href="#">{% trans "Priority" %}</a>
+      <ul class="dropdown-menu">
+      {% for i in priorities %}
+        <li{% ifequal i.0 order.priority  %} class="active"{% endifequal %}><a href="{% url 'orders-update' order.pk 'priority' i.0 %}">{{ i.1 }}</a></li>
+      {% endfor %}
+      </ul>
+    </li>
+    <li class="divider"></li>
+  {% if order.can_order_products %}
+    <li><a href="{% url 'orders-reserve_products' order.pk %}" data-modal="#modal">{% trans "Reserve Products" %}</a></li>
+    <li><a href="{% url 'purchases-create_po' order_id=order.pk %}">{% trans "Order Products" %}</a></li>
+  {% else %}
+    <li class="disabled"><a href="#">{% trans "Reserve Products" %}</a></li>
+    <li class="disabled"><a href="#">{% trans "Order Products" %}</a></li>
+  {% endif %}
+    <li class="divider"></li>
+    <li><a href="{% url 'repairs-import_repair' order.pk %}" data-modal="#modal">{% trans "Import GSX Repair" %}</a></li>
+    <li class="divider"></li>
+  {% if perms.servo.delete_order and order.is_editable %}
+    <li><a href="{% url 'orders-delete_order' order.pk %}" data-modal="#modal"><i class="icon-trash"> </i> {% trans "Delete Order" %}</a></li>
+  {% else %}
+    <li class="disabled"><a href="#"><i class="icon-trash"></i> {% trans "Delete Order" %}</a></li>
+  {% endif %}
+  </ul>
+</div>

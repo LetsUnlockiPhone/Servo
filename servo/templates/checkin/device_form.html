@@ -1,0 +1,62 @@
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% if device.fmip_active %}
+	<div class="alert alert-danger" role="alert">
+		{% trans "Find My iPhone is active!" %}
+		<button type="button" class="close" data-dismiss="alert" aria-label="{% trans "Close" %}"><span aria-hidden="true">&times;</span></button>
+	</div>
+{% endif %}
+
+{% if error %}
+	<div class="alert alert-danger" role="alert">
+		{{ error }}
+		<button type="button" class="close" data-dismiss="alert" aria-label="{% trans "Close" %}"><span aria-hidden="true">&times;</span></button>
+	</div>
+{% endif %}
+
+<div class="col-md-4">
+	<img src="{{ device.get_image_url }}" alt="{{ device.description }}" class="device-image"/>
+</div>
+<div class="col-md-8">
+	<div class="row">
+		<div class="col-md-6">
+			{% bootstrap_field device_form.sn %}
+		</div>
+		<div class="col-md-6">
+			{% bootstrap_field device_form.description %}
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="id_warranty_status">{% trans "Warranty Status" %}</label>
+		<p>{{ device.get_warranty_status_display }}</p>
+	</div>
+	{% bootstrap_field device_form.purchased_on %}
+	{% bootstrap_field device_form.purchase_country %}
+	<div class="row">
+		<div class="col-md-6">
+		{% if device.is_mac %}
+			{% bootstrap_field device_form.username %}
+		{% endif %}
+		</div>
+		<div class="col-md-6">
+			{% bootstrap_field device_form.password %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			{% bootstrap_field device_form.accessories %}
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('#id_sn').next('span').on('click', function(){
+		var v = $('#id_sn').val().trim();
+		if (v.length < 3) return false;
+		var target = document.getElementById('main');
+		var spinner = new Spinner().spin(target);
+		$('#device_details').load('?sn='+v, function(r){
+			spinner.stop();
+		});
+	});
+</script>

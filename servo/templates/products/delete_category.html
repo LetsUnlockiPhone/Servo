@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Delete product category?" %}
+{% endblock header %}
+
+{% block body %}
+    {% trans "This action will not delete the products in this category." %}
+{% endblock body %}
+
+{% block footer %}
+    <form method="post" action="{{ action }}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    </form>
+{% endblock footer %}

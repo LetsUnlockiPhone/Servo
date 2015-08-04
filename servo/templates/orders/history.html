@@ -1,0 +1,9 @@
+{% extends "modal.html" %}
+{% load i18n %}
+{% block header %}
+	{% trans "Order History" %}
+{% endblock header %}
+
+{% block body %}
+	{% include "orders/list.html" %}
+{% endblock body %}

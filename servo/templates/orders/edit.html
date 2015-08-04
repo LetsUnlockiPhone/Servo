@@ -1,0 +1,115 @@
+{% extends "default.html" %}
+{% load staticfiles %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+{% include "orders/toolbar.html" %}
+{% endblock toolbar %}
+
+{% block content %}
+  <div class="page-header">
+    <div class="row-fluid">
+      <div class="span6">
+      {% with order.status_title as stat %}
+        <h3 style="margin-top:0px;line-height:30px" title="{{ title }}">{{ title|truncatechars:40 }}<br/>
+        <img src="{% static order.get_status_img %}" title="{{ stat }}" alt="{{ stat }}"/><small style="padding-left:5px">{{ order.get_title }} {% if order.user %}({{ order.user.get_full_name }}){% endif %}</small></h3>
+      {% endwith %}
+      </div>
+      <div class="span6">
+      {% if locations.count > 1 %}
+        <div class="pull-right" style="padding:5px">
+          <div class="btn-group">
+            <a class="btn dropdown-toggle{% if order.is_closed %} disabled{% endif %}" data-toggle="dropdown" href="#" title="{% trans "Checkin Location" %}: {{ order.checkin_location.title }}">
+              <i class="halflings log_in"></i> {{ order.checkin_location.title|truncatechars:10 }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+            {% for l in locations %}
+              <li{% ifequal l order.checkin_location  %} class="active"{% endifequal %}><a href="{% url 'orders-update' order.pk 'checkin' l.pk %}">{{ l.title }}</a></li>
+            {% endfor %}
+            </ul>
+          </div>
+          <div class="btn-group">
+            <a class="btn dropdown-toggle{% if order.is_closed %} disabled{% endif %}" data-toggle="dropdown" href="#" title="{% trans "Current Location" %}: {{ order.location.title }}">
+              <i class="icon-map-marker"></i> {{ order.location.title|truncatechars:10 }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+            {% for l in locations %}
+              <li{% ifequal l order.location  %} class="active"{% endifequal %}><a href="{% url 'orders-update' order.pk 'location' l.pk %}">{{ l.title }}</a></li>
+            {% endfor %}
+            </ul>
+          </div>
+          <div class="btn-group">
+            <a class="btn dropdown-toggle{% if order.is_closed %} disabled{% endif %}" data-toggle="dropdown" href="#" title="{% trans "Checkout Location" %}: {{ order.checkout_location.title }}">
+              <i class="halflings log_out"></i> {{ order.checkout_location.title|truncatechars:10 }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-right">
+            {% for l in locations %}
+              <li{% ifequal l order.checkout_location  %} class="active"{% endifequal %}><a href="{% url 'orders-update' order.pk 'checkout' l.pk %}">{{ l.title }}</a></li>
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  <ul class="nav nav-tabs">
+  {% block tabs %}
+    {% include "orders/tabs.html" with active='order' %}
+  {% endblock tabs %}
+  </ul>
+  <div class="row-fluid">
+    <div class="span3" id="order_meta">
+      {% block first_column %}
+      {% if order.customer %}
+      {% include "orders/customer.html" with nodes=customer %}
+      {% else %}
+      <div class="well text-center">
+        <a href="{% url 'orders-choose_customer' order.pk %}" class="btn" data-modal="#modal"><i class="icon-search"></i> {% trans "Select Customer" %}</a>
+      </div>
+      {% endif %}
+      <hr/>
+      {% include "orders/checklists.html" %}
+      {% include "orders/followers.html" %}
+      <hr/>
+      <form method="post" action="{% url 'orders-update' order.pk "place" 0 %}" style="margin-bottom:0px">
+        {% csrf_token %}
+        <label><i class="icon-map-marker"></i> {% trans "Place" %}</label>
+        <input type="text" name="place" class="input typeahead span12" placeholder="{% trans "Enter place" %}" data-provide="typeahead" data-source="{% url 'api-places' %}"/>
+      </form>
+      {% if order.place %}
+      <div class="clearfix">
+        <span class="label label-info">{{ order.place }}</span>
+      </div>
+      {% else %}
+      <p class="muted text-center">{% trans "No place" %}</p>
+      {% endif %}
+      <hr/>
+      <form method="post" action="{% url 'orders-update' order.pk "label" 0 %}" style="margin-bottom:0px">
+        {% csrf_token %}
+        <label><i class="icon-tag"></i> {% trans "Label" %}</label>
+        <input type="text" name="label" class="input typeahead span12" placeholder="{% trans "Enter label" %}" data-provide="typeahead" data-source="{% url 'api-tags' %}"/>
+      </form>
+      {% for t in order.tags.all %}
+      <span class="label label-{{ t.color }}"><div class="pull-left">{{ t.title }}</div><a class="close" href="{% url 'orders-toggle_tag' order.pk t.pk %}"><i class="icon-remove icon-white"></i></a></span>
+      {% empty %}
+      <p class="muted text-center">{% trans "No labels" %}</p>
+      {% endfor %}
+      {% endblock first_column %}
+    </div><!-- //# order sidebar -->
+
+    <div class="span9">
+      {% block second_column %}
+      {% include "orders/devices.html" %}
+      {% include "orders/notes.html" with notes=order.notes %}
+      {% include "orders/products.html" %}
+      {% endblock second_column %}
+    </div>
+  </div>
+  {% endblock content %}
+
+  {% block crumbs %}
+  <li><a href="{{ order.get_queue_url }}">{{ order.get_queue_title }}</a> <span class="divider">/</span></li>
+  {% block morecrumbs %}<li class="active">{% trans "Order" %} {{ order.get_footer }}</li>{% endblock morecrumbs %}
+  {% endblock crumbs %}

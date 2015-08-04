@@ -1,0 +1,28 @@
+{% load i18n %}
+
+<form method="post" action="{% url 'orders-update' order.pk "user" 0 %}" style="margin-bottom:0px">
+  {% csrf_token %}
+  <label><i class="icon-user"></i> {% trans "Followers" %}</label>
+  <input type="text" name="user" class="input typeahead span12" placeholder="{% trans "Enter name" %}" data-provide="typeahead" data-source="{% url 'api-users' %}?is_active=1"/>
+</form>
+{% for i in followers %}
+<div class="clearfix">
+  {% with i.get_full_name|truncatechars:26 as fullname %}
+  {% if i == order.user %}
+  <span class="label label-info pull-left">{{ fullname }}</span>
+  {% else %}
+  <span class="label pull-left">{{ fullname }}</span>
+  {% endif %}
+  {% endwith %}
+  <div class="btn-group pull-right">
+  {% if i == order.user %}
+    <a href="#" class="btn btn-small btn-primary active disabled" title="{% trans "Make primary" %}"><i class="icon-user icon-white"></i></a>
+  {% else %}
+    <a href="{% url 'orders-update' order.pk 'user' i.pk %}" class="btn btn-small" title="{% trans "Make primary" %}"><i class="icon-user"></i></a>
+  {% endif %}
+    <a href="{% url 'orders-remove_user' order.pk i.pk %}" class="btn btn-small" title="{% trans "Remove" %}"><i class="icon-remove"></i></a>
+  </div>
+</div>
+{% empty %}
+<p class="muted text-center">{% trans "No followers" %}</p>
+{% endfor %}

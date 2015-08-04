@@ -1,0 +1,13 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+{% trans "Upload devices" %}
+{% endblock header %}
+
+{% block body %}
+<form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+  {% csrf_token %}
+  {% include "form_snippet.html" %}
+</form>
+{% endblock body %}

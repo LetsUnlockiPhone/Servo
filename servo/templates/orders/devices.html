@@ -1,0 +1,139 @@
+{% load i18n %}
+{% load servo_tags %}
+
+{% for d in order.orderdevice_set.all %}
+{% with d.device as device %}
+<div class="row-fluid">
+  <div class="span3">
+    <img src="{{ device.get_photo }}" alt="{{ device.description }}" title="{{ device.description }}"/>
+  </div>
+  <div class="span9">
+    <h3>{{ device.description }}</h3>
+  {% if d.is_repeat_service %}
+    <span class="label label-important pull-right">{% trans "Repeat Service" %}</span>
+  {% endif %}
+    <dl class="dl-horizontal">
+      <dt>{% trans "Warranty Status" %}</dt>
+      <dd>{{ device.get_warranty_status_display }}</dd>
+      <dt>{% trans "Purchase Date" %}</dt>
+      <dd>{{ device.purchased_on|date:"SHORT_DATE_FORMAT"|default:"-" }}, {{ device.get_purchase_country|default:"-" }}</dd>
+      <dt>{% trans "Serial Number" %}</dt>
+      <dd>{{ device.sn|default:"-" }}</dd>
+    {% if device.configuration %}
+      <dt>{% trans "Configration" %}</dt>
+      <dd>{{ device.configuration }}</dd>
+    {% endif %}
+    {% if device.imei %}
+      <dt>{% trans "IMEI" %}</dt>
+      <dd>{{ device.imei }}</dd>
+      <dt>{% trans "Applied Activation Policy" %}</dt>
+      <dd>{{ device.applied_activation_policy }}</dd>
+      <dt>{% trans "Initial Activation Policy" %}</dt>
+      <dd>{{ device.initial_activation_policy }}</dd>
+      <dt>{% trans "Find My iPhone" %}</dt>
+      <dd>{{ device.get_fmip_status }}</dd>
+      <dt>{% trans "Unlocked" %}</dt>
+      <dd>{{ device.unlocked|yesno }}</dd>
+    {% endif %}
+    {% if device.username %}
+      <dt>{% trans "Username" %}</dt>
+      <dd>{{ device.username }}</dd>
+    {% endif %}
+    {% if device.password %}
+      <dt>{% trans "Password" %}</dt>
+      <dd>{{ device.password }}</dd>
+    {% endif %}
+    {% if device.get_coverage_details %}
+      <dt>{% trans "Details" %}</dt>
+      <dd>{{ device.get_coverage_details|join:"<br/>" }}</dd>
+    {% endif %}
+    {% if device.notes %}
+      <dt>{% trans "Notes" %}</dt>
+      <dd>{{ device.notes }}</dd>
+    {% endif %}
+    {% with device|device_accessories:order as accessories %}
+    {% if accessories.count %}
+      <dt>{% trans "Accessories" %}</dt>
+      <dd>{{ accessories|join:", " }}</dd>
+    {% endif %}
+    {% endwith %}
+    </dl>
+    {% if order.queue %}
+    <a href="{% url 'orders-list_parts' order.id device.id order.queue_id %}" class="btn btn-small"><i class="icon-wrench"></i> {% trans "Parts" %}</a>
+    {% else %}
+    <a class="btn btn-small disabled" title="{% trans "Assign order to a queue first" %}"><i class="icon-wrench"></i> {% trans "Parts" %}</a>
+    {% endif %}
+    {% if order.is_editable %}
+      <a href="{% url 'orders-accessories' order.id device.id %}" class="btn btn-small" data-modal="#modal"><i class="icon-hdd"></i> {% trans "Accessories" %}</a>
+    {% else %}
+      <a class="btn btn-small disabled" href="#"><i class="icon-hdd"></i> {% trans "Accessories" %}</a>
+    {% endif %}
+    <a href="{% url 'orders-history' order.pk device.pk %}" class="btn btn-small" data-modal="#modal"><i class="icon-time"></i> {% trans "History" %}</a>
+    <div class="btn-group">
+      <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-cog"></i> <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+      {% if order.can_create_carryin and device.can_create_carryin %}
+        <li><a href="{% url 'repairs-create_repair' order.id device.id 'CA' %}">{% trans "Create Carry-In Repair" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#" title="{% trans "Device has open GSX repairs" %}">{% trans "Create Carry-In Repair" %}</a></li>
+      {% endif %}
+      {% if order.can_create_carryin and device.can_create_carryin and device.has_onsite %}
+        <li><a href="{% url 'repairs-create_repair' order.id device.id 'ON' %}">{% trans "Create Onsite Repair" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">{% trans "Create Onsite Repair" %}</a></li>
+      {% endif %}
+      {% if order.can_create_carryin and device.can_create_carryin and 0 %}
+        <li><a href="{% url 'repairs-create_repair' order.id device.id 'RR' %}">{% trans "Create Whole-Unit Exchange" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">{% trans "Create Whole-Unit Exchange" %}</a></li>
+      {% endif %}
+        <li class="divider"></li>
+        <li><a href="{% url 'devices-update_gsx_details' device.pk %}" class="spin">{% trans "Update Warranty Status" %}</a></li>
+        <li class="divider"></li>
+      {% if device.is_ios %}
+        <li><a href="{% url 'devices-diagnostics' device.pk %}?a=init&amp;order={{ order.pk|safe }}" data-modal="#modal">{% trans "Initiate Diagnostics" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#" data-modal="#modal">{% trans "Fetch Diagnostics" %}</a></li>
+      {% endif %}
+        <li><a href="{% url 'devices-diagnostics' device.pk %}" data-modal="#modal">{% trans "Fetch Diagnostics" %}</a></li>
+        <li class="divider"></li>
+        <li><a href="{{ device.get_absolute_url }}">{% trans "Show Device" %}</a></li>
+      {% if device.sn == '' %}
+        <li class="disabled"><a href="#" target="_blank">{% trans "Show Barcode" %}</a></li>
+      {% else %}
+        <li><a href="{% url 'barcodes-view' device.sn %}?f=svg" target="_blank">{% trans "Show Barcode" %}</a></li>
+      {% endif %}
+      </ul>
+    </div>
+<div class="pull-right">
+  <div class="btn-group">
+  {% if d.should_report %}
+    <a href="{% url 'orders-report_device' order.pk d.pk %}" class="btn btn-success btn-small nofollow active" title="{% trans "Report" %}" data-toggle="button"><i class="icon-ok"></i></a>
+  {% else %}
+    <a href="{% url 'orders-report_device' order.pk d.pk %}" class="btn btn-success btn-small nofollow" title="{% trans "Report" %}" data-toggle="button"><i class="icon-ok icon-white"></i></a>
+  {% endif %}
+  </div>
+  <div class="btn-group">
+  {% if order.is_editable %}
+    <a href="{{ device.get_absolute_url }}edit/" class="btn btn-warning btn-small" title="{% trans "Edit" %}"><i class="icon-pencil icon-white"></i></a>
+    <a href="{% url 'orders-delete_device' order.id device.id %}" class="btn btn-small btn-danger" data-modal="#modal" title="{% trans "Remove" %}"><i class="icon-trash icon-white"></i></a>
+  {% endif %}
+  </div>
+</div>
+</div>
+</div>
+<hr/>
+{% endwith %}
+{% empty %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="empty well"><h3 class="muted">{% trans "Order doesn't contain any devices" %}</h3></div>
+  </div>
+</div>
+{% endfor %}
+<p class="clearfix">
+  <a href="{% url 'devices-choose' order.pk %}" class="btn pull-right {% if order.is_closed %}disabled{% endif %}" data-modal="#modal"><i class="icon-plus"></i> {% trans "Add Device" %}</a>
+</p>
+<hr/>

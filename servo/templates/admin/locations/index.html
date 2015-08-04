@@ -1,0 +1,6 @@
+{% extends "generic/admin_list.html" %}
+{% load i18n %}
+
+{% block toolbar %}
+    <a href="{% url 'admin-create_location' %}" class="btn btn-default navbar-btn"><i class="icon-plus"></i> {% trans "New Location" %}</a>
+{% endblock toolbar %}

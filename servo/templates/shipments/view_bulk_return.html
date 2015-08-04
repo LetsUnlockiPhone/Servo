@@ -1,0 +1,35 @@
+{% extends "shipments/edit_bulk_return.html" %}
+{% load i18n %}
+
+{% block return_info %}
+<dl>
+  <dt>{% trans "Carrier" %}</dt>
+  <dd>{{ shipment.get_carrier_display }}</dd>
+  <dt>{% trans "Tracking" %}</dt>
+  <dd>{{ shipment.tracking_id }}</dd>
+  <dt>{% trans "Dimensions" %}</dt>
+  <dd>{{ shipment.length }} x {{ shipment.width }} x {{ shipment.height }}</dd>
+  <dt>{% trans "Weight" %}</dt>
+  <dd>{{ shipment.weight }} kg</dd>
+</dl>
+<a class="btn window" href="{{ shipment.packing_list.url }}"><i class="icon-file"></i> {% trans "Open Packing List" %}</a>
+{% endblock return_info %}
+
+{% block return_parts %}
+{% for p in shipment.servicepart_set.all %}
+<tr>
+  <td><strong>{{ p.part_number }}</strong><br/>{{ p.part_title }}</td>
+  <td><a href="{% url 'orders-edit' p.order_item.order.pk %}">{{ p.service_order }}</a></td>
+  <td><a href="{% url 'parts-return_label' p.repair_id p.pk %}">{{ p.return_order }}</a></td>
+  <td>{{ p.box_number|default:"Individual" }}</td>
+</tr>
+{% empty %}
+<tr>
+  <td colspan="6" class="empty muted">{% trans "No parts registered for this shipment" %}</td>
+</tr>
+{% endfor %}
+{% endblock return_parts %}
+
+{% block form_controls %}
+
+{% endblock form_controls %}

@@ -1,0 +1,22 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% blocktrans with repair=repair.confirmation %}Add part to repair {{ repair }}?{% endblocktrans %}
+{% endblock header %}
+
+{% block body %}
+<form method="post" action="{{ action }}">
+    <div class="media">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="{{ item.product.get_photo }}" style="width:120px"/>
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">{{ item.code }}</h4>
+            <p>{{ item.title }}</p>
+            <p>{{ item.get_comptia_code_display }}, {{ item.get_price_category_display }}</p>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
+{% endblock body %}

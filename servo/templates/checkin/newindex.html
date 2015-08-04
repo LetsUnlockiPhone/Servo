@@ -1,0 +1,146 @@
+{% extends "checkin/index.html" %}
+{% load servo_tags %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block main %}
+
+
+<div class="page-header">
+	<h2>{% trans "Device" %}</h2>
+</div>
+
+{% comment %}
+	<div class="container choose-device">
+  <div class="row">
+  	<div class="col-md-3">
+  		<a href="{% url 'checkin-new' %}?d=mac">
+        	<img src="{{ STATIC_URL }}images/checkin/mac.jpg" alt="Mac"/>
+        	<p>{% trans "Mac" %}</p>
+      	</a>
+	</div>
+	<div class="col-md-3">
+  		<a href="{% url 'checkin-new' %}?d=iphone">
+        	<img src="{{ STATIC_URL }}images/checkin/iphone.jpg" alt="iPhone"/>
+        	<p>{% trans "iPhone" %}</p>
+      	</a>
+	</div>
+	<div class="col-md-3">
+  		<a href="{% url 'checkin-new' %}?d=ipad">
+        	<img src="{{ STATIC_URL }}images/checkin/ipad.jpg" alt="iPad"/>
+        	<p>{% trans "iPad" %}</p>
+      	</a>
+	</div>
+	<div class="col-md-3">
+  		<a href="{% url 'checkin-new' %}?d=ipod">
+        	<img src="{{ STATIC_URL }}images/checkin/ipod.jpg" alt="iPod"/>
+        	<p>{% trans "iPod" %}</p>
+      	</a>
+	</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+  			<a href="{% url 'checkin-new' %}?d=acc">
+        		<img src="{{ STATIC_URL }}images/checkin/appleacc.jpg" alt="Apple Accessory"/>
+        		<p>{% trans "Apple Accessory" %}</p>
+      		</a>
+		</div>
+		<div class="col-md-3">
+  			<a href="{% url 'checkin-new' %}?d=beats">
+        		<img src="{{ STATIC_URL }}images/checkin/beats.png" alt="Beats Products"/>
+        		<p>{% trans "Beats Products" %}</p>
+      		</a>
+		</div>
+		<div class="col-md-3">
+  			<a href="{% url 'checkin-new' %}?d=other">
+        		<img src="{{ STATIC_URL }}images/models/macbookair.jpg" alt="Other Device"/>
+        		<p>{% trans "Other Device" %}</p>
+      		</a>
+		</div>
+	</div>
+	</div>
+{% endcomment %}
+<div class="container">
+	<form action="{% url 'checkin-index' %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="row" id="device_details">
+			{% include "checkin/device_form.html" %}
+		</div>
+		<div class="page-header">
+			<h2>{% trans "Customer" %}</h2>
+		</div>
+		<div id="customer">
+			{% include "checkin/customer_form.html" %}
+		</div>
+		<div class="page-header">
+			<h2>{% trans "Problem description" %}</h2>
+		</div>
+		{% if request.user.is_authenticated %}
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="control-label">{% trans "Tags" %}</label>
+					<div class="row bootstrap3-multi-input select-tags">
+					{% for t in tags %}
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-sm btn-{{ t.color|replace:"important,danger" }}">
+								<input type="checkbox" name="tags" value="{{ t.id|safe }}"/> {% bootstrap_icon "tag" %} {{ t.title }}
+							</label>
+						</div>
+	      			{% endfor %}
+	      			</div>
+	    		</div>
+			</div>
+		</div>
+		{% endif %}
+		<div class="row">
+			<div class="col-md-6">
+				{% bootstrap_field issue_form.issue_description %}
+				{% bootstrap_field issue_form.notes %}
+				{% bootstrap_field device_form.condition %}
+			</div>
+			<div class="col-md-6">
+				{% bootstrap_field device_form.pop %}
+				<table class="table">
+		    		<thead>
+		    			<tr>
+		    				<th></th>
+		    				<th>{% trans "Yes" %}</th>
+		    				<th>{% trans "No" %}</th>
+		    			</tr>
+		    		</thead>
+		    		<tbody>
+		    		{% for q in questions %}
+			    		<tr>
+			    			<td>
+			    				<strong>{{ q }}</strong>
+			    				<p class="small">{{ q.description }}</p>
+			    			</td>
+			    			<td><input type="radio" name="__cl__{{ q }}" value="{% trans "Yes" %}"/></td>
+			    			<td><input type="radio" name="__cl__{{ q }}" value="{% trans "No" %}"/></td>
+			    		</tr>
+		    		{% endfor %}
+		    		</tbody>
+		    	</table>
+		    	{% bootstrap_field customer_form.checkin_location %}
+				{% bootstrap_field customer_form.checkout_location %}
+			</div>
+		</div>
+		<hr/>
+		<div class="row">
+			<div class="col-md-12">
+			{% buttons %}
+			{% if not request.user.is_authenticated %}
+				{% bootstrap_field customer_form.agree_to_terms %}
+			{% endif %}
+			{% if request.user.is_authenticated %}
+				<button type="submit" id="id_btn_submit" class="btn btn-primary pull-right">{% trans "Submit" %}</button>
+			{% else %}
+				<button type="submit" id="id_btn_submit" class="btn btn-primary pull-right" disabled="disabled">{% trans "Submit" %}</button>
+			{% endif %}
+  			{% endbuttons %}	
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock main %}

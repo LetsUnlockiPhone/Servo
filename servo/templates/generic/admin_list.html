@@ -1,0 +1,18 @@
+{% extends "admin/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block second_column %}
+<div class="span3">
+  <ul class="nav nav-list">
+    <li class="nav-header">{{ title }}</li>
+    {% for o in object_list %}
+    <li class="{% active_url request o.get_admin_url %}"><a href="{{ o.get_admin_url }}">{{ o.title|truncatechars:25 }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="span9">
+  {% block third_column %}
+  {% endblock third_column %}
+</div>
+{% endblock second_column %}

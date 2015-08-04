@@ -1,0 +1,82 @@
+{% extends "default_print.html" %}
+{% load servo_tags %}
+{% load mptt_tags %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="span4">
+  {% if location.logo %}
+  <img src="{% get_media_prefix %}{{ location.logo }}" alt="logo" title="logo" class="media-object pull-left span2" style="margin:10px"/>
+  {% endif %}
+  </div>
+  <div class="span4">
+    {{ location.title }}<br/>
+    {{ location.address }}<br/>
+    {{ location.zip_code }}, {{ location.city }}<br/>
+    {{ location.notes }}
+  </div>
+  <div class="span4">
+    {% block location_info %}
+    {% endblock location_info %}
+    {% trans "Email Address" %}: {{ location.email }}<br/>
+    {% trans "Phone" %}: {{ location.phone }}<br/><br/>
+  </div>
+</div>
+<div class="row" style="margin-top:2em;margin-bottom:1em">
+  <div class="span6">
+    {% trans "Employee" %}: {{ calendar.user.get_full_name }}<br/>
+    {% trans "Date" %}: {% now "SHORT_DATE_FORMAT" %}
+  </div>
+</div>
+<div class="row">
+  <div class="span12 text-center"><h3>{{ title }}</h3></div>
+</div>
+<div class="row">
+  <div class="span12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{% trans "Date" %}</th>
+          <th>{% trans "Started At" %}</th>
+          <th>{% trans "Finished At" %}</th>
+          <th>{% trans "Duration" %}</th>
+          <th>{% trans "Notes" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in events %}
+        <tr>
+          <td>{% ifchanged i.started_at|date %}{{ i.started_at|date:"SHORT_DATE_FORMAT" }}{% endifchanged %}</td>
+          <td>{{ i.started_at|time:"TIME_FORMAT" }}</td>
+          <td>{{ i.finished_at|time:"TIME_FORMAT"|default:"-" }}</td>
+          <td>{{ i.get_duration }}</td>
+          <td>{{ i.notes|default:'' }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="muted empty">{% trans "No events found" %}</td></tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><strong>{% trans "Total" %}</strong></td>
+          <td colspan="4"><strong>{{ subtitle }}</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<br/>
+<br/>
+<div class="row">
+  <div class="span6">
+    <hr/>
+    {% trans "Manager" %}
+  </div>
+  <div class="span6">
+    <hr/>
+    {% trans "Employee" %}
+  </div>
+</div>
+{% endblock content %}

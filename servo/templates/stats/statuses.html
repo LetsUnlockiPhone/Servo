@@ -1,0 +1,21 @@
+{% extends "stats/index.html" %}
+{% load i18n %}
+
+{% block tabs %}
+    <li><a href="{% url 'stats-index' %}">{% trans "Technicians" %}</a></li>
+    <li><a href="{% url 'stats-locations' %}">{% trans "Locations" %}</a></li>
+    <li><a href="{% url 'stats-queues' %}">{% trans "Queues" %}</a></li>
+    <li><a href="{% url 'stats-repairs' %}">{% trans "Repairs" %}</a></li>
+    <li class="active"><a href="{% url 'stats-statuses' %}">{% trans "Statuses" %}</a></li>
+    <li><a href="{% url 'stats-sales' %}">{% trans "Sales" %}</a></li>
+{% endblock tabs %}
+
+{% block stats %}
+    <h2>{% trans "Orders per location" %}</h2>
+    <p>{% trans "Shows the number of orders with a particular status at the selected location that have been assigned to a technician over the specified time period." %}</p>
+    {% include "stats/plot_snippet.html" with url="/stats/data/status/location/" %}
+    <hr/>
+    <h2>{% trans "Orders per user" %}</h2>
+    <p>{% trans "Shows the number of orders with a particular status per each user at the given location that have been assigned to a technician over the specified time period." %}</p>
+    {% include "stats/plot_snippet.html" with url="/stats/data/status/tech/" %}
+{% endblock stats %}

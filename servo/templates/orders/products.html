@@ -1,0 +1,98 @@
+{% load i18n %}
+{% load servo_tags %}
+
+{% with order.serviceorderitem_set.all as products %}
+<table class="table" style="margin-bottom:0px">
+  {% if products.count %}
+  <thead>
+    <tr>
+      <th style="width:64px"></th>
+      <th>{% trans "Product" %}</th>
+      <th>{% trans "Amount" %}</th>
+      <th>{% trans "Price Category" %}</th>
+      <th>{% trans "Price" %}</th>
+      <th>{% trans "Total" %}</th>
+      <th></th>
+    </tr>
+  </thead>
+  {% endif %}
+  <tbody>
+  {% for item in products %}
+    {% with item.product as product %}
+    <tr>
+      <td><img src="{{ product.get_photo }}" alt="{{ product }}" class="img-icon"/></td>
+      <td>
+        <strong><a href="{% url 'products-get_info' item.code order.location.pk %}" data-modal="#modal">{{ product.code }}</a></strong><br/>
+        <div>{{ item.title }}</div>
+        {% if item.sn or item.kbb_sn %}
+        <p><small class="muted">{% trans "Serial Number" %}: {{ item.sn }}{% if item.kbb_sn %}, KBB: {{ item.kbb_sn }}{% endif %}</small></p>
+        {% endif %}
+        {% if product.is_apple_part %}
+        {% for repair in order.get_repairs %}
+        <div class="btn-group">
+          <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-wrench"></i> {{ repair.confirmation }} <span class="caret"></span>
+          </a>
+          {% if item in repair.get_products %}
+          {% with item.get_part as part %}
+          {% include "repairs/part_menu.html" %}
+          {% endwith %}
+          {% else %}
+          <ul class="dropdown-menu">
+          {% if repair.is_open %}
+            <li><a href="{% url 'repairs-add_part' repair.pk item.pk %}" data-modal="#modal" class="spin">{% trans "Add to Repair" %}</a></li>
+          {% else %}
+            <li class="disabled"><a href="#">{% trans "Add to Repair" %}</a></li>
+          {% endif %}
+          </ul>
+          {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+      </td>
+      <td>{{ item.amount }}</td>
+      <td>{{ item.get_price_category_display }}</td>
+      <td><a href="#" class="tt" title="{{ item.price_notax|currency }}">{{ item.price|currency }}</a></td>
+      <td><a href="#" class="tt" title="{{ item.total_net|currency }}">{{ item.total_gross|currency }}</a></td>
+      <td style="width:125px">
+        {% if order.is_editable %}
+        <div class="btn-group">
+          {% if item.should_report %}
+          <a href="{% url 'orders-report_product' pk=order.id item_id=item.id %}" title="Toggle report flag" class="btn btn-small btn-success nofollow active" data-toggle="button"><i class="icon-ok"></i></a>
+          {% else %}
+          <a href="{% url 'orders-report_product' pk=order.id item_id=item.id %}" title="Toggle report flag" class="btn btn-small btn-success nofollow" data-toggle="button"><i class="icon-ok icon-white"></i></a>
+          {% endif %}
+        </div>
+        <div class="btn-group">
+          <a href="{% url 'orders-edit_product' pk=order.id item_id=item.id %}" class="btn btn-small" title="{% trans "Edit" %}" data-modal="#modal"><i class="icon-pencil"></i></a>
+          <a class="btn btn-small dropdown-toggle {% if not order.is_editable %}disabled{% endif %}" data-toggle="dropdown" href="#"><i class="icon-cog"></i> <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu pull-right">
+            {% if item.can_create_device %}
+            <li><a href="{% url 'orders-create_device' order.pk item.pk %}">{% trans "Create Device" %}</a></li>
+            {% else %}
+            <li class="disabled"><a href="#">{% trans "Create Device" %}</a></li>
+            {% endif %}
+            <li class="divider"></li>
+            <li><a href="{% url 'orders-remove_product' pk=order.id item_id=item.id %}" data-modal="#modal" title="{% trans "Delete" %}"><i class="icon-trash"></i> {% trans "Remove" %}</a></li>
+          </ul>
+        </div>
+        {% endif %}
+      </td>
+    </tr>
+    {% endwith %}
+    {% empty %}
+    <div class="row-fluid">
+      <div class="span12 well empty"><h3 class="muted">{% trans "Order doesn't contain any products." %}</h3></div>
+    </div>
+  {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'products-choose' order_id=order.pk %}" data-modal="#modal" class="btn {% if not order.is_editable %}disabled{% endif %} pull-right"><i class="icon-plus"></i> {% trans "Add Product" %}</a>
+{% endwith %}
+<p class="clearfix">
+  <hr/>
+  {% if order.serviceorderitem_set.count %}
+  <h3 class="pull-right">{% trans "Order Total" %}: <a href="#" class="tt" title="{{ order.net_total|currency }}">{{ order.gross_total|currency }}</a></h3>
+  {% endif %}
+</p>

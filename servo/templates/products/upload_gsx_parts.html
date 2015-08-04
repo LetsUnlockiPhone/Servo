@@ -1,0 +1,13 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Upload GSX Parts" %}
+{% endblock header %}
+
+{% block body %}
+    <form method="post" action="{{ action }}" enctype="multipart/form-data" class="form-horizontal" accept-charset="utf-8">
+        {% csrf_token %}
+        {% include "form_snippet.html" %}
+    </form>
+{% endblock body %}

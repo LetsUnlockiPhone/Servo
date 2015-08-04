@@ -1,0 +1,66 @@
+{% extends "devices/index.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<ul class="nav nav-tabs" style="margin-top:30px">
+  <li><a href="{% url 'devices-list' %}">{% trans "Browse" %}</a></li>
+  <li class="active"><a href="{% url 'devices-find' %}">{% trans "Search" %}</a></li>
+</ul>
+
+<form action="" method="post" class="form-inline well clearfix">
+  {% csrf_token %}
+  {% for field in form %}
+  <div class="control-group pull-left">
+    <label class="control-label">{{ field.label }}</label>
+    <div class="controls">{{ field }}</div>
+  </div>
+  {% endfor %}
+  <p class="clearfix">
+    <hr/>
+    <button class="btn btn-primary pull-right" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+  </p>
+</form>
+
+<table class="table table-striped sortable">
+  <thead>
+    <th>{% trans "Serial Number" %}</th>
+    <th>{% trans "Description" %}</th>
+    <th>{% trans "Created" %}</th>
+    <th>{% trans "Warranty Status" %}</th>
+    <th data-defaultsort="disabled"></th>
+  </thead>
+  <tbody>
+  {% for i in devices %}
+    <tr>
+      <td>{{ i.sn|safe }}</td>
+      <td>{{ i.description }}</td>
+      <td>{{ i.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+      <td>{{ i.get_warranty_status_display }}</td>
+      <td>
+        <div class="btn-group pull-right">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-cog"></i> <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+          {% if request.session.current_order_id %}
+            <li><a href="{% url 'orders-add_device' request.session.current_order_id i.id %}">{% trans "Use in" %} #{{ request.session.current_order_code }}</a></li>
+            <li class="divider"></li>
+          {% endif %}
+            <li><a href="{% url 'orders-create_with_sn' sn=i.sn|safe %}">{% trans "Create Service Order" %}</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ i.get_absolute_url }}">{% trans "View" %}</a></li>
+            <li><a href="{{ i.get_absolute_url }}edit/">{% trans "Edit" %}</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ i.get_absolute_url }}delete/" data-modal="#modal"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5" class="empty muted">{% trans "No search results" %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% include "pagination.html" with items=devices %}
+{% endblock content %}

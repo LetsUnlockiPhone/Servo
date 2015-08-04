@@ -1,0 +1,20 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+{% trans "Move customer" %}
+{% endblock header %}
+
+{% block body %}
+<form action="{% url 'customers-filter' %}" method="post" accept-charset="utf-8" id="search-form" data-target="#search-results">
+  {% csrf_token %}
+  <input type="hidden" name="id" value="{{ customer.pk|safe }}"/>
+  <input type="text" class="search-query" name="name" autocomplete="off" placeholder="{% trans "Customer name" %}"/>
+</form>
+<div id="search-results"></div>
+{% endblock body %}
+
+{% block footer %}
+<a href="{% url 'customers-move_customer' pk=customer.pk new_parent=0 %}" class="btn">{% trans "Move to top" %}</a>
+<button class="btn btn-primary" data-dismiss="modal">{% trans "Close" %}</button>
+{% endblock footer %}

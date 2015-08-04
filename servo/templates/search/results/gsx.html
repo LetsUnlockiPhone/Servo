@@ -1,0 +1,41 @@
+{% extends "search/spotlight.html" %}
+{% load i18n %}
+
+{% block second_column %}
+{% block tabs %}
+    <ul class="nav nav-tabs" id="gsx-tabs">
+    {% if gsx_type == 'serialNumber' or 'alternateDeviceId' %}
+        <li><a href="{% url 'search-gsx' what='warranty' %}?q={{ query }}">{% trans "Device" %}</a></li>
+    {% else %}
+        <li class="disabled"><a href="#">{% trans "Device" %}</a></li>
+    {% endif %}
+    {% if gsx_type == 'serialNumber' or gsx_type == 'partNumber' %}
+        <li><a href="{% url 'search-gsx' what='parts' %}?q={{ query }}">{% trans "Parts" %}</a></li>
+    {% else %}
+        <li class="disabled"><a href="#">{% trans "Parts" %}</a></li>
+    {% endif %}
+    {% if gsx_type == 'serialNumber' or gsx_type == 'dispatchId' %}
+        <li><a href="{% url 'search-gsx' what='repairs' %}?q={{ query }}">{% trans "Repairs" %}</a></li>
+    {% else %}
+        <li class="disabled"><a href="#">{% trans "Repairs" %}</a></li>
+    {% endif %}
+        <li class="pull-right"><a href="#" class="filter_table"><i class="icon-search"></i></a></li>
+    </ul>
+{% endblock tabs %}
+
+{% block results %}
+    <div id="gsx-container" data-source="{% url 'search-gsx_results' what=what %}?q={{ query }}">
+        <div class="progress active">
+            <div class="bar" style="width:1%;" data-progress="0"></div>
+        </div>
+    </div>
+{% endblock results %}
+
+{% endblock second_column %}
+
+{% block media %}
+<script type="text/javascript">
+    var loc = location.pathname + location.search;
+    $('#gsx-tabs>li>a[href="'+loc+'"]').parent().addClass('active');
+</script>
+{% endblock media %}

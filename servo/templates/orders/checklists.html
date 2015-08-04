@@ -1,0 +1,10 @@
+{% load servo_tags %}
+{% for c in checklists %}
+    <h4>{{ c.title }} ({{ order.checklistitemvalue_set.all.count }}/{{ c.checklistitem_set.all.count }})</h4>
+  {% for i in c.checklistitem_set.all %}
+    <label class="checkbox" style="margin-left:8x">
+        <input type="checkbox" data-url="{% url 'orders-toggle_task' order.id i.id %}" class="toggle" {% if order|is_item_complete:i %}checked="checked"{% endif %}/> {{ i.title }} <i class="muted">{{ order|item_completed_by:i }}</i>
+    </label>
+    {% if forloop.last %}<hr/>{% endif %}
+  {% endfor %}
+{% endfor %}

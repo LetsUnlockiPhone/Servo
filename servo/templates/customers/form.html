@@ -1,0 +1,51 @@
+{% extends "customers/view.html" %}
+{% load i18n %}
+
+{% block third_column %}
+<form method="post" action="" accept-charset="utf-8" class="form-horizontal">
+  {% csrf_token %}
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{% trans "Details" %}</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      {% include "form_field_snippet.html" with field=form.name %}
+      {% include "form_field_snippet.html" with field=form.phone %}
+      {% include "form_field_snippet.html" with field=form.email %}
+      {% include "form_field_snippet.html" with field=form.street_address %}
+      {% include "form_field_snippet.html" with field=form.zip_code %}
+      {% include "form_field_snippet.html" with field=form.city %}
+      {% include "form_field_snippet.html" with field=form.is_company %}
+    </div>
+    <div class="tab-pane" id="tab2">
+      {% include "form_field_snippet.html" with field=form.parent %}
+      {% include "form_field_snippet.html" with field=form.country %}
+      {% for p in customer.contactinfo_set.all %}
+      <div class="control-group">
+        <select name="keys" class="control-label">
+          <option>{{ p.key }}</option>
+        </select>
+        <div class="controls">
+          <input type="text" name="values" value="{{ p.value }}"/>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="control-group property">
+        <select name="keys" class="control-label" data-value="{{ fields.0.title }}">
+        {% for f in fields %}
+          <option>{{ f.title }}</option>
+        {% endfor %}
+        </select>
+        <div class="controls">
+          <input type="text" name="values"/>
+        </div>
+      </div>
+      {% include "form_field_snippet.html" with field=form.photo %}
+      {% include "form_field_snippet.html" with field=form.groups %}
+      {% include "form_field_snippet.html" with field=form.notes %}
+    </div>
+  </div>
+  {% include "form_buttons.html" %}
+</form>
+{% endblock third_column %}

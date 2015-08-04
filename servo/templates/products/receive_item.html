@@ -1,0 +1,51 @@
+{% extends "modal.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block header %}
+    {{ item.code }}
+{% endblock header %}
+
+{% block body %}
+    <form method="post" action="{{ url }}" class="form-horizontal">
+        {% csrf_token %}
+        <h4>{{ item.title }}</h4>
+        <dl class="dl-horizontal">
+        {% with item.purchase_order as po %}
+            <dt>{% trans "Ordered" %}</dt>
+            <dd>{{ po.created_at|date:"SHORT_DATE_FORMAT" }}, {{ po.created_by }}</dd>
+            <dt>{% trans "Service Order" %}</dt>
+        {% if po.sales_order %}
+            <dd><a href="{% url 'orders-edit' po.sales_order.pk %}">{{ po.sales_order.code }}</a></dd>
+        {% else %}
+            <dd>{% trans "Stocking Order" %} {{ po.reference }}</dd>
+        {% endif %}
+            <dt>{% trans "Reference" %}</dt>
+            <dd>{{ po.reference|default:"-" }}</dd>
+        {% if item.received_at %}
+            <dt>{% trans "Received" %}</dt>
+            <dd>{{ item.received_at|date:"SHORT_DATE_FORMAT" }}, {{ item.received_by }}</dd>
+        {% endif %}
+        {% if item.reference %}
+            <dt>{% trans "Reference" %}</dt>
+            <dd>{{ item.reference }}</dd>
+        {% endif %}
+            <dt>{% trans "Confirmation" %}</dt>
+            <dd>{{ po.confirmation|default:"-" }}</dd>
+        {% endwith %}
+            <dt>{% trans "Purchase Price" %}</dt>
+            <dd>{{ form.instance.price|currency|default:"-" }}</dd>
+        </dl>
+        {% include "form_field_snippet.html" with field=form.amount %}
+        {% if item.product.is_serialized %}
+        {% include "form_field_snippet.html" with field=form.sn %}
+        {% endif %}
+    </form>
+{% endblock body %}
+
+{% block footer %}
+    <button class="btn" data-dismiss="modal">{% trans "Cancel" %}</button>
+{% if not item.received_at %}
+    <button type="submit" class="btn btn-primary">{% trans "Receive" %}</button>
+{% endif %}
+{% endblock footer %}

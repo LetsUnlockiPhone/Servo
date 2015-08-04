@@ -1,0 +1,12 @@
+{% load i18n %}
+<ul class="nav nav-list">
+{% for i in results %}
+{% if i.pk %}
+    <li><a href="{% url 'orders-add_device' pk=order device_id=i.pk %}"><strong>{{ i.description }}</strong><br/><small>{{ i.configuration }}</small></a></li>
+{% else %}
+    <li><a href="{% url 'orders-add_device' pk=order sn=i.sn %}"><strong>{{ i.description }}</strong><br/><small>{{ i.configuration }}</small></a></li>
+{% endif %}
+{% empty %}
+    <li style="text-align:center">{% trans "No search results" %}</li>
+{% endfor %}
+</ul>

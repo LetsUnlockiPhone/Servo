@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% blocktrans with queue.title as title %}Delete queue "{{ title }}"?{% endblocktrans %}
+{% endblock header %}
+
+{% block body %}
+    <p>{% trans "Orders in this queue will not be deleted." %}</p>  
+{% endblock body %}
+
+{% block footer %}
+    <form action="{% url 'admin-delete_queue' queue.pk %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    </form>    
+{% endblock footer %}

@@ -1,0 +1,10 @@
+{% extends "search/spotlight.html" %}
+{% load humanize %}
+{% load servo_tags %}
+
+{% block second_column %}
+{% for i in articles %}
+    <h2>{{ i.title }}</h2>
+    {{ i.content|markdown }}
+{% endfor %}
+{% endblock second_column %}

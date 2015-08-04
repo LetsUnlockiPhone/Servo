@@ -1,0 +1,9 @@
+{% load i18n %}
+{% load servo_tags %}
+<ul class="nav nav-pills nav-stacked">
+{% for i in products %}
+  <li><a href="{% url target_url order i.pk %}"><strong>{{ i.code}}</strong><br/>{{ i.title }}<span class="pull-right">{{ i.price_sales_stock|currency }}</span></a></li>
+{% empty %}
+  <li style="text-align:center">{% trans "No products found" %}</li>
+{% endfor %}
+</ul>

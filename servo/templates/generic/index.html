@@ -1,0 +1,23 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block second_column %}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#">{% trans "Browse" %}</a></li>
+</ul>
+
+<table class="table">
+{% for item in object_list %}
+    <tr>
+        <td><a href="{{ item.id }}/edit/">{{ item.title }}</a></td>
+        <td style="text-align:right">
+            <div class="btn-group">
+                <a href="{{ item.pk }}/edit/" class="btn btn-warning" title="{% trans "Edit" %}"><i class="icon-pencil icon-white"></i></a>
+                <a href="{{ item.pk }}/delete/" class="btn btn-danger" data-modal="#modal" title="{% trans "Delete" %}"><i class="icon-trash icon-white"></i></a>
+            </div>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+<a class="btn" href="new/"><i class="icon-plus"></i> {% trans "Create New" %}</a>
+{% endblock second_column %}

@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% if orders %}
+    {% include "orders/list.html" %}
+{% else %}
+    <h1 class="muted text-center">{% trans "No orders found" %}</h1>
+{% endif %}

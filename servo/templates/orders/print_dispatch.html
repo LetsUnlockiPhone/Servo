@@ -1,0 +1,38 @@
+{% extends "orders/print_confirmation.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% blocktrans with code=order.code%}Dispatch #{{ code }}{% endblocktrans %}
+{% endblock title %}
+
+{% block parts_and_services %}
+<h4>{% trans "Products and Services" %}</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th colspan="2">{% trans "Product" %}</th>
+      <th>{% trans "Warranty" %}</th>
+      <th style="width:50px">{% trans "VAT %" %}</th>
+      <th style="width:40px">{% trans "Qty" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% block list_products %}
+    {% for i in order.products %}
+    <tr>
+      <td style="width:75px">{{ i.product.code }}</td>
+      <td>{{ i.title }}{% if i.sn %}<br/><span class="muted">{% trans "SN" %}: {{ i.sn }}</span>{% endif %}</td>
+      <td>{{ i.product.warranty_period }} {% trans "mon." %}</td>
+      <td>{{ i.product.pct_vat|floatformat:"0" }}%</td>
+      <td>{{ i.amount }}</td>
+    </tr>
+    {% endfor %}
+  {% endblock list_products %}
+  </tbody>
+</table>
+{% endblock parts_and_services %}
+
+{% block received_by %}
+{% endblock received_by %}
+
+{% block tos %}{% endblock tos %}

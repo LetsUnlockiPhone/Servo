@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Really remove product from order?" %}
+{% endblock header %}
+
+{% block body %}
+    {% trans "Product will not be deleted from the warehouse." %}
+{% endblock body %}
+
+{% block footer %}
+<form action="{% url 'servo.views.order.remove_product' order.id item.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+</form>
+{% endblock footer %}

@@ -1,0 +1,30 @@
+{% extends "generic/admin_list.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+<a href="{% url 'admin-create_field' type=type %}" class="btn btn-default navbar-btn"><i class="icon-plus"></i> {% trans "New Field" %}</a>
+{% endblock toolbar %}
+
+{% block second_column %}
+<div class="row-fluid">
+  <ul class="nav nav-tabs">
+  {% for k, v in types %}
+    <li class="{% active request k %}"><a href="{% url 'admin-fields' type=k %}">{{ v }}</a></li>
+  {% endfor %}
+  </ul>
+</div>
+<div class="row-fluid">
+  <div class="span3">
+    <ul class="nav nav-pills nav-stacked">
+    {% for o in object_list %}
+      <li class="{% active_url request o.get_admin_url %}"><a href="{{ o.get_admin_url }}">{{ o.title|truncatechars:25 }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="span9">
+    {% block third_column %}
+    {% endblock third_column %}
+  </div>
+</div>
+{% endblock second_column %}

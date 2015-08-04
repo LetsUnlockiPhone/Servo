@@ -1,0 +1,37 @@
+{% extends "generic/admin_list.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+<a href="{% url 'admin-create_tag' type=type %}" class="btn btn-default navbar-btn"><i class="icon-plus"></i> {% trans "New Tag" %}</a>
+{% endblock toolbar %}
+
+{% block second_column %}
+
+<div class="row">
+  <ul class="nav nav-tabs">
+  {% for k, v in types %}
+    <li {% if k == type %} class="active"{% endif %}><a href="{% url 'admin-tags' type=k %}">{{ v }}</a></li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div class="row">
+  <div class="span5">
+    <ul class="nav nav-pills nav-stacked">
+    {% for o in object_list %}
+      <li class="{% active_url request o.get_admin_url %}"><a href="{{ o.get_admin_url }}">{{ o.title }}</a></li>
+    {% empty %}
+      <li class="empty">{% blocktrans with objects=title %}No {{ objects }} found.{% endblocktrans %}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="span7">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+    </ul>
+    {% block third_column %}
+    {% endblock third_column %}
+  </div>
+</div>
+{% endblock second_column %}

@@ -1,0 +1,17 @@
+{% extends "notes/view_note.html" %}
+{% load i18n %}
+
+{% block note_buttons %}
+{% endblock note_buttons %}
+
+{% block view_message %}
+    <form action="{{ request.path }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include "form_snippet.html" %}
+        <div class="form-actions">
+            <div class="pull-right">
+                <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
+            </div>
+        </div>
+    </form>
+{% endblock view_message %}

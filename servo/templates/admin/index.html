@@ -1,0 +1,50 @@
+{% extends "two_column_layout.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block first_column %}
+<ul class="nav nav-list">
+  <li class="nav-header">{% trans "System Settings" %}</li>
+  <li class="{% active request "settings" %}">
+    <a href="{% url 'admin-settings' %}"><i class="icon-cog"></i> {% trans "Settings" %}</a>
+  </li>
+  <li class="{% active request "gsx" %}">
+    <a href="{% url 'admin-list_gsx_accounts' %}"><i class="icon-globe"></i> {% trans "GSX Accounts" %}</a>
+  </li>
+  <li class="{% active request "locations" %}">
+    <a href="{% url 'admin-locations' %}"><i class="icon-map-marker"></i> {% trans "Locations" %}</a>
+  </li>
+  <li class="{% active request "statuses" %}">
+    <a href="{% url 'admin-statuses' %}"><i class="icon-tasks"></i> {% trans "Statuses" %}</a>
+  </li>
+  <li class="{% active request "queues" %}">
+    <a href="{% url 'admin-queues' %}"><i class="icon-inbox"></i> {% trans "Queues" %}</a>
+  </li>
+  <li class="{% active request "(users)|(groups)" %}">
+    <a href="{% url 'admin-list_users' %}"><i class="icon-user"></i> {% trans "Users & Groups" %}</a>
+  </li>
+  <li class="{% active request "fields" %}">
+    <a href="{% url 'admin-fields' type='customer' %}"><i class="icon-list-alt"></i> {% trans "Fields" %}</a>
+  </li>
+  <li class="{% active request "tags" %}">
+    <a href="{% url 'admin-tags' type='device' %}"><i class="icon-tags"></i> {% trans "Tags" %}</a>
+  </li>
+  <li class="{% active request "templates" %}">
+    <a href="{% url 'admin-list_templates' %}"><i class="icon-file"></i> {% trans "Templates" %}</a>
+  </li>
+  <li class="{% active request "checklists" %}">
+    <a href="{% url 'admin-checklists' %}"><i class="icon-cog"></i> {% trans "Checklists" %}</a>
+  </li>
+  <li class="{% active request "backups" %}">
+    <a href="{% url 'admin-backups' %}"><i class="icon-download"></i> {% trans "Backups" %}</a>
+  </li>
+</ul>
+{% endblock first_column %}
+
+{% block second_column %}
+
+{% endblock second_column %}
+
+{% block crumbs %}
+  <li class="active">{% trans "Systen Settings" %}</li>
+{% endblock crumbs %}

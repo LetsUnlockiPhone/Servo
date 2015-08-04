@@ -1,0 +1,49 @@
+{% load i18n %}
+
+{% for d in results %}
+<div class="row-fluid">
+  <div class="span3">
+    <img class="img-rounded" src="{{ d.image_url }}" alt="{{ d.description }}" title="{{ d.description }}"/>
+  </div>
+  <div class="span9" id="gsx-results">
+    <h3>{{ d.description }}</h3>
+    <dl class="dl-horizontal">
+      <dt>{% trans "Warranty Status" %}</dt>
+      <dd>{{ d.get_warranty_status_display }}</dd>
+      <dt>{% trans "Purchase Date" %}</dt>
+      <dd>{{ d.purchased_on|date:"SHORT_DATE_FORMAT"|default:"-" }}, {{ d.purchase_country|default:"-" }}</dd>
+      <dt>{% trans "Serial Number" %}</dt>
+      <dd>{{ d.sn }}</dd>
+      <dt>{% trans "Configration" %}</dt>
+      <dd>{{ d.configuration }}</dd>
+    {% if d.activation %}
+      <dt>IMEI</dt>
+      <dd>{{ d.activation.imeiNumber }}</dd>
+      <dt>{% trans "Activation Profile" %}</dt>
+      <dd>{{ d.activation.initialActivationPolicyDetails }}</dd>
+      <dt>{% trans "Unlocked" %}</dt>
+      <dd>{{ d.activation.unlocked }}</dd>
+      <dt>{% trans "Find My iPhone" %}</dt>
+      <dd>{{ d.fmip_is_active|yesno:"Active,Inactive" }}</dd>
+    {% endif %}
+    </dl>
+    <div class="btn-group pull-right">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-cog"></i> <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="{% url 'orders-create_with_sn' sn=query %}">{% trans "Create Service Order" %}</a></li>
+        {% if request.session.current_order_id %}
+        <li><a href="{% url 'orders-add_device' pk=request.session.current_order_id sn=query %}">{% trans "Use in order"  %} #{{ request.session.current_order.code }}</a></li>
+        {% endif %}
+        <li class="divider"></li>
+        {% if d.manualURL %}
+        <li><a href="{{ d.manualURL }}">{% trans "Download Manual" %}</a></li>
+        {% else %}
+        <li class="disabled"><a href="">{% trans "Download Manual" %}</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endfor %}

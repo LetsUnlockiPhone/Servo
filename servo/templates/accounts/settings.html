@@ -1,0 +1,46 @@
+{% extends "accounts/orders.html" %}
+{% load i18n %}
+
+{% block first_column %}
+{% endblock first_column %}
+
+{% block second_row %}
+<form action="" method="post" accept-charset="utf-8" class="form-horizontal" enctype="multipart/form-data">{% csrf_token %}
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{% trans "Profile" %}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{% trans "Locale" %}</a></li>
+    <li><a href="#tab3" data-toggle="tab">{% trans "Password" %}</a></li>
+    <li><a href="#tab4" data-toggle="tab">{% trans "GSX" %}</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      {% include "form_field_snippet.html" with field=form.location %}
+      {% include "form_field_snippet.html" with field=form.queues %}
+      {% include "form_field_snippet.html" with field=form.should_notify %}
+      {% include "form_field_snippet.html" with field=form.notify_by_email %}
+      {% include "form_field_snippet.html" with field=form.autoprint %}
+      {% include "form_field_snippet.html" with field=form.photo %}
+    </div>
+    <div class="tab-pane" id="tab2">
+      {% include "form_field_snippet.html" with field=form.locale %}
+      {% include "form_field_snippet.html" with field=form.region %}
+      {% include "form_field_snippet.html" with field=form.timezone %}
+    </div>
+    <div class="tab-pane" id="tab3">
+      {% include "form_field_snippet.html" with field=form.password1 %}
+      {% include "form_field_snippet.html" with field=form.password2 %}
+    </div>
+    <div class="tab-pane" id="tab4">
+      {% include "form_field_snippet.html" with field=form.tech_id %}
+      {% include "form_field_snippet.html" with field=form.gsx_userid %}
+      {% include "form_field_snippet.html" with field=form.gsx_password %}
+      {% include "form_field_snippet.html" with field=form.gsx_poprefix %}
+    </div>
+  </div>
+  {% include "form_buttons.html" %}
+</form>
+{% endblock second_row %}
+
+{% block crumbs %}
+  <li class="active">{% trans "Settings" %}</li>
+{% endblock crumbs %}

@@ -1,0 +1,40 @@
+{% extends "admin/locations/index.html" %}
+{% load i18n %}
+
+{% block third_column %}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+  <li><a href="#tab3" data-toggle="tab">{% trans "GSX" %}</a></li>
+</ul>
+
+<form method="post" action="" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+  {% csrf_token %}
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      {% include "form_field_snippet.html" with field=form.title %}
+      {% include "form_field_snippet.html" with field=form.email %}
+      {% include "form_field_snippet.html" with field=form.phone %}
+      {% include "form_field_snippet.html" with field=form.address %}
+      {% include "form_field_snippet.html" with field=form.zip_code %}
+      {% include "form_field_snippet.html" with field=form.city %}
+      {% include "form_field_snippet.html" with field=form.timezone %}
+      {% include "form_field_snippet.html" with field=form.notes %}
+      {% include "form_field_snippet.html" with field=form.logo %}
+      {% include "form_field_snippet.html" with field=form.enabled %}
+    </div>
+    <div class="tab-pane" id="tab3">
+      {% include "form_field_snippet.html" with field=form.gsx_shipto %}
+      {% include "form_field_snippet.html" with field=form.gsx_accounts %}
+      {% include "form_field_snippet.html" with field=form.gsx_tz %}
+    </div>
+  </div>
+  <div class="form-actions">
+    {% if location.pk %}
+    <a class="btn btn-danger" data-modal="#modal" href="{% url 'admin-delete_location' location.pk %}">{% trans "Delete" %}</a>
+    {% else %}
+    <a class="btn btn-danger disabled">{% trans "Delete" %}</a>
+    {% endif %}
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+  </div>
+</form>
+{% endblock third_column %}

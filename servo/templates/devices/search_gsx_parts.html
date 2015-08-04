@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load servo_tags %}
+
+{% autoescape on %}
+{% for p in results %}
+    <tr>
+        <td><a href="{% url 'products-view_product' code=p.code %}">{{ p.code }}</a></td>
+        <td>{{ p.title }}<br/><span class="muted small" title="{{ p.eee_code }}">{{ p.eee_code|truncatechars:40 }}</td>
+        <td>{{ p.price_sales_exchange|currency }}</td>
+        <td>{{ p.price_sales_stock|currency }}</td>
+        <td>0</td>
+        <td>
+            <div class="btn-group pull-right">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="icon-cog"></i> <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li{% if not perms.servo.add_product %} class="disabled"{% endif %}>
+                    {% if device %}
+                        <a href="{% url 'products-create' group=device.get_product_category code=p.code %}">{% trans "Create Product" %}</a>
+                    {% else %}
+                        <a href="{% url 'products-create' code=p.code %}">{% trans "Create Product" %}</a>
+                    {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+{% endfor %}
+{% endautoescape %}

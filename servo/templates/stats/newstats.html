@@ -1,0 +1,87 @@
+{% extends "default.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<ul class="nav nav-tabs" style="margin-top:30px">
+{% block tabs %}
+  <li><a href="{% url 'stats-index' %}">{% trans "Technicians" %}</a></li>
+  <li><a href="{% url 'stats-locations' %}">{% trans "Locations" %}</a></li>
+  <li><a href="{% url 'stats-queues' %}">{% trans "Queues" %}</a></li>
+  <li class="active"><a href="{% url 'stats-repairs' %}">{% trans "Repairs" %}</a></li>
+  <li><a href="{% url 'stats-statuses' %}">{% trans "Statuses" %}</a></li>
+  <li><a href="{% url 'stats-sales' %}">{% trans "Sales" %}</a></li>
+{% endblock tabs %}
+</ul>
+
+<div class="row-fluid">
+  <div class="span12 well">
+  {% block filter_block %}
+    <form action="#" method="get" class="form-inline" id="stats-form">
+      {% for field in form %}
+      <div class="control-group pull-left">
+        <label class="control-label">{{ field.label }}</label>
+        <div class="controls">{{ field }}</div>
+      </div>
+      {% endfor %}
+      <div class="control-group">
+        <label class="control-label">&nbsp;</label>
+        <div class="controls">
+          <button class="btn btn-primary pull-right" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+        </div>
+      </div>
+    </form>
+  {% endblock filter_block %}
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="span12">
+  {% block stats %}
+    <table class="table table-hover sortable">
+      <thead>
+        <tr>
+          <th>{% trans "Technician" %}</th>
+          <th>{% trans "Cases Created" %}</th>
+          <th>{% trans "Cases Assigned" %}</th>
+          <th>{% trans "Repairs Created" %}</th>
+          <th>{% trans "Cases Dispatched" %}</th>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+      {% for r in results %}
+        <tr>
+          <td>{{ r.name }}</td>
+          <td>{{ r.created }}</td>
+          <td>{{ r.assigned }}</td>
+          <td>{{ r.repairs }}</td>
+          <td>{{ r.dispatched }}</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot style="font-weight:bold">
+        <tr>
+          <td>{% trans "Total" %}</td>
+          <td>{{ totals.created }}</td>
+          <td>{{ totals.assigned }}</td>
+          <td>{{ totals.repairs }}</td>
+          <td>{{ totals.dispatched }}</td>
+          <td>{{ totals.diff }}</td>
+        </tr>
+      {% if totals.turnaround.nonzero %}
+        <tr>
+          <td>{% trans "Average turnaround time" %}</td>
+          <td colspan="5">{{ totals.turnaround.days }} {% trans "days" %}, {{ totals.turnaround.hours }} {% trans "hours" %}</td>
+        </tr>
+      {% endif %}
+      </tfoot>
+    </table>
+  {% endblock stats %}
+  </div>
+</div>
+{% endblock content %}
+
+{% block crumbs %}
+  <li class="active">{% trans "Statistics" %}</li>
+{% endblock crumbs %}

@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load servo_tags %}
+
+<div class="control-group{% for e in field.errors %} error{% endfor %}">
+    {% if field|widget_is:"CheckboxInput" %}
+    <div class="controls">
+        <label class="checkbox">
+            {{ field }} {% trans field.label %}
+        </label>
+    </div>
+    {% else %}
+    <div class="controls">
+        {{ field }}
+    {% if field.help_text %}
+        <span class="help-block">{% trans field.help_text %}</span>
+    {% endif %}
+    {% for e in field.errors %}
+        <span class="help-inline">{{ e }}</span>
+    {% endfor %}
+    </div>
+    {% endif %}
+</div>

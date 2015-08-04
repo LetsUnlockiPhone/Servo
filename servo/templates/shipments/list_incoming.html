@@ -1,0 +1,61 @@
+{% extends "shipments/index.html" %}
+{% load i18n %}
+
+{% block toolbar %}
+{% endblock toolbar %}
+
+{% block second_column %}
+{% include "snippets/filtering_form.html" %}
+<form method="post" action="">
+  {% csrf_token %}
+  <table class="table table-hover sortable">
+    <thead>
+      <tr>
+      {% if can_receive %}
+        <th data-defaultsort="disabled"></th>
+      {% endif %}
+        <th>{% trans "Part" %}</th>
+        <th>{% trans "Service Order" %}</th>
+        <th>{% trans "Confirmation" %}</th>
+        <th>{% trans "Ordered" %}</th>
+      </tr>
+    </thead>
+    <tbody class="searchable">
+    {% for i in inventory %}
+      <tr>
+      {% if can_receive %}
+        <td><input type="checkbox" name="id" value="{{ i.pk|safe }}" class="toggle-submit"/></td>
+      {% endif %}
+      {% with i.product as p %}
+        <td data-value="{{ p.code }}">
+          <strong><a href="{% url 'shipments-view_incoming' i.pk %}" data-modal="#modal">{{ p.code }}</a></strong><br/>{{ p.title }}
+        </td>
+      {% endwith %}
+      {% with i.purchase_order as po %}
+        <td data-value="{{ po.sales_order.code }}">
+        {% if po.sales_order %}
+          <a href="{% url 'orders-edit' po.sales_order.pk %}">{{ po.sales_order.code }}</a>
+        {% endif %}
+          <br/><small class="muted">{{ po.reference }}</small>
+        </td>
+        <td>{{ po.confirmation }}</td>
+        <td>{{ po.created_by }}<br/><small class="muted">{{ po.submitted_at|date:"SHORT_DATE_FORMAT" }}</small></td>
+      {% endwith %}
+      </tr>
+      {% empty %}
+      <tr><td colspan="7" class="muted empty">{% trans "No incoming products" %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if can_receive %}
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary pull-right" disabled="disabled">{% trans "Receive" %}</button>
+  </div>
+  {% endif %}
+</form>
+{% include "pagination.html" with items=inventory %}
+{% endblock second_column %}
+
+{% block breadcrumb %}
+<li class="active"><span class="divider">/</span><a href="{% url 'shipments-list_incoming' %}">{% trans "Incoming" %}</a></li>
+{% endblock breadcrumb %}

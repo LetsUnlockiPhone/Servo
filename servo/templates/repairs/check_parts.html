@@ -1,0 +1,10 @@
+{% load servo_tags %}
+{% for p in parts %}
+  <label class="checkbox">
+      <input type="checkbox" {% if p.pk in checked_parts %}checked="checked"{% endif %} class="toggle_part" name="parts" value="{{ p.pk|safe }}"/><small><strong>{{ p.code }}</strong></small>
+      <small class="pull-right">{{ p.price|currency }}</small>
+  </label>
+  <small class="muted">{{ p.title }}</small><br/>
+  <small class="muted">{{ p.get_price_category_display }} - {{ p.warranty_status }}</small>
+  <hr class="dashed"/>
+{% endfor %}

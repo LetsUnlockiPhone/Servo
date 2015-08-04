@@ -1,0 +1,5 @@
+<ul class="nav nav-pills nav-stacked">
+{% for c in results %}
+  <li><a href="{% url 'customers-move_customer' pk=id new_parent=c.id %}">{{ c.name }}</a></li>
+{% endfor %}
+</ul>

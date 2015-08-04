@@ -1,0 +1,142 @@
+{% extends "rules/list_rules.html" %}
+{% load bootstrap3 %}
+{% load static %}
+{% load i18n %}
+
+{% block third_column %}
+<div style="margin-top:28px">
+  <form method="post" action="" accept-charset="utf-8" class="form-horizontal" data-bind="submit: validateAndSave">
+    {% csrf_token %}
+    <div class="form-group">
+      <input class="form-control" name="description" type="text" autocomplete="off" data-bind="value: rule.description"/>
+    </div>
+    <fieldset>
+      <legend>If <select name="match" data-bind="options: rule.matchChoices, optionsText: 'title', optionsValue: 'key', value: rule.match"></select> of the conditions are met:</legend>
+      <table>
+        <tbody data-bind="foreach: rule.conditions">
+          <tr>
+            <td>
+              <div class="form-group">
+                <select class="form-control" data-bind="options: keyChoices, optionsText: 'title', optionsValue: 'key', value: key" name="condition-key">
+                </select>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+              <!-- ko if: canSelect() -->
+                <select class="form-control" name="condition-value" data-bind="options: valueChoices, optionsText: 'title', optionsValue: 'value'">
+                </select>
+              <!-- /ko -->
+              <!-- ko if: !canSelect() -->
+                <input class="form-control" type="text" name="condition-value" required="required" data-bind="value: value"/>
+              <!-- /ko -->
+              </div>
+            </td>
+            <td>
+              <a href="#" class="btn btn-default" data-bind="click: $parent.removeCondition, css: { disabled: $index() == 0 }"><i class="icon-minus"></i></a> <a href="#" class="btn btn-default" data-bind="click: $parent.addCondition"><i class="icon-plus"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>{% trans "Peform the following actions" %}:</legend>
+      <table>
+        <tbody data-bind="foreach: rule.actions">
+          <tr>
+            <td>
+              <div class="form-group" id="key">
+                <select class="form-control" data-bind="options: keyChoices, optionsText: 'title', optionsValue: 'key', value: key" name="action-key"></select>
+              </div>
+            </td>
+            <td>
+            <!-- ko if: canSelect() -->
+              <select class="form-control" name="action-value" data-bind="options: valueChoices, optionsText: 'title', optionsValue: 'value'">
+              </select>
+            <!-- /ko -->
+            <!-- ko if: !canSelect() -->
+              <input type="text" name="action-value" data-bind="value: value"/>
+            <!-- /ko -->
+            </td>
+            <td>
+              <a class="btn btn-default" data-bind="click: $parent.removeAction, css: { disabled: $index() == 0 }" href="#"><i class="icon-minus"></i></a> <a class="btn btn-default" data-bind="click: $parent.addAction" href="#"><i class="icon-plus"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+    <hr/>
+    {% buttons %}
+    <div class="form-controls pull-right">
+    {% if rule.pk %}
+      <a class="btn btn-danger" href="{% url 'rules-delete_rule' rule.pk %}" data-modal="#modal">{% trans "Delete" %}</a>
+    {% else %}
+      <a class="btn btn-danger disabled" href="#">{% trans "Delete" %}</a>
+    {% endif %}
+      <a class="btn btn-default" href="{% url 'rules-list_rules' %}">{% trans "Cancel" %}</a>
+      <button type="submit" class="btn btn-primary" data-bind="disable: rule.description().length < 3">{% trans "OK" %}</button>
+    </div>
+  </form>
+  </div>
+  {% endbuttons %}
+{% endblock third_column %}
+
+{% block media %}
+  <script type="text/javascript" src="{% static "js/knockout.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/rules.js" %}"></script>
+  <script type="text/javascript">
+    // start data init
+    var cData            = [];
+    cData['QUEUE']       = [];
+    cData['STATUS']      = [];
+
+    var aData            = [];
+    aData['ADD_TAG']     = [];
+    aData['SET_USER']    = [];
+    aData['SET_QUEUE']   = [];
+    aData['SEND_EMAIL']  = [];
+
+    // get the possible choices
+    $.get('/api/statuses/', function(r){
+      r.forEach(function(e){
+        var choice = {title: e.fields.title, value: e.pk};
+        cData['STATUS'].push(choice);
+      });
+    });
+
+    $.get('/api/queues/', function(r){
+      r.forEach(function(e){
+        var choice = {title: e.fields.title, value: e.pk};
+        cData['QUEUE'].push(choice);
+        aData['SET_QUEUE'].push(choice);
+      });
+      
+      var viewModel = new ViewModel(cData, aData);
+      ko.applyBindings(viewModel);
+
+      {% if rule.pk %}
+        var data = {{ rule.serialize|safe }};
+        viewModel.rule.description(data.description);
+        viewModel.rule.match(data.match);
+        var conditions = [];
+        data.conditions.forEach(function(e){
+          var c = new Condition(cData);
+          c.key(e.key);
+          c.value(e.value);
+          c.operator(e.operator);
+          conditions.push(c);
+        });
+        viewModel.rule.conditions(conditions);
+        var actions = [];
+        data.actions.forEach(function(e){
+          var c = new Action(aData);
+          c.key(e.key);
+          c.value(e.value);
+          actions.push(c);
+        });
+        viewModel.rule.actions(actions);
+      {% endif %}
+    });
+    // end data init
+  </script>
+{% endblock media %}

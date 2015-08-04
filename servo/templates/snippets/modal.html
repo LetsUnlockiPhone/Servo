@@ -1,0 +1,14 @@
+{% load i18n %}
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal">×</button>
+  <h3>{% block header %}{% endblock header %}</h3>
+</div>
+<div class="modal-body">
+  {% block body %}{% endblock body %}
+</div>
+<div class="modal-footer">
+{% block footer %}
+  <button class="btn" data-dismiss="modal">{% trans "Close" %}</button>
+  <button type="submit" class="btn btn-primary submit">{% trans "Done" %}</button>
+{% endblock footer %}
+</div>

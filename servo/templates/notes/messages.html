@@ -1,0 +1,22 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+  {% trans "Message Log" %}
+{% endblock header %}
+
+{% block body %}
+<table class="table">
+  <tbody>
+  {% for m in messages %}
+    <tr>
+      <td>{{ m.sent_at|date:"SHORT_DATETIME_FORMAT" }}</td>
+      <td>{{ m.recipient }}</td>
+      <td>{{ m.status }}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="3" class="muted empty">{% trans "No messages to display" %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock body %}

@@ -1,0 +1,9 @@
+{% extends "checkin/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+{% block main %}
+<div class="page-header">
+  <h1>{% blocktrans with company=conf.company_name %}{{ company }} terms of service{% endblocktrans %}</h1>
+</div>
+{{ conf.terms_of_service|markdown }}
+{% endblock main %}

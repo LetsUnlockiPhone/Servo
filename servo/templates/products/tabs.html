@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load servo_tags %}
+
+<div class="row-fluid">
+  <div class="span12">
+    <ul class="nav nav-tabs">
+      <li class="{% active request "products" %}">
+        <a href="{% url 'products-list_products' %}">{% trans "Products" %}</a>
+      </li>
+      <li class="{% active request "shipments" %}">
+        <a href="{% url 'shipments-list_incoming' %}">{% trans "Shipments" %}</a>
+      </li>
+      <li class="{% active request "purchases" %}">
+        <a href="{% url 'purchases-list_pos' %}">{% trans "Purchase Orders" %}</a>
+      </li>
+      <li class="{% active request "invoices" %}">
+        <a href="{% url 'invoices-index' %}">{% trans "Invoices" %}</a>
+      </li>
+    </ul>
+  </div>
+</div>

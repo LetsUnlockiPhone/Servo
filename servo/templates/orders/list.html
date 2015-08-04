@@ -1,0 +1,43 @@
+{% load staticfiles %}
+{% load servo_tags %}
+{% load humanize %}
+{% load cache %}
+{% load i18n %}
+
+<table class="table table-hover sortable">
+  <thead>
+    <tr>
+      <th style="width:60px">{% trans "Order" %}</th>
+      <th>{% trans "Customer" %}</th>
+      <th>{% trans "Created" %}</th>
+      <th>{% trans "Assigned to" %}</th>
+      <th>{% trans "Status" %}</th>
+      <th data-defaultsort="disabled"></th>
+    </tr>
+  </thead>
+  <tbody class="searchable">
+  {% for order in orders %}
+    <tr>
+      <td><a href="{{ order.get_absolute_url }}">{{ order.code }}</a></td>
+      <td data-value="{{ order.customer_name }}">{% if order.customer_name %}<strong>{{ order.customer_name }}</strong>{% else %}<span class="muted">{% trans "No customer" %}</span>{% endif %}<br/>{% if order.description %}{{ order.description }}{% else %}<span class="muted">{% trans "No description" %}</span>{% endif %} {% cache 120 order_tags order.pk %} {% for t in order.tags.all %}<span class="label label-{{ t.color }}">{{ t.title }}</span>&nbsp;{% endfor %}{% endcache %}</td>
+      <td data-value="{{ order.created_at|date:"U" }}">{{ order.created_at|naturaltime }}<br/><small class="muted">{{ order.created_at|date:"SHORT_DATETIME_FORMAT" }}</small></td>
+      <td>
+      {% if order.user %}
+        {{ order.get_user_name }}<br/>
+        <small class="muted">{{ order.started_at|naturaltime|default:"" }}</small>
+      {% else %}
+        <span class="muted">{% trans "Nobody" %}</span>
+      {% endif %}
+      <td data-value="{{ order.status_name }}">{% if order.status_name %}{{ order.status_name }}{% else %}<span class="muted">{% trans "No status" %}</span>{% endif %}<br/><small class="muted">{{ order.status_started_at|naturaltime|default:"" }}</small></td>
+      <td><img src="{% static order.get_status_img %}" title="{{ order.status_name }}" alt="{{ order.status_name }}" class="status_color"/></td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="6" class="empty muted">{% trans "No orders found" %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if orders.paginator %}
+  {% include "pagination.html" with items=orders %}
+  {% endif %}

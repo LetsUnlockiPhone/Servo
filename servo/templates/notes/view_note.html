@@ -1,0 +1,38 @@
+{% extends "notes/list_notes.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block note_buttons %}
+    <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-flag"></i> <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'notes-toggle_flag' note.pk 'read' %}" class="nofollow">{{ note.get_read_title }}</a></li>
+            <li><a href="{% url 'notes-toggle_flag' note.pk 'flagged' %}" class="nofollow">{{ note.get_flagged_title }}</a></li>
+        </ul>
+    </div>
+{% endblock note_buttons %}
+
+{% block view_message %}
+    <div class="message-header">
+        <p>{% trans "From" %}: {{ note.sender }}</p>
+    {% if note.order.id %}
+        <p>{% trans "Service Order" %}: <a href="{% url 'orders-edit' note.order.id %}">{{ note.order.code }}</a></p>
+    {% endif %}
+        <p>{% trans "Created" %}: {{ note.created_at|relative_date }}</p>
+        <p>{% trans "Subject" %}: {{ note.subject }}</p>
+    </div>
+    <hr/>
+    {{ note.body|markdown }}
+    {% for a in note.attachments.all %}
+        <a class="label label-info window" href="{{ a.content.url }}"><i class="icon-download icon-white"></i> {{ a }}</a>
+    {% endfor %}
+    <div class="form-actions">
+        <div class="pull-right">
+            <a href="{% url 'servo.views.order.create' note_id=note.id %}" class="btn {% if note.order.id %} disabled {% endif %}">{% trans "Create Order" %}</a>
+            <a href="{% url 'notes-delete_note' note.id %}" class="btn btn-danger" data-modal="#modal">{% trans "Delete" %}</a>
+            <a href="{% url 'servo.views.note.edit' parent=note.id %}" class="btn btn-primary">{% trans "Reply" %}</a>
+        </div>
+    </div>
+{% endblock view_message %}

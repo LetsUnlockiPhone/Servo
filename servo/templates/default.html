@@ -1,0 +1,185 @@
+{% load servo_tags %}
+{% load humanize %}
+{% load cache %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
+  <link rel="apple-touch-icon" type="image/png" href="{{ STATIC_URL }}images/apple-touch-icon.png">
+  <link href="{{ STATIC_URL }}js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}js/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/bootstrap-sortable.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/glyphicons.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/halflings.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/servo.css" rel="stylesheet">
+  <title>{{ title }} | Servo</title>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="modal hide" id="modal"></div>
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="{% active request request.user.username %}"><a href="{% url 'accounts-list_orders' request.user.username %}" title="{% trans "Homepage" %}"><i class="icon-home icon-white"></i></a></li>
+              <li class="{% active request '^orders' %}"><a href="{% url 'orders-index' %}?page=1"><i class="icon-inbox icon-white"></i> {% trans "Orders" %}</a></li>
+              <li class="{% active request '^sales' %}"><a href="{% url 'products-list_products' %}"><i class="icon-shopping-cart icon-white"></i> {% trans "Inventory" %}</a></li>
+              <li class="{% active request '^devices' %}"><a href="{% url 'devices-list' %}"><i class="icon-hdd icon-white"></i> {% trans "Devices" %}</a></li>
+              <li class="{% active request '^customers' %}"><a href="{% url 'customers-list_all' %}"><i class="icon-book icon-white"></i> {% trans 'Customers' %}</a></li>
+              <li class="{% active request '^notes' %}"><a href="{% url 'notes-list_notes' 'inbox' %}"><i class="icon-comment icon-white"></i> {% trans "Messages" %}</a></li>
+              <li class="{% active request '^stats' %}"><a href="{% url 'stats-index' %}"><i class="halflings stats white"></i> {% trans "Statistics" %}</a></li>
+            </ul>
+            <div class="nav-collapse collapse">
+              <form class="navbar-search pull-right" method="get" action="{{ request|search_url }}">
+                <input type="text" class="search-query" name="q" placeholder="{% trans "Search" %}" autocomplete="off" value="{{ request.session.search_query }}" id="toolbar-search" autofocus/>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-fixed-top" style="top:41px;z-index:3">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <div class="pull-left">
+          {% block toolbar %}
+          {% endblock toolbar %}
+          </div>
+          <div class="pull-right">
+            <ul class="nav pull-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="icon-user"></i> <b class="caret"></b>
+                </a>
+              {% with request.user as user %}
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon-user"></i> {{ request.user.get_name }}</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{% url 'accounts-list_orders' user.username %}"><i class="icon-home"></i> {% trans "Homepage" %}</a></li>
+                  <li><a href="{% url 'calendars-list' user.username %}"><i class="icon-calendar"></i> {% trans "Calendars" %}</a></li>
+                  <li><a href="{% url 'accounts-settings' user.username %}"><i class="icon-wrench"></i> {% trans "Profile" %}</a></li>
+                {% if request.user.is_staff %}
+                  <li><a href="{% url 'admin-settings' %}"><i class="icon-cog"></i> {% trans "System Settings" %}</a></li>
+                {% endif %}
+                <li class="divider"></li>
+                <li><a href="{% url 'checkin-index' %}"><i class="icon-check"></i> {% trans "Go to check-in" %}</a></li>
+                <li><a href="{% url 'accounts-logout' %}" data-modal="#modal"><i class="icon-off"></i> {% trans "Log out" %}...</a></li>
+                </ul>
+              {% endwith %}
+              </li>
+            </ul>
+            {% with request.user.notifications as notifications %}
+            <ul class="nav pull-right">
+            {% with notifications|unread_notifications as alerts %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="icon-bell"></i> <span class="badge event-counter">{{ alerts|count_or_empty }}</span> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                {% for i in alerts|slice:":10" %}
+                  <li class="{{ i.get_class }}">
+                    <a href="{% url 'events-ack_event' i.pk %}" class="alt" data-rel=".event-counter">
+                      <div>
+                        <i class="icon-tasks"></i> {{ i.description }}
+                        <br/>
+                        <small class="muted">{{ i.triggered_at|naturaltime }}</small>
+                      </div>
+                    </a>
+                  </li>
+                {% if not forloop.last %}
+                  <li class="divider"></li>
+                {% endif %}
+                {% empty %}
+                  <li class="disabled"><a href="#" class="text-center">{% trans "No new alerts" %}</a></li>
+                {% endfor %}
+                  <li class="divider"></li>
+                  <li>
+                    <a class="text-center" href="{% url 'accounts-updates' request.user.username %}?kind=set_status">
+                      <strong>{% trans "See All Alerts" %}</strong> <i class="icon-chevron-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            {% endwith %}
+            </ul>
+            <ul class="nav pull-right">
+              <li class="dropdown">
+              {% with notifications|unread_messages as messages %}
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="icon-envelope"></i> <span class="badge msg-counter">{{ messages|count_or_empty }}</span> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                {% for i in messages|slice:":10" %}
+                  <li class="{{ i.get_class }}">
+                    <a href="{% url 'events-ack_event' i.pk %}" class="alt" data-rel=".msg-counter">
+                      <div class="clearfix">
+                        <strong class="pull-left">{{ i.triggered_by }}</strong>
+                        <small class="pull-right muted">{{ i.triggered_at|naturaltime }}</small>
+                      </div>
+                      <div style="overflow:hidden">{{ i.description }}</div>
+                    </a>
+                  </li>
+                {% if not forloop.last %}
+                  <li class="divider"></li>
+                {% endif %}
+                {% empty %}
+                  <li class="disabled"><a href="#" class="text-center">{% trans "No new messages" %}</a></li>
+                {% endfor %}
+                {% endwith %}
+                  <li class="divider"></li>
+                  <li>
+                    <a class="text-center" href="{% url 'accounts-updates' request.user.username %}?kind=note_added">
+                      <strong>{% trans "Read All Messages" %}</strong> <i class="icon-chevron-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              {% endwith %}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid container-main">
+    {% for message in messages %}
+      <div class="alert alert-block alert-{{ message.tags }}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon-exclamation-sign"></i> <strong>{{ message }}</strong>
+      </div>
+    {% endfor %}
+      {% block content %}
+      {% endblock content %}
+    </div>
+    <div class="push"></div>
+  </div>
+  <div class="footer">
+    <div class="container-fluid">
+      <ul class="breadcrumb pull-left">
+        <li><i class="icon-home"></i> <a href="{% url 'accounts-list_orders' request.user.username %}">{{ request.user.get_full_name }}</a> <span class="divider">/</span></li>
+        {% block crumbs %}{% endblock crumbs %}
+      </ul>
+      <small class="copyright pull-right muted">&copy; {% now "Y" %} First Party Software | <a href="https://docs.servoapp.com/terms/" target="_blank">{% trans "Terms" %}</a></small>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-sortable.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/spin.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.spin.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/common.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/modernizr.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/servo.js"></script>
+  {% block media %}{% endblock media %}
+</body>
+</html>

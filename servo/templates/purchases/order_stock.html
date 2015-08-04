@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Submit this stocking order?" %}    
+{% endblock header %}
+
+{% block body %}
+    {% trans "Products will be ordered from GSX." %}
+{% endblock body %}
+
+{% block footer %}
+    <form action="{{ action }}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger">{% trans "Submit" %}</button>
+    </form>
+{% endblock footer %}

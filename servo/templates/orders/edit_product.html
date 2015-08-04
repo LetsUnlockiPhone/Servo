@@ -1,0 +1,33 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block body %}
+
+<form method="post" action="{{ request.path }}" class="form-horizontal">
+  {% csrf_token %}
+  {% include "form_field_snippet.html" with field=form.title %}
+  {% include "form_field_snippet.html" with field=form.amount %}
+  {% include "form_field_snippet.html" with field=form.price_category %}
+  {% include "form_field_snippet.html" with field=form.price %}
+  {% if product.is_serialized %}
+  {% include "form_field_snippet.html" with field=form.sn %}
+  {% include "form_field_snippet.html" with field=form.kbb_sn %}
+  {% include "form_field_snippet.html" with field=form.imei %}
+  {% endif %}
+  {% if product.component_code %}
+  {% include "form_field_snippet.html" with field=form.comptia_code %}
+  {% include "form_field_snippet.html" with field=form.comptia_modifier %}
+  {% endif %}
+  {% include "form_field_snippet.html" with field=form.should_report %}
+</form>
+
+<script type="text/javascript">
+  {% autoescape off %}
+  var prices = {{ prices }};
+  {% endautoescape %}
+  $('#id_price_category').change(function(){
+    $('#id_price').val(prices[$(this).val()]);
+  });
+</script>
+
+{% endblock body %}

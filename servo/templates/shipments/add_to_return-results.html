@@ -1,0 +1,8 @@
+{% load i18n %}
+<ul class="nav nav-pills nav-stacked">
+{% for i in results %}
+  <li><a href="{% url 'shipments-add_to_return' pk=shipment part=i.pk %}">{{ i.order_item.code }}</a></li>
+{% empty %}
+  <li class="text-center">{% trans "No parts found" %}</li>
+{% endfor %}
+</ul>

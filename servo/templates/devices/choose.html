@@ -1,0 +1,26 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+{% trans "Search for device" %}
+{% endblock header %}
+
+{% block body %}
+<form method="post" action="{% url 'devices-choose' order %}" accept-charset="utf-8" data-target="#search-results" id="search-form">
+  {% csrf_token %}
+  <input type="text" style="width:500px" class="search-query" name="q" autocomplete="off" placeholder="{% trans "Serial number or IMEI code" %}" id="device-sn"/>
+</form>
+<div id="search-results"></div>
+{% endblock body %}
+
+{% block footer %}
+<a id="add-device" href="{% url 'devices-add' %}" class="btn">{% trans "New Device" %}</a>
+<a class="btn btn-primary trigger-search" href="#">{% trans "Search" %}</a>
+<script type="text/javascript">
+  $('#add-device').on('click', function() {
+    var url = $(this).attr('href') + '?sn=' + $('#device-sn').val();
+    document.location = url;
+    return false;
+  });
+</script>
+{% endblock footer %}

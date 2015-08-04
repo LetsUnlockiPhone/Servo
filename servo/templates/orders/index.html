@@ -1,0 +1,55 @@
+{% extends "default.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+{% if perms.servo.add_order %}
+  <a href="{% url 'orders-create' %}" class="btn"><i class="icon-plus"></i> {% trans "Create Order" %}</a>
+  {% if request.session.order_queryset %}
+    <a href="{% url 'orders-download_results' %}" class="btn"><i class="icon-download"></i> {% trans "Download Results" %}</a>
+  {% endif %}
+{% else %}
+  <a href="#" class="btn disabled"><i class="icon-plus"></i> {% trans "Create Order" %}</a>
+{% endif %}
+{% endblock toolbar %}
+
+{% block content %}
+<div class="page-header clearfix">
+  <div class="pull-left">
+    <h2><i class="glyphicons-icon inbox_in"></i> {{ title }}<br/><small style="margin-left:60px">{{ subtitle }}</small></h2>
+  </div>
+  <form class="form-search pull-right">
+    <div class="input-append">
+      <input type="text" class="search-query filter" placeholder="{% trans "Filter results" %}"/>
+      <button type="button" class="btn" data-toggle="collapse" data-target="#collapsable"><i class="icon-search"></i></button>
+    </div>
+  </form>
+</div>
+
+<div id="collapsable" class="collapse out">
+  <div class="well clearfix">
+    <form action="" method="get" class="form-inline">
+    {% for field in form %}
+      <div class="control-group pull-left">
+        <label class="control-label">{{ field.label }}</label>
+        <div class="controls">{{ field }}</div>
+      </div>
+    {% endfor %}
+      <p class="clearfix"><hr/></p>
+      <div class="pull-right">
+        <a class="btn" href="{% url 'orders-index' %}?state=0"><i class="icon-refresh"></i> {% trans "Reset" %}</a>
+        <button class="btn btn-primary" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% block second_column %}
+{% include "orders/list.html" %}
+{% endblock second_column %}
+
+{% endblock content %}
+
+{% block crumbs %}
+<li><a href="{% url 'orders-index' %}">{% trans "Orders" %}</a></li>
+{% endblock crumbs %}

@@ -1,0 +1,71 @@
+{% load i18n %}
+
+{% for d in results %}
+<div class="row-fluid">
+  <div class="span3">
+    <img class="img-rounded" src="{{ d.get_image_url }}" alt="{{ d.description }}" title="{{ d.description }}"/>
+  </div>
+  <div class="span9" id="gsx-results">
+    <h3>{{ d.description }}</h3>
+  {% if d.tags %}
+    {% for t in d.tags.all %}<span class="label pull-right"><i class="icon icon-tag"></i>{{ t.tag }}</span>{% endfor %}
+  {% endif %}
+    <dl class="dl-horizontal">
+      <dt>{% trans "Warranty Status" %}</dt>
+      <dd>{{ d.get_warranty_status_display }}</dd>
+      <dt>{% trans "Purchase Date" %}</dt>
+      <dd>{{ d.purchased_on|date:"SHORT_DATE_FORMAT"|default:"-" }}, {{ d.purchase_country|default:"-" }}</dd>
+      <dt>{% trans "Serial Number" %}</dt>
+      <dd>{{ d.sn }}</dd>
+      <dt>{% trans "Configration" %}</dt>
+      <dd>{{ d.configuration }}</dd>
+    {% if d.imei %}
+      <dt>{% trans "IMEI" %}</dt>
+      <dd>{{ d.imei|safe }}</dd>
+      <dt>{% trans "Applied Activation Policy" %}</dt>
+      <dd>{{ d.applied_activation_policy }}</dd>
+      <dt>{% trans "Initial Activation Policy" %}</dt>
+      <dd>{{ d.initial_activation_policy }}</dd>
+      <dt>{% trans "Next Tether Policy" %}</dt>
+      <dd>{{ d.next_tether_policy }}</dd>
+      <dt>{% trans "Find My iPhone" %}</dt>
+      <dd>{{ d.get_fmip_status }}</dd>
+      <dt>{% trans "Unlocked" %}</dt>
+      <dd>{{ d.unlocked|yesno }}</dd>
+    {% endif %}
+    {% if d.repeat_service %}
+      {% with d.repeat_service as order %}
+      <dt>{% trans "Sales Order" %}</dt>
+      <dd><a href="{{ order.get_absolute_url }}">{{ d.repeat_service.code }}</a> ({{ order.created_at|date:"SHORT_DATE_FORMAT" }})</dd>
+      {% endwith %}
+    {% endif %}
+    {% if d.get_coverage_details %}
+      <dt>{% trans "Details" %}</dt>
+      <dd>{{ d.get_coverage_details|join:"<br/>" }}</dd>
+    {% endif %}
+    {% if d.has_onsite %}
+      <dt>{% trans "Onsite Coverage" %}</dt>
+      <dd>{{ d.onsite_start_date }} - {{ d.onsite_end_date }}</dd>
+    {% endif %}
+    {% if d.contract_start_date %}
+      <dt>{% trans "Contract Coverage" %}</dt>
+      <dd>{{ d.contract_start_date }} - {{ d.contract_end_date }}</dd>
+    {% endif %}
+    {% if d.notes %}
+      <dt>{% trans "Notes" %}</dt>
+      <dd>{{ d.notes }}</dd>
+    {% endif %}
+    </dl>
+    <hr/>
+  {% if request.session.current_order_id %}
+    {% with request.session.current_order_id as co %}
+    <a class="btn btn-primary" href="{% url 'orders-add_device' pk=co sn=d.sn %}"><i class="icon-share-alt icon-white"></i> {% trans "Use in order"  %} #{{ request.session.current_order_code }}</a>
+    {% endwith %}
+  {% endif %}
+    <a class="btn btn-default" href="{% url 'orders-create_with_sn' sn=d.sn %}"><i class="icon-plus"></i> {% trans "Create Service Order" %}</a>
+  {% if d.manual_url %}
+    <a class="btn" href="{{ d.manual_url }}"><i class="icon-download"></i> {% trans "Download Manual" %}</a></li>
+  {% endif %}
+  </div>
+</div>
+{% endfor %}

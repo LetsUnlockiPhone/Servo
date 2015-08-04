@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load servo_tags %}
+
+<div class="pagination pagination-centered">
+    <ul>
+    {% if items.has_previous %}
+        <li><a href="?{% paginator_page request items.previous_page_number %}"><span>&laquo;</span></a></li>
+    {% else %}
+        <li class="disabled"><a href="#"><span>&laquo;</span></a></li>
+    {% endif %}
+        <li class="active"><a href="#"><span>{% trans "Page" %} {{ items.number }}/{{ items.paginator.num_pages }}</span></a></li>
+    {% if items.has_next %}
+        <li><a href="?{% paginator_page request items.next_page_number %}"><span>&raquo;</span></a></li>
+    {% else %}
+        <li class="disabled"><a href="#"><span>&raquo;</span></a></li>
+    {% endif %}
+  </ul>
+</div>

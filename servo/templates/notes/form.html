@@ -1,0 +1,112 @@
+{% extends "two_column_layout.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block first_column %}
+{% with note.order as order %}
+{% if order %}
+{% if order.customer %}
+{% include "orders/customer.html" with nodes=order.customer_list %}
+<hr/>
+{% endif %}
+{% for device in order.devices.all %}
+<p>
+  <strong>{{ device.description }}</strong><br/>
+  <small class="muted">{{ device.configuration }}</small><br/>
+  <small class="muted"><i class="icon-barcode"></i> {{ device.sn }}</small>
+</p>
+{% endfor %}
+<hr/>
+{% for p in order.products %}
+<small><strong>{{ p.code }}</strong></small><small class="pull-right">{{ p.price|currency }}</small><br/>
+<small class="muted">{{ p.title }}</small><br/>
+{% endfor %}
+<hr/>
+<strong>{% trans "Total" %}:</strong>
+<span class="pull-right"><strong>{{ order.gross_total|currency }}</strong></span>
+{% endif %}
+{% endwith %}
+{% endblock first_column %}
+
+{% block second_column %}
+
+<form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data" class="form-horizontal">
+  {% csrf_token %}
+  {{ form.customer }}
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{% trans "Note" %}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{% trans "Attachments" %}</a></li>
+    <li><a href="#tab3" data-toggle="tab">{% trans "Labels" %}</a></li>
+    <li><a href="#tab4" data-toggle="tab">{% trans "Escalation" %}</a></li>
+  </ul>
+  {{ formset.management_form }}
+  {{ form.order }}
+  {% if note.parent %}
+  {{ form.parent }}
+  {% endif %}
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      {% include "form_field_snippet.html" with field=form.recipient %}
+      {% include "form_field_snippet.html" with field=form.subject %}
+      {% include "form_field_snippet.html" with field=form.sender %}
+      {% include "form_field_snippet.html" with field=form.body %}
+      {% include "form_field_snippet.html" with field=form.is_reported %}
+    </div>
+    <div class="tab-pane" id="tab2">
+    {% for f in formset %}
+      {% include "form_snippet.html" with form=f %}
+    {% endfor %}  
+    </div>
+    <div class="tab-pane" id="tab3">
+      {% include "form_field_snippet.html" with field=form.labels %}
+    </div>
+    <div class="tab-pane" id="tab4">
+      {% include "form_field_snippet.html" with field=escalation_form.issue_type %}
+      {% include "form_field_snippet.html" with field=escalation_form.status %}
+      {% include "form_field_snippet.html" with field=escalation_form.gsx_account %}
+    {% for k, v in contexts.items %}
+      <div class="control-group">
+        <select name="keys" class="control-label">
+        {% for i, f in fields %}
+          <option{% if i == k %} selected="selected"{% endif %} value="{{ i }}">{{ f }}</option>
+        {% endfor %}
+        </select>
+        <div class="controls">
+          <div class="input-append">
+            <input type="text" name="values" value="{{ v }}"/>
+            <a class="btn remove_field"><i class="icon-remove"></i></a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+      <div class="control-group property">
+        <select name="keys" class="control-label">
+        {% for i, f in fields %}
+          <option value="{{ i }}">{{ f }}</option>
+        {% endfor %}
+        </select>
+        <div class="controls">
+          <div class="input-append">
+            <input type="text" name="values"/>
+            <a class="btn remove_field disabled"><i class="icon-remove"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-actions">
+  {% if note.pk %}
+    <a class="btn btn-danger" href="{% url 'notes-delete_note' note.pk %}" data-modal="#modal">{% trans "Delete" %}</a>
+  {% endif %}
+    <input type="submit" class="btn btn-primary" value="{% trans "Save" %}"/>
+  </div>
+</form>
+{% endblock second_column %}
+
+{% block crumbs %}
+{% if note.order %}
+  <li><a href="{{ order.get_queue_url }}">{{ order.get_queue_title }}</a> <span class="divider">/</span></li>
+  <li><a href="{{ order.get_absolute_url }}">{% trans "Order" %} {{ order.code }}</a> <span class="divider">/</span></li>
+  <li class="active">{% trans "Edit Note" %}</li>
+{% endif %}
+{% endblock crumbs %}

@@ -1,0 +1,106 @@
+{% extends "products/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block first_column %}
+<ul class="nav nav-list">
+  <li class="nav-header">{% trans "Invoices" %}</li>
+  <li class="active"><a href="{% url 'invoices-index' %}">{% trans "Sales Invoices" %}</a></li>
+  <li><a href="{% url 'invoices-gsx_invoices' %}">{% trans "Apple Invoices" %}</a></li>
+</ul>
+{% endblock first_column %}
+
+{% block toolbar %}
+{% endblock toolbar %}
+
+{% block second_column %}
+{% block filter_bar %}
+<div class="row-fluid">
+  <div class="span12 well">
+    <form action="" method="post" class="form-inline">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="control-group pull-left">
+        <label class="control-label">{{ field.label }}</label>
+        <div class="controls">{{ field }}</div>
+      </div>
+      {% endfor %}
+      <div class="control-group">
+        <label class="control-label">&nbsp;</label>
+        <div class="controls">
+          <button class="btn btn-primary pull-right" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock filter_bar %}
+<div class="row-fluid">
+  <div class="span12">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{% trans "Order" %}</th>
+          <th>{% trans "Customer" %}</th>
+          <th>{% trans "Date Created" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Total" %}</th>
+          <th>{% trans "Date Paid" %}</th>
+          <th>{% trans "Payment Method" %}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for i in invoices %}
+        <tr>
+          <td>{{ i.pk|safe }}</td>
+          <td><a href="{{ i.order.get_absolute_url }}">{{ i.order.code }}</a></td>
+          <td>{{ i.customer_name }}</td>
+          <td>{{ i.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+          <td>{{ i.order.status_name }}</td>
+          <td>{{ i.total_gross|currency }}</td>
+          <td>{{ i.paid_at|date:"SHORT_DATE_FORMAT" }}</td>
+          <td>{{ i.get_payment_methods|join:", " }}</td>
+          <td>
+            <div class="btn-group pull-right">
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="icon-cog"></i> <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'invoices-print_invoice' i.pk %}" class="window">{% trans "Print receipt" %}</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="9" class="empty muted">{% trans "No invoices found" %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><strong>{{ total.total_net__sum|currency|default:"" }}<br/>{{ total_purchases.total__sum|currency|default:"" }}</strong></td>
+          <td><strong>{{ total_paid.total_net__sum|currency|default:"" }}</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    {% include "pagination.html" with items=invoices %}
+  </div>
+</div>
+{% endblock second_column %}
+
+{% block third_column %}
+{% endblock third_column %}
+
+{% block crumbs %}
+<li class="active"><span class="divider"></span> <a href="{% url 'invoices-index' %}">{% trans "Invoices" %}</a></li>
+{% endblock crumbs %}

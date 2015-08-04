@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Delete this note?" %}
+{% endblock header %}
+
+{% block body %}
+    <p>{% trans "This will also delete any replies to this note." %}</p>
+{% endblock body %}
+
+{% block footer %}
+    <form action="{% url 'notes-delete_note' note.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+    </form>
+{% endblock footer %}

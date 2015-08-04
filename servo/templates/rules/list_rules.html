@@ -1,0 +1,22 @@
+{% extends "admin/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+  <a class="btn" href="{% url 'rules-create' %}"><i class="icon-plus"></i> {% trans "New Rule" %}</a>
+{% endblock toolbar %}
+
+{% block second_column %}
+  <div class="span3">
+    <ul class="nav nav-pills nav-stacked">
+      <li class="nav-header">{% trans "Rules" %}</li>
+    {% for o in object_list %}
+      <li class="{% active_url request o.get_admin_url %}"><a href="{{ o.get_admin_url }}">{{ o.get_name }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="span9">
+    {% block third_column %}
+    {% endblock third_column %}
+  </div>
+{% endblock second_column %}

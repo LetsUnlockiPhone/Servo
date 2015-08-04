@@ -1,0 +1,22 @@
+{% extends "login.html" %}
+{% load i18n %}
+
+{% block content %}
+<img src="{{ STATIC_URL }}images/logo_servoapp.png" class="servo-logo" alt=""/>
+<form action="{% url "accounts-login" %}" method="post" accept-charset="utf-8">
+  {% csrf_token %}
+  <div class="input-prepend">
+    <span class="add-on"><i class="icon-user"></i></span>
+    {{ form.username }}
+  </div>
+  <div class="input-prepend">
+    <span class="add-on"><i class="icon-lock"></i></span>
+    {{ form.password }}
+  </div>
+  <br/>
+  <div class="pull-right">
+    <a class="btn btn" href="{% url 'checkin-index' %}">{% trans "Check-in" %}</a>
+    <button class="btn btn-primary" type="submit">{% trans "Login" %}</button>
+  </div>
+</form>
+{% endblock content %}

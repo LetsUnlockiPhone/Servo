@@ -1,0 +1,21 @@
+{% extends "checkin/index.html" %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block main %}
+  <div class="page-header">
+    <h2>{% trans "Please enter your Service Order number" %}</h2>
+  </div>
+  <p>{% trans "The Service Order number is an 8-digit code printed on your work confirmation" %}</p>
+  <form method="get" action="" class="nolabel">
+    {% bootstrap_form form %}
+  {% buttons %}
+  <div class="pull-right">
+    <a class="btn btn-default" href="{% url 'checkin-index' %}">{% trans "Back" %}</a>
+    <button type="submit" class="btn btn-primary">
+      {% bootstrap_icon "search" %} Submit
+    </button>
+  </div>
+  {% endbuttons %}
+  </form>
+{% endblock main %}

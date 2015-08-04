@@ -1,0 +1,39 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block second_column %}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">{% trans "Reports" %}</a></li>
+</ul>
+
+<form method="post" action="">
+    {% csrf_token %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>{% trans "Daily" %}</th>
+                <th>{% trans "Weekly" %}</th>
+                <th>{% trans "Monthly" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{% trans "Repairs aging beyond limits" %}</td>
+                <td><input type="checkbox"/></td>
+                <td><input type="checkbox"/></td>
+                <td><input type="checkbox"/></td>
+            </tr>
+            <tr>
+                <td>{% trans "Products below stocking limit" %}</td>
+                <td><input type="checkbox"/></td>
+                <td><input type="checkbox"/></td>
+                <td><input type="checkbox"/></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary pull-right">{% trans "Save" %}</button>
+    </div>
+</form>
+{% endblock second_column %}

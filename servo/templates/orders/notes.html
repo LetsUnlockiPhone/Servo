@@ -1,0 +1,84 @@
+{% load i18n %}
+{% load humanize %}
+{% load mptt_tags %}
+{% load servo_tags %}
+
+{% if not order.notes %}
+<div class="row-fluid">
+  <div class="span12 well empty"><h3 class="muted">{% trans "Order doesn't contain any notes." %}</h3></div>
+</div>
+{% endif %}
+
+<ul class="media-list" style="margin-bottom:0px">
+{% recursetree notes %}
+  {% if node.is_root_node %}<li {% else %}<div {% endif %}class="media">
+  <a class="pull-left" href="#">
+  {% with node.created_by as profile %}
+    <img src="{{ profile.get_avatar }}" alt="{{ profile }}" title="{{ profile }}" class="avatar"/>
+  {% endwith %}
+  </a>
+  <div class="btn-group pull-right">
+    <a href="{% url 'notes-reply' node.pk %}" class="btn btn-small" title="{% trans "Reply" %}"><i class="icon-share-alt"></i></a>
+    {% if perms.servo.change_note and order.is_editable %}
+    <a href="{{ node.get_edit_url }}" class="btn btn-small"><i class="icon-pencil"></i></a>
+    {% else %}
+    <a href="#" class="btn btn-small disabled"><i class="icon-pencil"></i></a>
+    {% endif %}
+    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="icon-cog"></i> <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li class="dropdown-submenu pull-left">
+        <a tabindex="-1" href="#"><i class="icon-tag"></i> {% trans "Tag" %}</a>
+        <ul class="dropdown-menu">
+        {% for t in note_tags %}
+          <li><a href="{% url 'notes-toggle_tag' node.pk t.pk %}">{{ t }}</a></li>
+        {% endfor %}
+        </ul>
+      </li>
+      <li class="dropdown-submenu pull-left">
+        <a tabindex="-1" href="#"><i class="icon-flag"></i> {% trans "Mark" %}</a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'notes-toggle_flag' node.pk 'reported' %}" class="nofollow">{{ node.get_reported_title }}</a></li>
+          <li><a href="{% url 'notes-toggle_flag' node.pk 'read' %}" class="nofollow">{{ node.get_read_title }}</a></li>
+          <li><a href="{% url 'notes-toggle_flag' node.pk 'flagged' %}" class="nofollow">{{ node.get_flagged_title }}</a></li>
+        </ul>
+      </li>
+      <li{% if not order.is_editable %} class="disabled"{% endif %}><a href="{% url 'notes-copy' node.pk %}"><i class="icon-plus"></i> {% trans "Copy" %}</a></li>
+      <li><a href="{% url 'notes-messages' node.pk %}" data-modal="#modal"><i class="icon-info-sign"></i> {% trans "Message Log" %}</a></li>
+      <li class="divider"></li>
+      <li{% if not order.is_editable %} class="disabled"{% endif %}><a href="{% url 'notes-delete_note' node.pk %}" data-modal="#modal"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+    </ul>
+  </div>
+  <div class="media-body">
+    <h5 class="media-heading">{{ node.get_sender_name }} {{ node.created_at|relative_date }}
+    {% if node.escalation.is_submitted %}
+      <small class="muted"><i class="icon-globe"></i> {{ node.escalation.escalation_id }}</small>
+    {% endif %}
+    </h5>
+    {% if node.is_reported %}
+      {{ node.body|markdown }}
+    {% else %}
+      <em>{{ node.body|markdown }}</em>
+    {% endif %}
+    {% if node.message_set.all|length %}
+      <i class="icon-envelope" title="{% trans "Note has been sent" %}"></i>
+    {% endif %}
+    {% with node.attachments.all as attachments %}
+      {% for a in attachments %}
+      <a class="window" href="{{ a.content.url }}"><span class="label label-info"><i class="icon-file icon-white"></i> {{ a }}</span></a>
+      {% endfor %}
+    {% endwith %}
+    {% if not node.is_leaf_node %}
+      {{ children }}
+    {% endif %}
+    {% for t in node.labels.all %}
+      <span class="label label-{{ t.color }}">{{ t.title }}</span>
+    {% endfor %}
+  </div>
+  {% if node.is_root_node %}</li><hr/>{% else %}</div>{% endif %}
+{% endrecursetree %}
+</ul>
+<p class="clearfix">
+  <a href="{% url 'orders-add_note' order.pk %}" class="btn pull-right {% if order.is_closed %}disabled{% endif %}"><i class="icon-plus"></i> {% trans "Add Note" %}</a>
+</p>

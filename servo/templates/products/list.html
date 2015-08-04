@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load servo_tags %}
+<table class="table table-hover sortable">
+  <thead>
+    <tr>
+      <th style="width:80px" data-defaultsort="disabled"></th>
+      <th>{% trans "Product" %}</th>
+      <th>{% trans "Stock Price" %}</th>
+      <th>{% trans "Exchange Price" %}</th>
+      <th style="width:80px">{% trans "In Stock" %}</th>
+      <th data-defaultsort="disabled"></th>
+    </tr>
+  </thead>
+  <tbody class="searchable">
+    {% include "products/list_rows.html" %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><strong>{{ total_sales_value|currency }}</strong><br/><strong>{{ total_purchase_value|currency }}</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>

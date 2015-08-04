@@ -1,0 +1,10 @@
+[
+  {
+    "model": "servo.Location",
+    "pk": 1,
+    "fields": {
+      "title": "Default Location",
+      "timezone": "Europe/Helsinki"
+    }
+  }
+]

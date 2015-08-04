@@ -1,0 +1,18 @@
+{% extends "notes/list_notes.html" %}
+{% load servo_tags %}
+{% load humanize %}
+{% load i18n %}
+
+{% block toolbar %}
+  <a href="{% url 'notes-create' %}" class="btn"><i class="icon-plus"></i> {% trans "Create Note" %}</a>
+{% endblock toolbar %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>{{ title }} <small>{{ subtitle }}</small></h1>
+</div>
+
+{% include "notes/search-results.html" %}
+
+{% endblock content %}

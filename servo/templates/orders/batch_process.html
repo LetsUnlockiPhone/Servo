@@ -1,0 +1,14 @@
+{% extends "orders/index.html" %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block content %}
+	<h2>{% trans "Batch Processing" %}</h2>
+	<form action="" method="post">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+		<button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+		{% endbuttons %}
+	</form>
+{% endblock content %}

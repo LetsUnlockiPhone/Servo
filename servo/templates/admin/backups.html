@@ -1,0 +1,17 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block second_column %}
+	<h2>{% trans "Backups" %}</h2>
+	<table class="table">
+		<tbody>
+		{% for b in backups %}
+			<tr>
+				<td>{{ b.filename }}</td>
+				<td>{{ b.filesize|filesizeformat }}</td>
+				<td><a href="?dl={{ b.filename }}" class="btn btn-default"><i class="icon-download"></i></a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock second_column %}

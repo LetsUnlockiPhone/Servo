@@ -1,0 +1,15 @@
+{% extends "checkin/index.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "An error occurred" %}{% endblock title %}
+
+{% block main %}
+<div class="container-narrow">
+  <div class="jumbotron">
+    <h1>{% trans "Oops!" %}</h1>
+    <p class="lead">{% trans "It appears that an error has occurred." %}</p>
+    <p>{{ message }}</p>
+    <a class="btn btn-large btn-success" href="{% url 'checkin-index' %}"><i class="icon-refresh icon-white"></i> {% trans "Try again" %}</a>
+  </div>
+</div>
+{% endblock main %}

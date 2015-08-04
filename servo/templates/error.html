@@ -1,0 +1,49 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
+  <link rel="apple-touch-icon" type="image/png" href="{{ STATIC_URL }}images/apple-touch-icon.png">
+  <link href="{{ STATIC_URL }}js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}js/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="{{ STATIC_URL }}css/glyphicons.css" rel="stylesheet">
+  <title>{% trans "An Error Occurred" %}</title>
+  <style type="text/css">
+    label {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="main container">
+  {% block main %}
+  <div class="container-narrow">
+    <div class="row">
+      <div class="span12">
+        <div class="jumbotron">
+        {% if crashed %}
+          <h1>{% trans "Oops!" %}</h1>
+          <p class="lead">{% trans "It appears that an error has occurred." %} {% trans "I've notified the developers, but I'm sure they would really appreciate if you could briefly describe what you were doing before this happened." %}</p>
+          <form action="" method="post">
+            {% csrf_token %}
+            {% include "form_snippet.html" %}
+            <div class="pull-right">
+              <a class="btn btn-large" href="{% url 'home' %}">{% trans "Cancel" %}</a>
+              <button type="submit" class="btn btn-primary btn-large">{% trans "Submit" %}</button>
+            </div>
+          </form>
+        {% else %}
+          <h1>{% trans "Thanks!" %}</h1>
+          <p class="lead">{% trans "Your error report has been submitted. Thanks for helping make Servo better!" %}</p>
+          <a class="btn btn-large" href="{% url 'home' %}"><i class="icon-home"></i> {% trans "Return Home" %}</a>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock main %}
+  </div>
+</body>
+</html>

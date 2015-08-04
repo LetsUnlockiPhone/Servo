@@ -1,0 +1,26 @@
+{% extends "checkin/index.html" %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block main %}
+<div class="page-header">
+	<h2>{% trans "Done!" %}</h2>
+	<p class="lead">{% blocktrans with code=order.code %}Your service order <strong>{{ code }}</strong> has been submitted. {% endblocktrans %} {% blocktrans %}Please click <strong>Print</strong> to print the confirmation.{% endblocktrans %}</p>
+</div>
+<div class="thanks text-center">
+  <img src="{{ STATIC_URL }}images/ok_256.png" alt="Done!"/>
+  <br/>
+  <a href="{% url 'checkin-index' %}" class="btn btn-default btn-large">{% bootstrap_icon "plus" %} {% trans "Create New" %}</a>
+  <a href="{% url 'checkin-print' order.url_code %}" class="btn btn-primary btn-large" target="_blank">{% bootstrap_icon "print" %} {% trans "Print" %}</a>
+</div>
+{% endblock main %}
+
+{% block media %}
+{% comment %}
+<script type="text/javascript">
+  window.setTimeout(function(){
+    window.location = "{% url 'checkin-reset' %}";
+  }, 20*1000);
+</script>
+{% endcomment %}
+{% endblock media %}

@@ -1,0 +1,33 @@
+{% load i18n %}
+<ul class="dropdown-menu">
+{% if part.can_return %}
+  <li><a href="{% url 'parts-return_label' repair.pk part.pk %}" class="window">{% trans "Print Return Label" %}</a></li>
+  <li><a href="{% url 'parts-register_return' part.pk %}">{{ part.get_return_title }}</a></li>
+{% else %}
+  <li class="disabled"><a href="#" title="{% trans 'Part has no return order number' %}">{% trans "Print Return Label" %}</a></li>
+  <li class="disabled"><a href="#">{% trans "Register for Return" %}</a></li>
+{% endif %}
+{% if part.can_update_sn %}
+  <li><a href="{% url 'repairs-update_sn' repair.pk part.pk %}">{% trans "Update Serial Numbers" %}</a></li>
+{% else %}
+  <li class="disabled"><a href="#">{% trans "Update Serial Numbers" %}</a></li>
+{% endif %}
+  <li class="divider"></li>
+{% if repair.is_open %}
+  <li><a href="{% url 'shipments-update_part' part=part.pk return_type=1 %}" data-modal="#modal" class="spin">{% trans "Return DOA" %}</a></li>
+  <li><a href="{% url 'shipments-update_part' part=part.pk return_type=2 %}" data-modal="#modal" class="spin">{% trans "Return Good Part" %}</a></li>
+  <li><a href="{% url 'shipments-update_part' part=part.pk return_type=3 %}" data-modal="#modal" class="spin">{% trans "Convert to Stock" %}</a></li>
+  <li class="divider"></li>
+{% if part.line_number %}
+  <li><a href="{% url 'repairs-remove_part' repair.pk part.pk %}" data-modal="#modal">{% trans "Remove from Repair" %}</a></li>
+{% else %}
+  <li class="disabled"><a href="#">{% trans "Remove from Repair" %}</a></li>
+{% endif %}
+{% else %}
+  <li class="disabled"><a href="#">{% trans "Return DOA" %}</a></li>
+  <li class="disabled"><a href="#">{% trans "Return Good Part" %}</a></li>
+  <li class="disabled"><a href="#">{% trans "Convert to Stock" %}</a></li>
+  <li class="divider"></li>
+  <li class="disabled"><a href="#">{% trans "Remove from Repair" %}</a></li>
+{% endif %}
+</ul>

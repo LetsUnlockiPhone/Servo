@@ -1,0 +1,14 @@
+{% extends "login.html" %}
+{% load i18n %}
+
+{% block content %}
+    <form method="post" action="">
+        <h2>{% trans "Register" %}</h2>
+        {% csrf_token %}
+        {% include "form_snippet.html" %}
+        <div class="pull-right">
+            <a href="/login/" class="btn">{% trans "Back" %}</a>
+            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+        </div>
+    </form>
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "An error occured..." %}
+{% endblock header %}
+
+{% block body %}
+    {{ error }}
+{% endblock body %}

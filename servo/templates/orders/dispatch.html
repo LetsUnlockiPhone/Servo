@@ -1,0 +1,115 @@
+{% extends "orders/edit.html" %}
+{% load staticfiles %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+  {% with order.status_title as stat %}
+    <h3 style="margin-top:0px;line-height:30px" title="{{ title }}">{{ title|truncatechars:40 }}<br/>
+    <img src="{% static order.get_status_img %}" title="{{ stat }}" alt="{{ stat }}"/><small style="padding-left:5px">{{ order.get_title }} {% if order.user %}({{ order.user.get_full_name }}){% endif %}</small></h3>
+  {% endwith %}
+</div>
+<form method="post" action="" accept-charset="utf8">
+  {% csrf_token %}
+  {{ formset.management_form }}
+  <div class="row-fluid">
+    <div class="span3">
+      <div class="row-fluid">
+        <fieldset>
+          <legend>{% trans "Customer" %}</legend>
+          <div class="row-fluid">
+            {% include "form_field_snippet.html" with field=form.customer_name %}
+          </div>
+          <div class="row-fluid">
+            {% include "form_field_snippet.html" with field=form.customer_email %}
+          </div>
+          <div class="row-fluid">
+            {% include "form_field_snippet.html" with field=form.customer_phone %}
+          </div>
+          <div class="row-fluid">
+            {% include "form_field_snippet.html" with field=form.customer_address %}
+          </div>
+          <div class="row-fluid">
+            {% include "form_field_snippet.html" with field=form.reference %}
+          </div>
+        </fieldset>
+      </div>
+      <div class="row-fluid">
+        <fieldset>
+          <legend>{% trans "Payment" %}</legend>
+          {% for f in formset %}
+          <div class="row-fluid formrow">
+            <div class="span8">
+              {{ f.created_by }}
+              {{ f.method }}
+            </div>
+            <div class="span4">
+              {{ f.amount }}
+            </div>
+          </div>
+          {% endfor %}
+            <button class="btn clonerow" type="button" data-prefix="payment"><i class="icon-plus"></i></button>
+        </fieldset>
+      </div>
+    </div>
+    <div class="span9">
+      <fieldset>
+        <legend>{% trans "Products" %}</legend>
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width:20px"></th>
+              <th>{% trans "Product" %}</th>
+              <th style="width:50px">{% trans "Qty" %}</th>
+              <th style="width:100px">{% trans "Price" %}</th>
+              <th style="width:100px">{% trans "Price w/ tax" %}</th>
+              <th style="width:100px">{% trans "Total" %}</th>
+            </tr>
+          </thead>
+          <tbody>{% for p in products %}
+            <tr>
+              <td><input type="checkbox" name="items" value="{{ p.id|safe }}" checked="checked" class="toggle_row"/></td>
+              <td><strong>{{ p.product.code }}</strong><br/>{{ p.product.title }}</td>
+              <td class="amount">{{ p.amount }}</td>
+              <td class="net">{{ p.price_notax|currency }}</td>
+              <td class="tax">{{ p.price|currency }}</td>
+              <td class="gross">{{ p.total_gross|currency }}</td>
+            </tr>{% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td style="text-align:right">{% trans "Total" %}:</td>
+              <td>{{ totals.amount  }}</td>
+              <td>{{ form.total_net }}</td>
+              <td>{{ form.total_tax }}</td>
+              <td>{{ form.total_gross }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </fieldset>
+    </div>
+  </div>
+  <div class="form-actions">
+    <div class="pull-right">
+      <a class="btn btn-default" href="{{ order.get_absolute_url }}">{% trans "Cancel" %}</a>
+      <button type="submit" class="btn btn-primary">{% trans "Dispatch" %}</button>
+    </div>
+  </div>
+</form>
+{% endblock content %}
+
+{% block crumbs %}
+  <li><a href="{{ order.get_queue_url }}">{{ order.get_queue_title }}</a> <span class="divider">/</span></li>
+  <li><a href="{% url 'orders-edit' order.id %}">{% trans "Order" %} {{ order.get_footer }}</a> <span class="divider">/</span></li>
+  <li class="active">{% trans "Dispatch" %}</li>
+{% endblock crumbs %}
+
+{% block media %}
+<script type="text/javascript">
+  $('.clonerow').click(function() {
+    cloneMore('.formrow:last', 'payment', true);
+  });
+</script>
+{% endblock media %}

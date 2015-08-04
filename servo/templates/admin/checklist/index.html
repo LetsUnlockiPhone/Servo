@@ -1,0 +1,6 @@
+{% extends "generic/admin_list.html" %}
+{% load i18n %}
+
+{% block toolbar %}
+    <a class="btn btn-default navbar-btn" href="{% url 'admin-create_checklist' %}"><i class="icon-plus"></i> {% trans "New Checklist" %}</a>
+{% endblock toolbar %}

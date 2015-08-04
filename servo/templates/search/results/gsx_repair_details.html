@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% for r in results %}
+<h3>{{ r.dispatchId }}</h3>
+<dl class="dl-horizontal">
+  <dt>{% trans "Service Order" %}</dt>
+  <dd>{{ r.purchaseOrderNumber }}</dd>
+  <dt>{% trans "CS Code" %}</dt>
+  <dd>{{ r.csCode|safe }}</dd>
+  <dt>{% trans "Tracking Number" %}</dt>
+  <dd>{{ r.deliveryTrackingNumber }}</dd>
+  <dt>{% trans "Notes" %}</dt>
+  <dd>{{ r.notes }}</dd>
+  <dt>{% trans "Warranty Coverage" %}</dt>
+  <dd>{{ r.coverageStatusDescription }}</dd>
+  <dt>{% trans "Status" %}</dt>
+  <dd>{{ r.orderStatus }}</dd>
+</dl>
+{% endfor %}

@@ -1,0 +1,55 @@
+{% load i18n %}
+{% load servo_tags %}
+{% for p in products %}
+{% with p.get_pk as product_id %}
+<tr>
+  <td><img src="{{ p.get_photo }}" alt="{{ product }}" class="img-icon"/></td>
+  <td data-value="{{ p.code }}">
+    <a href="{% url 'products-view_product' pk=p.pk group=group.slug %}"><strong>{{ p.code }}</strong></a><br/>
+    {{ p.title }}<br/><small class="muted">{{ p.eee_code|default:""|addspace }}</small>
+  </td>
+  <td data-value="{{ p.price_sales_stock|safe }}">{{ p.price_sales_stock|currency }}</td>
+  <td data-value="{{ p.price_sales_exchange|safe }}">{{ p.price_sales_exchange|currency }}</td>
+  {% if p.is_service %}
+  <td>&infin;</td>
+  {% else %}
+  <td>{{ p|amount_in_location:request.user }}</td>
+  {% endif %}
+  <td>
+    <div class="btn-group pull-right">
+    {% if perms.servo.change_product %}
+      <a class="btn" href="{% url 'products-edit_product' pk=product_id group=group.slug %}"><i class="icon-pencil"></i></a>
+    {% else %}
+      <a class="btn disabled" href="#"><i class="icon-pencil"></i></a>
+    {% endif %}
+      <button class="btn dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+      {% with request.session.current_order_id as co %}
+        {% if co %}
+        <li><a href="{% url 'orders-add_product' co product_id %}">{% trans "Use in Service Order" %} #{{ request.session.current_order_code }}</a></li>
+        <li class="divider"></li>
+        {% endif %}
+      {% endwith %}
+        <li><a href="{% url 'orders-create_with_product' product_id %}">{% trans "Create Sales Order" %}</a></li>
+        <li><a href="{% url 'purchases-create_po' product_id=product_id %}">{% trans "Create Purchase Order" %}</a></li>
+        {% with request.session.current_po as po %}
+        {% if po %}
+        <li><a href="{% url 'purchases-add_to_po' pk=po.id product_id=product_id %}">{% trans "Use in Purchase Order" %}</a></li>
+        {% endif %}
+      {% endwith %}
+        <li class="divider"></li>
+        {% if perms.servo.delete_product %}
+        <li><a href="{% url 'products-delete_product' pk=product_id group=group.slug %}" data-modal="#modal"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+        {% else %}
+        <li class="disabled"><a href="#"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </td>
+</tr>
+{% endwith %}
+{% empty %}
+<tr><td colspan="6" class="muted empty">{% trans "No products found" %}</td></tr>
+{% endfor %}

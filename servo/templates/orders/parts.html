@@ -1,0 +1,36 @@
+{% extends "orders/edit.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+{% endblock toolbar %}
+
+{% block first_column %}
+<address>
+  <strong>{{ device.description }}</strong><br/>
+  <small class="muted">{{ device.configuration }}</small><br/>
+  <span><a href="{% url 'devices-get_info' device.pk %}" data-modal="#modal">{{ device.get_warranty_status_display }}</a></span> <i class="icon-info-sign"></i><br/>
+  <i class="icon-barcode"></i> <a href="#" class="sn">{{ device.sn }}</a>
+  <hr/>
+  <strong>{% trans "Parts and Services" %}</strong>
+  {% include "orders/list_products.html" %}
+</address>
+<hr/>
+<input type="text" class="span12 search-query filter" placeholder="{% trans "Filter results" %}"/>
+<a class="btn btn-primary pull-right" style="margin:10px" href="{{ order.get_absolute_url }}">{% trans "Done" %}</a>
+{% endblock first_column %}
+
+{% block second_toolbar %}
+{% endblock second_toolbar %}
+
+{% block second_column %}
+
+<div class="async" data-url="{{ url }}"><h2 class="text-center muted">{% trans "Fetching parts..." %}</h2></div>
+
+{% endblock second_column %}
+
+{% block morecrumbs %}
+<li><a href="{{ order.get_absolute_url }}">{% trans "Order" %} {{ order.get_footer }}</a> <span class="divider">/</span></li>
+<li><a href="">{{ device.description }}</a> <span class="divider">/</span></li>
+<li class="active">{% trans "Service Parts" %}</li>
+{% endblock morecrumbs %}

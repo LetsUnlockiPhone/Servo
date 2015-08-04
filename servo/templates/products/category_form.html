@@ -1,0 +1,13 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Edit Product Group" %}
+{% endblock header %}
+
+{% block body %}
+    <form action="{{ request.path }}" method="post" class="form-horizontal">
+        {% csrf_token %}
+        {% include "form_snippet.html" %}
+    </form> 
+{% endblock body %}

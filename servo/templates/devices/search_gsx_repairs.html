@@ -1,0 +1,27 @@
+{% load i18n %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>{% trans "Number" %}</th>
+      <th>{% trans "Reference" %}</th>
+      <th>{% trans "Created" %}</th>
+      <th>{% trans "Customer" %}</th>
+      <th>{% trans "Status" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for r in results %}
+    <tr>
+    {% with r.repairConfirmationNumber as repconf %}
+      <td><a href="{% url 'repairs-get_details' repconf %}" data-modal="#modal">{{ repconf }}</a></td>
+    {% endwith %}
+      <td>{{ r.purchaseOrderNumber|safe }}</td>
+      <td>{{ r.createdOn }}</td>
+      <td>{{ r.customerName }}</td>
+      <td>{{ r.repairStatus }}</td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="5" class="muted text-center">{% trans "No search results" %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>

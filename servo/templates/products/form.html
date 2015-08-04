@@ -1,0 +1,90 @@
+{% extends "products/view.html" %}
+{% load i18n %}
+
+{% block third_column %}
+<div class="span6">
+  <form method="post" action="" class="form-horizontal" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+      <li><a href="#tab2" data-toggle="tab">{% trans "Exchange Price" %}</a></li>
+      <li><a href="#tab3" data-toggle="tab">{% trans "Stock Price" %}</a></li>
+      <li><a href="#tab4" data-toggle="tab">{% trans "Stock" %}</a></li>
+      <li><a href="#tab5" data-toggle="tab">{% trans "Details" %}</a></li>
+      <li><a href="#tab6" data-toggle="tab">{% trans "GSX" %}</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
+        {% include "form_field_snippet.html" with field=form.code %}
+        {% include "form_field_snippet.html" with field=form.title %}
+        {% include "form_field_snippet.html" with field=form.description %}
+        {% include "form_field_snippet.html" with field=form.is_service %}
+      </div>
+      <div class="tab-pane calculate" id="tab2">
+        {% include "form_field_snippet.html" with field=form.price_purchase_exchange %}
+        {% include "form_field_snippet.html" with field=form.pct_margin_exchange %}
+        {% include "form_field_snippet.html" with field=form.price_notax_exchange %}
+        {% include "form_field_snippet.html" with field=form.price_sales_exchange %}
+      </div>
+      <div class="tab-pane calculate" id="tab3">
+        {% include "form_field_snippet.html" with field=form.price_purchase_stock %}
+        {% include "form_field_snippet.html" with field=form.pct_margin_stock %}
+        {% include "form_field_snippet.html" with field=form.price_notax_stock %}
+        {% include "form_field_snippet.html" with field=form.price_sales_stock %}
+      </div>
+      <div class="tab-pane" id="tab4">
+      {% for f in formset %}
+        <div class="table">
+          {% include "form_snippet.html" with form=f %}
+        </div>
+      {% endfor %}
+        <a class="btn" id="add_more"><i class="icon-plus"></i> {% trans "Add" %}</a>
+      </div>
+      <div class="tab-pane" id="tab5">
+        {% include "form_field_snippet.html" with field=form.pct_vat %}
+        {% include "form_field_snippet.html" with field=form.shipping %}
+        {% include "form_field_snippet.html" with field=form.warranty_period %}
+        {% include "form_field_snippet.html" with field=form.brand %}
+        {% include "form_field_snippet.html" with field=form.categories %}
+        <div class="control-group">
+          <label class="control-label">{% trans "Tags" %}</label>
+          <div class="controls">
+            <input type="text" name="tag" class="input typeahead" placeholder="{% trans "Enter tag" %}" data-provide="typeahead" data-source="{% url 'products-tags' %}" autocomplete="off"/>
+            <div style="margin-top:10px">
+            {% for t in product.tags.all %}
+              <span class="label"><div class="pull-left">{{ t.tag }}</div><a class="close" href="{% url 'tags-clear' t.pk %}"><i class="icon-remove icon-white"></i></a></span>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% include "form_field_snippet.html" with field=form.photo %}
+        {% include "form_field_snippet.html" with field=form.fixed_price %}
+        {% include "form_field_snippet.html" with field=form.is_serialized %}
+      </div>
+      <div class="tab-pane" id="tab6">
+        {% include "form_field_snippet.html" with field=form.part_type %}
+        {% include "form_field_snippet.html" with field=form.labour_tier %}
+        {% include "form_field_snippet.html" with field=form.component_code %}
+        {% include "form_field_snippet.html" with field=form.eee_code %}
+      </div>
+    </div>
+    <div class="form-actions">
+    {% if product.pk %}
+      <a class="btn" href="{% url 'products-view_product' product.pk %}">{% trans "Cancel" %}</a>
+    {% else %}
+      <a class="btn" href="{% url 'products-list_products' %}">{% trans "Cancel" %}</a>
+    {% endif %}
+      <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+    </div>
+  </form>
+</div>
+{% endblock third_column %}
+
+{% block media %}
+<script type="text/javascript">
+  $('#add_more').click(function() {
+    cloneMore('div.table:last', 'inventory_set');
+  });
+</script>
+{% endblock media %}

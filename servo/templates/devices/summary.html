@@ -1,0 +1,48 @@
+{% load i18n %}
+<div class="row-fluid">
+  <div class="span3">
+    <img src="{{ device.get_photo }}" alt="{{ device.description }}" title="{{ device.description }}" class="img-rounded"/>
+  </div>
+  <div class="span9">
+    <h3>{{ device.description }}</h3>
+    <dl class="dl-horizontal">
+      <dt>{% trans "Warranty Status" %}</dt>
+      <dd>{{ device.get_warranty_status_display }}</dd>
+      <dt>{% trans "Purchase Date" %}</dt>
+      <dd>{{ device.purchased_on|date:"SHORT_DATE_FORMAT"|default:"-" }}, {{ device.get_purchase_country|default:"-" }}</dd>
+      <dt>{% trans "Serial Number" %}</dt>
+      <dd>{{ device.sn|default:"-" }}</dd>
+    {% if device.configuration %}
+      <dt>{% trans "Configration" %}</dt>
+      <dd>{{ device.configuration }}</dd>
+    {% endif %}
+    {% if device.username %}
+      <dt>{% trans "Username" %}</dt>
+      <dd>{{ device.username }}</dd>
+    {% endif %}
+    {% if device.password %}
+      <dt>{% trans "Password" %}</dt>
+      <dd>{{ device.password }}</dd>
+    {% endif %}
+    {% if device.imei %}
+      <dt>{% trans "IMEI" %}</dt>
+      <dd>{{ device.imei }}</dd>
+      <dt>{% trans "Applied Activation Policy" %}</dt>
+      <dd>{{ device.applied_activation_policy }}</dd>
+      <dt>{% trans "Initial Activation Policy" %}</dt>
+      <dd>{{ device.initial_activation_policy }}</dd>
+      <dt>{% trans "Find My iPhone" %}</dt>
+      <dd>{{ device.get_fmip_status }}</dd>
+      <dt>{% trans "Unlocked" %}</dt>
+      <dd>{{ device.unlocked }}</dd>
+    {% endif %}
+    {% if device.notes %}
+      <dt>{% trans "Notes" %}</dt>
+      <dd>{{ device.notes }}</dd>
+    {% endif %}
+    </dl>
+  {% for t in device.tags.all %}
+    <span class="label">{{ t.tag }}</span>
+  {% endfor %}
+  </div>
+</div>

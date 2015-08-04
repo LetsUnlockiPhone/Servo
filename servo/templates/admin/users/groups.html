@@ -1,0 +1,37 @@
+{% extends "admin/users/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block second_column %}
+{% include "admin/users/tabs.html" %}
+
+{% block third_column %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>{% trans "Group" %}</th>
+      <th>{% trans "Members" %}</th>
+      <th style="width:100px"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for group in object_list %}
+    <tr>
+      <td><a href="{% url 'admin-edit_group' group.pk %}">{{ group.name }}</a></td>
+      <td>{{ group.user_set.all|join:", "}}</td>
+      <td style="text-align:right">
+        <div class="btn-group">
+          <a href="{% url 'admin-edit_group' group.pk %}" class="btn btn-warning"><i class="icon-pencil icon-white"></i></a>
+          <a href="{% url 'admin-delete_group' group.pk %}" class="btn btn-danger" data-modal="#modal"><i class="icon-trash icon-white"></i></a>
+        </div>
+      </td>
+    </tr>
+  {% empty %}
+    <tr>
+      <td colspan="3" class="text-muted empty">{% trans "No groups defined" %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock third_column %}
+{% endblock second_column %}

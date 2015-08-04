@@ -1,0 +1,7 @@
+{% load i18n %}
+<select name="status" id="select_status">
+    <option value="">{% trans "Choose" %}...</option>
+{% for status in statuses %}
+    <option value="{{ status.id }}">{{ status.title }}</option>
+{% endfor %}
+</select>

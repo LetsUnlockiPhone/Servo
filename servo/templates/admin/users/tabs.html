@@ -1,0 +1,7 @@
+{% load i18n %}
+{% load servo_tags %}
+
+<ul class="nav nav-tabs">
+    <li class="{% active request "users" %}"><a href="{% url 'admin-list_users' %}">{% trans "Users" %}</a></li>
+    <li class="{% active request "groups" %}"><a href="{% url 'admin-list_groups' %}">{% trans "Groups" %}</a></li>
+</ul>

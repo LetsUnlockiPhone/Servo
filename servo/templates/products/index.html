@@ -1,0 +1,104 @@
+{% extends "default.html" %}
+{% load i18n %}
+{% load mptt_tags %}
+{% load servo_tags %}
+
+{% block toolbar %}
+<div class="btn-group">
+  {% if perms.servo.add_product %}
+  <a class="btn" href="{% url 'products-create' group=group.slug %}"><i class="icon-plus"></i> {% trans "New Product" %}</a> 
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'products-create_category' %}" data-modal="#modal">{% trans "New Category" %}</a></li>
+    <li class="divider"></li>
+  {% if product.id and perms.servo.add_purchaseorder %}
+    <li><a href="{% url 'orders-create_with_product' product_id=product.id %}">{% trans "New Sales Order" %}</a></li>
+    <li><a href="{% url 'purchases-create_po' product_id=product.id %}">{% trans "New Purchase Order" %}</a></li>
+  {% else %}
+    <li class="disabled"><a href="">{% trans "New Sales Order" %}</a></li>
+    <li class="disabled"><a href="">{% trans "New Purchase Order" %}</a></li>
+  {% endif %}
+  </ul>
+  {% endif %}
+</div>
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    <i class="icon-cog"></i> <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    {% if group.pk and perms.servo.add_product %}
+    <li><a href="{% url 'products-edit_category' group.slug %}" data-modal="#modal">{% trans "Edit Category" %}</a></li>
+    <li><a href="{% url 'products-delete_category' group.slug %}" data-modal="#modal">{% trans "Delete Category" %}</a></li>
+    {% else %}
+    <li class="disabled"><a href="#">{% trans "Edit Category" %}</a></li>
+    <li class="disabled"><a href="#">{% trans "Delete Category" %}</a></li>
+    {% endif %}
+    <li class="divider"></li>
+    <li><a href="{% url 'products-download' %}">{% trans "Download Products" %}</a></li>
+    <li><a href="{% url 'products-upload_products' %}" data-modal="#modal">{% trans "Upload Products" %}</a></li>
+    <li><a href="{% url 'products-upload_gsx_parts' %}" data-modal="#modal">{% trans "Upload Parts Database" %}</a></li>
+  </ul>
+</div>
+{% endblock toolbar %}
+
+{% block content %}
+<div class="row-fluid row-header">
+  <div class="span12">
+    <form class="form-search pull-right">
+      <div class="input-append">
+        <input type="text" class="search-query filter" placeholder="{% trans "Filter results" %}"/>
+        <button type="button" class="btn" data-toggle="collapse" data-target="#collapsable"><i class="icon-search"></i></button>
+      </div>
+    </form>
+  </div>
+</div>
+{% include "products/tabs.html" %}
+<div class="row-fluid">
+  {% block second_column %}
+  <div class="span3">
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans "Categories" %}</li>
+      <li class="{% active request 'all' %}"><a href="{% url 'products-list_products' %}">{% trans "All" %}</a></li>
+      {% recursetree categories %}
+      <li class="{% active request 'products' node.slug %}">
+        <a href="{% url 'products-list_products' group=node.slug %}">{{ node.title }}</a>
+        {% if not node.is_leaf_node %}
+        <ul class="nav nav-list">{{ children }}</ul>
+        {% endif %}
+      </li>
+      {% endrecursetree %}
+    </ul>
+  </div>
+  <div class="span9">
+    <div id="collapsable" class="collapse out">
+      <form method="post" action="" class="form-inline">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="control-group pull-left">
+          <label class="control-label">{{ field.label|default:"&nbsp;" }}</label>
+          <div class="controls">{{ field }}</div>
+        </div>
+        {% endfor %}
+        <p class="clearfix"><hr/></p>
+        <div class="pull-right">
+          <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+        </div>
+      </form>
+    </div>
+    {% include "products/list.html" %}
+    {% include "pagination.html" with items=products %}
+  </div>
+  {% endblock second_column %}
+
+  {% block third_column %}
+  
+  {% endblock third_column %}
+</div>
+{% endblock content %}
+
+{% block crumbs %}
+<li><a href="{% url 'products-list_products' %}">{% trans "Products" %}</a></li>
+{% block breadcrumb %}
+<li class="active"><span class="divider">/</span>{{ group_name }}</li>
+{% endblock breadcrumb %}
+{% endblock crumbs %}

@@ -1,0 +1,33 @@
+{% extends "stats/index.html" %}
+{% load i18n %}
+
+{% block tabs %}
+<li><a href="{% url 'stats-index' %}">{% trans "Technicians" %}</a></li>
+<li><a href="{% url 'stats-locations' %}">{% trans "Locations" %}</a></li>
+<li><a href="{% url 'stats-queues' %}">{% trans "Queues" %}</a></li>
+<li><a href="{% url 'stats-repairs' %}">{% trans "Repairs" %}</a></li>
+<li><a href="{% url 'stats-statuses' %}">{% trans "Statuses" %}</a></li>
+<li class="active"><a href="{% url 'stats-sales' %}">{% trans "Sales" %}</a></li>
+{% endblock tabs %}
+
+{% block stats %}
+<h2>{% trans "Sales" %}</h2>
+<p>{% trans "Shows you invoice totals per queue within the selected time period." %}</p>
+{% include "stats/plot_snippet.html" with url="/stats/data/sales/invoices/" %}
+<hr/>
+<h2>{% trans "Purchases" %}</h2>
+<p>{% trans "Shows you Purchase Order totals per queue within the selected time period." %}</p>
+{% include "stats/plot_snippet.html" with url="/stats/data/sales/purchases/" %}
+<hr/>
+<h2>{% trans "Service Parts" %}</h2>
+<p>{% trans "Shows you how many parts have been ordered for each labour tier." %}</p>
+<div class="row-fluid">
+  <div class="span12">
+    <div class="span10">
+      <div class="plot plot-bar" data-source="/stats/data/sales/parts/"></div>
+      <div class="legend-container"></div>
+    </div>
+    <div class="span2"></div>
+  </div>
+</div>
+{% endblock stats %}

@@ -1,0 +1,8 @@
+{% load i18n %}
+{% load humanize %}
+
+<li{% if not repair and active == 'order' %} class="active"{% endif %}><a href="{{ order.get_absolute_url }}">{% trans "Order" %}</a></li>
+{% for r in order.repair_set.all %}
+<li{% if r.pk == repair.pk %} class="active"{% endif %}><a href="{{ r.get_absolute_url }}">{{ r.get_number }}</a></li>
+{% endfor %}
+<li{% if active == 'events' %} class="active"{% endif %}><a href="{{ order.get_absolute_url }}events/">{% trans "Events" %}</a></li>

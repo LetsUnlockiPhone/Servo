@@ -1,0 +1,22 @@
+{% load i18n %}
+<dl class="dl-horizontal">
+{% with diagnostics.eventHeader as header %}
+  <dt>{% trans "Result" %}</dt>
+  <dd>{{ header.diagnosticEventEndResult|default:"-" }}</dd>
+  <dt>{% trans "Tool" %}</dt>
+  <dd>{{ header.toolID|default:"-" }} ({{ header.toolVersion|default:"-" }})</dd>
+  <dt>{% trans "Passed modules" %}</dt>
+  <dd>{{ header.modulePassCount|default:"-" }}</dd>
+{% endwith %}
+</dl>
+
+<table class="table">
+{% for i in diagnostics.eventItems %}
+  <tr>
+    <td>{{ i.moduleName }}</td>
+    <td>{{ i.moduleLocation }}</td>
+    <td>{{ i.moduleTestName }}</td>
+    <td>{{ i.moduleTestResult }}</td>
+  </tr>
+{% endfor %}
+</table>

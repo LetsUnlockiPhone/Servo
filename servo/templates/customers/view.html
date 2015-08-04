@@ -1,0 +1,119 @@
+{% extends "customers/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block third_column %}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#tab1" data-toggle="tab">{% trans "Customer" %}</a></li>
+  <li><a href="#tab2" data-toggle="tab">{% trans "Orders" %}</a></li>
+  <li><a href="#tab3" data-toggle="tab">{% trans "Devices" %}</a></li>
+  <li><a href="#tab4" data-toggle="tab">{% trans "Messages" %}</a></li>
+</ul>
+<div class="tab-content customer-view">
+  <div class="tab-pane active" id="tab1">
+    <legend>
+      {{ customer.name }}
+    {% if customer.parent %}<br/>
+      <small class="muted">{{ customer.parent.name }} <a href="{{ customer.parent.get_absolute_url }}"><i class="icon icon-circle-arrow-right"></i></a></small>
+    {% endif %}
+    </legend>
+    <dl class="dl-horizontal">
+    {% if customer.email %}
+      <dt>{% trans "Email" %}</dt>
+      <dd><a href="{% url 'notes-create_with_recipient' recipient=customer.email %}">{{ customer.email }}</a></dd>
+    {% endif %}
+    {% if customer.phone %}
+      <dt>{% trans "Phone" %}</dt>
+      <dd><a href="{% url 'notes-create_with_recipient' recipient=customer.get_standard_phone %}">{{ customer.get_international_phone }}</a></dd>
+    {% endif %}
+    {% if customer.street_address %}
+      <dt>{% trans "Address" %}</dt>
+      <dd>{{ customer.street_address }}<br/>{{ customer.zip_code }} {{ customer.city }}</dd>
+    {% endif %}
+    {% for ci in customer.contactinfo_set.all %}
+      <dt>{{ ci.key }}</dt>
+      <dd>{{ ci.value }}</dd>
+    {% endfor %}
+    {% if customer.country %}
+      <dt>{% trans "Country" %}</dt>
+      <dd>{{ customer.get_country_display }}</dd>
+    {% endif %}
+    {% if customer.notes %}
+      <dt>{% trans "Notes" %}</dt>
+      <dd>{{ customer.notes }}</dd>
+    {% endif %}
+    </dl>
+  {% if customer.is_company %}
+    <dl class="dl-horizontal">
+      <dt>{% trans "Contacts" %}</dt>
+      <dd>{% for c in customer.get_contacts %}{{ c }} <a href="{{ c.get_absolute_url }}"><i class="icon icon-circle-arrow-right"></i></a><br/>{% endfor %}</dd>
+    </dl>
+  {% endif %}
+  <hr/>
+  {% with request.session.current_order_id as order_id %}
+  {% if order_id and not request.session.current_order_customer %}
+    <a href="{% url 'customers-add_to_order' customer.pk order_id %}" class="btn btn-primary"><i class="icon-share-alt icon-white"></i> {% trans "Use in " %} #{{ request.session.current_order_code }}</a>
+  {% else %}
+    <a href="#" class="btn btn-primary disabled"><i class="icon-share-alt icon-white"></i>{% trans "Use in current order" %}</a>
+  {% endif %}
+  {% endwith %}
+    <div class="btn-group">
+      <a href="{% url 'orders-create_with_customer' customer_id=customer.pk %}" class="btn">{% trans "Create Service Order" %}</a>
+    </div>
+    <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-cog"></i> <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+      {% if perms.servo.change_customer %}
+        <li><a href="{% url 'customers-move_customer' pk=customer.pk %}" data-modal="#modal">{% trans "Move Customer" %}</a></li>
+        <li><a href="{% url 'customers-merge_customer' pk=customer.pk %}" data-modal="#modal">{% trans "Merge Customer" %}</a></li>
+      {% else %}
+        <li><a href="#" class="disabled">{% trans "Move Customer" %}</a></li>
+        <li><a href="#" class="disabled">{% trans "Merge Customer" %}</a></li>
+      {% endif %}
+        <li class="divider"></li>
+      {% if perms.servo.delete_customer %}
+        <li><a href="delete/" data-modal="#modal"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+      {% else %}
+        <li><a href="#" class="disabled"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+      {% endif %}
+      </ul>
+    </div>
+    <div class="pull-right">
+    {% if perms.servo.change_customer %}
+      <a href="edit/" class="btn">{% trans "Edit" %}</a>
+    {% else %}
+      <a href="#" class="btn disabled">{% trans "Edit" %}</a>
+    {% endif %}
+    </div>
+  </div>
+  <div class="tab-pane" id="tab2">
+    {% include "orders/list.html" %}
+  </div>
+  <div class="tab-pane" id="tab3">
+    {% include "devices/list.html" with devices=customer.devices.all tag_id=None %}
+  </div>
+  <div class="tab-pane" id="tab4">
+    <table class="table">
+      <tbody>
+      {% for i in customer.note_set.all %}
+        <tr>
+          <td><a href="{% url 'notes-view_note' 'sent' i.pk %}">{{ i.code }}</a></td>
+          <td>{{ i.subject }}</td>
+          <td>{{ i.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+          <td>{{ i.sender }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="empty muted">{% trans "No messages found" %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock third_column %}
+
+{% block crumbs %}
+  <li><a href="{% url 'customers-list_all' %}">{% trans "Customers" %}</a> <span class="divider">/</span></li>
+  <li class="active">{{ customer.name }}</li>
+{% endblock crumbs %}

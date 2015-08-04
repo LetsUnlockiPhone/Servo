@@ -1,0 +1,75 @@
+{% extends "default.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    <i class="icon-file"></i> <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'notes-create' %}">{% trans "New Message" %}</a></li>
+    <!--<li><a href="{% url 'notes-create_escalation' %}">{% trans "New Escalation" %}</a></li>//-->
+  </ul>
+</div>
+{% block note_buttons %}
+<div class="btn-group">
+  <a class="btn dropdown-toggle disabled" data-toggle="dropdown" href="#">
+    <i class="icon-flag"></i> <span class="caret"></span>
+  </a>
+</div>
+{% endblock note_buttons %}
+{% endblock toolbar %}
+
+{% block content %}
+
+{% block second_row %}
+<ul class="nav nav-tabs" style="margin-top:30px">
+  <li class="active"><a href="{% url 'notes-list_notes' 'inbox' %}">{% trans "Browse" %}</a></li>
+  <li><a href="{% url 'notes-find' %}">{% trans "Search" %}</a></li>
+</ul>
+
+<div class="row-fluid">
+  <div class="span2">
+    {% block first_column %}
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans "Messages" %}</li>
+      <li class="{% active request "inbox" %}"><a href="{% url 'notes-list_notes' kind="inbox" %}">{% trans "Inbox" %} <span class="badge pull-right">{{ inbox_count|safe }}</span></a></li>
+      <li class="{% active request "flagged" %}"><a href="{% url 'notes-list_notes' kind="flagged" %}">{% trans "Flagged" %}</a></li>
+      <li class="{% active request "sent" %}"><a href="{% url 'notes-list_notes' kind="sent" %}">{% trans "Sent" %}</a></li>
+      <!--<li class="{% active request "escalations" %}"><a href="{% url 'notes-list_notes' kind="escalations" %}">{% trans "Escalations" %}</a></li>//-->
+    </ul>
+    {% endblock first_column %}
+  </div>
+  <div class="span3">
+  {% block second_column %}
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans kind %}</li>
+      {% for note in notes %}
+      <li class="{% active request 'notes' kind note.pk 'view' %}">
+        <a href="{% url 'notes-view_note' kind note.pk %}">
+          <strong>{{ note.sender }}</strong><span class="pull-right">{{ note.created_at|date:"SHORT_DATE_FORMAT" }}</span>
+          <br/>
+          <small>{{ note.body|truncatechars:30 }}</small>
+        </a>
+      </li>
+    {% empty %}
+      <li class="disabled text-center"><a href="#">{% trans "No messages found" %}</a></li>
+    {% endfor %}
+    </ul>
+    {% include "pagination.html" with items=notes %}
+    {% endblock second_column %}
+  </div>
+  <div class="span7">
+    {% block view_message %}
+    <h2 class="muted text-center">{% trans "No message selected" %}</h2>
+    {% endblock view_message %}
+  </div>
+</div>
+{% endblock second_row %}
+
+{% endblock content %}
+
+{% block crumbs %}
+<li class="active">{% trans "Notes" %}</li>
+{% endblock crumbs %}

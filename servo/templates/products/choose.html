@@ -1,0 +1,25 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Search for a product" %}
+{% endblock header %}
+
+{% block body %}
+    <form method="post" action="{{ action }}" accept-charset="utf-8" data-target="#search-results" id="search-form">
+        {% csrf_token %}
+        <input type="text" style="width:500px" class="search-query" name="q" autocomplete="off" placeholder="{% trans "Code, title or category" %}"/>
+    </form>
+    <div id="search-results"></div>
+{% endblock body %}
+
+{% block footer %}
+    <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans "Close" %}</button>
+    <a class="btn btn-primary submit-search" href="#">{% trans "Search" %}</a>
+    <script type="text/javascript">
+        $('.submit-search').click(function(e){
+            $('#search-form').submit();
+            e.preventDefault();
+        });
+    </script>
+{% endblock footer %}

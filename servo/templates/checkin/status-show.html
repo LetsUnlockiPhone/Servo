@@ -1,0 +1,35 @@
+{% extends "checkin/index.html" %}
+{% load bootstrap3 %}
+{% load humanize %}
+{% load i18n %}
+
+{% block main %}
+  <div class="page-header">
+    <h2>{{ order.status_name }} {{ order.status_started_at|naturaltime|default:"" }}</h2>
+    <p class="lead">{{ order.status.status.description }}</p>
+  </div>
+  {% if timeline|length %}
+  <ul class="timeline">
+  {% for i in timeline %}
+    <li class="{% cycle '' 'timeline-inverted' %}">
+      <div class="timeline-badge {{ i.get_badge }}">{% bootstrap_icon "ok" %}</i></div>
+      <div class="timeline-panel">
+      {% with i.status as status %}
+        <div class="timeline-heading">
+          <h4 class="timeline-title">{{ status.title }}</h4>
+          <p>
+            <small class="text-muted"><i class="fa fa-time"></i> {{ i.started_at|naturaltime }}</small>
+          </p>
+        </div>
+        <div class="timeline-body">
+          <p>{{ status.description }}</p>
+        </div>
+      {% endwith %}
+      </div>
+    </li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+  <a href="" class="btn btn-default">{% bootstrap_icon "refresh" %} {% trans "Refresh" %}</a>
+  <a href="{% url 'checkin-index' %}" class="btn btn-primary">{% trans "Return" %}</a>
+{% endblock main %}

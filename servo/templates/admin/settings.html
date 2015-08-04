@@ -1,0 +1,136 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block second_column %}
+<form method="post" accept-charset="utf-8" action="" enctype="multipart/form-data" class="form-horizontal">
+  {% csrf_token %}
+<!--
+  {{ formset.management_form }}
+//-->
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+    <li><a href="#tab2" data-toggle="tab">{% trans "Stock" %}</a></li>
+    <li><a href="#tab3" data-toggle="tab">{% trans "Outgoing Mail" %}</a></li>
+    <li><a href="#tab4" data-toggle="tab">{% trans "Incoming Mail" %}</a></li>
+    <li><a href="#tab5" data-toggle="tab">{% trans "Text Messages" %}</a></li>
+    <li><a href="#tab6" data-toggle="tab">{% trans "Check-in" %}</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      {% include "form_field_snippet.html" with field=form.company_name %}
+      {% include "form_field_snippet.html" with field=form.company_logo %}
+      {% include "form_field_snippet.html" with field=form.gsx_account %}
+      {% include "form_field_snippet.html" with field=form.terms_of_service %}
+      {% include "form_field_snippet.html" with field=form.autocomplete_repairs %}
+    </div>
+    <div class="tab-pane" id="tab2">
+      {% include "form_field_snippet.html" with field=form.currency %}
+      {% include "form_field_snippet.html" with field=form.pct_margin %}
+      {% include "form_field_snippet.html" with field=form.pct_vat %}
+      {% include "form_field_snippet.html" with field=form.shipping_cost %}
+      {% include "form_field_snippet.html" with field=form.track_inventory %}
+      <div class="control-group">
+        <div class="controls">
+          <label class="checkbox">
+            <input name="update_prices" type="checkbox" value="1"/> {% trans "Update prices" %}
+          </label>
+          <span class="help-block">{% trans "Applies the new settings to existing products after saving" %}</span>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="tab3">
+      <fieldset>
+        {% include "form_field_snippet.html" with field=form.default_sender %}
+        {% include "form_field_snippet.html" with field=form.default_sender_custom %}
+        {% include "form_field_snippet.html" with field=form.default_subject %}
+        {% include "form_field_snippet.html" with field=form.smtp_host %}
+        {% include "form_field_snippet.html" with field=form.smtp_user %}
+        {% include "form_field_snippet.html" with field=form.smtp_password %}
+        {% include "form_field_snippet.html" with field=form.smtp_ssl %}
+      </fieldset>
+      <fieldset>
+        <legend>{% trans "Notifications" %}</legend>
+        {% include "form_field_snippet.html" with field=form.notify_address %}
+        {% include "form_field_snippet.html" with field=form.notify_location %}
+      </fieldset>
+    </div>
+    <div class="tab-pane" id="tab4">
+      {% include "form_field_snippet.html" with field=form.imap_act %}
+      {% include "form_field_snippet.html" with field=form.imap_host %}
+      {% include "form_field_snippet.html" with field=form.imap_user %}
+      {% include "form_field_snippet.html" with field=form.imap_password %}
+      {% include "form_field_snippet.html" with field=form.imap_ssl %}
+    </div>
+    <div class="tab-pane" id="tab5">
+      {% include "form_field_snippet.html" with field=form.sms_gateway %}
+      {% if config.sms_gateway == 'builtin' %}
+        <p class="text-muted text-center">{% trans "Sending SMS messages will be handled by Servo" %}</p>
+      {% endif %}
+      {% if config.sms_gateway == 'http' %}
+        {% include "form_field_snippet.html" with field=form.sms_http_url %}
+        {% include "form_field_snippet.html" with field=form.sms_http_user %}
+        {% include "form_field_snippet.html" with field=form.sms_http_password %}
+      {% endif %}
+      {% if config.sms_gateway == 'smtp' %}
+        {% include "form_field_snippet.html" with field=form.sms_smtp_address %}
+      {% endif %}
+      {% if config.sms_gateway == 'jazz' %}
+        {% include "form_field_snippet.html" with field=form.sms_http_user %}
+        {% include "form_field_snippet.html" with field=form.sms_http_password %}
+        {% include "form_field_snippet.html" with field=form.sms_http_sender %}
+      {% endif %}
+      {% if config.sms_gateway == 'hqsms' %}
+        {% include "form_field_snippet.html" with field=form.sms_http_user %}
+        {% include "form_field_snippet.html" with field=form.sms_http_password %}
+        {% include "form_field_snippet.html" with field=form.sms_http_sender %}
+      {% endif %}
+    </div>
+    <div class="tab-pane" id="tab6">
+      {% include "form_field_snippet.html" with field=form.checkin_user %}
+      {% include "form_field_snippet.html" with field=form.checkin_group %}
+      {% include "form_field_snippet.html" with field=form.checkin_queue %}
+      {% include "form_field_snippet.html" with field=form.checkin_checklist %}
+      {% include "form_field_snippet.html" with field=form.checkin_password %}
+      {% include "form_field_snippet.html" with field=form.checkin_require_password %}
+      {% include "form_field_snippet.html" with field=form.checkin_require_condition %}
+      {% include "form_field_snippet.html" with field=form.checkin_report_checklist %}
+      {% include "form_field_snippet.html" with field=form.checkin_timeline %}
+<!--
+      <fieldset>
+        <legend>{% trans "Shipping Methods" %}</legend>
+      {% for f in formset %}
+        <div class="form">
+        {% include "form_snippet.html" with form=f %}
+        </div>
+      {% endfor %}
+      </fieldset>
+      <a class="btn" id="add_more"><i class="icon-plus"></i> {% trans "Add Method" %}</a>
+//-->
+    </div>
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+  </div>
+</form>
+{% endblock second_column %}
+
+{% block media %}
+<script type="text/javascript">
+  $(function(){
+    $('#id_default_sender').change(function(){
+      if( $(this).val() == 'custom' ) {
+        $('#id_default_sender_custom').attr('disabled', false);
+        $('#id_default_sender_custom').focus();
+      } else {
+        $('#id_default_sender_custom').attr('disabled', true);
+      }
+    });
+    $('#id_default_sender').trigger('change');
+
+    $('#add_more').click(function() {
+      cloneMore('div.form:last', 'form', false);
+    });
+
+  });
+</script>
+{% endblock media %}

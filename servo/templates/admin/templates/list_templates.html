@@ -1,0 +1,7 @@
+{% extends "generic/admin_list.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+    <a class="btn btn-default navbar-btn" href="{% url 'admin-edit_template' %}"><i class="icon-plus"></i> {% trans "New Template" %}</a>
+{% endblock toolbar %}

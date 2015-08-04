@@ -1,0 +1,59 @@
+{% extends "default.html" %}
+{% load i18n %}
+{% load servo_tags %}
+
+{% block toolbar %}
+{% if perms.servo.add_order %}
+  <a href="{% url 'orders-create' %}" class="btn"><i class="icon-plus"></i> {% trans "Create Order" %}</a>
+{% endif %}
+{% endblock toolbar %}
+
+{% block content %}
+<div class="page-header clearfix">
+  <div class="pull-left">
+    <h2><i class="glyphicons-icon home"></i> {{ title }}<br/><small style="margin-left:60px">{{ subtitle }}</small></h2>
+  </div>
+  <form class="form-search pull-right">
+    <div class="input-append">
+      <input type="text" class="search-query filter" placeholder="{% trans "Filter results" %}"/>
+      <button type="button" class="btn" data-toggle="collapse" data-target="#collapsable"><i class="icon-search"></i></button>
+    </div>
+  </form>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    {% include "accounts/tabs.html" %}
+  </div>
+</div>
+
+{% block second_row %}
+
+<div id="collapsable" class="collapse out">
+  <div class="well clearfix">
+    <form action="" method="get" class="form-inline">
+      {% for field in form %}
+      <div class="control-group pull-left">
+        <label class="control-label">{{ field.label }}</label>
+        <div class="controls">{{ field }}</div>
+      </div>
+      {% endfor %}
+      <p class="clearfix"><hr/></p>
+      <div class="pull-right">
+        <a class="btn" href="{% url 'accounts-list_orders' username=request.user.username %}?user=state=1&amp;user={{ request.user.pk }}"><i class="icon-refresh"></i> {% trans "Reset" %}</a>
+        <button class="btn btn-primary" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% block second_column %}
+  {% include "orders/list.html" %}
+{% endblock second_column %}
+</div>
+{% endblock second_row %}
+
+{% endblock content %}
+
+{% block crumbs %}
+<li class="active">{% trans "Orders" %}</li>
+{% endblock crumbs %}

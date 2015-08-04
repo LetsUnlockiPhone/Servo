@@ -1,0 +1,52 @@
+{% load i18n %}
+{% load mptt_tags %}
+{% load servo_tags %}
+{% recursetree nodes %}
+<address>
+  <strong><a href="{{ node.get_absolute_url }}"><i class="{{ node.get_icon }}"></i> {{ node.name }}</a></strong>
+  <div class="btn-group pull-right">
+    <a class="btn btn-small dropdown-toggle{% if order.is_closed %} disabled{% endif %}" data-toggle="dropdown" href="#">
+      <i class="icon-cog"></i> <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="{% url 'orders-choose_customer' order.pk %}" data-modal="#modal">{% trans "Choose" %}</a></li>
+    {% if node.is_company %}
+      <li><a href="{% url 'customers-create_contact' parent_id=node.id %}">{% trans "Add contact" %}</a></li>
+    {% else %}
+      <li class="disabled"><a href="#">{% trans "Add contact" %}</a></li>
+    {% endif %}
+      <li><a href="{% url 'orders-create_with_customer' customer_id=node.id %}">{% trans "Create Order" %}</a></li>
+      <li class="divider"></li>
+      <li><a href="{% url 'customers-edit_customer' group=node.get_group pk=node.pk %}">{% trans "Edit" %}</a></li>
+    {% if node.is_leaf_node %}
+      <li><a href="{% url 'orders-remove_customer' pk=order.pk customer_id=node.pk %}" data-modal="#modal">{% trans "Remove" %}</a></li>
+    {% else %}
+      <li class="disabled"><a href="#" data-modal="#modal">{% trans "Remove" %}</a></li>
+    {% endif %}
+    </ul>
+  </div>
+  <br/>
+  {% if node.email %}
+  <a href="{% url 'notes-create_with_to_and_order' recipient=node.email order_id=order.id %}">{{ node.email }}</a><br/>
+  {% endif %}
+  {% if node.phone %}
+  <a href="{% url 'notes-create_with_to_and_order' recipient=node.get_standard_phone order_id=order.id %}">{{ node.get_national_phone }}</a><br/>
+  {% endif %}
+  {% if node.street_address %}
+  {{ node.street_address }}<br/>
+  {{ node.zip_code }} {{ node.city }}
+  {% endif %}
+  {% with node.fullprops.items as props %}
+  {% if props %}
+  <br/>
+  {% for k, v in props %}
+  {{ k }}: {{ v }}<br/>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  {% if node.notes %}
+  <p><small class="muted">{{ node.notes|default:"" }}</small></p>
+  {% endif %}
+</address>
+{{ children }}
+{% endrecursetree %}

@@ -1,0 +1,14 @@
+{% extends "accounts/calendars.html" %}
+
+{% block detail_view %}
+    <form action="" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        {% include "form_field_snippet.html" with field=form.started_at %}
+        <div class="input-append">
+            {{ form.finished_at }}
+            <button class="btn" type="button" id="set_dt"><i class="icon-time"></i></button>
+        </div>
+        {% include "form_field_snippet.html" with field=form.notes %}
+        {% include "form_buttons.html" %}
+    </form>
+{% endblock detail_view %}

@@ -1,0 +1,18 @@
+{% extends "default.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="row-fluid">
+  <div class="span12">{% block header_row %}{% endblock header_row %}</div>
+</div>
+<div class="row-fluid">
+  <div class="span3">
+    {% block first_column %}
+    {% endblock first_column %}
+  </div>
+  <div class="span9">
+    {% block second_column %}
+    {% endblock second_column %}
+  </div>
+</div>
+{% endblock content %}

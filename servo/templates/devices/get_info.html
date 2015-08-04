@@ -1,0 +1,45 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+{{ device.description }}
+{% endblock header %}
+
+{% block body %}
+<dl class="dl-horizontal">
+  <dt>{% trans "Warranty Status" %}</dt>
+  <dd>{{ device.get_warranty_status_display }}</dd>
+  <dt>{% trans "Purchase Date" %}</dt>
+  <dd>{{ device.purchased_on|date:"SHORT_DATE_FORMAT"|default:"-" }}, {{ device.purchase_country|default:"-" }}</dd>
+  <dt>{% trans "Serial Number" %}</dt>
+  <dd>{{ device.sn }}</dd>
+  {% if device.configuration %}
+  <dt>{% trans "Configration" %}</dt>
+  <dd>{{ device.configuration }}</dd>
+  {% endif %}
+  {% if device.imei %}
+  <dt>IMEI</dt>
+  <dd>{{ device.imei }}</dd>
+  <dt>{% trans "Activation Profile" %}</dt>
+  <dd>{{ device.initial_activation_policy }}</dd>
+  <dt>{% trans "Unlocked" %}</dt>
+  <dd>{{ device.unlocked|yesno }}</dd>
+  {% endif %}
+  {% if device.username %}
+  <dt>{% trans "Username" %}</dt>
+  <dd>{{ device.username }}</dd>    
+  {% endif %}
+  {% if device.password %}
+  <dt>{% trans "Password" %}</dt>
+  <dd>{{ device.password }}</dd>
+  {% endif %}
+  {% if device.get_coverage_details %}
+  <dt>{% trans "Details" %}</dt>
+  <dd>{{ device.get_coverage_details|join:"<br/>" }}</dd>
+  {% endif %}
+  {% if device.notes %}
+  <dt>{% trans "Notes" %}</dt>
+  <dd>{{ device.notes }}</dd>
+  {% endif %}
+</dl>
+{% endblock body %}

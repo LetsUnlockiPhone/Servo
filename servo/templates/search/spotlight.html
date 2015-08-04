@@ -1,0 +1,37 @@
+{% extends "two_column_layout.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+    <a href="{% url 'customers-create_customer' group='all' %}?name={{ query }}" class="btn btn-inverse"><i class="icon-plus icon-white"></i> {% trans "New Customer" %}</a>
+{% endblock toolbar %}
+
+{% block first_column %}
+<ul class="nav nav-list">
+    <li class="nav-header">{% trans "Results" %}</li>
+    <li class="{% active request 'search/customers' %}">
+        <a href="/search/customers/?q={{ query }}">{% trans "Customers" %}</a>
+    </li>
+    <li class="{% active request 'search/devices' %}">
+        <a href="/search/devices/?q={{ query }}">{% trans "Devices" %}</a>
+    </li>
+    <li class="{% active request 'search/gsx' %}">
+        <a href="/search/gsx/{{ what }}?q={{ query }}">{% trans "GSX" %}</a>
+    </li>
+    <li class="{% active request 'search/orders' %}">
+        <a href="/search/orders/?q={{ query }}">{% trans "Orders" %}</a>
+    </li>
+    <li class="{% active request 'search/products' %}">
+        <a href="/search/products/?q={{ query }}">{% trans "Products and Parts" %}</a>
+    </li>
+    <li class="{% active request 'search/notes' %}"><a href="/search/notes/?q={{ query }}">{% trans "Notes" %}</a></li>
+    <li class="{% active request 'search/articles' %}"><a href="/search/articles/?q={{ query }}">{% trans "Articles" %}</a></li>
+</ul>
+{% endblock first_column %}
+
+{% block second_column %}
+{% endblock second_column %}
+
+{% block footer %}
+    <li><i class="icon-home"></i> <a href="{% url 'accounts-list_orders' request.user.username %}">{% trans "Home" %}</a> <span class="divider">/</span></li><li class="active">{{ title }}</li>
+{% endblock footer %}

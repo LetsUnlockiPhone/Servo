@@ -1,0 +1,12 @@
+{% if items.count %}
+<div class="btn-group">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="icon-file"></i> <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+    {% for i in items %}
+        <li><a href="{{ i.get_absolute_url }}">{{ i }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}

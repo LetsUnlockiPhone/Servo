@@ -1,0 +1,46 @@
+.container-narrow {
+  max-width:700px;
+  margin: 0 auto;
+}
+.jumbotron {
+  margin: 60px 0;
+  text-align: center;
+}
+.jumbotron h1 {
+  font-size: 72px;
+  line-height: 1em;
+}
+.main {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.choose-device {
+  text-align: center;
+}
+.choose-device a:hover {
+  text-decoration: none;
+}
+.nolabel label {
+  display: none;
+}
+textarea {
+  resize: vertical;
+}
+.alert {
+  margin-top: 20px;
+}
+.select-tags {
+    padding: 0 10px;
+}
+.select-tags .btn {
+  margin: 3px;
+}
+.device-image {
+  width: 100%;
+}
+label {
+  font-weight: normal !important;
+}
+.required label {
+  font-weight: bold !important;
+}

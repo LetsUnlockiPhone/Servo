@@ -1,0 +1,16 @@
+{% extends "snippets/modal.html" %}
+{% load i18n %}
+
+{% block header %}
+{% trans "Delete this GSX repair?" %}
+{% endblock header %}
+
+{% block body %}
+{% trans "Only repairs that have not been submitted can be deleted." %}
+{% endblock body %}
+
+{% block footer %}
+<form method="post" action="{{ action }}">{% csrf_token %}
+  <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+</form>
+{% endblock footer %}

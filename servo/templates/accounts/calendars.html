@@ -1,0 +1,55 @@
+{% extends "accounts/orders.html" %}
+{% load i18n %}
+{% load servo_tags %}
+
+{% block toolbar %}
+<div class="btn-group">
+    <a href="{% url 'calendars-create' username=request.user.username %}" data-modal="#modal" class="btn"><i class="icon-plus"></i> {% trans "New Calendar" %}</a>
+{% if calendar %}
+    <a href="{% url 'calendars.event.edit' username=request.user.username cal_pk=calendar.pk %}" class="btn">{% trans "New Event" %}</a>
+{% endif %}
+</div>
+
+<div class="btn-group">
+{% if calendar %}
+    <a href="print/" class="btn window"><i class="icon-print"></i> {% trans "Print" %}</a>
+    <a href="{% url 'calendars-edit' request.user.username calendar.pk view %}" data-modal="#modal" class="btn"><i class="icon-pencil"></i> {% trans "Edit" %}</a>
+    {% if perms.servo.delete_calendar %}
+    <a href="{{ calendar.get_absolute_url }}delete/" data-modal="#modal" class="btn"><i class="icon-trash"></i> {% trans "Delete" %}</a>
+    {% else %}
+    <a href="" class="btn disabled">{% trans "Delete" %}</a>
+    {% endif %}
+{% endif %}
+</div>
+
+<div class="btn-group">
+    <a href="download/" class="btn {% if not calendar %}disabled{% endif %}"><i class="icon-download"></i> {% trans "Download" %}</a>
+</div>
+
+{% endblock toolbar %}
+
+{% block second_row %}
+
+<div class="row-fluid">
+    <div class="span3">
+        <ul class="nav nav-list">
+            <li class="nav-header">{% trans "Calendars" %}</li>
+        {% for c in calendars %}
+            <li class="{% active request c.pk '/' %}">
+                <a href="{% url 'calendars.view' pk=c.pk username=request.user.username view='week' %}">{{ c.title }}<span class="badge pull-right">{{ c.get_unfinished_count }}</span></a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="span9">
+    {% block detail_view %}
+        <h1 class="muted text-center">{% trans "No calendar selected" %}</h1>
+    {% endblock detail_view %}
+    </div>
+</div>
+{% endblock second_row %}
+
+{% block crumbs %}
+    <li class="active"><a href="{% url 'calendars-list' username=request.user.username %}">{% trans "Calendars" %}</a></li>
+{% endblock crumbs %}

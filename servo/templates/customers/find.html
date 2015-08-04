@@ -1,0 +1,95 @@
+{% extends "customers/index.html" %}
+{% load i18n %}
+
+{% block toolbar %}
+<div class="btn-group">
+{% if request.session.customer_query %}
+  <a class="btn" href="{% url 'customers-download' %}"><i class="icon-download-alt"></i> {% trans "Download" %}</a>
+{% else %}
+  <a class="btn disabled" href="#"><i class="icon-download-alt"></i> {% trans "Download" %}</a>
+{% endif %}
+</div>
+{% endblock toolbar %}
+
+{% block tabs %}
+  <li><a href="{% url 'customers-list_all' %}">{% trans "Browse" %}</a></li>
+  <li class="active"><a href="{% url 'customers-find' %}">{% trans "Search" %}</a></li>
+{% endblock tabs %}
+
+{% block customers %}
+<form action="" method="post" class="form-inline well clearfix">
+  {% csrf_token %}
+  {% for field in form %}
+  <div class="control-group pull-left">
+    <label class="control-label">{{ field.label }}</label>
+    <div class="controls">{{ field }}</div>
+  </div>
+  {% endfor %}
+  <div class="control-group pull-right">
+    <label class="control-label">&nbsp;</label>
+    <div class="controls">
+      <button class="btn btn-primary pull-right" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+    </div>
+  </div>
+</form>
+
+{% if form.errors %}
+  <div class="alert alert-danger">
+  {% for k, v in form.errors.items %}
+    {{ v }}
+  {% endfor %}
+  </div>
+{% endif %}
+
+<table class="table table-hover sortable">
+  <thead>
+    <tr>
+      <th>{% trans "Name" %}</th>
+      <th>{% trans "Email" %}</th>
+      <th>{% trans "Phone" %}</th>
+      <th>{% trans "Address" %}</th>
+      <th>{% trans "Postal Code" %}</th>
+      <th>{% trans "City" %}</th>
+      <th data-defaultsort="disabled"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% for i in customers %}
+  <tr>
+    <td><a href="{{ i.get_absolute_url }}">{{ i.fullname }}</a></td>
+    <td><a href="{% url 'notes-create_to_customer' customer=i.pk %}">{{ i.email }}</a></td>
+    <td>{{ i.phone }}</td>
+    <td>{{ i.street_address }}</td>
+    <td>{{ i.zip_code }}</td>
+    <td>{{ i.city }}</td>
+    <td>
+      <div class="btn-group pull-right">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-cog"></i> <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ i.get_absolute_url }}">{% trans "View" %}</a></li>
+        {% if perms.servo.change_customer %}
+          <li><a href="{{ i.get_absolute_url }}edit/">{% trans "Edit" %}</a></li>
+        {% else %}
+          <li><a href="#" class="disabled">{% trans "Edit" %}</a></li>
+        {% endif %}
+          <li class="divider"></li>
+        {% if perms.servo.delete_customer %}
+          <li><a href="{{ i.get_absolute_url }}delete/" data-modal="#modal"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+        {% else %}
+          <li><a href="#" class="disabled"><i class="icon-trash"></i> {% trans "Delete" %}</a></li>
+        {% endif %}
+        </ul>
+      </div>
+    </td>
+  </tr>
+{% empty %}
+  <tr>
+    <td class="muted text-center empty" colspan="7">{% trans "No customers found" %}</td>
+  </tr>
+{% endfor %}
+  </tbody>
+  </table>
+  {% include "pagination.html" with items=customers %}
+{% endblock customers %}

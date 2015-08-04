@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+  {% blocktrans with user=user.get_full_name %}Delete user {{ user }}?{% endblocktrans %}
+{% endblock header %}
+
+{% block body %}
+  <p>{% trans 'This action cannot be undone.' %}</p>
+{% endblock body %}
+
+{% block footer %}
+  <form action="{% url 'admin-delete_user' user.id %}" method="post" accept-charset="utf-8">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">{% trans "Delete" %}</button>
+  </form>
+{% endblock footer %}

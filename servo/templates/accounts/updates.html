@@ -1,0 +1,65 @@
+{% extends "default.html" %}
+{% load humanize %}
+{% load i18n %}
+
+{% block toolbar %}
+{% if perms.servo.add_order %}
+  <a href="{% url 'accounts-clear_notifications' request.user.username %}?t={% now "Y/m/d/H/i" %}" class="btn"><i class="icon-ok"></i> {% trans "Clear all" %}</a>
+{% endif %}
+{% endblock toolbar %}
+
+{% block content %}
+<div class="page-header clearfix">
+  <div class="pull-left">
+    <h2><i class="glyphicons-icon home"></i> {{ title }}<br/><small style="margin-left:60px">{{ subtitle }}</small></h2>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="span12">
+    {% include "accounts/tabs.html" %}
+  </div>
+</div>
+{% block second_row %}
+<div class="row-fluid">
+  <div class="span3">
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans "Updates" %}</li>
+      <li {% if kind == 'note_added' %}class="active"{% endif %}><a href="?kind=note_added">{% trans "Messages" %}</a></li>
+      <li {% if kind == 'set_status' %}class="active"{% endif %}><a href="?kind=set_status">{% trans "Statuses" %}</a></li>
+    </ul>
+  </div>
+  <div class="span9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:25px"></th>
+          <th>{% trans "Event" %}</th>
+          <th style="width:100px">{% trans "Order" %}</th>
+          <th style="width:150px"></th>
+          <th style="width:24px"></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for event in events %}
+        <tr>
+          <td><img src="{{ STATIC_URL }}images/{{ event.get_icon }}.png" alt="{{ event.description }}" class="icon"/></td>
+          <td>{{ event.description }}</td>
+          <td><a href="{{ event.content_object.get_absolute_url }}">{{ event.content_object }}</a></td>
+          <td style="text-align:right">{{ event.triggered_by }}<br/>
+          <small class="muted">{{ event.triggered_at|naturaltime }}</small></td>
+          <td><a class="btn {% if event.handled_at %}disabled{% endif %}" href="{% url 'events-ack_event' event.pk %}?return=0"><i class="icon-ok"></i></a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% include "pagination.html" with items=events %}
+  </div>
+</div>
+
+{% endblock second_row %}
+
+{% endblock content %}
+
+{% block crumbs %}
+<li class="active">{% trans "Updates" %}</li>
+{% endblock crumbs %}

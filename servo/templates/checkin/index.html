@@ -1,0 +1,95 @@
+{% load i18n %}{% load bootstrap3 %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{{ title }}{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ STATIC_URL }}css/checkin.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}bs3/css/timeline.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ STATIC_URL }}bs3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}bs3/css/bootstrap-theme.min.css">
+    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}bs3/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}js/knockout.js"></script>
+  </head>
+  <body id="main">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="collapse navbar-collapse">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        {% if request.user.is_authenticated %}
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% bootstrap_icon "map-marker" %} {{ request.session.checkin_location_name }} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+              {% for l in request.session.checkin_locations %}
+                <li{% if l.pk == request.session.checkin_location %} class="active"{% endif %}><a href="?l={{ l.pk|safe }}">{{ l.name }}</a></li>
+              {% endfor %}
+              </ul>
+            </li>
+          </ul>
+        {% endif %}
+          <ul class="nav navbar-nav pull-right">
+        {% if request.user.is_authenticated %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% bootstrap_icon "user" %} {{ request.session.checkin_user_name }} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+              {% for u in request.session.checkin_users %}
+                <li{% if u.pk == request.session.checkin_user %} class="active"{% endif %}><a href="?u={{ u.pk|safe }}">{{ u.name }}</a></li>
+              {% endfor %}
+                <li class="divider"></li>
+                <li><a href="{% url 'accounts-list_orders' user.username %}">{% bootstrap_icon "log-in" %} {% trans "Go to Servo" %}</a></li>
+                <li><a href="{% url 'accounts-logout' %}" data-modal="#modal">{% bootstrap_icon "off" %} {% trans "Log out" %}...</a></li>
+              </ul>
+            </li>
+        {% endif %}
+          </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="main container">
+    {% if request.user.is_authenticated %}
+      <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">{% trans "Search results" %}</h4>
+            </div>
+            <div class="modal-body">
+              <ul class="nav nav-pills nav-stacked" data-bind="foreach: results">
+                <li><a href="#" data-bind="text: title, click: $parent.loadCustomer"></a></li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+      <div class="row">
+        <div class="col-md-12">
+          {% bootstrap_messages %}
+          {% block main %}(no content){% endblock main %}
+        </div>
+      </div>
+    </div><!-- /container -->
+    <script type="text/javascript" src="{{ STATIC_URL }}js/spin.js-2.1.0.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.spin.new.js"></script>
+    <script src="{{ STATIC_URL }}js/common.js"></script>
+    {% block media %}{% endblock media %}
+    <script type="text/javascript">
+      $(function(){
+        $( "#id_agree_to_terms" ).click(function() {
+          $('#id_btn_submit').prop('disabled', !$(this).prop('checked'));
+        });
+      });
+    </script>
+  </body>
+</html>

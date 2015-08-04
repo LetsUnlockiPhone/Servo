@@ -1,0 +1,44 @@
+{% extends "shipments/index.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block second_column %}
+<form method="post" action="">
+  {% csrf_token %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th><input type="checkbox" class="toggle_column"/></th>
+        <th>{% trans "Code" %}</th>
+        <th>{% trans "Title" %}</th>
+        <th>{% trans "Order" %}</th>
+        <th>{% trans "Return Order" %}</th>
+        <th>{% trans "Register For Return" %}</th>
+        <th>{% trans "Serial Number" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in parts %}
+      <tr>
+        <td><input type="checkbox" name="items" value="{{ p.returnOrderNumber }}"/></td>
+        <td>{{ p.partNumber }}</td>
+        <td>{{ p.partDescription|truncatechars:42 }}</td>
+        <td>{{ p.purchaseOrderNumber }}</td>
+        <td><a href="{% url 'shipments-return_label' p.partNumber p.returnOrderNumber %}" class="window">{{ p.returnOrderNumber }}</a></td>
+        <td>{{ p.registeredForReturn }}</td>
+        <td>{{ p.kbbSerialNumber }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="7" class="muted empty">{% trans "No parts pending return" %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <button type="submit" class="btn btn-primary pull-right" disabled="disabled">{% trans "Submit" %}</button>
+</form>
+{% endblock second_column %}
+
+{% block breadcrumb %}
+<li class="active"><span class="divider">/</span> <a href="{% url 'shipments-returns' %}">{% trans "Parts Pending Return" %}</a></li>
+{% endblock breadcrumb %}

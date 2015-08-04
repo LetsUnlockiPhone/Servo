@@ -1,0 +1,17 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% blocktrans with id=order.code%}Really delete order {{ id }}? {% endblocktrans %}
+{% endblock header %}
+
+{% block body %}
+    <p>{% trans "This will also delete all the order's notes. This action cannot be undone." %}</p>
+{% endblock body %}
+
+{% block footer %}
+    <form action="{{ action }}" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger pull-right">{% trans "Delete" %}</button>
+    </form>
+{% endblock footer %}

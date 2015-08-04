@@ -1,0 +1,5460 @@
+# Estonian translation for SErvo.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Filipp Lepalaan <filipp@mcare.fi>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-23 10:41+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: forms/account.py:36 forms/account.py:70 forms/account.py:78
+#: forms/admin.py:364 forms/admin.py:407 forms/admin.py:435
+#: models/account.py:138 models/common.py:197
+#: templates/devices/get_info.html:33 templates/devices/summary.html:24
+#: templates/orders/devices.html:41
+msgid "Password"
+msgstr "Parool"
+
+#: forms/account.py:41 templates/checkin/confirmation.html:6
+#: templates/orders/repair.html:28 templates/products/receive_item.html:33
+#: templates/purchases/list_pos.html:55 templates/purchases/view_po.html:23
+#: templates/shipments/list_incoming.html:19
+msgid "Confirmation"
+msgstr "Kinnitus"
+
+#: forms/account.py:54
+msgid "Password and confirmation do not match!"
+msgstr "Parool ja kinnitus ei klapi"
+
+#: forms/account.py:61
+msgid "File size of photo is too large"
+msgstr ""
+
+#: forms/account.py:67
+msgid "First Name"
+msgstr "Eesnimi"
+
+#: forms/account.py:68
+msgid "Last Name"
+msgstr "Perekonnanimi"
+
+#: forms/account.py:69 templates/accounts/print_calendar.html:23
+#: templates/orders/print_confirmation.html:24
+#: templates/orders/print_confirmation.html:54
+#: templates/orders/print_receipt.html:12
+msgid "Email Address"
+msgstr "Email"
+
+#: forms/account.py:75 forms/admin.py:358 forms/admin.py:403
+#: forms/admin.py:431 templates/devices/get_info.html:29
+#: templates/devices/summary.html:20 templates/orders/devices.html:37
+msgid "Username"
+msgstr "Kasutajatunnus"
+
+#: forms/admin.py:43 views/product.py:173
+msgid "Unsupported file encoding"
+msgstr ""
+
+#: forms/admin.py:90
+#, fuzzy
+msgid "Group members"
+msgstr "Rühmad"
+
+#: forms/admin.py:97 templates/admin/users/form.html:9
+msgid "Permissions"
+msgstr "Õigused"
+
+#: forms/admin.py:133
+msgid "A location with that name already exists"
+msgstr ""
+
+#: forms/admin.py:192
+#, python-format
+msgid "\"%s\" cannot be used as a username"
+msgstr ""
+
+#: forms/admin.py:234
+#, python-format
+msgid "Syntax error in template: %s"
+msgstr ""
+
+#: forms/admin.py:241
+msgid "Company Name"
+msgstr "Firma nimi"
+
+#: forms/admin.py:243
+#, fuzzy
+msgid "Company Logo"
+msgstr "Firma nimi"
+
+#: forms/admin.py:245
+msgid "Company-wide logo to use in print templates"
+msgstr ""
+
+#: forms/admin.py:250
+msgid "Terms of Service"
+msgstr "Hooldustingimused"
+
+#: forms/admin.py:252
+msgid ""
+"These terms will be added to your work confirmations and public check-in "
+"site."
+msgstr ""
+
+#: forms/admin.py:258
+msgid "Autocomplete GSX repairs"
+msgstr "Sulge GSX tellimused automaatselt"
+
+#: forms/admin.py:259
+msgid "Complete the GSX repair when closing a Service Order"
+msgstr ""
+
+#: forms/admin.py:264 forms/admin.py:371
+#, fuzzy
+msgid "User Account"
+msgstr "Uus konto"
+
+#: forms/admin.py:266
+msgid "User account to use for the public check-in service"
+msgstr ""
+
+#: forms/admin.py:270 templates/admin/users/groups.html:12 views/stats.py:276
+msgid "Group"
+msgstr "Rühm"
+
+#: forms/admin.py:272
+msgid "Users to choose from in the check-in interface"
+msgstr ""
+
+#: forms/admin.py:276 models/repair.py:54
+msgid "Checklist"
+msgstr ""
+
+#: forms/admin.py:278
+msgid "Checklist to show during check-in"
+msgstr ""
+
+#: forms/admin.py:282 models/queue.py:174
+msgid "Queue"
+msgstr "Järjekord"
+
+#: forms/admin.py:284
+msgid "Orders created through the check-in interface will go into this queue"
+msgstr ""
+
+#: forms/admin.py:289
+msgid "Show timeline"
+msgstr ""
+
+#: forms/admin.py:290
+msgid "Show status timeline on public repair status page"
+msgstr ""
+
+#: forms/admin.py:295
+#, fuzzy
+msgid "Show password"
+msgstr "parool"
+
+#: forms/admin.py:296
+msgid "Make checkin device password field readable"
+msgstr ""
+
+#: forms/admin.py:301
+#, fuzzy
+msgid "Show checklist results"
+msgstr "Testimistulemused"
+
+#: forms/admin.py:302
+msgid "Show checklist results in order confirmation"
+msgstr ""
+
+#: forms/admin.py:306
+msgid "Currency"
+msgstr "Valuuta"
+
+#: forms/admin.py:319
+msgid "Default GSX account"
+msgstr "Primaarne GSX konto"
+
+#: forms/admin.py:321
+msgid "Use this GSX account before and order is assigned to a queue"
+msgstr ""
+
+#: forms/admin.py:327 models/product.py:107 models/product.py:134
+msgid "Margin %"
+msgstr "Katte %"
+
+#: forms/admin.py:328
+msgid "Default margin for new products"
+msgstr "Kate uutele toodetele"
+
+#: forms/admin.py:334 models/product.py:88
+msgid "VAT %"
+msgstr "Käibemaks"
+
+#: forms/admin.py:335
+msgid "Default VAT for new products"
+msgstr "Käibemaks uutele toodetele"
+
+#: forms/admin.py:341
+msgid "Shipping Cost"
+msgstr "Transpordikulud"
+
+#: forms/admin.py:342
+msgid "Default shipping cost for new products"
+msgstr "Transpordikulud uutelete toodetele"
+
+#: forms/admin.py:348
+#, fuzzy
+msgid "Track inventory"
+msgstr "Ladu"
+
+#: forms/admin.py:349
+msgid "Unchecking this will disable tracking product amounts in your inventory"
+msgstr ""
+
+#: forms/admin.py:353
+msgid "IMAP server"
+msgstr "IMAP server"
+
+#: forms/admin.py:368 forms/admin.py:410 forms/admin.py:445
+msgid "Use SSL"
+msgstr "Kasuta SSL-i"
+
+#: forms/admin.py:373
+msgid "User account to use when creating notes from messages"
+msgstr ""
+
+#: forms/admin.py:378
+#, fuzzy
+msgid "Default Sender"
+msgstr "Vaikimisi-staatus"
+
+#: forms/admin.py:380 models/account.py:241
+#, fuzzy
+msgid "User"
+msgstr "Kasutajad"
+
+#: forms/admin.py:381 forms/returns.py:53 models/common.py:507
+#: templates/admin/users/form.html:10 views/stats.py:265
+msgid "Location"
+msgstr "Asukoht"
+
+#: forms/admin.py:382
+#, fuzzy
+msgid "Custom..."
+msgstr "Klient"
+
+#: forms/admin.py:384
+msgid "Select the default sender address for outgoing emails"
+msgstr ""
+
+#: forms/admin.py:396
+msgid "Default subject"
+msgstr "Vaikimisi-pealkiri"
+
+#: forms/admin.py:401
+msgid "SMTP server"
+msgstr "SMTP server"
+
+#: forms/admin.py:413
+msgid "SMS Gateway"
+msgstr ""
+
+#: forms/admin.py:415
+msgid "Built-in"
+msgstr ""
+
+#: forms/admin.py:423 forms/admin.py:456 forms/checkin.py:100
+msgid "Email address"
+msgstr "Email"
+
+#: forms/admin.py:426
+msgid "URL"
+msgstr "Aadress"
+
+#: forms/admin.py:428
+msgid "SMS Server URL"
+msgstr "SMS serveri aadress"
+
+#: forms/admin.py:441
+#, fuzzy
+msgid "Sender"
+msgstr "Vaikimisi-staatus"
+
+#: forms/admin.py:451
+#, fuzzy
+msgid "Notify locations"
+msgstr "Teavitused"
+
+#: forms/admin.py:452
+msgid "Daily reports will be sent to the location's email address"
+msgstr ""
+
+#: forms/admin.py:457
+msgid "Send daily reports to this email address"
+msgstr ""
+
+#: forms/admin.py:465
+msgid "Invalid margin %"
+msgstr "Vale katte %"
+
+#: forms/checkin.py:26 models/note.py:54
+#, python-format
+msgid "%s is not a valid phone number"
+msgstr "%s ei ole kõlbulik telefoninumber"
+
+#: forms/checkin.py:31
+#, python-format
+msgid "%s is not a valid serial or IMEI number"
+msgstr "%s ei ole õige seerianumber ega IMEI kood"
+
+#: forms/checkin.py:40 forms/repairs.py:22 models/customer.py:99
+#: templates/customers/view.html:38
+msgid "Country"
+msgstr "Maa"
+
+#: forms/checkin.py:46 templates/orders/devices.html:54
+#: templates/orders/print_confirmation.html:79
+msgid "Accessories"
+msgstr "Lisaseadmed"
+
+#: forms/checkin.py:48
+msgid ""
+"Please list here any accessories you'd like to check in with your device "
+"(cables, power adapters, bags, etc)"
+msgstr ""
+"Palun loetle siia seadmega kaasas olevad lisaseadmed (kaablid, laadijad, "
+"kotid jms)"
+
+#: forms/checkin.py:53
+msgid "Proof of Purchase"
+msgstr "Ostutšekk"
+
+#: forms/checkin.py:54
+msgid "Proof of Purchase is required when setting purchase date manually"
+msgstr "Ostutšekk on eriti vajalik siis kui täidad seadme ostukuupäeva käsitsi"
+
+#: forms/checkin.py:93 forms/repairs.py:15
+msgid "First name"
+msgstr "Eesnimi"
+
+#: forms/checkin.py:94 forms/repairs.py:16
+msgid "Last name"
+msgstr "Perekonnanimi"
+
+#: forms/checkin.py:97
+msgid "Company (optional)"
+msgstr "Firma"
+
+#: forms/checkin.py:104
+msgid "Phone number"
+msgstr "Telefoninumber"
+
+#: forms/checkin.py:107 forms/repairs.py:19 models/invoices.py:75
+#: templates/customers/find.html:51 templates/customers/view.html:30
+#: templates/orders/print_confirmation.html:57
+#: templates/orders/print_receipt.html:15
+msgid "Address"
+msgstr "Aadress"
+
+#: forms/checkin.py:108 forms/repairs.py:21 templates/customers/find.html:53
+msgid "City"
+msgstr "Linn"
+
+#: forms/checkin.py:109 templates/customers/find.html:52
+msgid "Postal Code"
+msgstr "Postiindeks"
+
+#: forms/checkin.py:112
+msgid "Check-in location"
+msgstr "Vastuvõtt"
+
+#: forms/checkin.py:115
+msgid "Choose where you want to leave the device"
+msgstr "Valige kuidas tahate oma seadet hooldusesse toimetada"
+
+#: forms/checkin.py:119
+msgid "Check-out location"
+msgstr "Tagastus"
+
+#: forms/checkin.py:122
+msgid "Choose where you want to pick up the device"
+msgstr "Valige kuidas te soovite oma seadet tagasi saada"
+
+#: forms/checkin.py:124
+msgid ""
+"I agree to the <a href=\"/checkin/terms/\" target=\"_blank\">terms of "
+"service.</a>"
+msgstr ""
+"Aktsepteerin <a href=\"/checkin/terms/\" target=\"_blank\">hooldustingimused."
+"</a>"
+
+#: forms/checkin.py:139
+msgid "Serial number or IMEI"
+msgstr "Seerianumber või IMEI kood"
+
+#: forms/checkin.py:146 templates/notes/view_note.html:21
+#: templates/products/receive_item.html:17
+#: templates/repairs/get_details.html:10
+#: templates/search/results/gsx_repair_details.html:6
+#: templates/shipments/list_incoming.html:18
+msgid "Service Order"
+msgstr "Hooldustellimus"
+
+#: forms/checkin.py:147
+msgid "Invalid Service Order number"
+msgstr "Vale hooldustellimuse number"
+
+#: forms/checkin.py:155 templates/checkin/issue.html:7
+msgid "Problem description"
+msgstr "Veakirjeldus"
+
+#: forms/checkin.py:160 templates/orders/repair.html:23
+msgid "Attachment"
+msgstr "Liide"
+
+#: forms/checkin.py:161
+msgid "Please use this to attach relevant documents"
+msgstr "Palun lisa siia vajalikud dokumendid"
+
+#: forms/checkin.py:166 models/common.py:457
+#: templates/accounts/print_calendar.html:45
+#: templates/accounts/view_calendar.html:32 templates/customers/view.html:42
+#: templates/devices/get_info.html:41
+#: templates/devices/search_gsx_warranty.html:48
+#: templates/devices/summary.html:28 templates/notes/list_notes.html:74
+#: templates/orders/devices.html:49 templates/orders/repair.html:32
+#: templates/repairs/get_details.html:16 templates/search/spotlight.html:27
+#: templates/search/results/gsx_repair_details.html:12
+msgid "Notes"
+msgstr "Märkmed"
+
+#: forms/checkin.py:168
+msgid "Will not appear on the print-out"
+msgstr ""
+
+#: forms/customer.py:35
+msgid "Enter a valid phone number"
+msgstr "Sisesta korrektne telefoninumber"
+
+#: forms/customer.py:44 forms/product.py:17
+msgid "Name contains"
+msgstr "Nimi sisaldab"
+
+#: forms/customer.py:48
+msgid "Email contains"
+msgstr "Email sisaldab"
+
+#: forms/customer.py:52
+msgid "Address contains"
+msgstr "Aadress sisaldab"
+
+#: forms/customer.py:56
+#, fuzzy
+msgid "Checked in between"
+msgstr "Tellimus loodud"
+
+#: forms/customer.py:72
+msgid "Please specify at least one parameter"
+msgstr ""
+
+#: forms/customer.py:76
+#, fuzzy
+msgid "CSV file"
+msgstr "fail"
+
+#: forms/customer.py:80
+msgid "Skip duplicates"
+msgstr ""
+
+#: forms/customer.py:81
+msgid "Skip customers with existing email addresses"
+msgstr ""
+
+#: forms/customer.py:87
+msgid "Data file should be in text format"
+msgstr ""
+
+#: forms/devices.py:26 forms/orders.py:97
+#, fuzzy
+msgid "Created between"
+msgstr "Tellimus loodud"
+
+#: forms/devices.py:34
+#, fuzzy
+msgid "Serial number contains"
+msgstr "Saatja sisaldab"
+
+#: forms/devices.py:42 forms/product.py:25
+#, fuzzy
+msgid "Description contains"
+msgstr "Saaja sisaldab"
+
+#: forms/devices.py:61
+#, fuzzy
+msgid "Serial numbers may not include spaces"
+msgstr "Saatja sisaldab"
+
+#: forms/invoices.py:39 forms/orders.py:57 forms/product.py:125
+msgid "State is"
+msgstr "Seis on"
+
+#: forms/invoices.py:41 forms/invoices.py:50 forms/product.py:127
+msgid "Any"
+msgstr ""
+
+#: forms/invoices.py:42 forms/product.py:128 models/order.py:128
+msgid "Open"
+msgstr "Ava"
+
+#: forms/invoices.py:43
+msgid "Paid"
+msgstr "Makstud"
+
+#: forms/invoices.py:49
+#, fuzzy
+msgid "Payment method is"
+msgstr "Maksumeetod"
+
+#: forms/invoices.py:55
+#, fuzzy
+msgid "Status is not"
+msgstr "Staatused"
+
+#: forms/invoices.py:61 forms/invoices.py:64 forms/product.py:140
+#: forms/product.py:143 forms/product.py:173 forms/product.py:187
+#: views/stats.py:250
+msgid "Start date"
+msgstr "Alates"
+
+#: forms/invoices.py:69 forms/invoices.py:72 forms/product.py:148
+#: forms/product.py:151 forms/product.py:180 forms/product.py:194
+#: views/stats.py:255
+msgid "End date"
+msgstr "Kuni"
+
+#: forms/invoices.py:77
+#, fuzzy
+msgid "Customer name contains"
+msgstr "Kliendi nimi"
+
+#: forms/invoices.py:81 forms/notes.py:43
+msgid "Service Order is"
+msgstr "Hooldustellimus on"
+
+#: forms/notes.py:29 models/note.py:81 templates/notes/view_note.html:19
+msgid "From"
+msgstr "Saatja"
+
+#: forms/notes.py:40
+msgid "Body contains"
+msgstr "Tekst sisaldab"
+
+#: forms/notes.py:41
+msgid "Recipient contains"
+msgstr "Saaja sisaldab"
+
+#: forms/notes.py:42
+msgid "Sender contains"
+msgstr "Saatja sisaldab"
+
+#: forms/orders.py:52 forms/product.py:165
+msgid "Location is"
+msgstr "Asukoht on"
+
+#: forms/orders.py:62
+msgid "Queue is"
+msgstr "Järjekord"
+
+#: forms/orders.py:67 models/queue.py:236 templates/admin/queues/form.html:27
+#: templates/devices/search_gsx_repairs.html:9
+#: templates/invoices/index.html:47 templates/orders/list.html:14
+#: templates/repairs/get_details.html:20
+#: templates/search/results/gsx_repair_details.html:16 views/stats.py:286
+msgid "Status"
+msgstr "Staatus"
+
+#: forms/orders.py:72
+#, fuzzy
+msgid "Created by"
+msgstr "Loodud"
+
+#: forms/orders.py:77 templates/orders/list.html:13
+msgid "Assigned to"
+msgstr "Käsitleja"
+
+#: forms/orders.py:82 templates/orders/edit.html:91
+msgid "Label"
+msgstr ""
+
+#: forms/orders.py:87 models/common.py:345
+msgid "Green"
+msgstr "Roheline"
+
+#: forms/orders.py:88
+msgid "Yellow"
+msgstr "Kollane"
+
+#: forms/orders.py:89 models/common.py:347
+msgid "Red"
+msgstr "Punane"
+
+#: forms/orders.py:90
+msgid "Grey"
+msgstr "Hall"
+
+#: forms/orders.py:92
+msgid "Color"
+msgstr "Värv"
+
+#: forms/product.py:21
+#, fuzzy
+msgid "Code contains"
+msgstr "Tekst sisaldab"
+
+#: forms/product.py:29
+#, fuzzy
+msgid "Device model is"
+msgstr "seadmed"
+
+#: forms/product.py:40
+msgid "Product datafile"
+msgstr "Tootefail"
+
+#: forms/product.py:48
+msgid "Parts database file"
+msgstr ""
+
+#: forms/product.py:52
+msgid "Import vintage parts"
+msgstr ""
+
+#: forms/product.py:57
+msgid "Update product prices"
+msgstr "Uuenda toodete hindu"
+
+#: forms/product.py:112
+#, python-format
+msgid "Product code %s contains invalid characters"
+msgstr ""
+
+#: forms/product.py:129
+msgid "Submitted"
+msgstr "Saadetud"
+
+#: forms/product.py:130 templates/products/receive_item.html:26
+#: templates/products/view.html:158 templates/purchases/list_pos.html:56
+msgid "Received"
+msgstr "Saabunud"
+
+#: forms/product.py:156
+#, fuzzy
+msgid "Reference contains"
+msgstr "Saatja sisaldab"
+
+#: forms/product.py:170
+#, fuzzy
+msgid "Ordered between"
+msgstr "Tellimus loodud"
+
+#: forms/product.py:184
+#, fuzzy
+msgid "Received between"
+msgstr "Vastu võtnud"
+
+#: forms/product.py:198
+#, fuzzy
+msgid "Confirmation is"
+msgstr "Kinnitus"
+
+#: forms/product.py:201
+#, fuzzy
+msgid "Service order is"
+msgstr "Hooldustellimus on"
+
+#: forms/repairs.py:17 models/invoices.py:69 templates/customers/find.html:49
+#: templates/customers/view.html:22
+msgid "Email"
+msgstr "Email"
+
+#: forms/repairs.py:18 models/invoices.py:63
+#: templates/accounts/print_calendar.html:24 templates/customers/find.html:50
+#: templates/customers/search.html:18 templates/customers/view.html:26
+#: templates/orders/print_confirmation.html:25
+#: templates/search/results/customers.html:14
+msgid "Phone"
+msgstr "Telefon"
+
+#: forms/repairs.py:20 models/common.py:413 models/customer.py:88
+msgid "ZIP Code"
+msgstr "Postiindeks"
+
+#: forms/repairs.py:23 models/common.py:325 models/product.py:224
+msgid "Other"
+msgstr "Muu"
+
+#: forms/repairs.py:58 models/repair.py:103
+msgid "Technician"
+msgstr ""
+
+#: forms/repairs.py:73
+msgid "Replacement serial number must be set"
+msgstr ""
+
+#: forms/returns.py:16
+msgid "Reason"
+msgstr "Põhjus"
+
+#: forms/returns.py:18 forms/returns.py:29 forms/returns.py:39
+msgid "Select..."
+msgstr "Vali..."
+
+#: forms/returns.py:19
+msgid "Part not needed"
+msgstr "Varuosa ei olnud vaja"
+
+#: forms/returns.py:20
+msgid "Duplicated part"
+msgstr "Topelt varuosa"
+
+#: forms/returns.py:21
+msgid "Added wrong part"
+msgstr "Lisatud vale varuosa"
+
+#: forms/returns.py:22
+msgid "Tried to cancel order"
+msgstr ""
+
+#: forms/returns.py:23
+msgid "Customer refused order"
+msgstr "Klient keeldus hooldusest"
+
+#: forms/returns.py:27
+msgid "Type"
+msgstr "Tüüp"
+
+#: forms/returns.py:30
+msgid "Diagnostic"
+msgstr "Diagnostika"
+
+#: forms/returns.py:31
+msgid "Un-Opened"
+msgstr "Avamata"
+
+#: forms/returns.py:38 models/parts.py:46
+msgid "Symptom Code"
+msgstr "Sümptom"
+
+#: forms/returns.py:42 models/parts.py:51
+msgid "Symptom Modifier"
+msgstr ""
+
+#: management/commands/cron.py:81 models/order.py:127
+msgid "Unassigned"
+msgstr "Ilma käsitlejata"
+
+#: management/commands/cron.py:82
+msgid "No Status"
+msgstr "Ilma staatuseta"
+
+#: management/commands/cron.py:86
+#, python-format
+msgid "Repairs aging beyond limits at %s"
+msgstr ""
+
+#: management/commands/cron.py:115
+msgid "Products stocked below limit"
+msgstr ""
+
+#: messaging/sms.py:14
+#, fuzzy
+msgid "SMS sender not configured"
+msgstr "Primaarne GSX konto"
+
+#: messaging/sms.py:51
+msgid "SMS sender name not configured"
+msgstr ""
+
+#: messaging/sms.py:77
+#, python-format
+msgid "Failed to send message to %s"
+msgstr ""
+
+#: messaging/sms.py:90
+msgid "Wrong sender name"
+msgstr ""
+
+#: messaging/sms.py:91
+msgid "Too many messages in one request"
+msgstr ""
+
+#: messaging/sms.py:92
+#, fuzzy
+msgid "Invalid username or password"
+msgstr "Vale parool või kasutajanimi"
+
+#: messaging/sms.py:93
+msgid "Insufficient credits on your account"
+msgstr ""
+
+#: messaging/sms.py:94
+msgid "Unsuccessful message submission"
+msgstr ""
+
+#: messaging/sms.py:95 messaging/sms.py:96
+msgid "Internal system error"
+msgstr ""
+
+#: messaging/sms.py:118
+#, python-format
+msgid "Unknown error (%s)"
+msgstr ""
+
+#: messaging/sms.py:132
+msgid "No SMS HTTP gateway defined"
+msgstr ""
+
+#: models/account.py:53 templates/admin/users/index.html:7
+msgid "New User"
+msgstr "Uus kasutaja"
+
+#: models/account.py:64 templates/orders/edit.html:33
+msgid "Current Location"
+msgstr "Praegune asukoht"
+
+#: models/account.py:65
+msgid "Orders you create will be registered to this location."
+msgstr ""
+
+#: models/account.py:71
+msgid "queues"
+msgstr "järjekorrad"
+
+#: models/account.py:74
+#, fuzzy
+msgid "Danish"
+msgstr "Soome"
+
+#: models/account.py:75
+msgid "Dutch"
+msgstr ""
+
+#: models/account.py:76
+msgid "English"
+msgstr "Inglise"
+
+#: models/account.py:77
+msgid "Estonian"
+msgstr "Eesti"
+
+#: models/account.py:78
+msgid "Finnish"
+msgstr "Soome"
+
+#: models/account.py:79
+msgid "Swedish"
+msgstr "Rootsi"
+
+#: models/account.py:85
+msgid "language"
+msgstr "keel"
+
+#: models/account.py:86
+msgid "Select which language you want to use Servo in."
+msgstr ""
+
+#: models/account.py:94 models/common.py:428
+#, fuzzy
+msgid "Time zone"
+msgstr "Ajatsoon"
+
+#: models/account.py:98
+msgid "Denmark"
+msgstr "Taani"
+
+#: models/account.py:99
+msgid "Estonia"
+msgstr "Eesti"
+
+#: models/account.py:100
+msgid "Finland"
+msgstr "Soome"
+
+#: models/account.py:101
+msgid "United States"
+msgstr "Ühendriigid"
+
+#: models/account.py:102
+msgid "Netherlands"
+msgstr ""
+
+#: models/account.py:103
+msgid "Sweden"
+msgstr "Rootsi"
+
+#: models/account.py:109
+msgid "region"
+msgstr "Regioon"
+
+#: models/account.py:110
+msgid "Affects formatting of numbers, dates and currencies."
+msgstr "Mõjutab numbrite, kuupäevade ja summade kuvamist."
+
+#: models/account.py:114
+msgid "email notifications"
+msgstr "saada teated mailiga"
+
+#: models/account.py:115
+msgid "Event notifications will also be emailed to you."
+msgstr ""
+
+#: models/account.py:119
+msgid "print automatically"
+msgstr ""
+
+#: models/account.py:120
+msgid "Opens print dialog automatically."
+msgstr ""
+
+#: models/account.py:126
+msgid "tech ID"
+msgstr "Tech ID"
+
+#: models/account.py:132 models/common.py:190
+msgid "User ID"
+msgstr "Kasutaja ID"
+
+#: models/account.py:144
+msgid "PO prefix"
+msgstr ""
+
+#: models/account.py:145
+msgid "GSX repairs you create will be prefixed"
+msgstr ""
+
+#: models/account.py:152 models/customer.py:107 models/device.py:152
+#: models/product.py:202
+msgid "photo"
+msgstr "foto"
+
+#: models/account.py:153
+msgid "Maximum avatar size is 1MB"
+msgstr ""
+
+#: models/account.py:242 templates/admin/index.html:24 views/admin.py:405
+msgid "Users & Groups"
+msgstr "Kasutajad ja rühmad"
+
+#: models/calendar.py:25 models/common.py:632 models/common.py:709
+#: models/order.py:704 models/repair.py:32
+msgid "title"
+msgstr "nimi"
+
+#: models/calendar.py:26 templates/accounts/calendars.html:7
+msgid "New Calendar"
+msgstr "Uus kalender"
+
+#: models/calendar.py:31
+msgid "hours per day"
+msgstr "tundi päevas"
+
+#: models/calendar.py:32
+msgid "How many hours per day should be in this calendar"
+msgstr "Kui mitu tundi peaks selles kalendris olema keskmiselt iga päev"
+
+#: models/calendar.py:49
+#, python-format
+msgid ""
+"%(hours)s hours total in %(workdays)s days (%(overtime)s hours overtime)."
+msgstr ""
+
+#: models/calendar.py:52
+#, python-format
+msgid "%(hours)s hours total in %(workdays)s days."
+msgstr ""
+
+#: models/common.py:176
+msgid "New GSX Account"
+msgstr "Uus GSX konto"
+
+#: models/common.py:177 models/queue.py:126
+msgid "Sold-To"
+msgstr ""
+
+#: models/common.py:178 models/common.py:444
+msgid "Ship-To"
+msgstr ""
+
+#: models/common.py:183
+msgid "Region"
+msgstr "Regioon"
+
+#: models/common.py:202
+msgid "Environment"
+msgstr "Keskkond"
+
+#: models/common.py:227
+#, fuzzy
+msgid "Default GSX account not configured"
+msgstr "Primaarne GSX konto"
+
+#: models/common.py:252
+#, fuzzy
+msgid "Configuration error"
+msgstr "Konfiguratsioon"
+
+#: models/common.py:297 models/escalations.py:25
+#, fuzzy
+msgid "GSX Account"
+msgstr "GSX kontod"
+
+#: models/common.py:298 templates/admin/index.html:12
+msgid "GSX Accounts"
+msgstr "GSX kontod"
+
+#: models/common.py:317 templates/admin/tags/index.html:6
+msgid "New Tag"
+msgstr "Uus tag"
+
+#: models/common.py:318 models/common.py:393 models/customer.py:25
+#: models/customer.py:59 models/queue.py:197
+msgid "name"
+msgstr "nimi"
+
+#: models/common.py:322 templates/devices/index.html:49
+#: templates/devices/search_gsx.html:8 templates/devices/search_gsx.html:10
+#: templates/devices/search_gsx_error.html:8 templates/devices/view.html:7
+#: templates/search/results/gsx.html:8 templates/search/results/gsx.html:10
+msgid "Device"
+msgstr "Seade"
+
+#: models/common.py:323 models/common.py:625
+#: templates/accounts/updates.html:37 templates/invoices/index.html:44
+#: templates/notes/form.html:109 templates/orders/dispatch.html:105
+#: templates/orders/edit.html:114 templates/orders/gsx_repair_form.html:89
+#: templates/orders/list.html:10 templates/orders/parts.html:33
+#: templates/orders/tabs.html:4 templates/products/index_outgoing.html:25
+#: templates/products/view.html:129 templates/products/view.html.py:155
+#: templates/products/view.html:180 templates/purchases/list_pos.html:57
+#: templates/shipments/list_returns.html:14
+msgid "Order"
+msgstr "Tellimus"
+
+#: models/common.py:324 templates/notes/form.html:37
+msgid "Note"
+msgstr "Märge"
+
+#: models/common.py:331 models/common.py:639
+msgid "type"
+msgstr "tüüp"
+
+#: models/common.py:344
+msgid "Default"
+msgstr ""
+
+#: models/common.py:346
+msgid "Orange"
+msgstr "Oranž"
+
+#: models/common.py:348
+msgid "Blue"
+msgstr "Sinine"
+
+#: models/common.py:374 templates/orders/notes.html:32
+msgid "Tag"
+msgstr "Tägi"
+
+#: models/common.py:375 templates/admin/index.html:30
+#: templates/devices/form.html:25 templates/products/form.html:51
+msgid "Tags"
+msgstr "Tägid"
+
+#: models/common.py:394 templates/admin/locations/index.html:5
+msgid "New Location"
+msgstr "Uus asukoht"
+
+#: models/common.py:400 models/customer.py:71
+msgid "phone"
+msgstr "Telefon"
+
+#: models/common.py:402 models/customer.py:76
+msgid "email"
+msgstr "email"
+
+#: models/common.py:407 models/customer.py:82
+msgid "address"
+msgstr "aadress"
+
+#: models/common.py:419 models/customer.py:94
+msgid "city"
+msgstr "linn"
+
+#: models/common.py:437
+msgid "Accounts"
+msgstr "Kontod"
+
+#: models/common.py:450
+msgid "Timezone"
+msgstr "Ajatsoon"
+
+#: models/common.py:458
+msgid "Will be shown on print templates"
+msgstr ""
+
+#: models/common.py:465
+msgid "Logo"
+msgstr ""
+
+#: models/common.py:470
+msgid "Enabled"
+msgstr ""
+
+#: models/common.py:508 templates/admin/index.html:15
+#: templates/stats/index.html:9 templates/stats/locations.html:6
+#: templates/stats/queues.html:6 templates/stats/sales.html:6
+#: templates/stats/statuses.html:6 views/admin.py:510
+msgid "Locations"
+msgstr "Asukohad"
+
+#: models/common.py:624 templates/customers/view.html:7
+#: templates/devices/search_gsx_repairs.html:8
+#: templates/invoices/index.html:45 templates/orders/dispatch.html:20
+#: templates/orders/gsx_repair_form.html:44 templates/orders/list.html:11
+#: templates/products/view.html:130
+msgid "Customer"
+msgstr "Klient"
+
+#: models/common.py:626 templates/orders/dispatch.html:63
+#: templates/orders/print_confirmation.html:105
+#: templates/orders/print_dispatch.html:13 templates/orders/products.html:10
+#: templates/products/list.html:7 templates/products/view.html:43
+#: templates/purchases/edit_po.html:32 templates/purchases/view_po.html:31
+msgid "Product"
+msgstr "Toode"
+
+#: models/common.py:631 templates/admin/fields/index.html:6
+msgid "New Field"
+msgstr "Uus väli"
+
+#: models/common.py:645
+msgid "format"
+msgstr "formaat"
+
+#: models/common.py:647
+msgid "value"
+msgstr "väärtus"
+
+#: models/common.py:664
+#, fuzzy
+msgid "Field"
+msgstr "Väljad"
+
+#: models/common.py:665 templates/admin/index.html:27
+msgid "Fields"
+msgstr "Väljad"
+
+#: models/common.py:710 templates/admin/templates/list_templates.html:6
+msgid "New Template"
+msgstr "Uus põhi"
+
+#: models/common.py:713
+msgid "content"
+msgstr "sisu"
+
+#: models/common.py:732
+#, fuzzy
+msgid "Template"
+msgstr "Põhjad"
+
+#: models/common.py:733 templates/admin/index.html:33
+#: templates/admin/queues/form.html:13
+msgid "Templates"
+msgstr "Põhjad"
+
+#: models/common.py:741
+msgid "file"
+msgstr "fail"
+
+#: models/common.py:761
+#, fuzzy, python-format
+msgid "%s is not of an allowed file type"
+msgstr "%s ei ole lubatud failitüüp"
+
+#: models/customer.py:24 templates/admin/users/index.html:12
+#: templates/customers/index.html:16
+msgid "New Group"
+msgstr "Uus rühm"
+
+#: models/customer.py:54 models/customer.py:142
+msgid "company"
+msgstr "firma"
+
+#: models/customer.py:60 templates/customers/choose.html:17
+#: templates/customers/index.html:7 templates/customers/search.html:5
+#: templates/search/spotlight.html:6
+msgid "New Customer"
+msgstr "Uus klient"
+
+#: models/customer.py:114 templates/admin/users/tabs.html:6
+#: templates/customers/index.html:55
+msgid "Groups"
+msgstr "Rühmad"
+
+#: models/customer.py:121
+msgid "tags"
+msgstr "tagid"
+
+#: models/customer.py:128 models/device.py:146
+msgid "notes"
+msgstr "märkmed"
+
+#: models/customer.py:136
+msgid "devices"
+msgstr "seadmed"
+
+#: models/device.py:39 templates/devices/find.html:27
+#: templates/devices/get_info.html:14
+#: templates/devices/search_gsx_warranty.html:15
+#: templates/devices/summary.html:13 templates/orders/devices.html:20
+#: templates/orders/print_confirmation.html:72
+#: templates/orders/products.html:28 templates/products/index_outgoing.html:28
+#: templates/search/results/gsx_warranty.html:15
+#: templates/shipments/list_returns.html:17
+msgid "Serial Number"
+msgstr "Seerianumber"
+
+#: models/device.py:43 templates/devices/choose.html:17
+#: templates/devices/index.html:7 templates/devices/index.html.py:10
+msgid "New Device"
+msgstr "Uus seade"
+
+#: models/device.py:44 models/order.py:708 models/queue.py:44
+#: models/queue.py:202
+msgid "description"
+msgstr "kirjeldus"
+
+#: models/device.py:49
+msgid "Apple"
+msgstr ""
+
+#: models/device.py:50 models/product.py:183
+msgid "Brand"
+msgstr "Tootja"
+
+#: models/device.py:57 templates/orders/print_confirmation.html:68
+msgid "IMEI Number"
+msgstr "IMEI number"
+
+#: models/device.py:63 templates/devices/search_gsx_warranty.html:24
+#: templates/orders/devices.html:31
+msgid "Initial Activation Policy"
+msgstr "Aktiveerimisproofil"
+
+#: models/device.py:69 templates/devices/search_gsx_warranty.html:22
+#: templates/orders/devices.html:29
+msgid "Applied Activation Policy"
+msgstr "Aktiveerimisproofil"
+
+#: models/device.py:79 templates/devices/index.html:26
+msgid "Product Line"
+msgstr "Tooteseeria"
+
+#: models/device.py:85
+msgid "Products that are compatible with this device instance"
+msgstr ""
+
+#: models/device.py:92
+msgid "configuration"
+msgstr "konfiguratsioon"
+
+#: models/device.py:96 models/parts.py:78
+msgid "Apple Limited Warranty"
+msgstr "Apple aastane garantii"
+
+#: models/device.py:97 models/parts.py:82
+msgid "AppleCare Protection Plan"
+msgstr "AppleCare Protection Plan"
+
+#: models/device.py:98
+msgid "Customer Satisfaction (CS) Code"
+msgstr ""
+
+#: models/device.py:99 models/parts.py:75
+msgid "Custom Bid Contracts"
+msgstr ""
+
+#: models/device.py:100
+msgid "3'rd Party Warranty"
+msgstr "Kolmanda osapoole garantii"
+
+#: models/device.py:101
+msgid "Out Of Warranty (No Coverage)"
+msgstr "Ilma garantiita"
+
+#: models/device.py:102 views/gsx.py:131
+msgid "Unknown"
+msgstr "Tundmatu"
+
+#: models/device.py:109 templates/checkin/device.html:16
+#: templates/devices/find.html:30 templates/devices/get_info.html:10
+#: templates/devices/search_gsx_warranty.html:11
+#: templates/devices/summary.html:9 templates/orders/devices.html:16
+#: templates/orders/print_confirmation.html:65
+#: templates/search/results/gsx_warranty.html:11
+msgid "Warranty Status"
+msgstr "Garantiistaatus"
+
+#: models/device.py:115
+msgid "username"
+msgstr "kasutaja"
+
+#: models/device.py:121
+msgid "password"
+msgstr "parool"
+
+#: models/device.py:126
+msgid "Date Purchased"
+msgstr "Ostetud"
+
+#: models/device.py:134
+msgid "Purchase Country"
+msgstr "Ostupaik"
+
+#: models/device.py:158
+msgid "Image URL"
+msgstr "Pildi URL"
+
+#: models/device.py:163
+msgid "Manual URL"
+msgstr "Manuaali URL"
+
+#: models/device.py:168 templates/devices/view.html:38
+#: templates/devices/view.html.py:40
+msgid "Exploded View"
+msgstr ""
+
+#: models/device.py:285
+#, python-format
+msgid "Invalid argument for warranty check: %s"
+msgstr ""
+
+#: models/device.py:352
+#, fuzzy, python-format
+msgid "SLA Group: %s"
+msgstr "Rühmad"
+
+#: models/device.py:354
+msgid "This unit is eligible for Onsite Service."
+msgstr ""
+
+#: models/device.py:356
+msgid "Parts and Labor are covered."
+msgstr ""
+
+#: models/escalations.py:96
+#, fuzzy, python-format
+msgid "Escalation %s"
+msgstr "Uus asukoht"
+
+#: models/invoices.py:27 models/invoices.py:163
+msgid "No Charge"
+msgstr "Ilma maksuta"
+
+#: models/invoices.py:28 models/invoices.py:164
+msgid "Cash"
+msgstr "Sularaha"
+
+#: models/invoices.py:29 models/invoices.py:165
+#: templates/products/view.html:179
+msgid "Invoice"
+msgstr "Arve"
+
+#: models/invoices.py:30 models/invoices.py:166
+msgid "Credit Card"
+msgstr "Krediitkaart"
+
+#: models/invoices.py:31 models/invoices.py:167
+msgid "Mail payment"
+msgstr ""
+
+#: models/invoices.py:32 models/invoices.py:168
+msgid "Online payment"
+msgstr "Online-makse"
+
+#: models/invoices.py:39 models/invoices.py:173
+#: templates/invoices/index.html:50
+msgid "Payment Method"
+msgstr "Maksumeetod"
+
+#: models/invoices.py:42
+msgid "paid"
+msgstr "on makstud"
+
+#: models/invoices.py:56
+msgid "Walk-in"
+msgstr ""
+
+#: models/invoices.py:57 templates/customers/find.html:48
+#: templates/orders/print_confirmation.html:177
+msgid "Name"
+msgstr "Nimi"
+
+#: models/invoices.py:81 models/repair.py:127
+#: templates/devices/search_gsx_repairs.html:6 templates/orders/repair.html:30
+#: templates/products/receive_item.html:23
+#: templates/products/receive_item.html:30 templates/purchases/edit_po.html:33
+#: templates/purchases/list_pos.html:54 templates/purchases/view_po.html:21
+#: templates/purchases/view_po.html:32
+#: templates/shipments/edit_bulk_return.html:57
+msgid "Reference"
+msgstr "Viide"
+
+#: models/invoices.py:132
+msgid "Sales Price"
+msgstr "Müügihind"
+
+#: models/invoices.py:186 views/invoices.py:159
+#, python-format
+msgid "Order %s dispatched"
+msgstr ""
+
+#: models/invoices.py:195
+#, python-format
+msgid "Payment for %0.2f received"
+msgstr ""
+
+#: models/note.py:66
+msgid "subject"
+msgstr "pealkiri"
+
+#: models/note.py:70
+msgid "Message"
+msgstr "Sõnum"
+
+#: models/note.py:87
+msgid "To"
+msgstr ""
+
+#: models/note.py:112 models/order.py:763
+msgid "report"
+msgstr "raporteeri"
+
+#: models/note.py:116
+msgid "read"
+msgstr "loetud"
+
+#: models/note.py:121
+msgid "flagged"
+msgstr ""
+
+#: models/note.py:159
+#, fuzzy, python-format
+msgid "Default Address <%s>"
+msgstr "Email"
+
+#: models/note.py:271
+msgid "As Unreported"
+msgstr ""
+
+#: models/note.py:271
+msgid "As Reported"
+msgstr ""
+
+#: models/note.py:274
+msgid "As Unread"
+msgstr ""
+
+#: models/note.py:274
+msgid "As Read"
+msgstr ""
+
+#: models/note.py:277
+msgid "As Unflagged"
+msgstr ""
+
+#: models/note.py:277
+msgid "As Flagged"
+msgstr ""
+
+#: models/note.py:319 models/note.py:409
+#, python-format
+msgid "Already sent message to %s"
+msgstr ""
+
+#: models/note.py:364 models/note.py:448
+#, fuzzy, python-format
+msgid "Message sent to %s"
+msgstr "Sõnum saadetud"
+
+#: models/note.py:385
+msgid "System is not configured for built-in SMS support."
+msgstr ""
+
+#: models/note.py:417
+msgid "SMS gateway not configured"
+msgstr ""
+
+#: models/note.py:473
+#, fuzzy, python-format
+msgid "Escalation %s created"
+msgstr "Uus asukoht"
+
+#: models/note.py:476
+#, fuzzy, python-format
+msgid "Escalation %s updated"
+msgstr "Uus asukoht"
+
+#: models/note.py:481
+msgid "Note saved"
+msgstr "Märge salvestatud"
+
+#: models/order.py:41 models/queue.py:60
+msgid "priority"
+msgstr "prioriteet"
+
+#: models/order.py:106 models/repair.py:39
+msgid "queue"
+msgstr "järjekord"
+
+#: models/order.py:112
+msgid "status"
+msgstr "staatus"
+
+#: models/order.py:129
+#, fuzzy
+msgid "Closed"
+msgstr "Sulge"
+
+#: models/order.py:215
+#, python-format
+msgid "%s added"
+msgstr "%s lisatud"
+
+#: models/order.py:219
+msgid "This device has already been added to this order"
+msgstr ""
+
+#: models/order.py:237
+#, fuzzy, python-format
+msgid "%s removed"
+msgstr "Klient %s eemaldatud"
+
+#: models/order.py:260
+msgid "Closed a moment ago"
+msgstr ""
+
+#: models/order.py:261
+#, fuzzy, python-format
+msgid "Closed for %(time)s"
+msgstr "suletud %s"
+
+#: models/order.py:265
+#, python-format
+msgid "%s a moment ago"
+msgstr ""
+
+#: models/order.py:268
+#, fuzzy, python-format
+msgid "%(status)s for %(time)s"
+msgstr "täna kell %(time)s"
+
+#: models/order.py:272
+#, fuzzy
+msgid "Created a moment ago"
+msgstr "Loodud"
+
+#: models/order.py:273
+#, fuzzy, python-format
+msgid "Unassigned for %(delta)s"
+msgstr "Ilma käsitlejata %s"
+
+#: models/order.py:277
+#, fuzzy
+msgid "Started a moment ago"
+msgstr "Alustatud"
+
+#: models/order.py:278
+#, fuzzy, python-format
+msgid "Open for %(delta)s"
+msgstr "Töö all %s"
+
+#: models/order.py:281
+msgid "Select place"
+msgstr "Vali paik"
+
+#: models/order.py:284
+msgid "Select status"
+msgstr "Vali staatus"
+
+#: models/order.py:291
+msgid "Select user"
+msgstr "Vali kasutaja"
+
+#: models/order.py:294
+msgid "Select queue"
+msgstr "Vali järjekord"
+
+#: models/order.py:303 templates/default.html:35
+#: templates/accounts/orders.html:58 templates/accounts/tabs.html:7
+#: templates/customers/view.html:8 templates/devices/view.html:8
+#: templates/orders/index.html:49 templates/search/spotlight.html:22
+#: views/order.py:43
+msgid "Orders"
+msgstr "Tellimused"
+
+#: models/order.py:312 views/order.py:195
+#, python-format
+msgid "Order %s closed"
+msgstr "Tellimus %s suletud"
+
+#: models/order.py:411
+#, fuzzy
+msgid "Order must belong to a queue to set status"
+msgstr "Tellimus on määratud sellesse järjekorda."
+
+#: models/order.py:445
+msgid "Status unassigned"
+msgstr "Staatus eemaldatud"
+
+#: models/order.py:475
+msgid "Removed from queue"
+msgstr "Eemaldatud järjekorrast"
+
+#: models/order.py:501
+msgid "Order unassigned"
+msgstr "Kasutaja eemaldatud"
+
+#: models/order.py:505
+#, fuzzy, python-format
+msgid "Order %(order)s assigned to %(user)s"
+msgstr "Kasutaja eemaldatud"
+
+#: models/order.py:598 views/order.py:693 views/purchases.py:90
+#, python-format
+msgid "Product %s added"
+msgstr "Toode %s lisatud"
+
+#: models/order.py:604
+#, fuzzy, python-format
+msgid "Product %s removed from order"
+msgstr "Toode %s eemaldatud"
+
+#: models/order.py:685
+msgid "Can set assignee"
+msgstr "Võib muuta tellimuse käsitlejat"
+
+#: models/order.py:686
+msgid "Can change status"
+msgstr "Võib muuta staatust"
+
+#: models/order.py:687
+msgid "Can follow order"
+msgstr "Võib jälgida tellimust"
+
+#: models/order.py:719
+msgid "amount"
+msgstr "kogus"
+
+#: models/order.py:724
+#, fuzzy
+msgid "KGB Serial Number"
+msgstr "KBB seerianumber"
+
+#: models/order.py:759
+msgid "dispatched"
+msgstr ""
+
+#: models/order.py:768
+msgid "sales price"
+msgstr "Müügihind"
+
+#: models/order.py:783
+msgid "KBB Serial Number"
+msgstr "KBB seerianumber"
+
+#: models/order.py:790 templates/orders/print_confirmation.html:120
+#: templates/orders/print_receipt.html:23
+msgid "IMEI"
+msgstr ""
+
+#: models/order.py:794 templates/orders/print_confirmation.html:106
+#: templates/orders/print_dispatch.html:14
+msgid "Warranty"
+msgstr "Garantii"
+
+#: models/order.py:795 templates/devices/parts.html:11
+#: templates/products/form.html:11 templates/products/get_info.html:23
+#: templates/products/list.html:9 templates/products/view.html:64
+msgid "Exchange Price"
+msgstr "Vahetushind"
+
+#: models/order.py:796 templates/devices/parts.html:10
+#: templates/products/form.html:12 templates/products/get_info.html:21
+#: templates/products/list.html:8 templates/products/view.html:62
+msgid "Stock Price"
+msgstr "Müügihind"
+
+#: models/order.py:803
+#, fuzzy
+msgid "Price category"
+msgstr "Uus kategooria"
+
+#: models/order.py:810
+#, fuzzy
+msgid "symptom code"
+msgstr "CS-kood"
+
+#: models/order.py:816
+#, fuzzy
+msgid "symptom modifier"
+msgstr "CS-kood"
+
+#: models/order.py:1005 models/product.py:589
+#, fuzzy
+msgid "New Shipping Method"
+msgstr "Transpordikulud"
+
+#: models/order.py:1034 views/order.py:238
+#, python-format
+msgid "Order %s created"
+msgstr "Tellimus %s loodud"
+
+#: models/parts.py:76
+#, fuzzy
+msgid "Customer Satisfaction"
+msgstr "Kliendi andmed"
+
+#: models/parts.py:77
+#, fuzzy
+msgid "DOA Coverage"
+msgstr "Garantii"
+
+#: models/parts.py:79
+msgid "Missing Upon First Use"
+msgstr ""
+
+#: models/parts.py:80
+#, fuzzy
+msgid "Out of Warranty (no coverage)"
+msgstr "Ilma garantiita"
+
+#: models/parts.py:81
+#, fuzzy
+msgid "AppleCare Parts Agreement"
+msgstr "AppleCare Protection Plan"
+
+#: models/parts.py:83
+msgid "Quality Program"
+msgstr ""
+
+#: models/parts.py:84
+msgid "AppleCare Repair Agreement"
+msgstr ""
+
+#: models/parts.py:85 templates/orders/devices.html:13
+#, fuzzy
+msgid "Repeat Service"
+msgstr "Teenus"
+
+#: models/parts.py:86
+#, fuzzy
+msgid "Additional Part Coverage"
+msgstr "Garantii"
+
+#: models/parts.py:87
+msgid "Additional Service Coverage"
+msgstr ""
+
+#: models/parts.py:88
+#, fuzzy
+msgid "NEW - AppleCare Protection Plan"
+msgstr "AppleCare Protection Plan"
+
+#: models/parts.py:89
+#, fuzzy
+msgid "Consumer Law Coverage"
+msgstr "Garantii"
+
+#: models/parts.py:231
+#, fuzzy
+msgid "Unregister from Return"
+msgstr "peab tagastama"
+
+#: models/parts.py:233 templates/repairs/part_menu.html:8
+#, fuzzy
+msgid "Register for Return"
+msgstr "peab tagastama"
+
+#: models/parts.py:328
+msgid "GSX repair has no dispatch ID"
+msgstr ""
+
+#: models/product.py:64
+msgid "code"
+msgstr "kood"
+
+#: models/product.py:71
+msgid "Substituted (new) code of this part"
+msgstr ""
+
+#: models/product.py:76 templates/products/index.html:9
+msgid "New Product"
+msgstr "Uus toode"
+
+#: models/product.py:77 models/queue.py:27
+#: templates/products/index_outgoing.html:24
+#: templates/shipments/list_returns.html:13
+msgid "Title"
+msgstr "Nimetus"
+
+#: models/product.py:82 models/repair.py:64 templates/devices/find.html:28
+msgid "Description"
+msgstr "Kirjeldus"
+
+#: models/product.py:93
+msgid "Don't update price when recalculating prices or importing parts"
+msgstr ""
+
+#: models/product.py:100 models/product.py:128
+msgid "Purchase price"
+msgstr "Ostuhind"
+
+#: models/product.py:113 models/product.py:140
+msgid "Net price"
+msgstr "Netohind"
+
+#: models/product.py:114 models/product.py:141
+msgid "Purchase price + margin %"
+msgstr "Ostuhind + katte %"
+
+#: models/product.py:120 models/product.py:147
+msgid "Sales price"
+msgstr "Müügihind"
+
+#: models/product.py:121 models/product.py:148
+msgid "Purchase price + margin % + shipping + VAT %"
+msgstr "ostuhind + katte % + saatmiskulud + KM %"
+
+#: models/product.py:153
+msgid "is serialized"
+msgstr ""
+
+#: models/product.py:154
+msgid "Product has a serial number"
+msgstr "Tootel on seerianumber"
+
+#: models/product.py:171
+msgid "Warranty (months)"
+msgstr "Garantii (kuud)"
+
+#: models/product.py:177
+msgid "Shelf code"
+msgstr "Riiulikood"
+
+#: models/product.py:189 templates/admin/inventory/index.html:9
+#: templates/products/index.html:60 templates/products/view.html:10
+msgid "Categories"
+msgstr "Kategooriad"
+
+#: models/product.py:195
+msgid "device models"
+msgstr "seadmed"
+
+#: models/product.py:205
+msgid "shipping"
+msgstr "postikulud"
+
+#: models/product.py:213
+msgid "component group"
+msgstr ""
+
+#: models/product.py:220
+msgid "Module"
+msgstr "Moodul"
+
+#: models/product.py:221
+msgid "Replacement"
+msgstr "Vahetus"
+
+#: models/product.py:222
+msgid "Service"
+msgstr "Teenus"
+
+#: models/product.py:223
+msgid "Service Contract"
+msgstr "Teenuseleping"
+
+#: models/product.py:231
+msgid "part type"
+msgstr "tüüp"
+
+#: models/product.py:238
+msgid "EEE code"
+msgstr "EEE kood"
+
+#: models/product.py:252
+#, python-format
+msgid "%d months"
+msgstr "%d kuud"
+
+#: models/product.py:419
+#, python-format
+msgid "Product %s not found in inventory."
+msgstr "Toodet %s ei ole laos"
+
+#: models/product.py:495
+msgid "Can change product amount"
+msgstr ""
+
+#: models/product.py:507 templates/products/index.html:12
+msgid "New Category"
+msgstr "Uus kategooria"
+
+#: models/product.py:557
+msgid "minimum amount"
+msgstr "miinimumkogus"
+
+#: models/product.py:561
+msgid "reserved amount"
+msgstr "reserveeritud kogus"
+
+#: models/product.py:565
+msgid "stocked amount"
+msgstr "laos"
+
+#: models/product.py:569
+msgid "ordered amount"
+msgstr "tellitud"
+
+#: models/purchases.py:35
+msgid "The location from which this PO was created"
+msgstr ""
+
+#: models/purchases.py:42
+msgid "reference"
+msgstr "viide"
+
+#: models/purchases.py:48
+msgid "confirmation"
+msgstr "kinnitus"
+
+#: models/purchases.py:58
+msgid "supplier"
+msgstr ""
+
+#: models/purchases.py:63 models/shipments.py:65
+msgid "carrier"
+msgstr ""
+
+#: models/purchases.py:68
+msgid "tracking ID"
+msgstr ""
+
+#: models/purchases.py:73
+msgid "delivery Time"
+msgstr ""
+
+#: models/purchases.py:125
+#, python-format
+msgid "Purchase Order %d has already been submitted"
+msgstr "Ostutellimus %d on juba kinnitatud."
+
+#: models/purchases.py:178
+#, fuzzy
+msgid "Submitted orders cannot be deleted"
+msgstr "Suletud tellimusi ei või muuta"
+
+#: models/purchases.py:191 templates/products/receive_item.html:36
+#: templates/purchases/edit_po.html:35 templates/purchases/view_po.html:34
+msgid "Purchase Price"
+msgstr "Ostuhind"
+
+#: models/purchases.py:192
+#, fuzzy
+msgid "Purchase price without taxes"
+msgstr "Ostuhind"
+
+#: models/purchases.py:198
+msgid "Purchase Order"
+msgstr "Ostutellimus"
+
+#: models/purchases.py:210
+msgid "arrived"
+msgstr "on saabunud"
+
+#: models/purchases.py:248
+msgid "Product has already been received"
+msgstr "Toode %s on juba saabunud"
+
+#: models/purchases.py:291
+#, python-format
+msgid "Cannot receive item %(prod)s (%(ref)s)"
+msgstr ""
+
+#: models/purchases.py:318 views/purchases.py:215
+#, python-format
+msgid "Purchase Order %d created"
+msgstr "Ostutellimus %d loodud"
+
+#: models/queue.py:26 templates/admin/queues/index.html:5
+msgid "New Queue"
+msgstr "Uus järjekord"
+
+#: models/queue.py:33
+msgid ""
+"Orders with devices matching these keywords will be automatically assigned "
+"to this queue"
+msgstr ""
+
+#: models/queue.py:38
+msgid "locations"
+msgstr "Asukohad"
+
+#: models/queue.py:39
+msgid "Pick the locations you want this queue to appear in."
+msgstr "Vali mis asukohtades seda järjekorda kasutatakse."
+
+#: models/queue.py:52
+msgid "High"
+msgstr "Kõrge"
+
+#: models/queue.py:53
+msgid "Normal"
+msgstr "Keskmine"
+
+#: models/queue.py:54
+msgid "Low"
+msgstr "Madal"
+
+#: models/queue.py:68
+msgid "Order Created"
+msgstr "Tellimus loodud"
+
+#: models/queue.py:69
+msgid "Order has ben placed to a queue"
+msgstr "Tellimus on määratud sellesse järjekorda."
+
+#: models/queue.py:77
+msgid "Order Assigned"
+msgstr "Käsitleja määratud"
+
+#: models/queue.py:78
+msgid "Order has ben assigned to a user"
+msgstr "Tellimus on võetud töö alla."
+
+#: models/queue.py:86
+msgid "Products Ordered"
+msgstr "Tooted tellitud"
+
+#: models/queue.py:87
+msgid "Purchase Order for this Service Order has been submitted"
+msgstr "Tellimuse ostutellimus on kinnitatud."
+
+#: models/queue.py:94
+#, fuzzy
+msgid "Products Received"
+msgstr "Toode kustutatud"
+
+#: models/queue.py:95
+#, fuzzy
+msgid "Products have been received"
+msgstr "Toode %s on saabunud"
+
+#: models/queue.py:102
+#, fuzzy
+msgid "Repair Completed"
+msgstr "Valmis"
+
+#: models/queue.py:103
+#, fuzzy
+msgid "GSX repair completed"
+msgstr "GSX konto kustutatud"
+
+#: models/queue.py:111
+#, fuzzy
+msgid "Order Dispatched"
+msgstr "Tellimus %s loodud"
+
+#: models/queue.py:119
+msgid "Order Closed"
+msgstr "Tellimus suletud"
+
+#: models/queue.py:127
+msgid "GSX queries of an order in this queue will be made using this Sold-To"
+msgstr ""
+
+#: models/queue.py:134
+msgid "order template"
+msgstr "tellimuspõhi"
+
+#: models/queue.py:135
+msgid "HTML template for Service Order/Work Confirmation"
+msgstr ""
+
+#: models/queue.py:141
+#, fuzzy
+msgid "quote template"
+msgstr "tellimuspõhi"
+
+#: models/queue.py:142
+msgid "HTML template for cost estimate"
+msgstr ""
+
+#: models/queue.py:148
+msgid "receipt template"
+msgstr "tšekipõhi"
+
+#: models/queue.py:149
+msgid "HTML template for Sales Order Receipt"
+msgstr ""
+
+#: models/queue.py:155
+msgid "dispatch template"
+msgstr ""
+
+#: models/queue.py:156
+msgid "HTML template for dispatched order"
+msgstr ""
+
+#: models/queue.py:175 templates/admin/index.html:21
+#: templates/stats/index.html:10 templates/stats/locations.html:7
+#: templates/stats/queues.html:7 templates/stats/sales.html:7
+#: templates/stats/statuses.html:7 views/admin.py:577
+msgid "Queues"
+msgstr "Järjekorrad"
+
+#: models/queue.py:187
+msgid "Minutes"
+msgstr "Minutit"
+
+#: models/queue.py:188
+msgid "Hours"
+msgstr "Tundi"
+
+#: models/queue.py:189
+msgid "Days"
+msgstr "Päeva"
+
+#: models/queue.py:190
+msgid "Weeks"
+msgstr "Nädalat"
+
+#: models/queue.py:191
+msgid "Months"
+msgstr "Kuud"
+
+#: models/queue.py:196 templates/admin/statuses/index.html:5
+msgid "New Status"
+msgstr "Uus staatus"
+
+#: models/queue.py:206 models/queue.py:249
+msgid "green limit"
+msgstr "roheline piir"
+
+#: models/queue.py:210 models/queue.py:250
+msgid "yellow limit"
+msgstr "kollane piir"
+
+#: models/queue.py:215 models/queue.py:253
+msgid "time unit"
+msgstr "ajaühik"
+
+#: models/queue.py:237 templates/accounts/updates.html:28
+#: templates/admin/index.html:18 templates/admin/queues/form.html:10
+#: templates/stats/index.html:11 templates/stats/locations.html:8
+#: templates/stats/queues.html:8 templates/stats/sales.html:8
+#: templates/stats/statuses.html:8 views/admin.py:261
+msgid "Statuses"
+msgstr "Staatused"
+
+#: models/repair.py:33 templates/admin/checklist/index.html:5
+msgid "New Checklist"
+msgstr ""
+
+#: models/repair.py:42
+msgid "enabled"
+msgstr ""
+
+#: models/repair.py:55 templates/admin/index.html:36
+msgid "Checklists"
+msgstr ""
+
+#: models/repair.py:60
+msgid "Task"
+msgstr ""
+
+#: models/repair.py:107
+#, fuzzy
+msgid "Unit Received"
+msgstr "Kuupäev"
+
+#: models/repair.py:120
+msgid "Repair should be reviewed by Apple before confirmation"
+msgstr ""
+
+#: models/repair.py:135
+msgid "Notes are mandatory when requesting review."
+msgstr ""
+
+#: models/repair.py:142
+msgid "Choose files to be sent with the repair creation request"
+msgstr ""
+
+#: models/repair.py:148
+msgid "mark complete"
+msgstr "Märgi valmiks"
+
+#: models/repair.py:149
+msgid "Requires replacement serial number"
+msgstr ""
+
+#: models/repair.py:155
+#, fuzzy
+msgid "New serial number"
+msgstr "Seerianumber"
+
+#: models/repair.py:156
+#, fuzzy
+msgid "Serial Number of replacement part"
+msgstr "Asendusseadme seerianumber"
+
+#: models/repair.py:175
+msgid "Unit is eligible for consumer law coverage"
+msgstr ""
+
+#: models/repair.py:223
+msgid "New GSX Repair"
+msgstr "Uus GSX tellimus"
+
+#: models/repair.py:278
+msgid "Please add some parts to the repair"
+msgstr ""
+
+#: models/repair.py:281
+msgid "Order has not been assigned to a queue"
+msgstr ""
+
+#: models/repair.py:327 views/gsx.py:193
+#, python-format
+msgid "GSX repair %s created"
+msgstr ""
+
+#: models/repair.py:582
+#, python-format
+msgid "Repair %d"
+msgstr "Remont %d"
+
+#: models/shipments.py:43 templates/shipments/list_bulk_returns.html:10
+msgid "Tracking ID"
+msgstr ""
+
+#: models/shipments.py:90
+msgid "width"
+msgstr "laius"
+
+#: models/shipments.py:96
+msgid "height"
+msgstr "kõrgus"
+
+#: models/shipments.py:102
+msgid "length"
+msgstr "kaal"
+
+#: models/shipments.py:108
+msgid "weight"
+msgstr ""
+
+#: templates/default.html:34 templates/default.html.py:66
+msgid "Homepage"
+msgstr "Koduleht"
+
+#: templates/default.html:36
+msgid "Inventory"
+msgstr "Ladu"
+
+#: templates/default.html:37 templates/customers/view.html:9
+#: templates/devices/index.html:77 templates/devices/search.html:14
+#: templates/search/spotlight.html:16 views/device.py:48
+msgid "Devices"
+msgstr "Seadmed"
+
+#: templates/default.html:38 templates/customers/index.html:82
+#: templates/customers/list.html:5 templates/customers/search.html:33
+#: templates/customers/view.html:117 templates/search/spotlight.html:13
+#: views/customer.py:27
+msgid "Customers"
+msgstr "Kliendid"
+
+#: templates/default.html:39 templates/accounts/updates.html:27
+#: templates/customers/view.html:10 templates/notes/list_notes.html:36
+#: views/note.py:54
+msgid "Messages"
+msgstr "Sõnumid"
+
+#: templates/default.html:40 templates/accounts/tabs.html:16
+#: templates/stats/index.html:58 views/stats.py:296
+msgid "Statistics"
+msgstr "Statistika"
+
+#: templates/default.html:44 templates/accounts/orders.html:44
+#: templates/accounts/stats.html:19 templates/customers/choose.html:18
+#: templates/customers/find.html:16 templates/customers/find.html.py:31
+#: templates/customers/index.html:44 templates/devices/choose.html:18
+#: templates/devices/find.html:8 templates/devices/find.html.py:21
+#: templates/devices/index.html:20 templates/invoices/index.html:31
+#: templates/notes/find.html:9 templates/notes/find.html.py:25
+#: templates/notes/list_notes.html:29 templates/orders/index.html:36
+#: templates/products/choose.html:18 templates/products/index.html:84
+#: templates/purchases/list_pos.html:37
+#: templates/snippets/filtering_form.html:12 templates/stats/index.html:30
+msgid "Search"
+msgstr "Otsing"
+
+#: templates/default.html:67 templates/accounts/calendars.html:36
+#: templates/accounts/calendars.html:54 templates/accounts/tabs.html:13
+#: templates/accounts/view_calendar.html:64 views/account.py:128
+msgid "Calendars"
+msgstr "Kalendrid"
+
+#: templates/default.html:68 templates/accounts/settings.html:11
+#: templates/admin/users/form.html:11
+msgid "Profile"
+msgstr "Profiil"
+
+#: templates/default.html:70 templates/admin/index.html:7 views/admin.py:205
+msgid "System Settings"
+msgstr "Süsteemiseaded"
+
+#: templates/default.html:73 templates/accounts/logout.html:15
+#: templates/checkin/index.html:47
+msgid "Log out"
+msgstr "Logi välja"
+
+#: templates/default.html:100
+#, fuzzy
+msgid "No new alerts"
+msgstr "Ei ole uusi teavitusi"
+
+#: templates/default.html:105
+msgid "See All Alerts"
+msgstr ""
+
+#: templates/default.html:133
+#, fuzzy
+msgid "No new messages"
+msgstr "SMS sõnumid"
+
+#: templates/default.html:139
+#, fuzzy
+msgid "Read All Messages"
+msgstr "SMS sõnumid"
+
+#: templates/default.html:168
+msgid "Terms"
+msgstr ""
+
+#: templates/error.html:12
+msgid "An Error Occurred"
+msgstr ""
+
+#: templates/error.html:27 templates/checkin/error.html:9
+msgid "Oops!"
+msgstr ""
+
+#: templates/error.html:28 templates/checkin/error.html:10
+msgid "It appears that an error has occurred."
+msgstr "Paistab, et midagi läks rikki"
+
+#: templates/error.html:28
+msgid ""
+"I've notified the developers, but I'm sure they would really appreciate if "
+"you could briefly describe what you were doing before this happened."
+msgstr ""
+
+#: templates/error.html:33 templates/orders/dispatch.html:96
+#: templates/products/form.html:74 templates/products/form.html.py:76
+#: templates/products/receive_item.html:47
+msgid "Cancel"
+msgstr "Tühista"
+
+#: templates/error.html:34 templates/accounts/register.html:11
+#: templates/checkin/confirmation.html:11 templates/checkin/customer.html:62
+#: templates/notes/edit_escalation.html:13
+#: templates/orders/gsx_repair_form.html:79
+#: templates/products/index_outgoing.html:49
+#: templates/purchases/edit_po.html:87 templates/purchases/order_stock.html:15
+#: templates/shipments/edit_bulk_return.html:96
+#: templates/shipments/list_returns.html:38
+#: templates/shipments/submit_bulk_return.html:13
+msgid "Submit"
+msgstr "Salvesta"
+
+#: templates/error.html:38
+msgid "Thanks!"
+msgstr ""
+
+#: templates/error.html:39
+msgid ""
+"Your error report has been submitted. Thanks for helping make Servo better!"
+msgstr ""
+
+#: templates/error.html:40
+#, fuzzy
+msgid "Return Home"
+msgstr "Tootel on seerianumber"
+
+#: templates/form_buttons.html:3 templates/accounts/register.html:10
+#: templates/admin/users/form.html:50 templates/checkin/choose_model.html:137
+#: templates/checkin/customer.html:61 templates/checkin/device.html:56
+#: templates/checkin/issue.html:19 templates/checkin/sn.html:14
+#: templates/checkin/status.html:14
+msgid "Back"
+msgstr "Tagasi"
+
+#: templates/form_buttons.html:4 templates/admin/settings.html:110
+#: templates/admin/checklist/form.html:28 templates/admin/fields/form.html:14
+#: templates/admin/gsx/form.html:17 templates/admin/locations/form.html:37
+#: templates/admin/notifications/index.html:36
+#: templates/admin/statuses/form.html:18 templates/admin/tags/form.html:14
+#: templates/admin/templates/form.html:18 templates/admin/users/form.html:51
+#: templates/notes/form.html:101 templates/orders/gsx_repair_form.html:79
+#: templates/products/form.html:78 templates/purchases/edit_po.html:87
+#: templates/shipments/edit_bulk_return.html:96
+msgid "Save"
+msgstr "Salvesta"
+
+#: templates/modal.html:10 templates/admin/fields/remove.html:7
+#: templates/admin/statuses/remove.html:9 templates/admin/users/remove.html:9
+msgid "This action cannot be undone."
+msgstr "Seda toimigut ei või tühistada"
+
+#: templates/modal.html:15 templates/orders/parts.html:20
+#: templates/products/get_info.html:58 templates/snippets/modal.html:12
+msgid "Done"
+msgstr "Valmis"
+
+#: templates/pagination.html:11
+msgid "Page"
+msgstr "Lehekülg"
+
+#: templates/accounts/calendars.html:9
+msgid "New Event"
+msgstr "Uus sündmus"
+
+#: templates/accounts/calendars.html:15 templates/checkin/thanks.html:13
+#: templates/orders/toolbar.html:20
+msgid "Print"
+msgstr "Prindi"
+
+#: templates/accounts/calendars.html:16 templates/customers/find.html:75
+#: templates/customers/find.html.py:77 templates/customers/view.html:85
+#: templates/customers/view.html.py:87 templates/devices/find.html:54
+#: templates/devices/list.html:27 templates/devices/view.html:60
+#: templates/generic/index.html:15 templates/orders/customer.html:20
+#: templates/orders/devices.html:119 templates/orders/products.html:67
+#: templates/products/get_info.html:56 templates/products/view.html:119
+#: templates/products/view.html.py:121 templates/purchases/list_pos.html:92
+#: templates/purchases/list_pos.html:94
+msgid "Edit"
+msgstr "Muuda"
+
+#: templates/accounts/calendars.html:18 templates/accounts/calendars.html:20
+#: templates/accounts/delete_calendar.html:15
+#: templates/accounts/delete_calendar_event.html:11
+#: templates/admin/checklist/form.html:24
+#: templates/admin/checklist/form.html:26 templates/admin/fields/form.html:10
+#: templates/admin/fields/form.html:12 templates/admin/gsx/form.html:13
+#: templates/admin/gsx/form.html.py:15 templates/admin/gsx/remove.html:11
+#: templates/admin/locations/form.html:33
+#: templates/admin/locations/form.html:35 templates/admin/queues/form.html:29
+#: templates/admin/queues/remove.html:15 templates/admin/statuses/form.html:14
+#: templates/admin/statuses/form.html:16
+#: templates/admin/statuses/remove.html:15 templates/admin/tags/form.html:10
+#: templates/admin/tags/form.html.py:12 templates/admin/templates/form.html:14
+#: templates/admin/templates/form.html:16
+#: templates/admin/users/delete_group.html:9
+#: templates/admin/users/form.html:46 templates/admin/users/form.html.py:48
+#: templates/admin/users/remove.html:15
+#: templates/customers/delete_group.html:15 templates/customers/find.html:81
+#: templates/customers/find.html.py:83 templates/customers/remove.html:5
+#: templates/customers/remove.html.py:15 templates/customers/view.html:77
+#: templates/customers/view.html.py:79 templates/devices/find.html:56
+#: templates/devices/list.html:29 templates/devices/remove.html:15
+#: templates/devices/view.html:52 templates/devices/view.html.py:54
+#: templates/generic/delete.html:15 templates/generic/index.html:16
+#: templates/notes/form.html:99 templates/notes/remove.html:15
+#: templates/notes/view_note.html:34 templates/orders/delete_order.html:15
+#: templates/orders/gsx_repair_form.html:77 templates/orders/notes.html:50
+#: templates/orders/products.html:77 templates/orders/remove_product.html:15
+#: templates/products/delete_category.html:15
+#: templates/products/list_rows.html:44 templates/products/list_rows.html:46
+#: templates/products/remove.html:11 templates/products/view.html:109
+#: templates/products/view.html.py:113 templates/purchases/edit_po.html:37
+#: templates/purchases/list_pos.html:97 templates/purchases/list_pos.html:99
+#: templates/repairs/delete_part.html:10
+#: templates/repairs/delete_repair.html:14
+msgid "Delete"
+msgstr "Eemalda"
+
+#: templates/accounts/calendars.html:26 templates/customers/find.html:7
+#: templates/customers/find.html.py:9
+msgid "Download"
+msgstr "Lae alla"
+
+#: templates/accounts/calendars.html:47
+msgid "No calendar selected"
+msgstr "Vali kalender"
+
+#: templates/accounts/delete_calendar.html:9
+msgid "This will also delete all events in this calendar"
+msgstr "See kustutab ka kõik kalendri märkmed"
+
+#: templates/accounts/login.html:18
+msgid "Login"
+msgstr "Logi sisse"
+
+#: templates/accounts/logout.html:5
+#, fuzzy
+msgid "Logging out?"
+msgstr "Logi välja"
+
+#: templates/accounts/logout.html:9
+msgid "This will terminate your Servo session."
+msgstr ""
+
+#: templates/accounts/orders.html:7 templates/checkin/welcome.html:12
+#: templates/notes/view_note.html:33 templates/orders/customer.html:18
+#: templates/orders/index.html:7
+msgid "Create Order"
+msgstr "Loo tellimus"
+
+#: templates/accounts/orders.html:18 templates/devices/search.html:6
+#: templates/orders/index.html:18 templates/orders/parts.html:19
+#: templates/products/index.html:49 templates/products/search.html:5
+#: templates/shipments/index.html:12
+msgid "Filter results"
+msgstr "Filtreeri tulemusi"
+
+#: templates/accounts/orders.html:43 templates/orders/index.html:35
+#, fuzzy
+msgid "Reset"
+msgstr "Reserveeri"
+
+#: templates/accounts/print_calendar.html:29
+#: templates/accounts/print_calendar.html:79
+msgid "Employee"
+msgstr "Töötegija"
+
+#: templates/accounts/print_calendar.html:30
+#: templates/accounts/print_calendar.html:41
+#: templates/accounts/view_calendar.html:28
+#: templates/orders/print_confirmation.html:33
+#: templates/orders/print_confirmation.html:162
+#: templates/orders/print_confirmation.html:179
+msgid "Date"
+msgstr "Kuupäev"
+
+#: templates/accounts/print_calendar.html:42
+#: templates/accounts/view_calendar.html:29
+msgid "Started At"
+msgstr "Alustatud"
+
+#: templates/accounts/print_calendar.html:43
+#: templates/accounts/view_calendar.html:30
+msgid "Finished At"
+msgstr "Lõpetatud"
+
+#: templates/accounts/print_calendar.html:44
+#: templates/accounts/view_calendar.html:31
+msgid "Duration"
+msgstr "Kestvus"
+
+#: templates/accounts/print_calendar.html:58
+#: templates/accounts/view_calendar.html:57
+msgid "No events found"
+msgstr "Ei leitud ühtegi sündmust"
+
+#: templates/accounts/print_calendar.html:63 templates/invoices/index.html:48
+#: templates/notes/form.html:25 templates/orders/dispatch.html:67
+#: templates/orders/dispatch.html.py:83
+#: templates/orders/gsx_repair_form.html:34
+#: templates/orders/list_products.html:20
+#: templates/orders/print_confirmation.html:111
+#: templates/orders/print_confirmation.html:139
+#: templates/orders/products.html:14 templates/purchases/edit_po.html:67
+#: templates/purchases/list_pos.html:59
+msgid "Total"
+msgstr "Kokku"
+
+#: templates/accounts/print_calendar.html:75
+msgid "Manager"
+msgstr "Ülemus"
+
+#: templates/accounts/register.html:6 views/account.py:326
+msgid "Register"
+msgstr "Registreeru"
+
+#: templates/accounts/settings.html:12 templates/admin/locations/form.html:7
+#: templates/admin/queues/form.html:12 templates/admin/users/form.html:12
+#: templates/products/form.html:15 templates/search/spotlight.html:19
+msgid "GSX"
+msgstr "GSX"
+
+#: templates/accounts/settings.html:39 templates/accounts/tabs.html:19
+#: templates/admin/index.html:9
+msgid "Settings"
+msgstr "Seaded"
+
+#: templates/accounts/stats.html:28
+msgid "Runrate"
+msgstr ""
+
+#: templates/accounts/stats.html:29
+msgid ""
+"Shows you how many you've been assigned to during the selected period, "
+"averaged over the time scale."
+msgstr ""
+
+#: templates/accounts/tabs.html:10 templates/accounts/updates.html:26
+#: templates/accounts/updates.html.py:64 views/account.py:401
+#, fuzzy
+msgid "Updates"
+msgstr "Uuenda toodete hinnad"
+
+#: templates/accounts/updates.html:7
+msgid "Clear all"
+msgstr ""
+
+#: templates/accounts/updates.html:36
+#, fuzzy
+msgid "Event"
+msgstr "Sündmused"
+
+#: templates/accounts/view_calendar.html:10 views/stats.py:243
+msgid "Day"
+msgstr "Päev"
+
+#: templates/accounts/view_calendar.html:11 views/stats.py:244
+msgid "Week"
+msgstr "Nädal"
+
+#: templates/accounts/view_calendar.html:12 views/stats.py:245
+msgid "Month"
+msgstr "Kuu"
+
+#: templates/accounts/view_calendar.html:19
+msgid "Today"
+msgstr "Täna"
+
+#: templates/admin/index.html:46
+msgid "Systen Settings"
+msgstr "Süsteemi seaded"
+
+#: templates/admin/settings.html:11 templates/admin/checklist/form.html:9
+#: templates/admin/gsx/form.html:6 templates/admin/locations/form.html:6
+#: templates/admin/queues/form.html:9 templates/admin/statuses/form.html:6
+#: templates/admin/tags/index.html:31 templates/admin/templates/form.html:6
+#: templates/admin/users/form.html:8 templates/customers/form.html:8
+#: templates/devices/form.html:8 templates/products/form.html:10
+msgid "General"
+msgstr "Üldised"
+
+#: templates/admin/settings.html:12 templates/admin/inventory/index.html:8
+#: templates/products/form.html:13
+msgid "Stock"
+msgstr ""
+
+#: templates/admin/settings.html:13
+msgid "Outgoing Mail"
+msgstr ""
+
+#: templates/admin/settings.html:14
+msgid "Incoming Mail"
+msgstr "Saabuv post"
+
+#: templates/admin/settings.html:15
+msgid "Text Messages"
+msgstr "SMS sõnumid"
+
+#: templates/admin/settings.html:16
+#, fuzzy
+msgid "Check-in"
+msgstr "Praegune asukoht"
+
+#: templates/admin/settings.html:35
+msgid "Update prices"
+msgstr "Uuenda toodete hinnad"
+
+#: templates/admin/settings.html:37
+msgid "Applies the new settings to existing products after saving"
+msgstr ""
+
+#: templates/admin/settings.html:52 views/admin.py:622
+msgid "Notifications"
+msgstr "Teavitused"
+
+#: templates/admin/settings.html:67
+msgid "Sending SMS messages will be handled by Servo"
+msgstr ""
+
+#: templates/admin/settings.html:98
+#, fuzzy
+msgid "Shipping Methods"
+msgstr "Transpordikulud"
+
+#: templates/admin/settings.html:105
+msgid "Add Method"
+msgstr ""
+
+#: templates/admin/checklist/form.html:10
+msgid "Tasks"
+msgstr ""
+
+#: templates/admin/fields/remove.html:6
+msgid "Are you sure you want to delete this field?"
+msgstr ""
+
+#: templates/admin/gsx/index.html:5
+msgid "New Account"
+msgstr "Uus konto"
+
+#: templates/admin/gsx/remove.html:5
+msgid "Remove GSX account"
+msgstr "Eemalda GSX konto"
+
+#: templates/admin/notifications/index.html:6
+msgid "Reports"
+msgstr "Raportid"
+
+#: templates/admin/notifications/index.html:15
+msgid "Daily"
+msgstr "Päevane"
+
+#: templates/admin/notifications/index.html:16
+msgid "Weekly"
+msgstr "Nädalane"
+
+#: templates/admin/notifications/index.html:17
+msgid "Monthly"
+msgstr "Kuine"
+
+#: templates/admin/notifications/index.html:22
+msgid "Repairs aging beyond limits"
+msgstr ""
+
+#: templates/admin/notifications/index.html:28
+msgid "Products below stocking limit"
+msgstr ""
+
+#: templates/admin/queues/form.html:11
+#, fuzzy
+msgid "Defaults"
+msgstr "Vaikimisi-staatus"
+
+#: templates/admin/queues/form.html:28
+msgid "Time limits"
+msgstr "Ajapiirangud"
+
+#: templates/admin/queues/form.html:46
+#, fuzzy
+msgid "Add Status"
+msgstr "Staatus"
+
+#: templates/admin/queues/remove.html:5
+#, python-format
+msgid "Delete queue \"%(title)s\"?"
+msgstr ""
+
+#: templates/admin/queues/remove.html:9
+msgid "Orders in this queue will not be deleted."
+msgstr ""
+
+#: templates/admin/sites/index.html:6 views/admin.py:648
+#, fuzzy
+msgid "New Site"
+msgstr "Uus väli"
+
+#: templates/admin/sites/index.html:12
+msgid "Sites"
+msgstr ""
+
+#: templates/admin/sites/index.html:20
+#, fuzzy
+msgid "No site selected"
+msgstr "Märge salvestatud"
+
+#: templates/admin/statuses/remove.html:5
+#, python-format
+msgid "Delete status \"%(title)s\"?"
+msgstr ""
+
+#: templates/admin/tags/index.html:25
+#, fuzzy, python-format
+msgid "No %(objects)s found."
+msgstr "Ei leitud ühtegi toodet"
+
+#: templates/admin/users/delete_group.html:4
+msgid "Really delete this group?"
+msgstr ""
+
+#: templates/admin/users/delete_group.html:5
+msgid "Group member accounts will not be deleted."
+msgstr ""
+
+#: templates/admin/users/groups.html:13
+msgid "Members"
+msgstr "Liikmed"
+
+#: templates/admin/users/groups.html:31
+msgid "No groups defined"
+msgstr "Mitte ühtegi rühma"
+
+#: templates/admin/users/index.html:13 views/admin.py:675
+#, fuzzy
+msgid "Upload Users"
+msgstr "Saada seadmed"
+
+#: templates/admin/users/remove.html:5
+#, fuzzy, python-format
+msgid "Delete user %(user)s?"
+msgstr "Kustuta kasutaja "
+
+#: templates/admin/users/tabs.html:5
+msgid "Users"
+msgstr "Kasutajad"
+
+#: templates/checkin/choose_model.html:6
+msgid "Choose your device"
+msgstr "Vali oma seade"
+
+#: templates/checkin/choose_model.html:7
+msgid "Please choose your device model"
+msgstr "Palun vali oma seadme mudel"
+
+#: templates/checkin/choose_model.html:14
+msgid "MacBook Air"
+msgstr ""
+
+#: templates/checkin/choose_model.html:20
+msgid "MacBook"
+msgstr ""
+
+#: templates/checkin/choose_model.html:26
+msgid "MacBook Pro"
+msgstr ""
+
+#: templates/checkin/choose_model.html:32
+msgid "iMac"
+msgstr ""
+
+#: templates/checkin/choose_model.html:40
+#, fuzzy
+msgid "iPhone"
+msgstr "Telefon"
+
+#: templates/checkin/choose_model.html:46
+msgid "iPad"
+msgstr ""
+
+#: templates/checkin/choose_model.html:52
+msgid "Apple TV"
+msgstr ""
+
+#: templates/checkin/choose_model.html:60
+msgid "Mac Pro"
+msgstr ""
+
+#: templates/checkin/choose_model.html:66
+msgid "Display"
+msgstr ""
+
+#: templates/checkin/choose_model.html:72
+msgid "Mac mini"
+msgstr ""
+
+#: templates/checkin/choose_model.html:78
+#, fuzzy
+msgid "Power Mac"
+msgstr "Vooluadapter"
+
+#: templates/checkin/choose_model.html:86
+msgid "iPod Touch"
+msgstr ""
+
+#: templates/checkin/choose_model.html:92
+msgid "iPod nano"
+msgstr ""
+
+#: templates/checkin/choose_model.html:98
+msgid "iPod Shuffle"
+msgstr ""
+
+#: templates/checkin/choose_model.html:104
+msgid "iPod Classic"
+msgstr ""
+
+#: templates/checkin/choose_model.html:112
+msgid "Keyboard or Mouse"
+msgstr "Klaviatuur või hiir"
+
+#: templates/checkin/choose_model.html:118 views/checkin.py:283
+msgid "Power Adapter"
+msgstr "Vooluadapter"
+
+#: templates/checkin/choose_model.html:124
+msgid "AirPort and Wireless"
+msgstr ""
+
+#: templates/checkin/choose_model.html:130
+msgid "Other Device"
+msgstr "Muu seade"
+
+#: templates/checkin/customer.html:7
+msgid "Your contact details"
+msgstr "Teie kontaktandmed"
+
+#: templates/checkin/customer.html:8
+msgid "Please make sure your contact details are filled out correctly."
+msgstr "Palun kontrollige, et kontaktandmed oleks täidetud korrektselt."
+
+#: templates/checkin/device.html:8
+msgid "Please provide additional details about your device here."
+msgstr "Palun täpsustage siin oma seadme andmeid."
+
+#: templates/checkin/device.html:8
+msgid ""
+"Providing a username and password helps us diagnose the problem faster, "
+"especially with software-related issues."
+msgstr ""
+"Kasutajanimi ja parool aitavad meid diagnoosida probleemi kiiremini, eriti "
+"kui tegemist on tarkvara probleemiga."
+
+#: templates/checkin/device.html:8
+msgid "For faster service time, please upload your purchase receipt."
+msgstr "Palun liitke siin seadme ostutšekk."
+
+#: templates/checkin/device.html:20
+msgid "Purchased"
+msgstr "Ostetud"
+
+#: templates/checkin/device.html:24 templates/devices/get_info.html:17
+#: templates/devices/search_gsx_warranty.html:17
+#: templates/devices/summary.html:16 templates/orders/devices.html:23
+#: templates/search/results/gsx_warranty.html:17
+msgid "Configration"
+msgstr "Konfiguratsioon"
+
+#: templates/checkin/device.html:28 templates/devices/get_info.html:23
+#: templates/devices/summary.html:34
+#: templates/search/results/gsx_warranty.html:22
+msgid "Activation Profile"
+msgstr "Aktiveerimisproofil"
+
+#: templates/checkin/device.html:30 templates/devices/get_info.html:25
+#: templates/devices/search_gsx_warranty.html:26
+#: templates/devices/summary.html:36 templates/orders/devices.html:33
+#: templates/search/results/gsx_warranty.html:24
+msgid "Unlocked"
+msgstr "Lukustamata"
+
+#: templates/checkin/device.html:34 templates/customers/form.html:9
+#: templates/devices/form.html:9 templates/devices/get_info.html:37
+#: templates/devices/search_gsx_warranty.html:36
+#: templates/orders/devices.html:45 templates/orders/gsx_repair_form.html:40
+#: templates/products/form.html:14
+msgid "Details"
+msgstr "Detailid"
+
+#: templates/checkin/device.html:38
+#: templates/devices/search_gsx_warranty.html:40
+#, fuzzy
+msgid "Onsite Coverage"
+msgstr "Garantii"
+
+#: templates/checkin/device.html:42
+#: templates/devices/search_gsx_warranty.html:44
+#, fuzzy
+msgid "Contract Coverage"
+msgstr "Garantii"
+
+#: templates/checkin/device.html:57 templates/checkin/issue.html:20
+#: templates/checkin/sn.html:16
+msgid "Continue"
+msgstr "Edasi"
+
+#: templates/checkin/error.html:4
+msgid "An error occurred"
+msgstr ""
+
+#: templates/checkin/error.html:12
+msgid "Try again"
+msgstr "Proovi uuesti"
+
+#: templates/checkin/issue.html:8
+msgid "Please describe the problem in as much detail as possible."
+msgstr "Palun kirjeldage probleeme võimalikult detailselt."
+
+#: templates/checkin/sn.html:7
+msgid "Please enter your serial number"
+msgstr "Palun sisestage oma seadme seerianumber"
+
+#: templates/checkin/sn.html:8
+msgid ""
+"You can find instructions for locating the serial number by <a href=\"http://"
+"support.apple.com/kb/ht1349\" target=\"_blank\">clicking here</a>."
+msgstr ""
+"Juhised seerianumbri leidmiseks asuvad <a href=\"http://http://support.apple."
+"com/kb/HT1349?viewlocale=et_EE\" target=\"_blank\">siin</a>."
+
+#: templates/checkin/sn.html:8
+msgid ""
+"Clicking \"Choose\" will let you pick the type of your device if you don't "
+"know the serial number."
+msgstr ""
+"Klikates \"Vali\" võid valida oma seadme juhul kui sul puudub seerianumber."
+
+#: templates/checkin/sn.html:8
+msgid "If you don't provide a serial number, the service time may be longer."
+msgstr "Seerianumbri puudumine võib pikendada hooldusaega."
+
+#: templates/checkin/sn.html:9
+msgid ""
+"When checking in an accessory, please provide the serial number of the "
+"device that the accessory is used with."
+msgstr ""
+"Palun kasutage põhiseadme seerianumbrit juhul kui tegemist on lisaseadmega."
+
+#: templates/checkin/sn.html:9
+msgid ""
+"For example the serial number of your iPhone if the headset is broken, or "
+"the serial number of your Mac if you have a problem with the mouse."
+msgstr ""
+"Näiteks iPhone seerianumbrit kui viga on kõrvaklappides või Maci "
+"seerianumbrit kui klaviatuur on rikkis."
+
+#: templates/checkin/sn.html:15 templates/orders/customer.html:12
+#: templates/orders/statuses.html:3
+msgid "Choose"
+msgstr "Vali"
+
+#: templates/checkin/status-show.html:33
+msgid "Refresh"
+msgstr "Värskenda"
+
+#: templates/checkin/status-show.html:34
+msgid "Return"
+msgstr "Tagasi"
+
+#: templates/checkin/status.html:7
+msgid "Please enter your Service Order number"
+msgstr "Palun sisestage oma hooldustellimuse number"
+
+#: templates/checkin/status.html:9
+msgid ""
+"The Service Order number is an 8-digit code printed on your work confirmation"
+msgstr "Hooldustellimus on 8-kohaline number mille leiad oma töölehelt"
+
+#: templates/checkin/terms.html:6
+#, python-format
+msgid "%(company)s terms of service"
+msgstr "%(company)s hooldustingimused"
+
+#: templates/checkin/thanks.html:7 views/checkin.py:228
+msgid "Done!"
+msgstr "Valmis!"
+
+#: templates/checkin/thanks.html:8
+msgid "Your service order has been submitted."
+msgstr "Teie hooldustellimus on edukalt vastu võetud."
+
+#: templates/checkin/thanks.html:8
+msgid "Click <strong>Print</strong> to print the confirmation."
+msgstr "Ära unusta printida töölehte!"
+
+#: templates/checkin/thanks.html:8
+#, python-format
+msgid "You will be redirected to the start page in %(seconds)s seconds."
+msgstr "Sind suunatakse tagasi alguslehele %(seconds)s sekundi pärast."
+
+#: templates/checkin/troubleshoot.html:12
+msgid "Yes"
+msgstr "Jah"
+
+#: templates/checkin/troubleshoot.html:13
+msgid "No"
+msgstr "Ei"
+
+#: templates/checkin/welcome.html:7
+#, python-format
+msgid "Welcome to %(location)s service check-in."
+msgstr "Tere tulemast %(location)s'i hoolduskeskkonda."
+
+#: templates/checkin/welcome.html:8
+msgid ""
+"From here you can <strong>create</strong> a service order or check the "
+"<strong>status</strong> of an existing order."
+msgstr ""
+"Siitkaudu võite te luua <strong>uue tellimuse</strong> või kontrollida "
+"hooldustellimuse <strong>staatust</strong>."
+
+#: templates/checkin/welcome.html:8
+msgid "Please choose an option below."
+msgstr "Palun valige"
+
+#: templates/checkin/welcome.html:11
+msgid "Check Status"
+msgstr "Kontrolli staatust"
+
+#: templates/customers/choose-list.html:6 templates/customers/find.html:91
+#: templates/customers/search.html:28
+#: templates/search/results/customers.html:24
+msgid "No customers found"
+msgstr "Ei leitud ühtegi klienti"
+
+#: templates/customers/choose.html:5
+msgid "Search for customer"
+msgstr "Otsi klienti"
+
+#: templates/customers/choose.html:11
+msgid "Name, email or phone number"
+msgstr "Nimi, email või telefon"
+
+#: templates/customers/delete_group.html:5
+msgid "Delete customer group?"
+msgstr "Kustutad kliendirühma?"
+
+#: templates/customers/delete_group.html:9
+#, fuzzy
+msgid "This action will not delete the customers in this group."
+msgstr "Toiming ei kustuta klienti kliendibaasist."
+
+#: templates/customers/find.html:15 templates/customers/index.html:43
+#: templates/devices/find.html:7 templates/devices/index.html:19
+#: templates/generic/index.html:6 templates/notes/find.html:8
+#: templates/notes/list_notes.html:28
+msgid "Browse"
+msgstr "Vali"
+
+#: templates/customers/find.html:73 templates/devices/find.html:53
+#: templates/devices/list.html:26 templates/products/get_info.html:55
+msgid "View"
+msgstr "Ava"
+
+#: templates/customers/index.html:11 templates/customers/index.html.py:13
+msgid "New Contact"
+msgstr "Uus kontakt"
+
+#: templates/customers/index.html:24 templates/devices/index.html:13
+msgid "Upload"
+msgstr "Saada"
+
+#: templates/customers/index.html:27 templates/customers/index.html.py:30
+#: views/admin.py:412
+msgid "Edit Group"
+msgstr "Muuda rühma"
+
+#: templates/customers/index.html:28 templates/customers/index.html.py:31
+msgid "Delete Group"
+msgstr "Eemalda rühm"
+
+#: templates/customers/index.html:57 templates/devices/specs.html:7
+#: templates/products/index.html:61 templates/products/view.html:11
+#: views/product.py:36 views/product.py:326
+msgid "All"
+msgstr "Kõik"
+
+#: templates/customers/index.html:74
+msgid "No customer selected"
+msgstr "Vali klient"
+
+#: templates/customers/merge.html:12 templates/customers/move.html:12
+msgid "Customer name"
+msgstr "Kliendi nimi"
+
+#: templates/customers/merge.html:18 templates/customers/move.html:19
+#: templates/orders/close.html:15 templates/orders/toolbar.html:69
+#: templates/orders/toolbar.html.py:73 templates/products/choose.html:17
+#: templates/snippets/modal.html:11
+msgid "Close"
+msgstr "Sulge"
+
+#: templates/customers/move.html:5
+#, fuzzy
+msgid "Move customer"
+msgstr "Ilma kliendita"
+
+#: templates/customers/move.html:18
+msgid "Move to top"
+msgstr "Vii peatasemele"
+
+#: templates/customers/remove.html:9
+msgid ""
+"This will also delete all customer's contacts. Customer's orders will not be "
+"deleted"
+msgstr "Toiming kustutab ka kõik kliendi kontaktid. Tellimusi ei kustutata."
+
+#: templates/customers/upload.html:5
+#, fuzzy
+msgid "Upload customer data"
+msgstr "Ilma kliendita"
+
+#: templates/customers/view.html:48
+#, fuzzy
+msgid "Contacts"
+msgstr "Uus kontakt"
+
+#: templates/customers/view.html:55
+#, fuzzy
+msgid "Use in "
+msgstr "Vii tellimusele"
+
+#: templates/customers/view.html:57 templates/devices/view.html:22
+#, fuzzy
+msgid "Use in current order"
+msgstr "Vii tellimusele"
+
+#: templates/customers/view.html:61 templates/devices/find.html:50
+#: templates/devices/list.html:23
+#: templates/devices/search_gsx_warranty.html:58
+#: templates/devices/view.html:25
+#: templates/search/results/gsx_warranty.html:33
+msgid "Create Service Order"
+msgstr "Loo hooldustellimus"
+
+#: templates/customers/view.html:69 templates/customers/view.html.py:72
+#, fuzzy
+msgid "Move Customer"
+msgstr "Uus klient"
+
+#: templates/customers/view.html:70 templates/customers/view.html.py:73
+#, fuzzy
+msgid "Merge Customer"
+msgstr "Uus klient"
+
+#: templates/customers/view.html:108 templates/notes/list_notes.html:57
+msgid "No messages found"
+msgstr "Ei leitud ühtegi märget"
+
+#: templates/devices/accessories_edit.html:4
+msgid "Manage Accessories"
+msgstr "Halda lisaseadmeid"
+
+#: templates/devices/accessories_edit.html:15
+#: templates/orders/customer.html:22 templates/orders/customer.html.py:24
+#: templates/orders/devices.html:120 templates/orders/followers.html:23
+#: templates/orders/products.html:77 templates/orders/remove_customer.html:15
+#: templates/orders/remove_device.html:15
+msgid "Remove"
+msgstr "Eemalda"
+
+#: templates/devices/accessories_edit.html:19
+msgid "No accessories added"
+msgstr "Lisaseadmeid ei ole lisatud"
+
+#: templates/devices/choose-list.html:10 templates/devices/find.html:62
+#: templates/devices/search_gsx_repairs.html:24
+#: templates/search/results/gsx_notfound.html:3
+msgid "No search results"
+msgstr "Mitte ühtegi otsingutulemust"
+
+#: templates/devices/choose.html:5
+msgid "Search for device"
+msgstr "Otsi seadet"
+
+#: templates/devices/choose.html:11
+msgid "Serial number or IMEI code"
+msgstr "Seerianumber või IMEI kood"
+
+#: templates/devices/diagnostic_results.html:4
+#, fuzzy
+msgid "Result"
+msgstr "Tulemused"
+
+#: templates/devices/diagnostic_results.html:6
+msgid "Tool"
+msgstr ""
+
+#: templates/devices/diagnostic_results.html:8
+msgid "Passed modules"
+msgstr ""
+
+#: templates/devices/diagnostics.html:4
+#, fuzzy
+msgid "Diagnostics"
+msgstr "Diagnostika"
+
+#: templates/devices/diagnostics.html:11
+msgid "Fetching diagnostics..."
+msgstr "Laen diagnostikat..."
+
+#: templates/devices/find.html:29 templates/devices/search_gsx_repairs.html:7
+#: templates/notes/view_note.html:23 templates/orders/list.html:12
+#: templates/products/view.html:132 templates/products/view.html.py:156
+#: templates/products/view.html:181 templates/purchases/list_pos.html:52
+msgid "Created"
+msgstr "Loodud"
+
+#: templates/devices/find.html:47 templates/devices/list.html:19
+#: templates/devices/view.html:20 templates/products/view.html:93
+msgid "Use in"
+msgstr "Vii tellimusele"
+
+#: templates/devices/find.html:51 templates/devices/list.html:24
+msgid "Show Service Orders"
+msgstr "Näita hooldustellimused"
+
+#: templates/devices/form.html:27 templates/products/form.html:53
+msgid "Enter tag"
+msgstr "Sisesta täg"
+
+#: templates/devices/get_info.html:12
+#: templates/devices/search_gsx_warranty.html:13
+#: templates/devices/summary.html:11 templates/orders/devices.html:18
+#: templates/search/results/gsx_warranty.html:13
+msgid "Purchase Date"
+msgstr "Ostukuupäev"
+
+#: templates/devices/index.html:8 templates/devices/index.html.py:11
+msgid "Show Parts"
+msgstr "Varuosad"
+
+#: templates/devices/index.html:36 templates/orders/print_confirmation.html:64
+msgid "Model"
+msgstr "Mudel"
+
+#: templates/devices/index.html:40
+msgid "No Product Line selected"
+msgstr "Vali kategooria"
+
+#: templates/devices/index.html:58 templates/devices/list.html:35
+#: templates/search/results/devices.html:8
+msgid "No devices found"
+msgstr "Ei leitud ühtegi seadet"
+
+#: templates/devices/index.html:68
+msgid "No device selected"
+msgstr "Vali seade"
+
+#: templates/devices/parts.html:9 templates/shipments/edit_bulk_return.html:56
+#: templates/shipments/list_incoming.html:17
+msgid "Part"
+msgstr "Varuosa"
+
+#: templates/devices/parts.html:21
+#, python-format
+msgid "Substituted to %(code)s"
+msgstr ""
+
+#: templates/devices/parts.html:27 templates/products/choose-list.html:7
+#: templates/products/list_rows.html:54 templates/products/search.html:13
+#: templates/search/results/products.html:8
+msgid "No products found"
+msgstr "Ei leitud ühtegi toodet"
+
+#: templates/devices/remove.html:5
+#, python-format
+msgid "Delete device %(sn)s\"?"
+msgstr "Kustutad seadme %(sn)s\"?"
+
+#: templates/devices/remove.html:9
+msgid "This will also remove it from all service orders."
+msgstr "See eemaldab seadme ka kõigist hooldustellimustest."
+
+#: templates/devices/search_gsx.html:13 templates/devices/search_gsx.html:15
+#: templates/devices/search_gsx_error.html:10
+#: templates/orders/gsx_repair_form.html:31
+#: templates/repairs/get_details.html:22 templates/search/results/gsx.html:13
+#: templates/search/results/gsx.html:15
+#: templates/shipments/list_bulk_returns.html:12
+msgid "Parts"
+msgstr "Varuosad"
+
+#: templates/devices/search_gsx.html:18 templates/devices/search_gsx.html:20
+#: templates/devices/search_gsx_error.html:11
+#: templates/search/results/gsx.html:18 templates/search/results/gsx.html:20
+msgid "Repairs"
+msgstr "Remondid"
+
+#: templates/devices/search_gsx_parts.html:20
+#: templates/devices/search_gsx_parts.html:22
+msgid "Create Product"
+msgstr "Loo toode"
+
+#: templates/devices/search_gsx_repairs.html:5
+msgid "Number"
+msgstr "Number"
+
+#: templates/devices/search_gsx_warranty.html:31
+#: templates/purchases/view_po.html:19
+msgid "Sales Order"
+msgstr "Müügitellimus"
+
+#: templates/devices/search_gsx_warranty.html:55
+#: templates/search/results/gsx_warranty.html:35
+msgid "Use in order"
+msgstr "Vii tellimusele"
+
+#: templates/devices/search_gsx_warranty.html:60
+#: templates/search/results/gsx_warranty.html:39
+#: templates/search/results/gsx_warranty.html:41
+msgid "Download Manual"
+msgstr "Lae hooldusmanuaal"
+
+#: templates/devices/specs.html:8
+msgid "Specs"
+msgstr ""
+
+#: templates/devices/specs.html:10
+msgid "Tagi"
+msgstr ""
+
+#: templates/devices/specs.html:17
+msgid "Luo malli"
+msgstr ""
+
+#: templates/devices/upload_devices.html:5
+msgid "Upload devices"
+msgstr "Saada seadmed"
+
+#: templates/devices/view.html:10 templates/devices/view.html.py:12
+#, fuzzy
+msgid "GSX Repairs"
+msgstr "GSX parandused"
+
+#: templates/devices/view.html:33 templates/devices/view.html.py:35
+msgid "Service Manual"
+msgstr "Hooldusjuhis"
+
+#: templates/devices/view.html:44 templates/devices/view.html.py:47
+#: templates/orders/devices.html:93
+#, fuzzy
+msgid "Update Warranty Status"
+msgstr "Garantiistaatus"
+
+#: templates/devices/view.html:45 templates/devices/view.html.py:48
+#, fuzzy
+msgid "Fetch Diagnostics"
+msgstr "Lae diagnostika"
+
+#: templates/devices/view.html:73
+msgid "Fetching repairs..."
+msgstr ""
+
+#: templates/generic/index.html:22
+msgid "Create New"
+msgstr "Loo uus"
+
+#: templates/invoices/index.html:7 templates/invoices/index.html.py:105
+#: templates/products/tabs.html:17 templates/products/view.html:46
+#: views/invoices.py:23
+msgid "Invoices"
+msgstr "Arved"
+
+#: templates/invoices/index.html:8
+msgid "Sales Invoices"
+msgstr "Arved"
+
+#: templates/invoices/index.html:9
+msgid "Apple Invoices"
+msgstr "Apple arved"
+
+#: templates/invoices/index.html:46
+msgid "Date Created"
+msgstr "Loodud"
+
+#: templates/invoices/index.html:49
+msgid "Date Paid"
+msgstr "Makstud"
+
+#: templates/invoices/index.html:71
+msgid "Print receipt"
+msgstr "Prindi kviitung"
+
+#: templates/invoices/index.html:78
+msgid "No invoices found"
+msgstr "Ei leitud ühtegi arvet"
+
+#: templates/notes/form.html:38
+msgid "Attachments"
+msgstr "Liited"
+
+#: templates/notes/form.html:39
+msgid "Labels"
+msgstr ""
+
+#: templates/notes/form.html:40
+#, fuzzy
+msgid "Escalation"
+msgstr "Uus asukoht"
+
+#: templates/notes/form.html:110
+#, fuzzy
+msgid "Edit Note"
+msgstr "Lisa märge"
+
+#: templates/notes/list_notes.html:11
+#, fuzzy
+msgid "New Message"
+msgstr "SMS sõnumid"
+
+#: templates/notes/list_notes.html:12
+#, fuzzy
+msgid "New Escalation"
+msgstr "Uus asukoht"
+
+#: templates/notes/list_notes.html:37
+msgid "Inbox"
+msgstr ""
+
+#: templates/notes/list_notes.html:38
+msgid "Flagged"
+msgstr "Märgistatud"
+
+#: templates/notes/list_notes.html:39
+msgid "Sent"
+msgstr "Saadetud"
+
+#: templates/notes/list_notes.html:40
+#, fuzzy
+msgid "Escalations"
+msgstr "Uus asukoht"
+
+#: templates/notes/list_notes.html:65
+msgid "No message selected"
+msgstr "Vali märge"
+
+#: templates/notes/messages.html:5 templates/orders/notes.html:48
+#, fuzzy
+msgid "Message Log"
+msgstr "Sõnum"
+
+#: templates/notes/messages.html:18
+#, fuzzy
+msgid "No messages to display"
+msgstr "Ei leitud ühtegi märget"
+
+#: templates/notes/remove.html:5
+msgid "Delete this note?"
+msgstr "Kustutad märkme?"
+
+#: templates/notes/remove.html:9
+msgid "This will also delete any replies to this note."
+msgstr "See kustutab ka kõik märkme vastused"
+
+#: templates/notes/search-results.html:21
+#, fuzzy
+msgid "No notes found"
+msgstr "Ei leitud ühtegi arvet"
+
+#: templates/notes/search.html:7
+msgid "Create Note"
+msgstr "Loo märge"
+
+#: templates/notes/view_note.html:24
+msgid "Subject"
+msgstr "Pealkiri"
+
+#: templates/notes/view_note.html:35 templates/orders/notes.html:21
+msgid "Reply"
+msgstr "Vasta"
+
+#: templates/orders/close.html:5
+msgid "Close order"
+msgstr "Sulge tellimus"
+
+#: templates/orders/close.html:9
+msgid "This order will no longer be editable."
+msgstr ""
+
+#: templates/orders/close_repair.html:5
+msgid "Complete the GSX repair?"
+msgstr ""
+
+#: templates/orders/close_repair.html:9
+msgid "The GSX repair will no longer be editable."
+msgstr ""
+
+#: templates/orders/close_repair.html:15
+msgid "Complete"
+msgstr ""
+
+#: templates/orders/customer.html:14 templates/orders/customer.html.py:16
+#, fuzzy
+msgid "Add contact"
+msgstr "Uus kontakt"
+
+#: templates/orders/delete_order.html:5
+#, python-format
+msgid "Really delete order %(id)s? "
+msgstr ""
+
+#: templates/orders/delete_order.html:9
+msgid ""
+"This will also delete all the order's notes. This action cannot be undone."
+msgstr ""
+
+#: templates/orders/devices.html:61 templates/orders/devices.html.py:63
+msgid "View Parts"
+msgstr "Varuosad"
+
+#: templates/orders/devices.html:63
+msgid "Assign order to a queue first"
+msgstr ""
+
+#: templates/orders/devices.html:65
+msgid "View History"
+msgstr ""
+
+#: templates/orders/devices.html:67 templates/orders/devices.html.py:69
+msgid "View Accessories"
+msgstr "Lisavarustus"
+
+#: templates/orders/devices.html:78 templates/orders/devices.html.py:80
+msgid "Create Carry-In Repair"
+msgstr ""
+
+#: templates/orders/devices.html:80
+#, fuzzy
+msgid "Device has open GSX repairs"
+msgstr "Sulge GSX tellimused automaatselt"
+
+#: templates/orders/devices.html:83 templates/orders/devices.html.py:85
+#, fuzzy
+msgid "Create Onsite Repair"
+msgstr "Uus klient"
+
+#: templates/orders/devices.html:88 templates/orders/devices.html.py:90
+#, fuzzy
+msgid "Create Whole-Unit Exchange"
+msgstr "Loodud"
+
+#: templates/orders/devices.html:94
+msgid "Get Diagnostics"
+msgstr "Lae diagnostika"
+
+#: templates/orders/devices.html:97 templates/orders/devices.html.py:99
+#: templates/orders/toolbar.html:91
+#, fuzzy
+msgid "Show Barcode"
+msgstr "Varuosad"
+
+#: templates/orders/devices.html:102
+#, fuzzy
+msgid "Show Service Manual"
+msgstr "Hooldusjuhis"
+
+#: templates/orders/devices.html:105
+msgid "Show Exploded View"
+msgstr ""
+
+#: templates/orders/devices.html:112 templates/orders/devices.html.py:114
+msgid "Report"
+msgstr "Raporteeri"
+
+#: templates/orders/devices.html:131
+msgid "Order doesn't contain any devices"
+msgstr "Tellimuses pole seadmeid"
+
+#: templates/orders/devices.html:136 templates/orders/toolbar.html:14
+msgid "Add Device"
+msgstr "Lisa seade"
+
+#: templates/orders/dispatch.html:40
+#, fuzzy
+msgid "Payment"
+msgstr "Maksumeetod"
+
+#: templates/orders/dispatch.html:58 templates/products/index.html:100
+#: templates/products/search.html:18 templates/products/tabs.html:8
+#: templates/products/view.html:25 templates/purchases/edit_po.html:21
+#: templates/purchases/list_pos.html:58 views/product.py:31
+msgid "Products"
+msgstr "Tooted"
+
+#: templates/orders/dispatch.html:64
+#: templates/orders/print_confirmation.html:108
+#: templates/orders/print_dispatch.html:16
+msgid "Qty"
+msgstr "Kogus"
+
+#: templates/orders/dispatch.html:65
+#: templates/orders/print_confirmation.html:110
+#: templates/orders/products.html:13 templates/products/view.html:131
+#: templates/products/view.html.py:157 templates/products/view.html:182
+msgid "Price"
+msgstr "Hind"
+
+#: templates/orders/dispatch.html:66
+msgid "Price w/ tax"
+msgstr "Hind koos km:ga"
+
+#: templates/orders/dispatch.html:97 templates/orders/dispatch.html.py:106
+#: templates/orders/toolbar.html:64 templates/orders/toolbar.html.py:66
+#: templates/purchases/edit_po.html:22
+msgid "Dispatch"
+msgstr ""
+
+#: templates/orders/edit.html:23
+#, fuzzy
+msgid "Checkin Location"
+msgstr "Praegune asukoht"
+
+#: templates/orders/edit.html:43
+#, fuzzy
+msgid "Checkout Location"
+msgstr "Praegune asukoht"
+
+#: templates/orders/edit.html:69
+msgid "Select Customer"
+msgstr "Vali klient"
+
+#: templates/orders/edit.html:78
+msgid "Place"
+msgstr "Asukoht"
+
+#: templates/orders/edit.html:79
+msgid "Enter place"
+msgstr "Sisesta asukoht"
+
+#: templates/orders/edit.html:86
+#, fuzzy
+msgid "No place"
+msgstr "Vali paik"
+
+#: templates/orders/edit.html:92
+msgid "Enter label"
+msgstr ""
+
+#: templates/orders/edit.html:97
+msgid "No labels"
+msgstr ""
+
+#: templates/orders/followers.html:5
+msgid "Followers"
+msgstr "Jälgijad"
+
+#: templates/orders/followers.html:6
+msgid "Enter name"
+msgstr "Kasutajanimi"
+
+#: templates/orders/followers.html:19 templates/orders/followers.html.py:21
+msgid "Make primary"
+msgstr "Määra käsitlejaks"
+
+#: templates/orders/followers.html:27
+msgid "No followers"
+msgstr "Jälgijad puuduvad"
+
+#: templates/orders/gsx_repair_form.html:32
+#, fuzzy
+msgid "Checking warranty"
+msgstr "Praegune asukoht"
+
+#: templates/orders/gsx_repair_form.html:39
+msgid "Repair"
+msgstr "Parandus"
+
+#: templates/orders/gsx_repair_form.html:42
+#, fuzzy
+msgid "Components"
+msgstr "Varuosarühm"
+
+#: templates/orders/gsx_repair_form.html:73
+#: templates/purchases/edit_po.html:85
+#: templates/shipments/edit_bulk_return.html:94
+msgid "Confirm"
+msgstr "Kinnita"
+
+#: templates/orders/list.html:22
+msgid "No customer"
+msgstr "Ilma kliendita"
+
+#: templates/orders/list.html:22
+#, fuzzy
+msgid "No description"
+msgstr "kirjeldus"
+
+#: templates/orders/list.html:29
+msgid "Nobody"
+msgstr "Mitte keegi"
+
+#: templates/orders/list.html:31
+msgid "No status"
+msgstr "Ilma staatuseta"
+
+#: templates/orders/list.html:36 templates/orders/search.html:6
+#: templates/search/results/orders.html:8
+msgid "No orders found"
+msgstr "Ei leitud ühtegi tellimust"
+
+#: templates/orders/list_products.html:12
+msgid "Click to select EEE code"
+msgstr ""
+
+#: templates/orders/list_products.html:16
+#, fuzzy
+msgid "No products added"
+msgstr "Ei leitud ühtegi toodet"
+
+#: templates/orders/notes.html:8
+msgid "Order doesn't contain any notes."
+msgstr "Tellimus ei sisalda märkmeid"
+
+#: templates/orders/notes.html:40
+msgid "Mark"
+msgstr "Märgista"
+
+#: templates/orders/notes.html:47 templates/orders/repair.html:10
+msgid "Copy"
+msgstr "Kopeeri"
+
+#: templates/orders/notes.html:65
+msgid "Note has been sent"
+msgstr ""
+
+#: templates/orders/notes.html:83 templates/orders/toolbar.html:6
+#: templates/orders/toolbar.html.py:8
+msgid "Add Note"
+msgstr "Lisa märge"
+
+#: templates/orders/parts.html:15
+#, fuzzy
+msgid "Parts and Services"
+msgstr "Varuosad ja teenused"
+
+#: templates/orders/parts.html:28
+#, fuzzy
+msgid "Fetching parts..."
+msgstr "Laen diagnostikat..."
+
+#: templates/orders/parts.html:35 templates/stats/sales.html:21
+msgid "Service Parts"
+msgstr "Varuosad"
+
+#: templates/orders/print_confirmation.html:26
+msgid "Repair Number"
+msgstr "Töö number"
+
+#: templates/orders/print_confirmation.html:37
+msgid "Work Confirmation"
+msgstr "Tööleht"
+
+#: templates/orders/print_confirmation.html:44
+msgid "Customer Information"
+msgstr "Kliendi andmed"
+
+#: templates/orders/print_confirmation.html:45
+msgid "Product Information"
+msgstr "Toote andmed"
+
+#: templates/orders/print_confirmation.html:53
+#: templates/orders/print_receipt.html:11
+msgid "Daytime Phone"
+msgstr "Telefon"
+
+#: templates/orders/print_confirmation.html:66
+msgid "Estimated Date of Purchase"
+msgstr "Ostukuupäev"
+
+#: templates/orders/print_confirmation.html:69
+#, fuzzy
+msgid "Activation Policy"
+msgstr "Aktiveerimisproofil"
+
+#: templates/orders/print_confirmation.html:89
+msgid "Work Description"
+msgstr "Töökirjeldus"
+
+#: templates/orders/print_confirmation.html:101
+#: templates/orders/print_dispatch.html:9
+msgid "Products and Services"
+msgstr "Varuosad ja teenused"
+
+#: templates/orders/print_confirmation.html:107
+#: templates/orders/print_dispatch.html:15
+#, python-format
+msgid "VAT %%"
+msgstr "KM %%"
+
+#: templates/orders/print_confirmation.html:109
+#, python-format
+msgid "0%% VAT"
+msgstr "Ilma KM:ta"
+
+#: templates/orders/print_confirmation.html:119
+#: templates/orders/print_dispatch.html:24
+#: templates/orders/print_receipt.html:23
+msgid "SN"
+msgstr "SN"
+
+#: templates/orders/print_confirmation.html:151
+msgid "Customer Pickup"
+msgstr "Vastuvõtt"
+
+#: templates/orders/print_confirmation.html:160
+#, fuzzy
+msgid "Customer Name"
+msgstr "Kliendi nimi"
+
+#: templates/orders/print_confirmation.html:161
+#: templates/orders/print_confirmation.html:178
+msgid "Signature"
+msgstr "Allkiri"
+
+#: templates/orders/print_confirmation.html:168
+msgid "Received By"
+msgstr "Vastu võtnud"
+
+#: templates/orders/print_dispatch.html:5
+#, python-format
+msgid "Dispatch #%(code)s"
+msgstr ""
+
+#: templates/orders/print_dispatch.html:25
+msgid "mon."
+msgstr "kuud"
+
+#: templates/orders/print_receipt.html:6
+#, python-format
+msgid "Receipt %(number)s"
+msgstr "Kviitung %(number)s"
+
+#: templates/orders/print_receipt.html:40
+msgid "Date of invoice"
+msgstr "Kviitungi kuupäev"
+
+#: templates/orders/print_receipt.html:41
+msgid "Payment method"
+msgstr "Maksumeetod"
+
+#: templates/orders/print_receipt.html:42
+msgid "Sales Person"
+msgstr "Teid teenindas"
+
+#: templates/orders/products.html:11 templates/purchases/edit_po.html:34
+#: templates/purchases/view_po.html:33
+msgid "Amount"
+msgstr "Kogus"
+
+#: templates/orders/products.html:12
+#, fuzzy
+msgid "Price Category"
+msgstr "Uus kategooria"
+
+#: templates/orders/products.html:43 templates/orders/products.html.py:45
+msgid "Add to Repair"
+msgstr "Lisa remondile"
+
+#: templates/orders/products.html:72 templates/orders/products.html.py:74
+msgid "Create Device"
+msgstr "Loo seade"
+
+#: templates/orders/products.html:86
+msgid "Order doesn't contain any products."
+msgstr "Tellimus ei sisalda tooteid"
+
+#: templates/orders/products.html:91 templates/orders/toolbar.html:15
+#: templates/purchases/edit_po.html:6
+msgid "Add Product"
+msgstr "Lisa toode"
+
+#: templates/orders/products.html:96
+#, fuzzy
+msgid "Order Total"
+msgstr "Telli tooted"
+
+#: templates/orders/remove_customer.html:5
+msgid "Remove this customer from the order?"
+msgstr "Eemaldame selle kliendi tellimusest?"
+
+#: templates/orders/remove_customer.html:9
+msgid "This will not delete the customer from the database."
+msgstr "Toiming ei kustuta klienti kliendibaasist."
+
+#: templates/orders/remove_device.html:5
+#, python-format
+msgid "Remove %(dev)s?"
+msgstr "Eemaldan %(dev)s?"
+
+#: templates/orders/remove_device.html:9
+msgid "This will not delete the device from the database."
+msgstr ""
+
+#: templates/orders/remove_product.html:5
+msgid "Really remove product from order?"
+msgstr "Eemaldame toote tellimusest?"
+
+#: templates/orders/remove_product.html:9
+msgid "Product will not be deleted from the warehouse."
+msgstr "Toodet ei kustutata laost."
+
+#: templates/orders/repair.html:6 templates/orders/repair.html.py:8
+msgid "Complete Repair"
+msgstr ""
+
+#: templates/orders/repair.html:16
+#, fuzzy
+msgid "Symptom"
+msgstr "Sümptom"
+
+#: templates/orders/repair.html:18
+msgid "Diagnosis"
+msgstr "Diagnoos"
+
+#: templates/orders/repair.html:20
+msgid "Request Review"
+msgstr ""
+
+#: templates/orders/reserve_products.html:5
+#, python-format
+msgid "Reserve all products in order %(id)s?"
+msgstr ""
+
+#: templates/orders/reserve_products.html:11
+msgid "Reserve"
+msgstr "Reserveeri"
+
+#: templates/orders/tabs.html:8
+msgid "Events"
+msgstr "Sündmused"
+
+#: templates/orders/toolbar.html:16
+#, fuzzy
+msgid "Choose Customer"
+msgstr "Vali klient"
+
+#: templates/orders/toolbar.html:25
+#, fuzzy
+msgid "Cost Estimate"
+msgstr "Prindi hinnakalkulatsioon"
+
+#: templates/orders/toolbar.html:27
+#, fuzzy
+msgid "Receipt"
+msgstr "Prindi kviitung"
+
+#: templates/orders/toolbar.html:28
+#, fuzzy
+msgctxt "noun"
+msgid "Dispatch"
+msgstr "Tellimus %s loodud"
+
+#: templates/orders/toolbar.html:42 templates/orders/toolbar.html.py:44
+msgid "Remove Queue"
+msgstr "Eemalda järjekorrast"
+
+#: templates/orders/toolbar.html:59
+msgid "Remove Status"
+msgstr "Eemalda staatus"
+
+#: templates/orders/toolbar.html:71
+msgid "Reopen"
+msgstr "Ava"
+
+#: templates/orders/toolbar.html:82
+#, fuzzy
+msgid "Unfollow Order"
+msgstr "Võib jälgida tellimust"
+
+#: templates/orders/toolbar.html:84
+#, fuzzy
+msgid "Follow Order"
+msgstr "Jälgijad"
+
+#: templates/orders/toolbar.html:87 templates/orders/toolbar.html.py:89
+msgid "Copy Order"
+msgstr "Kopeeri tellimus"
+
+#: templates/orders/toolbar.html:94
+msgid "Priority"
+msgstr "Prioriteet"
+
+#: templates/orders/toolbar.html:103 templates/orders/toolbar.html.py:106
+msgid "Reserve Products"
+msgstr "Reserveeri tooted"
+
+#: templates/orders/toolbar.html:104 templates/orders/toolbar.html.py:107
+msgid "Order Products"
+msgstr "Telli tooted"
+
+#: templates/orders/toolbar.html:111 templates/orders/toolbar.html.py:113
+msgid "Delete Order"
+msgstr "Kustuta tellimus"
+
+#: templates/products/category_form.html:5
+msgid "Edit Product Group"
+msgstr "Muuda tooteryhmä"
+
+#: templates/products/choose.html:5
+msgid "Search for a product"
+msgstr "Otsi toodet"
+
+#: templates/products/choose.html:11
+msgid "Code, title or category"
+msgstr "Tootekood, nimetus või kategooria"
+
+#: templates/products/delete_category.html:5
+msgid "Delete product category?"
+msgstr ""
+
+#: templates/products/delete_category.html:9
+msgid "This action will not delete the products in this category."
+msgstr ""
+
+#: templates/products/form.html:42
+msgid "Add"
+msgstr "Lisa"
+
+#: templates/products/get_info.html:6
+msgid "Product Info"
+msgstr "Toote andmed"
+
+#: templates/products/get_info.html:26 templates/products/view.html:67
+msgid "Component Group"
+msgstr "Varuosarühm"
+
+#: templates/products/get_info.html:31
+msgid "EEE Code"
+msgstr "EEE kood"
+
+#: templates/products/get_info.html:40 templates/products/view.html:82
+msgid "Stocked"
+msgstr "Laos"
+
+#: templates/products/get_info.html:42 templates/products/receive_item.html:15
+#: templates/products/view.html:84 templates/purchases/list_pos.html:53
+#: templates/shipments/list_incoming.html:20
+msgid "Ordered"
+msgstr "Tellitud"
+
+#: templates/products/get_info.html:44 templates/products/view.html:86
+msgid "Reserved"
+msgstr "Reserveeritud"
+
+#: templates/products/get_info.html:49
+#, fuzzy
+msgid "Product not in inventory"
+msgstr "Toodet %s ei ole laos"
+
+#: templates/products/index.html:15 templates/products/index.html.py:18
+msgid "New Sales Order"
+msgstr "Uus müügitellimus"
+
+#: templates/products/index.html:16 templates/products/index.html.py:19
+msgid "New Purchase Order"
+msgstr "Uus ostutellimus"
+
+#: templates/products/index.html:30 templates/products/index.html.py:33
+msgid "Edit Category"
+msgstr "Muuda kategooriat"
+
+#: templates/products/index.html:31 templates/products/index.html.py:34
+msgid "Delete Category"
+msgstr "Kustuta kategooria"
+
+#: templates/products/index.html:37
+msgid "Download Products"
+msgstr "Saabuvad tooted"
+
+#: templates/products/index.html:38
+msgid "Upload Products"
+msgstr "Saada tooted"
+
+#: templates/products/index.html:39
+msgid "Upload Parts Database"
+msgstr "Saada varuosad"
+
+#: templates/products/index_outgoing.html:10
+#: templates/products/index_outgoing.html:55
+msgid "Outgoing"
+msgstr ""
+
+#: templates/products/index_outgoing.html:11
+msgid "Shipped"
+msgstr "Saadetud"
+
+#: templates/products/index_outgoing.html:23
+#: templates/purchases/edit_po.html:31
+#: templates/shipments/list_returns.html:12
+msgid "Code"
+msgstr "Kood"
+
+#: templates/products/index_outgoing.html:26
+#: templates/shipments/edit_bulk_return.html:58
+#: templates/shipments/list_returns.html:15
+msgid "Return Order"
+msgstr ""
+
+#: templates/products/index_outgoing.html:27
+#: templates/shipments/list_returns.html:16
+msgid "Register For Return"
+msgstr ""
+
+#: templates/products/index_outgoing.html:44
+#: templates/shipments/list_returns.html:33
+msgid "No parts pending return"
+msgstr ""
+
+#: templates/products/list.html:10
+msgid "In Stock"
+msgstr "Laos"
+
+#: templates/products/list_rows.html:31
+msgid "Use in Service Order"
+msgstr "Vii hooldustellimusele"
+
+#: templates/products/list_rows.html:35 templates/products/view.html:96
+msgid "Create Sales Order"
+msgstr "Loo müügitellimus"
+
+#: templates/products/list_rows.html:36
+msgid "Create Purchase Order"
+msgstr "Loo ostutellimus"
+
+#: templates/products/list_rows.html:39
+msgid "Use in Purchase Order"
+msgstr "Vii ostutellimusele"
+
+#: templates/products/receive_item.html:21
+msgid "Stocking Order"
+msgstr "Lattu"
+
+#: templates/products/receive_item.html:49
+#: templates/shipments/list_incoming.html:52
+msgid "Receive"
+msgstr ""
+
+#: templates/products/remove.html:5
+#, python-format
+msgid "Really delete product \"%(code)s\"?"
+msgstr ""
+
+#: templates/products/tabs.html:11
+msgid "Shipments"
+msgstr "Saadetised"
+
+#: templates/products/tabs.html:14 templates/purchases/list_pos.html:131
+#: templates/purchases/view_po.html:55 views/purchases.py:28
+msgid "Purchase Orders"
+msgstr "Ostutellimused"
+
+#: templates/products/upload_gsx_parts.html:5
+msgid "Upload GSX Parts"
+msgstr ""
+
+#: templates/products/view.html:44 templates/stats/index.html:12
+#: templates/stats/locations.html:9 templates/stats/queues.html:9
+#: templates/stats/sales.html:9 templates/stats/sales.html.py:13
+#: templates/stats/statuses.html:9
+#, fuzzy
+msgid "Sales"
+msgstr "Müügihind"
+
+#: templates/products/view.html:45 templates/stats/sales.html:17
+msgid "Purchases"
+msgstr "Ostutellimused"
+
+#: templates/products/view.html:104 templates/products/view.html.py:106
+#: templates/products/view.html:111
+#, fuzzy
+msgid "Update Price"
+msgstr "Uuenda toodete hinnad"
+
+#: templates/products/view.html:133
+#, fuzzy
+msgid "Dispatched"
+msgstr "Tellimus %s loodud"
+
+#: templates/products/view.html:147
+msgid "No Sales Orders"
+msgstr "Ei leitud ühtegi müügitellimust"
+
+#: templates/products/view.html:171 templates/purchases/list_pos.html:106
+msgid "No Purchase Orders"
+msgstr "Ei leitud ühtegi ostutellimust"
+
+#: templates/products/view.html:195
+msgid "No invoices"
+msgstr "Ei leitud ühtegi arvet"
+
+#: templates/purchases/edit_po.html:61
+msgid "Order does not contain any products"
+msgstr "Tellimus ei sisalda tooteid"
+
+#: templates/purchases/list_pos.html:7
+#, fuzzy
+msgid "New"
+msgstr "Uus tag"
+
+#: templates/purchases/list_pos.html:86 templates/purchases/list_pos.html:88
+msgid "Create GSX Stocking Order"
+msgstr ""
+
+#: templates/purchases/order_stock.html:5
+msgid "Submit this stocking order?"
+msgstr ""
+
+#: templates/purchases/order_stock.html:9
+msgid "Products will be ordered from GSX."
+msgstr ""
+
+#: templates/purchases/view_po.html:15
+#, fuzzy
+msgid "Created By"
+msgstr "Loodud"
+
+#: templates/purchases/view_po.html:17
+#, fuzzy
+msgid "Created At"
+msgstr "Loodud"
+
+#: templates/purchases/view_po.html:35
+#, fuzzy
+msgid "Received At"
+msgstr "Saabunud"
+
+#: templates/repairs/add_part.html:5
+#, python-format
+msgid "Add part to repair %(repair)s?"
+msgstr ""
+
+#: templates/repairs/delete_part.html:5
+msgid "Remove this part from the GSX repair?"
+msgstr ""
+
+#: templates/repairs/delete_repair.html:5
+#, fuzzy
+msgid "Delete this GSX repair?"
+msgstr "Kustutad märkme?"
+
+#: templates/repairs/delete_repair.html:9
+msgid "Only repairs that have not been submitted can be deleted."
+msgstr ""
+
+#: templates/repairs/get_details.html:12
+#: templates/search/results/gsx_repair_details.html:8
+msgid "CS Code"
+msgstr "CS-kood"
+
+#: templates/repairs/get_details.html:14
+#: templates/search/results/gsx_repair_details.html:10
+msgid "Tracking Number"
+msgstr ""
+
+#: templates/repairs/get_details.html:18
+#: templates/search/results/gsx_repair_details.html:14
+msgid "Warranty Coverage"
+msgstr "Garantii"
+
+#: templates/repairs/part_menu.html:4 templates/repairs/part_menu.html.py:7
+msgid "Print Return Label"
+msgstr ""
+
+#: templates/repairs/part_menu.html:7
+#, fuzzy
+msgid "Part has no return order number"
+msgstr "Tootel on seerianumber"
+
+#: templates/repairs/part_menu.html:11 templates/repairs/part_menu.html:13
+#, fuzzy
+msgid "Update Serial Numbers"
+msgstr "Seerianumber"
+
+#: templates/repairs/part_menu.html:17 templates/repairs/part_menu.html:27
+msgid "Return DOA"
+msgstr ""
+
+#: templates/repairs/part_menu.html:18 templates/repairs/part_menu.html:28
+#: views/shipments.py:326
+msgid "Return Good Part"
+msgstr ""
+
+#: templates/repairs/part_menu.html:19 templates/repairs/part_menu.html:29
+#: views/shipments.py:330
+msgid "Convert to Stock"
+msgstr ""
+
+#: templates/repairs/part_menu.html:22 templates/repairs/part_menu.html:24
+#: templates/repairs/part_menu.html:31
+#, fuzzy
+msgid "Remove from Repair"
+msgstr "Eemaldatud järjekorrast"
+
+#: templates/search/spotlight.html:11
+msgid "Results"
+msgstr "Tulemused"
+
+#: templates/search/spotlight.html:25
+#, fuzzy
+msgid "Products and Parts"
+msgstr "Tooted"
+
+#: templates/search/spotlight.html:28
+msgid "Articles"
+msgstr "Artiklid"
+
+#: templates/search/spotlight.html:36
+msgid "Home"
+msgstr "Koduleht"
+
+#: templates/shipments/add_to_return-results.html:6
+#, fuzzy
+msgid "No parts found"
+msgstr "Ei leitud ühtegi toodet"
+
+#: templates/shipments/add_to_return.html:5
+msgid "Add part to return"
+msgstr ""
+
+#: templates/shipments/add_to_return.html:11
+#, fuzzy
+msgid "Return order number"
+msgstr "Tootel on seerianumber"
+
+#: templates/shipments/edit_bulk_return.html:6
+#, fuzzy
+msgid "Add Part"
+msgstr "Lisa toode"
+
+#: templates/shipments/edit_bulk_return.html:9
+#: templates/shipments/edit_bulk_return.html:11
+msgid "Verify"
+msgstr ""
+
+#: templates/shipments/edit_bulk_return.html:28
+#: templates/shipments/view_bulk_return.html:6
+msgid "Carrier"
+msgstr ""
+
+#: templates/shipments/edit_bulk_return.html:34
+#: templates/shipments/view_bulk_return.html:8
+msgid "Tracking"
+msgstr ""
+
+#: templates/shipments/edit_bulk_return.html:40
+#: templates/shipments/view_bulk_return.html:10
+msgid "Dimensions"
+msgstr "Mõõdud"
+
+#: templates/shipments/edit_bulk_return.html:46
+#: templates/shipments/view_bulk_return.html:12
+msgid "Weight"
+msgstr "Kaal"
+
+#: templates/shipments/edit_bulk_return.html:59
+msgid "Overpack"
+msgstr ""
+
+#: templates/shipments/edit_bulk_return.html:85
+#: templates/shipments/view_bulk_return.html:28
+msgid "No parts registered for this shipment"
+msgstr ""
+
+#: templates/shipments/index.html:26 templates/shipments/list_incoming.html:60
+msgid "Incoming"
+msgstr "Saabuvad"
+
+#: templates/shipments/index.html:29 templates/shipments/list_returns.html:43
+msgid "Parts Pending Return"
+msgstr ""
+
+#: templates/shipments/index.html:31
+#: templates/shipments/list_bulk_returns.html:36
+#, fuzzy
+msgid "Browse Returns"
+msgstr "peab tagastama"
+
+#: templates/shipments/list_bulk_returns.html:9
+msgid "ID"
+msgstr ""
+
+#: templates/shipments/list_bulk_returns.html:11
+msgid "Tracking URL"
+msgstr ""
+
+#: templates/shipments/list_bulk_returns.html:13
+msgid "Returned"
+msgstr ""
+
+#: templates/shipments/list_incoming.html:46
+msgid "No incoming products"
+msgstr "Mitte ühtegi saavuvad toodet"
+
+#: templates/shipments/submit_bulk_return.html:4
+#, fuzzy
+msgid "Submit the bulk return?"
+msgstr "peab tagastama"
+
+#: templates/shipments/view_bulk_return.html:15
+msgid "Open Packing List"
+msgstr ""
+
+#: templates/snippets/error_modal.html:5
+msgid "An error occured..."
+msgstr ""
+
+#: templates/stats/index.html:8 templates/stats/locations.html:5
+#: templates/stats/queues.html:5 templates/stats/sales.html:5
+#: templates/stats/statuses.html:5
+msgid "Technicians"
+msgstr ""
+
+#: templates/stats/index.html:40
+#, fuzzy
+msgid "Orders Assigned"
+msgstr "Käsitleja määratud"
+
+#: templates/stats/index.html:41
+msgid ""
+"Shows how many new orders have been assigned to each technician over the "
+"given time period."
+msgstr ""
+
+#: templates/stats/index.html:44 templates/stats/locations.html:13
+#: templates/stats/queues.html:13
+#, fuzzy
+msgid "Orders Created"
+msgstr "Tellimus loodud"
+
+#: templates/stats/index.html:45
+msgid "This graph shows how many orders are checked in by each user."
+msgstr ""
+
+#: templates/stats/index.html:48 templates/stats/locations.html:29
+#: templates/stats/queues.html:25
+#, fuzzy
+msgid "Work Distribution"
+msgstr "Töökirjeldus"
+
+#: templates/stats/index.html:49
+msgid ""
+"Shows you how the total number of service orders is distributed across the "
+"technicians at this location."
+msgstr ""
+
+#: templates/stats/locations.html:14
+msgid "Shows you how many orders are created at each location."
+msgstr ""
+
+#: templates/stats/locations.html:17 templates/stats/queues.html:17
+#, fuzzy
+msgid "Orders Closed"
+msgstr "Tellimus suletud"
+
+#: templates/stats/locations.html:18
+msgid "Shows you how many orders have been closed at each location."
+msgstr ""
+
+#: templates/stats/locations.html:21 templates/stats/queues.html:21
+#, fuzzy
+msgid "Average Turnaround"
+msgstr "Keskmine kestvus"
+
+#: templates/stats/locations.html:22
+msgid "Shows how many hours it takes to complete an order at each location."
+msgstr ""
+
+#: templates/stats/locations.html:25
+#, fuzzy
+msgid "Average Runrate"
+msgstr "Keskmine kestvus"
+
+#: templates/stats/locations.html:26
+msgid "Shows you how many orders people are working on at each location."
+msgstr ""
+
+#: templates/stats/locations.html:30
+msgid ""
+"This shows you how your overall work load is distributed across your service "
+"locations."
+msgstr ""
+
+#: templates/stats/queues.html:14
+msgid ""
+"This is your total number of orders per queue in the specified time period"
+msgstr ""
+
+#: templates/stats/queues.html:18
+msgid "Shows you how many orders have been closed in each queue."
+msgstr ""
+
+#: templates/stats/queues.html:22
+msgid "Shows how many hours it takes to complete an order in each queue."
+msgstr ""
+
+#: templates/stats/queues.html:26
+msgid ""
+"This shows your total ratio of orders over the time period distributed over "
+"each queue."
+msgstr ""
+
+#: templates/stats/sales.html:14
+msgid "Shows you invoice totals per queue within the selected time period."
+msgstr ""
+
+#: templates/stats/sales.html:18
+msgid ""
+"Shows you Purchase Order totals per queue within the selected time period."
+msgstr ""
+
+#: templates/stats/sales.html:22
+msgid "Shows you how many parts have been ordered for each labour tier."
+msgstr ""
+
+#: templates/stats/statuses.html:13
+msgid "Orders per location"
+msgstr "Tellimusi asukoha kohta"
+
+#: templates/stats/statuses.html:14
+msgid ""
+"Shows the number of orders with a particular status at the selected location "
+"that have been assigned to a technician over the specified time period."
+msgstr ""
+
+#: templates/stats/statuses.html:17
+msgid "Orders per user"
+msgstr "Tellimusi kasutaja kohta"
+
+#: templates/stats/statuses.html:18
+msgid ""
+"Shows the number of orders with a particular status per each user at the "
+"given location that have been assigned to a technician over the specified "
+"time period."
+msgstr ""
+
+#: views/account.py:26
+#, fuzzy
+msgid "Profile Settings"
+msgstr "Seaded"
+
+#: views/account.py:34 views/admin.py:235
+msgid "Settings saved"
+msgstr "Seaded salvestatud"
+
+#: views/account.py:47
+#, fuzzy
+msgid "Error in user details"
+msgstr "Ei leitud ühtegi toodet"
+
+#: views/account.py:73
+msgid "My Orders"
+msgstr "Minu tellimused"
+
+#: views/account.py:81
+msgid "Sign In"
+msgstr "Logi sisse"
+
+#: views/account.py:102
+#, python-format
+msgid "%s logged in"
+msgstr ""
+
+#: views/account.py:109
+msgid "Incorrect username or password"
+msgstr "Vale parool või kasutajanimi"
+
+#: views/account.py:111
+msgid "Login failed"
+msgstr ""
+
+#: views/account.py:119
+#, fuzzy
+msgid "You have logged out"
+msgstr "Logisid välja"
+
+#: views/account.py:223
+msgid "Users can only delete their own calendars!"
+msgstr "Kasutajad võivad kustutada ainult enda kalendreid"
+
+#: views/account.py:229
+msgid "Calendar deleted"
+msgstr "Kalender kustutatud"
+
+#: views/account.py:232
+msgid "Really delete this calendar?"
+msgstr ""
+
+#: views/account.py:251
+msgid "Calendar saved"
+msgstr "Kalender salvestatud"
+
+#: views/account.py:274
+msgid "Calendar event created"
+msgstr ""
+
+#: views/account.py:284
+msgid "Event saved"
+msgstr "Sündmus salvestatud"
+
+#: views/account.py:287
+#, fuzzy
+msgid "Edit Event"
+msgstr "Muud kasutajat"
+
+#: views/account.py:298
+msgid "Calendar event updated"
+msgstr ""
+
+#: views/account.py:305
+msgid "Users can only delete their own events!"
+msgstr ""
+
+#: views/account.py:313
+msgid "Calendar event deleted"
+msgstr "Sündmus kustutatud"
+
+#: views/account.py:316
+msgid "Really delete this event?"
+msgstr ""
+
+#: views/account.py:340
+msgid "Your registration is now pending approval."
+msgstr ""
+
+#: views/account.py:354
+#, fuzzy
+msgid "All notifications cleared"
+msgstr "saada teated mailiga"
+
+#: views/account.py:365 views/order.py:855
+msgid "Search query is too short"
+msgstr ""
+
+#: views/account.py:381
+msgid "Search results"
+msgstr "Otsingutulemused"
+
+#: views/admin.py:65 views/admin.py:270 views/customer.py:140
+#: views/device.py:152
+#, fuzzy, python-format
+msgid "%s saved"
+msgstr "Kasutaja salvestatud"
+
+#: views/admin.py:71
+msgid "GSX account for this sold-to and environment already exists"
+msgstr ""
+
+#: views/admin.py:83
+msgid "GSX account deleted"
+msgstr "GSX konto kustutatud"
+
+#: views/admin.py:126
+msgid "Checklist saved"
+msgstr ""
+
+#: views/admin.py:138
+msgid "Checklist deleted"
+msgstr ""
+
+#: views/admin.py:142
+msgid "Really delete this checklist?"
+msgstr ""
+
+#: views/admin.py:143
+msgid "This will also delete all checklist values."
+msgstr ""
+
+#: views/admin.py:179
+#, fuzzy, python-format
+msgid "Tag %s saved"
+msgstr "Kasutaja salvestatud"
+
+#: views/admin.py:194
+msgid "Tag deleted"
+msgstr ""
+
+#: views/admin.py:197
+msgid "Really delete this tag?"
+msgstr ""
+
+#: views/admin.py:215
+msgid "Check your settings"
+msgstr ""
+
+#: views/admin.py:283 views/admin.py:542 views/customer.py:154
+#, fuzzy, python-format
+msgid "%s deleted"
+msgstr "Kasutaja kustutatud"
+
+#: views/admin.py:322
+msgid "Field saved"
+msgstr "Väli salvestatud"
+
+#: views/admin.py:334
+msgid "Field deleted"
+msgstr "Väli kustutatud"
+
+#: views/admin.py:337
+msgid "Really delete this field?"
+msgstr ""
+
+#: views/admin.py:367
+#, fuzzy, python-format
+msgid "Template %s saved"
+msgstr "Põhi salvestatud"
+
+#: views/admin.py:383
+#, fuzzy, python-format
+msgid "Template %s deleted"
+msgstr "Põhi kustutatud"
+
+#: views/admin.py:386
+msgid "Really delete this template?"
+msgstr ""
+
+#: views/admin.py:427
+msgid "Group saved"
+msgstr "Rühm salvestatud"
+
+#: views/admin.py:439
+msgid "Group deleted"
+msgstr "Rühm kustutatud"
+
+#: views/admin.py:454
+msgid "User deleted"
+msgstr "Kasutaja kustutatud"
+
+#: views/admin.py:483
+#, fuzzy, python-format
+msgid "User %s saved"
+msgstr "Kasutaja salvestatud"
+
+#: views/admin.py:486
+msgid "Error in user profile data"
+msgstr ""
+
+#: views/admin.py:492
+#, fuzzy, python-format
+msgid "%d users"
+msgstr "Kasutajad"
+
+#: views/admin.py:527
+#, fuzzy, python-format
+msgid "Location %s saved"
+msgstr "Asukoht salvestatud"
+
+#: views/admin.py:548
+msgid "Really delete this location?"
+msgstr ""
+
+#: views/admin.py:549
+#, fuzzy
+msgid "This will not delete the orders at this location"
+msgstr "Toiming ei kustuta klienti kliendibaasist."
+
+#: views/admin.py:560
+msgid "Create, edit and delete service queues"
+msgstr ""
+
+#: views/admin.py:587
+msgid "Failed to save queue"
+msgstr ""
+
+#: views/admin.py:594
+#, fuzzy, python-format
+msgid "%s queue saved"
+msgstr "Kasutaja salvestatud"
+
+#: views/admin.py:611
+msgid "Queue deleted"
+msgstr "Järjekord kustutatud"
+
+#: views/admin.py:613
+msgid "Cannot delete queue"
+msgstr ""
+
+#: views/admin.py:633 views/admin.py:644
+#, fuzzy
+msgid "Access denied"
+msgstr "Lisavarustus"
+
+#: views/admin.py:637
+#, fuzzy
+msgid "Manage Sites"
+msgstr "Halda lisaseadmeid"
+
+#: views/admin.py:663
+#, fuzzy
+msgid "Site saved"
+msgstr "Märge salvestatud"
+
+#: views/admin.py:682
+#, fuzzy, python-format
+msgid "%d users imported"
+msgstr "Ei leitud ühtegi arvet"
+
+#: views/checkin.py:109
+msgid "Welcome"
+msgstr "Tere tulemast"
+
+#: views/checkin.py:120
+msgid "1/3: Enter serial number, IMEI code or choose a device"
+msgstr "1/3: Sisestage seerianumber, IMEI kood või valige seade"
+
+#: views/checkin.py:123
+msgid "Please enable cookies in your browser"
+msgstr ""
+
+#: views/checkin.py:134 views/checkin.py:161
+msgid "Your session has expired, please try again."
+msgstr ""
+
+#: views/checkin.py:140
+msgid "The serial number you entered is not valid."
+msgstr ""
+
+#: views/checkin.py:142
+msgid ""
+"Couldn't check warranty status, please choose device type manually or try "
+"again later."
+msgstr ""
+"Garantiistaatuse kontroll ebaõnnestus. Palun valige seade käsitsi või "
+"proovige hiljem uuesti."
+
+#: views/checkin.py:155
+msgid "1/3: Device details"
+msgstr "1/3: Seadme andmed"
+
+#: views/checkin.py:192
+msgid "2/3: Problem description"
+msgstr "2/3: Veakirjeldus"
+
+#: views/checkin.py:206
+msgid "3/3: Your contact details"
+msgstr "3/3/: Teie kontaktandmed"
+
+#: views/checkin.py:234
+msgid "Order does not exist"
+msgstr "Tellimust ei leitud"
+
+#: views/checkin.py:244
+msgid "2/3: Troubleshooting"
+msgstr "2/3: Veakirjeldus"
+
+#: views/checkin.py:281
+msgid "1/3: Choose your device"
+msgstr "1/3: Valige oma seade"
+
+#: views/checkin.py:284
+msgid "Apple Keyboard"
+msgstr "Apple klaviatuur"
+
+#: views/checkin.py:285
+msgid "Apple Wireless Device"
+msgstr "Apple juhtmeta seade"
+
+#: views/checkin.py:289
+#, python-format
+msgid "1/3: %s"
+msgstr "1/3: %s"
+
+#: views/checkin.py:320
+#, fuzzy
+msgid "Repair Status"
+msgstr "Remondid"
+
+#: views/checkin.py:332
+msgid "Waiting to be processed"
+msgstr "Ootab käsitlemist"
+
+#: views/checkin.py:334
+#, python-format
+msgid "Order %s not found"
+msgstr "Tellimust %s ei leitud"
+
+#: views/checkin.py:359
+msgid "Your session has expired"
+msgstr ""
+
+#: views/customer.py:89
+msgid "Customer added"
+msgstr "Klient lisatud"
+
+#: views/customer.py:105
+#, fuzzy
+msgid "Customer not found"
+msgstr "Kliendi andmed"
+
+#: views/customer.py:206
+msgid "Customer saved"
+msgstr "Klient salvestatud"
+
+#: views/customer.py:232
+msgid "Customer deleted"
+msgstr "Klient kustutatud"
+
+#: views/customer.py:250
+#, python-format
+msgid "Merge %s with"
+msgstr ""
+
+#: views/customer.py:265
+msgid "Customer records merged succesfully"
+msgstr ""
+
+#: views/customer.py:281
+#, python-format
+msgid "Customer %s moved to top level"
+msgstr ""
+
+#: views/customer.py:285
+#, fuzzy, python-format
+msgid "Customer %(customer)s moved to %(target)s"
+msgstr "Klient salvestatud"
+
+#: views/customer.py:307 views/device.py:282 views/order.py:875
+#: views/product.py:325 views/search.py:35
+#, fuzzy, python-format
+msgid "Search results for \"%s\""
+msgstr "Mitte ühtegi otsingutulemust"
+
+#: views/customer.py:357
+#, fuzzy
+msgid "Search for customers"
+msgstr "Otsi klienti"
+
+#: views/customer.py:376
+msgid "Please specify search query first"
+msgstr ""
+
+#: views/customer.py:419
+#, fuzzy
+msgid "Invalid upload data"
+msgstr "Puudulikud kliendi andmed"
+
+#: views/customer.py:439
+#, fuzzy, python-format
+msgid "%d customer(s) imported"
+msgstr "Ei leitud ühtegi arvet"
+
+#: views/device.py:114
+msgid "Device deleted"
+msgstr "Seade kustutatud"
+
+#: views/device.py:116
+msgid "Cannot delete device with GSX repairs"
+msgstr ""
+
+#: views/device.py:314
+#, python-format
+msgid "Devices matching \"%s\""
+msgstr ""
+
+#: views/device.py:333
+msgid "Device search"
+msgstr "Otsi seadmeid"
+
+#: views/device.py:386
+msgid "Invalid serial number for parts lookup"
+msgstr ""
+
+#: views/device.py:389
+msgid "Error calculating prices. Please check your system settings."
+msgstr ""
+
+#: views/device.py:486
+#, fuzzy, python-format
+msgid "%d devices imported"
+msgstr "Ei leitud ühtegi arvet"
+
+#: views/device.py:499
+msgid "Warranty status updated successfully"
+msgstr ""
+
+#: views/error.py:24
+#, fuzzy, python-format
+msgid "Browser: %s"
+msgstr "peab tagastama"
+
+#: views/gsx.py:21
+#, fuzzy, python-format
+msgid "Part %s updated"
+msgstr "Toode %s salvestatud"
+
+#: views/gsx.py:56
+#, python-format
+msgid "Part %(part)s added to repair %(repair)s"
+msgstr ""
+
+#: views/gsx.py:85
+#, fuzzy, python-format
+msgid "Part %(part)s removed from %(repair)s"
+msgstr "Eemaldatud järjekorrast"
+
+#: views/gsx.py:99
+#, fuzzy
+msgid "Submitted repairs cannot be deleted"
+msgstr "Suletud tellimusi ei või muuta"
+
+#: views/gsx.py:105
+#, fuzzy
+msgid "GSX repair deleted"
+msgstr "GSX konto kustutatud"
+
+#: views/gsx.py:147
+#, fuzzy
+msgid "Submitted repairs cannot be edited"
+msgstr "Suletud tellimusi ei või muuta"
+
+#: views/gsx.py:150
+msgid "Please add some parts before creating repair"
+msgstr ""
+
+#: views/gsx.py:153
+msgid "Cannot create GSX repair without valid customer data"
+msgstr ""
+
+#: views/gsx.py:190
+#, fuzzy
+msgid "GSX repair saved"
+msgstr "GSX parandused"
+
+#: views/gsx.py:216
+#, fuzzy
+msgid "Invalid component data"
+msgstr "Puudulikud kliendi andmed"
+
+#: views/gsx.py:231
+msgid "Invalid customer info"
+msgstr "Puudulikud kliendi andmed"
+
+#: views/gsx.py:296
+#, python-format
+msgid "%s serial numbers updated"
+msgstr ""
+
+#: views/invoices.py:91
+#, fuzzy, python-format
+msgid "Receipt #%d"
+msgstr "Prindi kviitung"
+
+#: views/invoices.py:99
+#, fuzzy, python-format
+msgid "Invoice %s"
+msgstr "Arved"
+
+#: views/invoices.py:110
+#, python-format
+msgid "Dispatch Order %s"
+msgstr ""
+
+#: views/invoices.py:135
+msgid "Walk-In Customer"
+msgstr ""
+
+#: views/note.py:170
+#, python-format
+msgid "Re: %s"
+msgstr ""
+
+#: views/note.py:237
+msgid "Note deleted"
+msgstr "Märge kustutatud"
+
+#: views/note.py:305
+msgid "OK"
+msgstr ""
+
+#: views/note.py:329
+#, python-format
+msgid "Notes containing \"%s\""
+msgstr ""
+
+#: views/note.py:373
+#, fuzzy
+msgid "Message search"
+msgstr "Teade saadetud"
+
+#: views/note.py:384
+#, fuzzy
+msgid "Edit Escalation"
+msgstr "Muuda GSX kontot"
+
+#: views/order.py:142
+#, python-format
+msgid "%d search results"
+msgstr "%d tulemust"
+
+#: views/order.py:153
+#, fuzzy, python-format
+msgid "Order %s"
+msgstr "Tellimused"
+
+#: views/order.py:212
+#, fuzzy, python-format
+msgid "Order %s reopened"
+msgstr "Tellimus %s loodud"
+
+#: views/order.py:349
+#, python-format
+msgid "Repair %s marked complete."
+msgstr ""
+
+#: views/order.py:404
+#, python-format
+msgid "Order %s deleted"
+msgstr "Tellimus %s kustutatud"
+
+#: views/order.py:408
+#, python-format
+msgid "Cannot delete order %(order)s: %(error)s"
+msgstr ""
+
+#: views/order.py:418
+msgid "Follow"
+msgstr "Jälgi tellimust"
+
+#: views/order.py:424
+msgid "Unfollow"
+msgstr "Ära jälgi tellimust"
+
+#: views/order.py:461
+msgid "Closed orders cannot be updated"
+msgstr "Suletud tellimusi ei või muuta"
+
+#: views/order.py:475
+#, python-format
+msgid "User %s does not exist"
+msgstr ""
+
+#: views/order.py:503
+#, python-format
+msgid "Label %s does not exist"
+msgstr ""
+
+#: views/order.py:508 views/order.py:514 views/order.py:523
+msgid "Order updated"
+msgstr "Tellimus uuendatud"
+
+#: views/order.py:520
+#, python-format
+msgid "Order moved to %s"
+msgstr "Tellimus tõsteti järjekorda %s"
+
+#: views/order.py:536
+#, python-format
+msgid "Service Order #%s"
+msgstr "Hooldustellimus #%s"
+
+#: views/order.py:633
+#, python-format
+msgid "Products of order %s reserved"
+msgstr ""
+
+#: views/order.py:674 views/product.py:271
+#, python-format
+msgid "Product %s saved"
+msgstr "Toode %s salvestatud"
+
+#: views/order.py:761
+#, fuzzy
+msgid "Order item does not exist"
+msgstr "Tellimust ei leitud"
+
+#: views/order.py:842
+#, python-format
+msgid "Customer %s removed"
+msgstr "Klient %s eemaldatud"
+
+#: views/product.py:117
+msgid "Parts database uploaded for processing"
+msgstr ""
+
+#: views/product.py:206
+#, python-format
+msgid "%d products imported"
+msgstr "%d toodet edukalt imporditud"
+
+#: views/product.py:211
+#, fuzzy
+msgid "Upload products"
+msgstr "Saabuvad tooted"
+
+#: views/product.py:274
+msgid "Error in inventory details"
+msgstr ""
+
+#: views/product.py:276
+#, fuzzy
+msgid "Error in product info"
+msgstr "Ei leitud ühtegi toodet"
+
+#: views/product.py:296
+msgid "Product deleted"
+msgstr "Toode kustutatud"
+
+#: views/product.py:298
+#, fuzzy
+msgid "Cannot delete product"
+msgstr "Loo toode"
+
+#: views/product.py:371
+#, fuzzy, python-format
+msgid "Category %s already exists"
+msgstr "Tooterühm salvestatud"
+
+#: views/product.py:373
+#, fuzzy, python-format
+msgid "Category %s saved"
+msgstr "Tooterühm salvestatud"
+
+#: views/product.py:389
+msgid "Category deleted"
+msgstr "Tooterühm kustutatud"
+
+#: views/product.py:437
+msgid "Price info updated from GSX"
+msgstr ""
+
+#: views/product.py:439
+msgid "Failed to update price from GSX"
+msgstr ""
+
+#: views/purchases.py:81
+#, python-format
+msgid "Product %s removed"
+msgstr "Toode %s eemaldatud"
+
+#: views/purchases.py:96
+#, fuzzy, python-format
+msgid "Purchase Order %d"
+msgstr "Ostutellimus"
+
+#: views/purchases.py:132
+#, fuzzy, python-format
+msgid "Purchase Order %d saved"
+msgstr "Ostutellimus %d loodud"
+
+#: views/purchases.py:136
+#, fuzzy, python-format
+msgid "Purchase Order %d submitted"
+msgstr "Ostutellimus %d loodud"
+
+#: views/purchases.py:144
+#, fuzzy, python-format
+msgid "Purchase Order #%d"
+msgstr "Ostutellimus"
+
+#: views/purchases.py:159
+#, fuzzy, python-format
+msgid "Purchase Order %s has already been submitted"
+msgstr "Ostutellimus %d on juba kinnitatud."
+
+#: views/purchases.py:177
+#, python-format
+msgid "Products ordered with confirmation %s"
+msgstr ""
+
+#: views/purchases.py:193
+#, python-format
+msgid "Purchase Order %s deleted"
+msgstr ""
+
+#: views/shipments.py:83
+#, fuzzy, python-format
+msgid "%d incoming products"
+msgstr "Mitte ühtegi saavuvad toodet"
+
+#: views/shipments.py:113
+#, python-format
+msgid "%d products received"
+msgstr ""
+
+#: views/shipments.py:152
+#, python-format
+msgid "Product %s received"
+msgstr ""
+
+#: views/shipments.py:186
+#, fuzzy
+msgid "Browse Bulk Returns"
+msgstr "peab tagastama"
+
+#: views/shipments.py:210
+#, fuzzy
+msgid "View bulk return"
+msgstr "peab tagastama"
+
+#: views/shipments.py:223
+#, fuzzy, python-format
+msgid "Location %s has no Ship-To"
+msgstr "Asukoht salvestatud"
+
+#: views/shipments.py:246
+#, fuzzy
+msgid "Bulk return saved"
+msgstr "Järjekord salvestatud"
+
+#: views/shipments.py:251
+#, fuzzy, python-format
+msgid "Bulk return %s submitted"
+msgstr "Järjekord salvestatud"
+
+#: views/shipments.py:266
+#, python-format
+msgid "%d parts pending return"
+msgstr ""
+
+#: views/shipments.py:279
+#, fuzzy, python-format
+msgid "Part %s removed from bulk return"
+msgstr "Eemaldatud järjekorrast"
+
+#: views/shipments.py:296
+#, python-format
+msgid "Part %s added to return"
+msgstr ""
+
+#: views/shipments.py:322
+msgid "Return DOA Part"
+msgstr ""
+
+#: views/shipments.py:331
+msgid "This part will be converted to regular inventory"
+msgstr ""
+
+#: views/shipments.py:346
+msgid "Part updated"
+msgstr ""
+
+#: views/stats.py:241
+msgid "Time Scale"
+msgstr ""
+
+#: views/stats.py:465
+msgid "No Queue"
+msgstr "Ilma järjekorrata"
+
+#, fuzzy
+#~ msgid "Error in SMS gateway settings"
+#~ msgstr "Ei leitud ühtegi toodet"
+
+#~ msgid "No device"
+#~ msgstr "Ilma seadmeta"
+
+#~ msgid "just now"
+#~ msgstr "hetk tagasi"
+
+#~ msgid "today at %(time)s"
+#~ msgstr "täna kell %(time)s"
+
+#~ msgid "yesterday at %(time)s"
+#~ msgstr "eile kell %(time)s"
+
+#~ msgid "%a, %d.%m at %k:%M"
+#~ msgstr "%a, %d.%m kell %k:%M"
+
+#, fuzzy
+#~ msgid "Exchange"
+#~ msgstr "Vahetushind"

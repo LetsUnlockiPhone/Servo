@@ -1,0 +1,13 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}{% trans "Diagnostics" %}{% endblock header %}
+
+{% block body %}
+  <div id="gsx-container" data-source="{% url 'devices-diagnostics' pk=device.id %}?a=get">
+    <div class="progress progress-striped active">
+      <div class="bar" style="width:100%;" data-progress="0"></div>
+    </div>
+    <div class="text-center muted">{% trans "Fetching diagnostics..." %}</div>
+  </div>
+{% endblock body %}

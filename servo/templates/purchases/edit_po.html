@@ -1,0 +1,92 @@
+{% extends "purchases/list_pos.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+    <a class="btn" href="{% url 'purchases-choose_for_po' order.pk %}" data-modal="#modal"><i class="icon-shopping-cart"></i> {% trans "Add Product" %}</a>
+{% endblock toolbar %}
+
+{% block filter_bar %}
+{% endblock filter_bar %}
+
+{% block detail_view %}
+    <form method="post" accept-charset="utf-8" action="">
+        <div class="span3">
+            {% include "form_field_snippet.html" with field=form.sales_order %}
+            {% include "form_field_snippet.html" with field=form.reference %}
+            {% include "form_field_snippet.html" with field=form.confirmation %}
+        </div>
+        <div class="span9">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1" data-toggle="tab">{% trans "Products" %}</a></li>
+                <li><a href="#tab2" data-toggle="tab">{% trans "Dispatch" %}</a></li>
+            </ul>
+            <div class="tab-content">
+                {% csrf_token %}
+                {{ formset.management_form }}
+                <div class="tab-pane active" id="tab1">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Code" %}</th>
+                                <th>{% trans "Product" %}</th>
+                                <th>{% trans "Reference" %}</th>
+                                <th>{% trans "Amount" %}</th>
+                                <th>{% trans "Purchase Price" %}</th>
+                            {% if not order.submitted_at %}
+                                <th>{% trans "Delete" %}</th>
+                            {% else %}
+                                <th></th>
+                            {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for form in formset %}
+                            {{ form.id }}
+                            {{ form.product }}
+                            <tr>
+                                <td>{{ form.code }}</td>
+                                <td>{{ form.title }}</td>
+                                <td>{{ form.reference }}</td>
+                                <td>{{ form.amount }}</td>
+                                <td>{{ form.price }}</td>
+                            {% if not order.submitted_at %}
+                                <td>{{ form.DELETE }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="6" class="muted empty">{% trans "Order does not contain any products" %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" style="text-align:right">{% trans "Total" %}:</td>
+                                <td>{{ order.amount }}</td>
+                                <td>{{ order.sum|currency }}</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    {% include "form_field_snippet.html" with field=form.carrier %}
+                    {% include "form_field_snippet.html" with field=form.supplier %}
+                    {% include "form_field_snippet.html" with field=form.tracking_id %}
+                    {% include "form_field_snippet.html" with field=form.days_delivered %}
+                </div>
+            </div>
+        {% if not order.submitted_at %}
+            <div class="form-actions">
+                <label class="checkbox pull-left">
+                    <input type="checkbox" name="confirm" id="id_confirm"> {% trans "Confirm" %}
+                </label>
+                <div class="pull-right"><button type="submit" class="btn btn-primary" id="save-bulk-return" data-placeholder="{% trans "Submit" %}">{% trans "Save" %}</button></div>
+            </div>
+        {% endif %}
+    </div>
+  </form>
+{% endblock detail_view %}

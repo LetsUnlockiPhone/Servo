@@ -1,0 +1,19 @@
+{% extends "devices/search.html" %}
+{% load i18n %}
+
+{% block second_column %}
+{% block tabs %}
+    <ul class="nav nav-tabs" id="gsx-tabs">
+    {% if param == 'serialNumber' or 'alternateDeviceId' %}
+        <li class="active"><a href="#">{% trans "Device" %}</a></li>
+    {% endif %}
+        <li class="disabled"><a href="#">{% trans "Parts" %}</a></li>
+        <li class="disabled"><a href="#">{% trans "Repairs" %}</a></li>
+    </ul>
+{% endblock tabs %}
+
+{% block results %}
+  {% include "search/results/gsx_error.html" %}
+{% endblock results %}
+
+{% endblock second_column %}

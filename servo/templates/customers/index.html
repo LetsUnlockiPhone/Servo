@@ -1,0 +1,84 @@
+{% extends "default.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block toolbar %}
+<div class="btn-group">
+  <a class="btn" href="{% url 'customers-create_customer' group=group %}"><i class="icon-plus"></i> {% trans "New Customer" %}</a>
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+  <ul class="dropdown-menu">
+  {% if customer.is_company %}
+    <li><a href="{% url 'customers-create_contact' parent_id=customer.id %}">{% trans "New Contact" %}</a></li>
+  {% else %}
+    <li class="disabled"><a href="#">{% trans "New Contact" %}</a></li>
+  {% endif %}
+    <li class="divider"></li>
+    <li><a href="{% url 'customers-create_group' %}" data-modal="#modal">{% trans "New Group" %}</a></li>
+  </ul>
+</div>
+<div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    <i class="icon-cog"></i> <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="{% url 'customers-upload' group=group %}" data-modal="#modal">{% trans "Import" %}</a></li>
+    <li><a href="{% url 'customers-download' group=group %}">{% trans "Export" %}</a></li>
+    <li class="divider"></li>
+  {% if group != 'all' %}
+    <li><a href="{% url 'customers-edit_group' group %}" data-modal="#modal">{% trans "Edit Group" %}</a></li>
+    <li><a href="{% url 'customers-delete_group' group %}" data-modal="#modal">{% trans "Delete Group" %}</a></li>
+  {% else %}
+    <li class="disabled"><a href="#">{% trans "Edit Group" %}</a></li>
+    <li class="disabled"><a href="#">{% trans "Delete Group" %}</a></li>
+  {% endif %}
+  </ul>
+</div>
+{% endblock toolbar %}
+
+{% block content %}
+
+<div class="row-fluid">
+  <div class="span12">
+    <ul class="nav nav-tabs" style="margin-top:30px">
+    {% block tabs %}
+      <li class="active"><a href="{% url 'customers-list_all' %}">{% trans "Browse" %}</a></li>
+      <li><a href="{% url 'customers-find' %}">{% trans "Search" %}</a></li>
+    {% endblock tabs %}
+    </ul>
+  </div>
+</div>
+
+<div class="row-fluid">
+{% block customers %}
+  <div class="span2">
+  {% block first_column %}
+    <ul class="nav nav-list">
+      <li class="nav-header">{% trans "Groups" %}</li>
+      <li {% if group == 'all' %}class="active"{% endif %}>
+        <a href="{% url 'customers-list_all' %}">{% trans "All" %}<span class="badge pull-right">{{ customer_count }}</span></a>
+      </li>
+      {% for i in groups %}
+      <li class="{% active request i.slug "/" %}">
+        <a href="{% url 'customers-list' group=i.slug %}">{{ i.name|truncatechars:16 }}<span class="badge pull-right">{{ i.customer_set.all.count }}</span></a>
+      </li>
+      {% endfor %}
+    </ul>       
+  {% endblock first_column %}
+  </div>
+  <div class="span3">
+  {% block second_column %}
+    {% include "customers/list.html" %}
+  {% endblock second_column %}
+  </div>
+  <div class="span7">
+    {% block third_column %}
+    <h2 class="muted text-center">{% trans "No customer selected" %}</h2>
+    {% endblock third_column %}
+  </div>
+{% endblock customers %}
+</div>
+{% endblock content %}
+
+{% block crumbs %}
+<li class="active">{% trans "Customers" %}</li>
+{% endblock crumbs %}

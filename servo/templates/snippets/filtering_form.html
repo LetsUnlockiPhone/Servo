@@ -1,0 +1,15 @@
+{% load i18n %}
+<div id="collapsable" class="collapse out">
+  <form method="post" action="" class="form-inline">{% csrf_token %}
+  {% for field in form %}
+    <div class="control-group pull-left">
+      <label class="control-label">{{ field.label|default:"&nbsp;" }}</label>
+      <div class="controls">{{ field }}</div>
+    </div>
+  {% endfor %}
+    <p class="clearfix"><hr/></p>
+    <div class="pull-right">
+      <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
+    </div>
+  </form>
+</div>

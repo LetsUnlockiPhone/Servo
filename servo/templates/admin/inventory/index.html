@@ -1,0 +1,18 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block second_column %}
+<form method="post" accept-charset="utf-8" action="" class="form-horizontal">
+    {% csrf_token %}
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">{% trans "Stock" %}</a></li>
+        <li><a href="#tab2" data-toggle="tab">{% trans "Categories" %}</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+        </div>
+        <div class="tab-pane" id="tab2">
+        </div>
+    </div>
+</form>
+{% endblock second_column %}
