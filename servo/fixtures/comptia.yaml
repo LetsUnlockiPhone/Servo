@@ -408,3 +408,30 @@
         G6A: Issue with Accessory
         G7A: Unusually hot
         G8A: Sensor/indicator issue
+
+"W":
+    category: Watch
+    symptoms:
+        WC1: Unusual Noise
+        WC2: Unusual Temperature
+        WC4: Frozen - At Apple Logo
+        WC6: Frozen - Unresponsive
+        WE2: Vibration Motor
+        WG2: Button / Switch - Crown
+        WG4: Button / Switch - Button
+        WJ2: Connectivity / Pairing
+        WL2: Display - Image Quality
+        WL4: Display - Multi Touch
+        WL6: Display - Force Touch
+        WL8: Display - Blank Screen
+        WN2: Sensors - Activity
+        WP2: Sound - Internal Speaker
+        WP4: Sound - Internal Microphone
+        WR2: Power - Unexpected Restart
+        WR4: Power - Will Not Power On
+        WR6: Power - Any Battery Issue
+        WT2: Physical Damage - Condensation
+        WT4: Physical Damage - Other
+        WT6: Physical Damage - Multiple Cracks
+        WT8: Physical Damage - Enclosure
+        WT9: Physical Damage - Glass Single Crack
