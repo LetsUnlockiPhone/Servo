@@ -1,3 +1,8 @@
+Introduction
+============
+Servo is a service management system for Authorised Apple Service Providers.
+
+
 Installation
 ============
 
