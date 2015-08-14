@@ -47,11 +47,9 @@ class ProfileForm(BaseModelForm):
             "autoprint",
             "tech_id",
             "gsx_userid",
-            "gsx_password",
             "gsx_poprefix",
         )
         widgets = {
-            'gsx_password': forms.PasswordInput,
             'queues': forms.CheckboxSelectMultiple
         }
         

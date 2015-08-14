@@ -220,13 +220,6 @@ class GsxAccount(models.Model):
         verbose_name=_("User ID")
     )
 
-    password = models.CharField(
-        blank=True,
-        default='',
-        max_length=256,
-        verbose_name=_("Password")
-    )
-
     environment = models.CharField(
         max_length=2,
         verbose_name=_("Environment"),
@@ -289,8 +282,6 @@ class GsxAccount(models.Model):
         """
         if user.gsx_userid:
             self.user_id = user.gsx_userid
-            if user.gsx_password:
-                self.password = user.gsx_password
 
         if location is None:
             timezone = user.location.gsx_tz
@@ -298,7 +289,6 @@ class GsxAccount(models.Model):
             timezone = location.gsx_tz
 
         gsxws.connect(user_id=self.user_id,
-                      password=self.password,
                       sold_to=self.sold_to,
                       environment=self.environment,
                       timezone=timezone)
@@ -308,11 +298,9 @@ class GsxAccount(models.Model):
         """
         Tests that the account details are correct
         """
-        if self.user_id and self.password:
-            gsxws.connect(sold_to=self.sold_to,
-                          user_id=self.user_id,
-                          password=self.password,
-                          environment=self.environment)
+        gsxws.connect(sold_to=self.sold_to,
+                      user_id=self.user_id,
+                      environment=self.environment)
 
     def get_admin_url(self):
         return reverse('admin-edit_gsx_account', args=[self.pk])

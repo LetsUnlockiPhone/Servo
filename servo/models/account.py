@@ -153,12 +153,7 @@ class User(AbstractUser):
         max_length=128,
         verbose_name=_("User ID")
     )
-    gsx_password = models.CharField(
-        blank=True,
-        default='',
-        max_length=256,
-        verbose_name=_("Password")
-    )
+
     gsx_poprefix = models.CharField(
         blank=True,
         default='',
