@@ -1,5 +1,7 @@
 django
 django-countries
+django-bootstrap3
+djangorestframework
 babel
 markdown
 python-memcached
@@ -10,9 +12,7 @@ reportlab
 pytz
 phonenumbers
 python-dateutil
-django-bootstrap3
 pyBarcode
-djangorestframework
 celery
 -e git+git://github.com/filipp/py-gsxws.git#egg=gsxws
 --allow-external pil
