@@ -10,6 +10,7 @@
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
     <li><a href="#tab2" data-toggle="tab">{% trans "Stock" %}</a></li>
+    <li><a href="#tab7" data-toggle="tab">{% trans "GSX" %}</a></li>
     <li><a href="#tab3" data-toggle="tab">{% trans "Outgoing Mail" %}</a></li>
     <li><a href="#tab4" data-toggle="tab">{% trans "Incoming Mail" %}</a></li>
     <li><a href="#tab5" data-toggle="tab">{% trans "Text Messages" %}</a></li>
@@ -19,7 +20,6 @@
     <div class="tab-pane active" id="tab1">
       {% include "form_field_snippet.html" with field=form.company_name %}
       {% include "form_field_snippet.html" with field=form.company_logo %}
-      {% include "form_field_snippet.html" with field=form.gsx_account %}
       {% include "form_field_snippet.html" with field=form.terms_of_service %}
       {% include "form_field_snippet.html" with field=form.autocomplete_repairs %}
     </div>
@@ -38,6 +38,12 @@
         </div>
       </div>
     </div>
+    <div class="tab-pane" id="tab7">
+        {% include "form_field_snippet.html" with field=form.gsx_account %}
+        {% include "form_field_snippet.html" with field=form.gsx_cert %}
+        {% include "form_field_snippet.html" with field=form.gsx_privkey %}
+        {% include "form_field_snippet.html" with field=form.gsx_keypass %}
+      </div>
     <div class="tab-pane" id="tab3">
       <fieldset>
         {% include "form_field_snippet.html" with field=form.default_sender %}

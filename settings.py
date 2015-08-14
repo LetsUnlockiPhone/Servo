@@ -243,3 +243,6 @@ ENABLE_RULES = True
 TIMEZONE = 'Europe/Helsinki'
 
 from local_settings import *
+
+os.environ['GSX_CERT'] = GSX_CERT
+os.environ['GSX_KEY'] = GSX_KEY

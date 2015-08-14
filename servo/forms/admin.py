@@ -95,15 +95,6 @@ class GsxAccountForm(forms.ModelForm):
     class Meta:
         model = GsxAccount
         exclude = []
-        widgets = {'password': forms.PasswordInput}
-
-    def clean(self):
-        cd = super(GsxAccountForm, self).clean()
-        # Don't save empty passwords
-        if cd['password'] == '':
-            del cd['password']
-
-        return cd
 
 
 class GroupForm(forms.ModelForm):
@@ -365,9 +356,28 @@ class SettingsForm(BaseForm):
 
     gsx_account = forms.ModelChoiceField(
         required=False,
-        label=_('Default GSX account'),
+        label=_('Default account'),
         queryset=GsxAccount.objects.all(),
         help_text=_('Use this GSX account before and order is assigned to a queue')
+    )
+
+    gsx_cert = forms.FileField(
+        required=False,
+        label=_('SSL certificate'),
+        help_text=_('SSL client certificate for GSX connections')
+    )
+
+    gsx_privkey = forms.FileField(
+        required=False,
+        label=_('SSL private key'),
+        help_text=_('SSL private key for certificate')
+    )
+
+    gsx_keypass = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput,
+        label=_('Private key passphrase'),
+        help_text=_('Passphrase for private key')
     )
 
     pct_margin = forms.CharField(
@@ -523,17 +533,38 @@ class SettingsForm(BaseForm):
         if re.match('^\d[\-=;\d]*\d$', margin):
             return margin
 
-        raise forms.ValidationError(_('Invalid margin %'))
+        raise forms.ValidationError(_('Invalid margin format'))
 
     def save(self, *args, **kwargs):
         config = dict()
+        from django.conf import settings
+
+        if self.cleaned_data.get('gsx_cert'):
+            f = self.cleaned_data['gsx_cert']
+            with open(settings.GSX_CERT, 'wb+') as d:
+                for chunk in f.chunks():
+                    d.write(chunk)
+
+        if self.cleaned_data.get('gsx_privkey'):
+            f = self.cleaned_data['gsx_privkey']
+            with open(settings.GSX_KEY, 'wb+') as d:
+                for chunk in f.chunks():
+                    d.write(chunk)
+
+        if self.cleaned_data.get('gsx_keypass'):
+            import subprocess
+            keypass = self.cleaned_data['gsx_keypass']
+            subprocess.call(['openssl', 'rsa', '-passin',
+                             'pass:' + keypass, 
+                             '-in', settings.GSX_KEY,
+                             '-out', settings.GSX_KEY])
 
         if self.cleaned_data.get('company_logo'):
             f = self.cleaned_data['company_logo']
             target = 'uploads/logos/%s' % f.name
-            with open(target, 'wb+') as destination:
+            with open(target, 'wb+') as d:
                 for chunk in f.chunks():
-                    destination.write(chunk)
+                    d.write(chunk)
 
             self.cleaned_data['company_logo'] = 'logos/%s' % f.name
         else:
