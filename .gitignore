@@ -6,3 +6,4 @@ docs
 local_settings.py
 local_rules.json
 backups/*
+src
