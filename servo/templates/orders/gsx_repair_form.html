@@ -47,6 +47,14 @@
         <div class="tab-pane active" id="tab1">
           {% include "form_field_snippet.html" with field=repair_form.symptom %}
           {% include "form_field_snippet.html" with field=repair_form.diagnosis %}
+          <div class="row-fluid">
+            <div class="span6">
+              {% include "form_field_snippet.html" with field=repair_form.symptom_code %}
+            </div>
+            <div class="span6">
+              {% include "form_field_snippet.html" with field=repair_form.issue_code %}
+            </div>
+          </div>
           {% include "form_field_snippet.html" with field=repair_form.tech_id %}
         </div>
         <div class="tab-pane" id="tab2">
@@ -90,5 +98,15 @@
 {% endblock crumbs %}
 
 {% block media %}
-{{ repair_form.media }}
+  {{ repair_form.media }}
+  <script type="text/javascript">
+    $('#id_symptom_code').change(function(e){
+      var c = $(e.target).val();
+      $('.wrapper').spin();
+      $.get('?c='+c).success(function(r) {
+        $('#id_issue_code').html(r);
+        $('.wrapper').spin(false);
+      });
+    });
+  </script>
 {% endblock media %}

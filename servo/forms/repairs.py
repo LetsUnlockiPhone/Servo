@@ -67,12 +67,13 @@ class GsxRepairForm(forms.ModelForm):
         model = Repair
         exclude = []
         widgets = {
-            'device' : forms.HiddenInput(),
+            'device': forms.HiddenInput(),
             'parts': forms.CheckboxSelectMultiple(),
             'unit_received_at': DateTimePickerInput(attrs={'readonly': 'readonly'})
         }
 
     def __init__(self, *args, **kwargs):
+        from servo.lib.utils import empty
         super(GsxRepairForm, self).__init__(*args, **kwargs)
         repair = kwargs['instance']
         techs = User.techies.filter(location=repair.order.location)
@@ -84,12 +85,24 @@ class GsxRepairForm(forms.ModelForm):
         self.fields['parts'].initial = repair.order.get_parts()
 
         if not repair.can_mark_complete:
-            del self.fields['mark_complete']
-            del self.fields['replacement_sn']
+            del(self.fields['mark_complete'])
+            del(self.fields['replacement_sn'])
 
         choices = Template.templates()
         for f in ('notes', 'symptom', 'diagnosis'):
             self.fields[f].widget = AutocompleteTextarea(choices=choices)
+
+        symptom_codes = self.instance.get_symptom_code_choices()
+        self.fields['symptom_code'] = forms.ChoiceField(choices=symptom_codes,
+                                                        label=_('Symptom group'))
+
+        if empty(self.instance.symptom_code):
+            # default to the first choice
+            self.instance.symptom_code = symptom_codes[0][0]
+
+        issue_codes = self.instance.get_issue_code_choices()
+        self.fields['issue_code'] = forms.ChoiceField(choices=issue_codes,
+                                                      label=_('Issue code'))
 
     def clean(self, *args, **kwargs):
         cd = super(GsxRepairForm, self).clean(*args, **kwargs)

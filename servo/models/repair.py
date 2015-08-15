@@ -28,6 +28,8 @@ import json
 import gsxws
 import os.path
 
+from gsxws.repairs import SymptomIssue
+
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -38,6 +40,7 @@ from django.core.validators import MaxLengthValidator
 from django.contrib.sites.managers import CurrentSiteManager
 
 from servo import defaults
+from servo.lib.utils import cache_getset
 from servo.models.common import GsxAccount
 from servo.models import Queue, Order, Device, Product
 from servo.models.order import ServiceOrderItem
@@ -210,6 +213,23 @@ class Repair(models.Model):
         default=None, 
         help_text=_('Unit is eligible for consumer law coverage')
     )
+
+    symptom_code = models.CharField(max_length=7, default='')
+    issue_code = models.CharField(max_length=7, default='')
+
+    def get_symptom_code_choices(self):
+        # @fixme: what if it's someone else ordering the part?
+        self.gsx_account.connect(self.created_by)
+        ckey = 'symptom_codes-' + self.device.sn
+        si = SymptomIssue(serialNumber=self.device.sn)
+        return cache_getset(ckey, si.fetch)
+
+    def get_issue_code_choices(self):
+        # @fixme: what if it's someone else ordering the part?
+        self.gsx_account.connect(self.created_by)
+        ckey = 'issue_codes-' + self.symptom_code
+        si = SymptomIssue(reportedSymptomCode=self.symptom_code)
+        return cache_getset(ckey, si.fetch)
 
     @property
     def has_cl_parts(self):
@@ -416,6 +436,10 @@ class Repair(models.Model):
         data['poNumber'] = self.reference
         data['diagnosis'] = self.diagnosis
         data['shipTo'] = self.gsx_account.ship_to
+
+        data['reportedSymptomCode'] = self.symptom_code
+        data['reportedIssueCode'] = self.issue_code
+
         # checkIfOutOfWarrantyCoverage
         if self.tech_id:
             data['diagnosedByTechId'] = self.tech_id

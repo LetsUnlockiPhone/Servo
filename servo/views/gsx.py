@@ -214,8 +214,16 @@ def edit_repair(request, order_id, repair_id):
     """
     Edits existing (non-submitted) GSX repair
     """
-    order = Order.objects.get(pk=order_id)
-    repair = Repair.objects.get(pk=repair_id)
+    order = get_object_or_404(Order, pk=order_id)
+    repair = get_object_or_404(Repair, pk=repair_id)
+
+    if request.GET.get('c'):
+        from django import forms
+        repair.symptom_code = request.GET['c']
+        repair.save()
+        choices = repair.get_issue_code_choices()
+        return render(request, "repairs/issue_code_menu.html", locals())
+
     repair.set_parts(order.get_parts())
 
     try:
@@ -237,7 +245,7 @@ def edit_repair(request, order_id, repair_id):
                 return redirect("repairs-view_repair", order.pk, repair.pk)
             messages.success(request, msg)
             return redirect(order)
-        except Exception, e:
+        except Exception as e:
             messages.error(request, e)
 
     return render(request, "orders/gsx_repair_form.html", data)
@@ -286,8 +294,8 @@ def create_repair(request, order_id, device_id, type):
     from datetime import timedelta
     from django.utils import timezone
     
-    order = Order.objects.get(pk=order_id)
-    device = order.devices.get(pk=device_id)
+    order = get_object_or_404(Order, pk=order_id)
+    device = get_object_or_404(Device, pk=device_id)
 
     repair = Repair(order=order, created_by=request.user, device=device)
     timediff = timezone.now() - order.created_at
