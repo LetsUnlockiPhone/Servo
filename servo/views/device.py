@@ -292,7 +292,7 @@ def get_gsx_search_results(request, what, param, query):
         except Exception:
             try:
                 device = Device.from_gsx(query)
-            except Exception, e:
+            except Exception as e:
                 return render(request, error_template, {'message': e})
 
         results.append(device)
@@ -356,7 +356,7 @@ def get_gsx_search_results(request, what, param, query):
             repair = gsxws.Repair(number=query)
             try:
                 results = repair.lookup()
-            except gsxws.GsxError, message:
+            except gsxws.GsxError as message:
                 return render(request, error_template, locals())
 
     return render(request, "devices/search_gsx_%s.html" % what, locals())
@@ -375,7 +375,7 @@ def search_gsx(request, what, param, query):
             GsxAccount.default(user=request.user)
         else:
             act.connect(request.user)
-    except gsxws.GsxError, message:
+    except gsxws.GsxError as message:
         return render(request, "devices/search_gsx_error.html", locals())
 
     if request.is_ajax():
@@ -384,7 +384,7 @@ def search_gsx(request, what, param, query):
                 dev = Device.from_gsx(query)
                 products = dev.get_parts()
                 return render(request, "devices/parts.html", locals())
-            except gsxws.GsxError, message:
+            except gsxws.GsxError as message:
                 return render(request, "search/results/gsx_error.html", locals())
 
         return get_gsx_search_results(request, what, param, query)

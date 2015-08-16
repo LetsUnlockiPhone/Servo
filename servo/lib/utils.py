@@ -48,5 +48,6 @@ def cache_getset(k, v):
     if cache.get(k):
         return cache.get(k)
 
-    cache.set(k, v())
-    return v
+    val = v()
+    cache.set(k, val)
+    return val

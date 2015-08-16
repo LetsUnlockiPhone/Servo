@@ -295,7 +295,7 @@ def create_repair(request, order_id, device_id, type):
     from django.utils import timezone
     
     order = get_object_or_404(Order, pk=order_id)
-    device = get_object_or_404(Device, pk=device_id)
+    device = order.devices.get(pk=device_id)
 
     repair = Repair(order=order, created_by=request.user, device=device)
     timediff = timezone.now() - order.created_at

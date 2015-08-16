@@ -342,9 +342,11 @@ class Device(models.Model):
             serial_number = wty.serialNumber or sn
             device = Device(sn=serial_number)
 
-        if device.notes == '':
-            device.notes        = wty.notes or ''
-            device.notes        += wty.csNotes or ''
+        from servo.lib.utils import empty
+
+        if empty(device.notes):
+            device.notes = wty.notes or ''
+            device.notes += wty.csNotes or ''
 
         device.has_onsite       = product.has_onsite
         device.is_vintage       = product.is_vintage

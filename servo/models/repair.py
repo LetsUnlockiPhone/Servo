@@ -220,14 +220,14 @@ class Repair(models.Model):
     def get_symptom_code_choices(self):
         # @fixme: what if it's someone else ordering the part?
         self.gsx_account.connect(self.created_by)
-        ckey = 'symptom_codes-' + self.device.sn
+        ckey = 'symptom_codes-%s' % self.device.sn
         si = SymptomIssue(serialNumber=self.device.sn)
         return cache_getset(ckey, si.fetch)
 
     def get_issue_code_choices(self):
         # @fixme: what if it's someone else ordering the part?
         self.gsx_account.connect(self.created_by)
-        ckey = 'issue_codes-' + self.symptom_code
+        ckey = 'issue_codes-%s' % self.symptom_code
         si = SymptomIssue(reportedSymptomCode=self.symptom_code)
         return cache_getset(ckey, si.fetch)
 
