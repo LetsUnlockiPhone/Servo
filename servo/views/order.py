@@ -305,11 +305,11 @@ def list_orders(request):
     args = request.GET.copy()
     default = {'state': Order.STATE_QUEUED}
 
-    if len(args) < 2: # search form not submitted
+    if len(args) < 1: # search form not submitted
         f = request.session.get("order_search_filter", default)
         args = QueryDict('', mutable=True)
         args.update(f)
-        
+
     request.session['order_search_filter'] = args
     data = prepare_list_view(request, args)
 
