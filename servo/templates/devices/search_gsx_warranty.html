@@ -23,13 +23,13 @@
       <dt>{% trans "IMEI" %}</dt>
       <dd>{{ d.imei|safe }}</dd>
       <dt>{% trans "Applied Activation Policy" %}</dt>
-      <dd>{{ d.applied_activation_policy }}</dd>
+      <dd>{{ d.applied_activation_policy|default:"-" }}</dd>
       <dt>{% trans "Initial Activation Policy" %}</dt>
-      <dd>{{ d.initial_activation_policy }}</dd>
+      <dd>{{ d.initial_activation_policy|default:"-" }}</dd>
       <dt>{% trans "Next Tether Policy" %}</dt>
-      <dd>{{ d.next_tether_policy }}</dd>
+      <dd>{{ d.next_tether_policy|default:"-" }}</dd>
       <dt>{% trans "Find My iPhone" %}</dt>
-      <dd>{{ d.get_fmip_status }}</dd>
+      <dd>{{ d.get_fmip_status|default:"-" }}</dd>
       <dt>{% trans "Unlocked" %}</dt>
       <dd>{{ d.unlocked|yesno }}</dd>
     {% endif %}

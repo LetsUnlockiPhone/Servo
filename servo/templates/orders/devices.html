@@ -25,13 +25,15 @@
     {% endif %}
     {% if device.imei %}
       <dt>{% trans "IMEI" %}</dt>
-      <dd>{{ device.imei }}</dd>
+      <dd>{{ device.imei|safe }}</dd>
       <dt>{% trans "Applied Activation Policy" %}</dt>
-      <dd>{{ device.applied_activation_policy }}</dd>
+      <dd>{{ device.applied_activation_policy|default:"-" }}</dd>
       <dt>{% trans "Initial Activation Policy" %}</dt>
-      <dd>{{ device.initial_activation_policy }}</dd>
+      <dd>{{ device.initial_activation_policy|default:"-" }}</dd>
+      <dt>{% trans "Next Tether Policy" %}</dt>
+      <dd>{{ device.next_tether_policy|default:"-" }}</dd>
       <dt>{% trans "Find My iPhone" %}</dt>
-      <dd>{{ device.get_fmip_status }}</dd>
+      <dd>{{ device.get_fmip_status|default:"-" }}</dd>
       <dt>{% trans "Unlocked" %}</dt>
       <dd>{{ device.unlocked|yesno }}</dd>
     {% endif %}
