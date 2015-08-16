@@ -30,7 +30,9 @@
   <a href="{% url 'notes-create_with_to_and_order' recipient=node.email order_id=order.id %}">{{ node.email }}</a><br/>
   {% endif %}
   {% if node.phone %}
-  <a href="{% url 'notes-create_with_to_and_order' recipient=node.get_standard_phone order_id=order.id %}">{{ node.get_national_phone }}</a><br/>
+  {% with node.get_standard_phone as standard_phone %}
+  <a href="{% url 'notes-create_with_to_and_order' recipient=standard_phone order_id=order.id %}">{{ node.get_national_phone }}</a> <a class="btn btn-mini" href="callto://{{ standard_phone }}"><i class="icon-headphones"></i></a><br/>
+  {% endwith %}
   {% endif %}
   {% if node.street_address %}
   {{ node.street_address }}<br/>
