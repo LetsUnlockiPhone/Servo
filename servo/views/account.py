@@ -32,6 +32,7 @@ from django.contrib import auth
 from django.utils import timezone, translation
 
 from django.contrib import messages
+from django.http import QueryDict
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render
@@ -88,14 +89,14 @@ def orders(request, username):
     Always update saved search filter
     """
     args = request.GET.copy()
+    default = {'state': Order.STATE_OPEN}
 
     if not args:
-        args = request.session.get("account_search_filter", args)
+        f = request.session.get("account_search_filter", default)
+        args = QueryDict('', mutable=True)
+        args.update(f)
 
-    if not args:
-        args.update({'state': 1}) # default to open cases
-
-    # Filter by the user, no matter what
+    # On the profile page, filter by the user, no matter what
     args.update({'followed_by': request.user.pk})
     request.session['account_search_filter'] = args
 
