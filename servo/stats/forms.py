@@ -55,6 +55,19 @@ class BasicStatsForm(forms.Form):
         widget=DatepickerInput(attrs={'class': "input-small"})
     )
 
+    def serialize(self):
+        import datetime
+        from django.db.models import Model
+        cd = self.cleaned_data
+
+        for k, v in cd.iteritems():
+            if isinstance(v, datetime.datetime):
+                cd[k] = str(v)
+            if isinstance(v, Model):
+                cd[k] = v.pk
+
+        return cd
+
 
 class OrderStatsForm(BasicStatsForm):
     location = forms.ModelChoiceField(

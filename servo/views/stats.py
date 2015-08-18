@@ -98,7 +98,7 @@ def index(request):
     if request.method == 'POST':
         form = TechieStatsForm(request.POST, initial=data['initial'])
         if form.is_valid():
-            request.session['stats_filter'] = form.cleaned_data
+            request.session['stats_filter'] = form.serialize()
 
     data['form'] = form
     return render(request, "stats/index.html", data)
@@ -207,11 +207,7 @@ def data(request, query):
             result.append({'label': i.title, 'data': data})
 
     if report == "status":
-        try:
-            status = params.get('status').title
-        except AttributeError:
-            return HttpResponse(json.dumps(result))
-
+        status = params.get('status')
         if what == "location":
             for i in locations.all():
                 data = stats.statuses_per_location(
@@ -298,7 +294,7 @@ def sales(request):
     if request.method == 'POST':
         form = InvoiceStatsForm(request.POST, initial=data['initial'])
         if form.is_valid():
-            request.session['stats_filter'] = form.cleaned_data
+            request.session['stats_filter'] = form.serialize()
 
     data['form'] = form
     return render(request, "stats/sales.html", data)
@@ -310,7 +306,7 @@ def queues(request):
     if request.method == 'POST':
         form = OrderStatsForm(request.POST, initial=data['initial'])
         if form.is_valid():
-            request.session['stats_filter'] = form.cleaned_data
+            request.session['stats_filter'] = form.serialize()
 
     data['form'] = form
     return render(request, "stats/queues.html", data)
@@ -322,7 +318,7 @@ def locations(request):
     if request.method == 'POST':
         form = BasicStatsForm(request.POST, initial=data['initial'])
         if form.is_valid():
-            request.session['stats_filter'] = form.cleaned_data
+            request.session['stats_filter'] = form.serialize()
     data['form'] = form
     return render(request, "stats/locations.html", data)
 
@@ -333,7 +329,12 @@ def statuses(request):
     if request.method == 'POST':
         form = StatusStatsForm(request.POST, initial=data['initial'])
         if form.is_valid():
-            request.session['stats_filter'] = form.cleaned_data
+            # Store the name of the status since we don't have
+            # IDs in events, yet
+            status = form.cleaned_data['status'].title
+            f = form.serialize()
+            f['status'] = status
+            request.session['stats_filter'] = f
 
     data['form'] = form
     return render(request, "stats/statuses.html", data)
