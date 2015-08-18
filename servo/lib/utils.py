@@ -24,6 +24,17 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
 # SUCH DAMAGE.
 
+import json
+from django.db.models import Model
+from django.core.serializers.json import DjangoJSONEncoder
+
+
+def multiprint(*args):
+    """
+    Emulate JS console.log()
+    """
+    print(', '.join(args))
+
 def choices_to_dict(t):
     """
     Converts a ChoiceField two-tuple to a dict (for JSON)
@@ -51,3 +62,11 @@ def cache_getset(k, v):
     val = v()
     cache.set(k, val)
     return val
+
+
+class SessionSerializer:
+    def dumps(self, obj):
+        return json.dumps(obj, cls=DjangoJSONEncoder)
+
+    def loads(self, data):
+        return json.loads(data, cls=DjangoJSONEncoder)

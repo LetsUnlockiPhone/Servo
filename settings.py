@@ -241,6 +241,7 @@ REST_FRAMEWORK = {
 
 ENABLE_RULES = True
 TIMEZONE = 'Europe/Helsinki'
+SESSION_SERIALIZER = 'servo.lib.utils.SessionSerializer'
 
 from local_settings import *
 
