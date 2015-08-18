@@ -91,7 +91,7 @@ def orders(request, username):
     args = request.GET.copy()
     default = {'state': Order.STATE_OPEN}
 
-    if not args:
+    if len(args) < 2:
         f = request.session.get("account_search_filter", default)
         args = QueryDict('', mutable=True)
         args.update(f)
