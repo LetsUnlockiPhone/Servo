@@ -37,11 +37,13 @@ from django.template.defaultfilters import slugify
 from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from servo.models import Device, Product, GsxAccount, ServiceOrderItem
+from servo.models import Device, Order, Product, GsxAccount, ServiceOrderItem
 from servo.forms.devices import DeviceForm, DeviceUploadForm, DeviceSearchForm
+
 
 class RepairDiagnosticResults:
     pass
+
 
 class DiagnosticResults(object):
     def __init__(self, diags):

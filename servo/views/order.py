@@ -169,9 +169,6 @@ def prepare_list_view(request, args):
     data['orders'] = order_pages
     data['subtitle'] = _("%d search results") % orders.count()
 
-    # @FIXME!!! how to handle this with jsonserializer???
-    #request.session['order_queryset'] = orders
-
     return data
 
 
@@ -221,7 +218,7 @@ def close(request, pk):
     """
     Closes this Service Order
     """
-    order = Order.objects.get(pk=pk)
+    order = get_object_or_404(Order, pk=pk)
 
     if request.method == 'POST':
         try:
@@ -245,7 +242,7 @@ def close(request, pk):
 
 @permission_required("servo.delete_order")
 def reopen_order(request, pk):
-    order = Order.objects.get(pk=pk)
+    order = get_object_or_404(Order, pk=pk)
     msg = order.reopen(request.user)
     messages.success(request, msg)
     return redirect(order)
@@ -305,7 +302,7 @@ def list_orders(request):
     args = request.GET.copy()
     default = {'state': Order.STATE_QUEUED}
 
-    if len(args) < 1: # search form not submitted
+    if len(args) < 2: # search form not submitted
         f = request.session.get("order_search_filter", default)
         args = QueryDict('', mutable=True)
         args.update(f)
@@ -450,7 +447,7 @@ def delete(request, pk):
 
 @permission_required('servo.change_order')
 def toggle_follow(request, order_id):
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     data = {'icon': "open", 'action': _("Follow")}
 
     if request.user in order.followed_by.all():
@@ -617,7 +614,7 @@ def add_device(request, pk, device_id=None, sn=None):
     try:
         event = order.add_device(device, request.user)
         messages.success(request, event)
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
         return redirect(order)
 
@@ -721,7 +718,7 @@ def edit_product(request, pk, item_id):
                 messages.success(request, _(u"Product %s saved") % item.code)
 
                 return redirect(order)
-            except Exception, e:
+            except Exception as e:
                 messages.error(request, e)
 
     product = item.product

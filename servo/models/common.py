@@ -244,9 +244,10 @@ class GsxAccount(models.Model):
 
     @classmethod
     def get_default_account(cls):
+        from servo.lib.utils import empty
         act_pk = Configuration.conf('gsx_account')
 
-        if act_pk in ('', None,):
+        if empty(act_pk):
             raise ValueError(_('Default GSX account not configured'))
 
         return GsxAccount.objects.get(pk=act_pk)

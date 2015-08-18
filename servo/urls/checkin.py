@@ -33,7 +33,7 @@ from servo.views.checkin import *
 urlpatterns = patterns(
     '',
     url(r'^$', index, name='checkin-index'),
-    url(r'^sn/$', RedirectView.as_view(url='/checkin/')),
+    url(r'^sn/$', RedirectView.as_view(url='/checkin/', permanent=True)),
     url(r'^customer/$', get_customer, name='checkin-get_customer'),
     url(r'^reset/$', reset, name='checkin-reset'),
     url(r'^status/$', status, name='checkin-status'),
