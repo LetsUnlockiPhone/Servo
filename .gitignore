@@ -1,9 +1,12 @@
 *.log
 *.pot
 *.pyc
-uploads
-docs
+src
+uploads/attachments/*
+uploads/devices/*
+uploads/return_labels/*
+uploads/settings/*
+uploads/products/*
+backups/*
 local_settings.py
 local_rules.json
-backups/*
-src

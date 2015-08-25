@@ -55,3 +55,8 @@ For testing, you can run Servo without any extra setup:
 
 	cd my_servo_folder
 	python ./manage.py runserver
+
+
+Documentation
+=============
+End-user documentation for the system is available [here](https://docs.servoapp.com).

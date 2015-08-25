@@ -80,18 +80,16 @@ MEDIA_URL = '/files/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-#STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
-
 STATIC_ROOT = os.path.dirname(os.path.join(BASE_DIR, 'static'))
 
 # Additional locations of static files
 STATICFILES_DIRS = (
     'static',
 )
+
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/static/'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
@@ -108,7 +106,6 @@ STATICFILES_FINDERS = (
 TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.filesystem.Loader',
-    #'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -120,12 +117,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'servo.lib.middleware.LoginRequiredMiddleware',
     'servo.lib.middleware.TimezoneMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
     'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'servo.urls.default'
+SESSION_SERIALIZER = 'servo.lib.utils.SessionSerializer'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'wsgi.application'
@@ -239,9 +236,8 @@ REST_FRAMEWORK = {
     )
 }
 
-ENABLE_RULES = True
+ENABLE_RULES = False
 TIMEZONE = 'Europe/Helsinki'
-SESSION_SERIALIZER = 'servo.lib.utils.SessionSerializer'
 
 from local_settings import *
 

@@ -171,7 +171,7 @@ class Event(BaseItem):
     def save(self, *args, **kwargs):
         saved = super(Event, self).save(*args, **kwargs)
         
-        if settings.ENABLE_RULES:
+        if settings.ENABLE_RULES is True:
             from servo.tasks import apply_rules
             apply_rules.delay(self)
 
