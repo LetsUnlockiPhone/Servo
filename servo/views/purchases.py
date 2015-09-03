@@ -31,13 +31,13 @@ from django.forms.models import inlineformset_factory
 
 from django.utils.translation import ugettext as _
 
-from django.shortcuts import render, redirect
-from servo.models.order import ServiceOrderItem
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.contrib import messages
 
+from servo.models.order import ServiceOrderItem
 from servo.models import Product, GsxAccount, PurchaseOrder, PurchaseOrderItem
 from servo.forms import PurchaseOrderItemEditForm, PurchaseOrderSearchForm
 
@@ -125,7 +125,7 @@ def view_po(request, pk):
 def edit_po(request, pk, item_id=None):
 
     if pk is not None:
-        po = PurchaseOrder.objects.get(pk=pk)
+        po = get_object_or_404(PurchaseOrder, pk=pk)
     else:
         po = PurchaseOrder(created_by=request.user)
 
@@ -163,7 +163,8 @@ def edit_po(request, pk, item_id=None):
                 messages.success(request, msg)
                 return redirect(list_pos)
 
-    request.session['current_po'] = po
+    request.session['current_po'] = po.pk
+
     data = {'order': po, 'form': form}
     data['formset'] = formset
     data['title'] = _('Purchase Order #%d' % po.pk)
@@ -177,7 +178,7 @@ def order_stock(request, po_id):
     Submits the PO as a GSX Stocking Order
     Using the default GSX account.
     """
-    po = PurchaseOrder.objects.get(pk=po_id)
+    po = get_object_or_404(PurchaseOrder, pk=po_id)
 
     if request.method == "POST":
         if po.submitted_at:
@@ -216,7 +217,7 @@ def delete_po(request, po_id):
     try:
         po.delete()
         messages.success(request, _("Purchase Order %s deleted" % po_id))
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
     return redirect(list_pos)
 

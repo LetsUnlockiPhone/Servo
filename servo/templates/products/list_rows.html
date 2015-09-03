@@ -34,9 +34,9 @@
       {% endwith %}
         <li><a href="{% url 'orders-create_with_product' product_id %}">{% trans "Create Sales Order" %}</a></li>
         <li><a href="{% url 'purchases-create_po' product_id=product_id %}">{% trans "Create Purchase Order" %}</a></li>
-        {% with request.session.current_po as po %}
-        {% if po %}
-        <li><a href="{% url 'purchases-add_to_po' pk=po.id product_id=product_id %}">{% trans "Use in Purchase Order" %}</a></li>
+        {% with request.session.current_po as po_pk %}
+        {% if po_pk %}
+        <li><a href="{% url 'purchases-add_to_po' pk=po_pk product_id=product_id %}">{% trans "Use in Purchase Order" %}</a></li>
         {% endif %}
       {% endwith %}
         <li class="divider"></li>
