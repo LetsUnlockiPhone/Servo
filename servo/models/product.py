@@ -429,7 +429,7 @@ class Product(AbstractBaseProduct):
         product.labour_tier = part.laborTier
         product.part_type = part.partType.upper()
 
-        # eee and componentCode are sometimes missing
+        # EEE and componentCode are sometimes missing
         if part.eeeCode:
             product.eee_code = str(part.eeeCode).strip()
         if part.componentCode:
@@ -542,7 +542,7 @@ class Product(AbstractBaseProduct):
                 result = part.fetch_image()
                 filename = basename(result)
                 self.photo.save(filename, File(open(result)))
-            except Exception, e:
+            except Exception as e:
                 print e
 
     def __unicode__(self):
@@ -564,7 +564,11 @@ class ProductCategory(MPTTModel):
         default=defaults.site_id
     )
 
-    title = models.CharField(max_length=255, default=_("New Category"))
+    title = models.CharField(
+        max_length=255,
+        unique=True,
+        default=_("New Category")
+    )
     slug = models.SlugField(null=True, editable=False)
     parent = TreeForeignKey(
         'self',

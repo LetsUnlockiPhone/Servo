@@ -8,7 +8,7 @@
 {% with order.location as location %}
 <div class="row">
   <div class="span4">
-  {% if location.logo %}
+  {% if conf.company_logo %}
     <img src="{% get_media_prefix %}{{ conf.company_logo }}" alt="logo" title="logo" class="media-object pull-left span2" style="margin:10px"/>
   {% endif %}
   </div>

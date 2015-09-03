@@ -476,13 +476,6 @@ class Location(models.Model):
         help_text=_('Will be shown on print templates')
     )
 
-    logo = models.FileField(
-        null=True,
-        blank=True,
-        upload_to='logos',
-        verbose_name=_('Logo')
-    )
-
     enabled = models.BooleanField(
         default=True,
         verbose_name=_('Enabled')
