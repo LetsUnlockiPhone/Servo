@@ -2,6 +2,7 @@
 *.pot
 *.pyc
 src
+uploads/logos/*
 uploads/attachments/*
 uploads/devices/*
 uploads/return_labels/*

@@ -63,6 +63,8 @@
         Z56: REP iPhone 5 Loaner Return No Power
         Z57: REP European 5W USB power adapter
         Z58: REP European iPhone 5 Battery Replacement
+        Z70: REP 6+ Rear Camera
+        Z71: REP 6+ Rear Camera (Multi Issue)
 
 "F":
     category: iPad
