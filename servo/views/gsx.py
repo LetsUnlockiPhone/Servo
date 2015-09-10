@@ -75,12 +75,12 @@ def import_repair(request, order_pk, device_pk):
         form = ImportForm(request.POST)
         if form.is_valid():
             confirmation = form.cleaned_data['confirmation']
-
             try:
                 repair = Repair.create_from_gsx(confirmation,
                                                 order,
                                                 device,
                                                 request.user)
+                messages.success(request, _('GSX repair %s imported successfully' % confirmation))
                 return redirect(repair)
             except Exception as e:
                 messages.error(request, e)
@@ -100,7 +100,7 @@ def return_label(request, repair, part):
         repair.connect_gsx(request.user)
         label_data = repair.get_return_label(part)
         return HttpResponse(label_data, content_type="application/pdf")
-    except gsxws.GsxError, e:
+    except gsxws.GsxError as e:
         messages.error(request, e)
         return redirect(repair.order)
 

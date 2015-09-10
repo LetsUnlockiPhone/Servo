@@ -268,9 +268,9 @@ class Order(models.Model):
         Adds device to order using serial number
         """
         sn = sn.upper()
-        try:
-            device = Device.objects.get(sn=sn)
-        except Device.DoesNotExist:
+        device = Device.objects.filter(sn=sn).first()
+        
+        if device is None:
             device = Device.from_gsx(sn)
             device.save()
 

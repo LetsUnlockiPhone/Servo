@@ -87,6 +87,11 @@
         <li class="disabled"><a href="#">{% trans "Create Onsite Repair" %}</a></li>
       {% endif %}
       {% if order.can_create_carryin and device.can_create_carryin and 0 %}
+        <li><a href="{% url 'repairs-create_repair' order.id device.id 'WH' %}">{% trans "Create Mail-In Repair" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">{% trans "Create Mail-In Repair" %}</a></li>
+      {% endif %}
+      {% if order.can_create_carryin and device.can_create_carryin and 0 %}
         <li><a href="{% url 'repairs-create_repair' order.id device.id 'RR' %}">{% trans "Create Whole-Unit Exchange" %}</a></li>
       {% else %}
         <li class="disabled"><a href="#">{% trans "Create Whole-Unit Exchange" %}</a></li>
