@@ -552,12 +552,9 @@ class SettingsForm(BaseForm):
                     d.write(chunk)
 
         if self.cleaned_data.get('gsx_keypass'):
-            import subprocess
+            from servo.lib.utils import strip_keypass
             keypass = self.cleaned_data['gsx_keypass']
-            subprocess.call(['openssl', 'rsa', '-passin',
-                             'pass:' + keypass, 
-                             '-in', settings.GSX_KEY,
-                             '-out', settings.GSX_KEY])
+            strip_keypass(keypass, settings.GSX_KEY, settings.GSX_KEY)
 
         if self.cleaned_data.get('company_logo'):
             f = self.cleaned_data['company_logo']

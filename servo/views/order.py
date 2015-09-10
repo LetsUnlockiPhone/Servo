@@ -315,8 +315,8 @@ def list_orders(request):
 
 @permission_required("servo.change_order")
 def toggle_tag(request, order_id, tag_id):
-    tag = Tag.objects.get(pk=tag_id)
-    order = Order.objects.get(pk=order_id)
+    tag = get_object_or_404(Tag, pk=tag_id)
+    order = get_object_or_404(Order, pk=order_id)
 
     if tag not in order.tags.all():
         order.add_tag(tag)
@@ -331,7 +331,7 @@ def toggle_task(request, order_id, item_id):
     """
     Toggles a given Check List item in this order
     """
-    checklist_item = ChecklistItem.objects.get(pk=item_id)
+    checklist_item = get_object_or_404(ChecklistItem, pk=item_id)
     
     try:
         item = ChecklistItemValue.objects.get(order_id=order_id, item=checklist_item)
@@ -371,7 +371,7 @@ def repair(request, order_id, repair_id):
 
 @permission_required("servo.change_order")
 def complete_repair(request, order_id, repair_id):
-    repair = Repair.objects.get(pk=repair_id)
+    repair = get_object_or_404(Repair, pk=repair_id)
     if request.method == 'POST':
         try:
             repair.close(request.user)
@@ -463,7 +463,7 @@ def toggle_follow(request, order_id):
 
 
 def toggle_flagged(request, pk):
-    order = Order.objects.get(pk=pk)
+    order = get_object_or_404(Order, pk=pk)
     t = FlaggedItem(content_object=order, flagged_by=request.user)
     t.save()
 
@@ -474,7 +474,7 @@ def remove_user(request, pk, user_id):
     Removes this user from the follower list, unsets assignee
     """
     order = get_object_or_404(Order, pk=pk)
-    user = User.objects.get(pk=user_id)
+    user = get_object_or_404(User, pk=user_id)
 
     try:
         order.remove_follower(user)
@@ -607,7 +607,7 @@ def add_device(request, pk, device_id=None, sn=None):
             try:
                 device = Device.from_gsx(sn)
                 device.save()
-            except Exception, e:
+            except Exception as e:
                 messages.error(request, e)
                 return redirect(order)
 
