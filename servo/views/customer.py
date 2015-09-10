@@ -346,7 +346,7 @@ def search(request):
     if kind == 'contact':
         customers = customers.filter(is_company=False)
 
-    title = _('Search results for "%s"') % query
+    title = _('%d results for "%s"') % (customers.count(), query)
     return render(request, "customers/search.html", locals())
 
 

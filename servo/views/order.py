@@ -929,7 +929,11 @@ def search(request):
         Q(repair__reference=query)
     )
 
-    data = {'title': _(u'Search results for "%s"') % query}
+    data = {
+        'title': _('Orders'),
+        'subtitle': _(u'%d results for "%s"') % (orders.count(), query)
+    }
+
     data['orders'] = orders.distinct()
 
     return render(request, "orders/index.html", data)

@@ -5,6 +5,10 @@
 <a href="{% url 'customers-create_customer' group='all' %}?name={{ query }}" class="btn"><i class="icon-plus"></i> {% trans "New Customer" %}</a>
 {% endblock toolbar %}
 
+{% block header_row %}
+    <h2>{{ title }}</h2>
+{% endblock header_row %}
+
 {% block first_column %}
 <ul class="nav nav-list">
   <li class="nav-header">{% trans "Show" %}</li>
