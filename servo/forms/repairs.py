@@ -35,6 +35,14 @@ from servo.models import User, Repair, Template
 from servo.forms import BaseForm, AutocompleteTextarea, DateTimePickerInput, ChoiceField
 
 
+class ImportForm(BaseForm):
+    confirmation = forms.CharField(
+        min_length=8,
+        max_length=15,
+        label=_('Confirmation')
+    )
+
+
 class GsxCustomerForm(BaseForm):
     firstName = forms.CharField(max_length=100, label=_('First name'))
     lastName = forms.CharField(max_length=100, label=_('Last name'))

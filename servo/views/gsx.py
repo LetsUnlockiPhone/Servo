@@ -34,7 +34,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 
 from servo.models import Order, GsxAccount, Repair, ServicePart
-from servo.forms import GsxCustomerForm, GsxRepairForm, GsxComponentForm
+from servo.forms import GsxCustomerForm, GsxRepairForm, GsxComponentForm, ImportForm
 
 
 class RepairDetails(object):
@@ -56,15 +56,37 @@ def register_return(request, part_id):
     try:
         part.register_for_return(request.user)
         messages.success(request, _(u"Part %s updated") % part.order_item.code)
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
 
     return redirect(part.repair.order)
 
 
 @permission_required("servo.change_repair")
-def import_repair(request, pk):
-    pass
+def import_repair(request, order_pk, device_pk):
+    from servo.models import Device
+    order = get_object_or_404(Order, pk=order_pk)
+    device = get_object_or_404(Device, pk=device_pk)
+
+    action = request.path
+    form = ImportForm()
+
+    if request.method == 'POST':
+        form = ImportForm(request.POST)
+        if form.is_valid():
+            confirmation = form.cleaned_data['confirmation']
+
+            try:
+                repair = Repair.create_from_gsx(confirmation,
+                                                order,
+                                                device,
+                                                request.user)
+                return redirect(repair)
+            except Exception as e:
+                messages.error(request, e)
+                return redirect(order)
+
+    return render(request, "repairs/import_repair.html", locals())
 
     
 @permission_required("servo.change_order")
@@ -309,7 +331,7 @@ def create_repair(request, order_id, device_id, type):
 
     try:
         repair.gsx_account = GsxAccount.default(request.user, order.queue)
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
         return redirect(order)
 

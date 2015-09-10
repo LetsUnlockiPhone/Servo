@@ -34,10 +34,8 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.core.urlresolvers import reverse
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MaxLengthValidator
-from django.contrib.sites.managers import CurrentSiteManager
 
 from servo import defaults
 from servo.lib.utils import cache_getset
@@ -49,12 +47,6 @@ from servo.models.purchases import PurchaseOrder, PurchaseOrderItem
 
 
 class Checklist(models.Model):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
-
     title = models.CharField(
         max_length=255,
         unique=True,
@@ -68,7 +60,6 @@ class Checklist(models.Model):
     )
 
     enabled = models.BooleanField(default=True, verbose_name=_("Enabled"))
-    objects = CurrentSiteManager()
 
     def get_admin_url(self):
         return reverse('admin-edit_checklist', args=[self.pk])
@@ -249,7 +240,7 @@ class Repair(models.Model):
         return len(replacements) == 1
 
     @classmethod
-    def create_from_gsx(cls, order, confirmation):
+    def create_from_gsx(cls, confirmation, order, device, user):
         """
         Creates a new Repair for order with confirmation number
         """
@@ -260,11 +251,21 @@ class Repair(models.Model):
         except cls.DoesNotExist:
             pass
 
-        repair = cls(order=order)
-        repair.confirmation=confirmation
+        repair = cls(order=order, created_by=user)
+        repair.device = device
+        repair.confirmation = confirmation
+        repair.gsx_account = GsxAccount.default(user, order.queue)
+        repair.submitted_at = timezone.now() # RepairDetails doesn't have this!
         repair.save()
-        repair.update_details()
-        repair.update_status()
+
+        try:
+            repair.get_details()
+            repair.update_status(user)
+        except gsxws.GsxError as e:
+            if e.code == 'RPR.LKP.01': # repair not found
+                repair.delete()
+                raise ValueError(_('Repair %s not found in GSX') % confirmation)
+
         return repair
 
     def create_purchase_order(self):

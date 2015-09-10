@@ -105,8 +105,6 @@
     <li class="disabled"><a href="#">{% trans "Order Products" %}</a></li>
   {% endif %}
     <li class="divider"></li>
-    <li><a href="{% url 'repairs-import_repair' order.pk %}" data-modal="#modal">{% trans "Import GSX Repair" %}</a></li>
-    <li class="divider"></li>
   {% if perms.servo.delete_order and order.is_editable %}
     <li><a href="{% url 'orders-delete_order' order.pk %}" data-modal="#modal"><i class="icon-trash"> </i> {% trans "Delete Order" %}</a></li>
   {% else %}

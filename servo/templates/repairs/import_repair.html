@@ -1,0 +1,13 @@
+{% extends "modal.html" %}
+{% load i18n %}
+
+{% block header %}
+    {% trans "Import GSX Repair" %}
+{% endblock header %}
+
+{% block body %}
+    <form method="post" action="{{ action }}">
+        {% csrf_token %}
+        {% include "form_snippet.html" %}
+    </form>
+{% endblock body %}
