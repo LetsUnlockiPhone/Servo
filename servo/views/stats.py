@@ -112,7 +112,7 @@ def data(request, query):
     report, what = query.split('/')
 
     locations   = request.user.locations
-    params      = request.session['stats_filter']
+    params      = request.session.get('stats_filter')
     timescale   = params.get('timescale', default_timescale)
     location    = params.get('location', request.user.location)
 
