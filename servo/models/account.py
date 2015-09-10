@@ -35,7 +35,6 @@ from django.core.urlresolvers import reverse
 from rest_framework.authtoken.models import Token
 
 from mptt.fields import TreeForeignKey
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser, Group, UserManager
 
@@ -60,7 +59,7 @@ class TechieManager(UserManager):
 
 
 class User(AbstractUser):
-    site = models.ForeignKey(Site, editable=False, default=defaults.site_id)
+
     customer = TreeForeignKey(
         Customer,
         null=True,
@@ -298,7 +297,6 @@ class User(AbstractUser):
 
 
 class UserGroup(Group):
-    site = models.ForeignKey(Site, editable=False, default=defaults.site_id)
 
     def members_as_list(self):
         pass

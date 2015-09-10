@@ -29,11 +29,9 @@ from django.db import models
 from django.conf import settings
 
 from mptt.managers import TreeManager
-from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 from mptt.models import MPTTModel, TreeForeignKey
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.sites.managers import CurrentSiteManager
 
 from pytz import country_names
 
@@ -66,11 +64,6 @@ class CustomerGroup(models.Model):
 
 
 class Customer(MPTTModel):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
     parent = TreeForeignKey(
         'self',
         null=True,
@@ -167,7 +160,6 @@ class Customer(MPTTModel):
     )
 
     objects = TreeManager()
-    on_site = CurrentSiteManager()
 
     def get_contacts(self):
         return self.get_descendants(include_self=False)

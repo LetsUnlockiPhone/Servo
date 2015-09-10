@@ -34,12 +34,10 @@ from django.core.files import File
 from django.core.cache import cache
 from decimal import Decimal, ROUND_CEILING
 from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
 
 from django.contrib.contenttypes.fields import GenericRelation
 
-from django.contrib.sites.managers import CurrentSiteManager
-
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 
 from mptt.models import MPTTModel, TreeForeignKey
@@ -207,12 +205,6 @@ class AbstractBaseProduct(models.Model):
 
 
 class Product(AbstractBaseProduct):
-
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
     warranty_period = models.PositiveIntegerField(
         default=0,
         verbose_name=_("Warranty (months)")
@@ -557,13 +549,11 @@ class Product(AbstractBaseProduct):
 
 
 class ProductCategory(MPTTModel):
-
     site = models.ForeignKey(
         Site,
         editable=False,
         default=defaults.site_id
     )
-
     title = models.CharField(
         max_length=255,
         unique=True,
@@ -578,7 +568,6 @@ class ProductCategory(MPTTModel):
     )
 
     objects = TreeManager()
-    on_site = CurrentSiteManager()
 
     def get_products(self):
         return Product.objects.filter(
@@ -606,7 +595,7 @@ class ProductCategory(MPTTModel):
         app_label = "servo"
         get_latest_by = "id"
         ordering = ("-title",)
-        unique_together = ("title", "site", )
+        unique_together = ("title", "site",)
 
 
 class Inventory(models.Model):

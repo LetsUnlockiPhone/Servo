@@ -29,17 +29,15 @@ from django.conf import settings
 
 from django.db import models
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
-from django.core.urlresolvers import reverse
 
 from servo import defaults
 from servo.models.common import Location
 
 
 class Queue(models.Model):
-
     site = models.ForeignKey(
         Site,
         editable=False,
@@ -48,6 +46,7 @@ class Queue(models.Model):
 
     title = models.CharField(
         max_length=255,
+        unique=True,
         default=_('New Queue'),
         verbose_name=_('Title')
     )
@@ -181,8 +180,6 @@ class Queue(models.Model):
         help_text=_("HTML template for dispatched order")
     )
 
-    objects = CurrentSiteManager()
-
     def get_admin_url(self):
         return reverse('admin-edit_queue', args=[self.pk])
 
@@ -208,12 +205,12 @@ class Status(models.Model):
         default=defaults.site_id
     )
 
-    FACTORS = (
-        (60, _('Minutes')),
-        (3600, _('Hours')),
-        (86400, _('Days')),
-        (604800, _('Weeks')),
-        (2419200, _('Months')),
+    FACTOR_CHOICES = (
+        (60,        _('Minutes')),
+        (3600,      _('Hours')),
+        (86400,     _('Days')),
+        (604800,    _('Weeks')),
+        (2419200,   _('Months')),
     )
 
     title = models.CharField(
@@ -235,8 +232,8 @@ class Status(models.Model):
         verbose_name=_(u'yellow limit')
     )
     limit_factor = models.IntegerField(
-        choices=FACTORS,
-        default=FACTORS[0],
+        choices=FACTOR_CHOICES,
+        default=FACTOR_CHOICES[0],
         verbose_name=_(u'time unit')
     )
     queue = models.ManyToManyField(
@@ -273,9 +270,9 @@ class QueueStatus(models.Model):
     limit_green = models.IntegerField(default=1, verbose_name=_(u'green limit'))
     limit_yellow = models.IntegerField(default=15, verbose_name=_(u'yellow limit'))
     limit_factor = models.IntegerField(
-        choices=Status().FACTORS,
+        choices=Status.FACTOR_CHOICES,
         verbose_name=_(u'time unit'),
-        default=Status().FACTORS[0][0]
+        default=Status.FACTOR_CHOICES[0][0]
     )
 
     def get_green_limit(self):

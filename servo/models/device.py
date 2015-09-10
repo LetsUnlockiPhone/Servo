@@ -36,7 +36,6 @@ from django.core.files import File
 from django.core.cache import cache
 from django.dispatch import receiver
 from django.utils.text import slugify
-from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 
@@ -44,7 +43,6 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.managers import CurrentSiteManager
 
 from servo import defaults
 from servo.validators import sn_validator
@@ -55,8 +53,6 @@ class Device(models.Model):
     """
     The serviceable device
     """
-    site = models.ForeignKey(Site, editable=False, default=defaults.site_id)
-
     # @TODO: unique=True would be nice, but complicated...
     sn = models.CharField(
         blank=True,
@@ -217,8 +213,6 @@ class Device(models.Model):
         help_text=_('Device is considered vintage in GSX')
     )
     fmip_active = models.BooleanField(default=False, editable=False)
-
-    objects = CurrentSiteManager()
 
     def is_apple_device(self):
         """

@@ -31,8 +31,6 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from django.contrib.sites.managers import CurrentSiteManager
-
 from django.contrib.contenttypes.fields import GenericRelation
 
 from django.dispatch import receiver
@@ -50,11 +48,7 @@ from servo.models.queue import Queue, Status, QueueStatus
 
 
 class Order(models.Model):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
+
     code = models.CharField(max_length=8, unique=True, null=True)
     url_code = models.CharField(max_length=8, unique=True, null=True)
     # Device description or something else
@@ -161,13 +155,12 @@ class Order(models.Model):
     )
 
     state = models.IntegerField(default=0, choices=STATES)
-
+    
     status_name = models.CharField(max_length=128, default="")
     status_started_at = models.DateTimeField(null=True)
     status_limit_green = models.DateTimeField(null=True)  # turn yellow after this
     status_limit_yellow = models.DateTimeField(null=True) # turn red after this
-
-    objects = CurrentSiteManager()
+    
     api_fields = ('status_name', 'status_description',)
 
     def apply_rules(self):

@@ -27,24 +27,16 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-
-from django.contrib.sites.managers import CurrentSiteManager
 
 from servo import defaults
 from servo.models import User, Customer, Order, ServiceOrderItem, AbstractOrderItem
 
 
 class Invoice(models.Model):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
     created_at = models.DateTimeField(editable=False, auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
 
@@ -115,8 +107,6 @@ class Invoice(models.Model):
         decimal_places=2,
         editable=False
     )
-
-    objects = CurrentSiteManager()
 
     def get_payment_total(self):
         from django.db.models import Sum

@@ -33,12 +33,12 @@ from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 from pytz import common_timezones, country_timezones
 
-from django.db import models
-from django.conf import settings
 from django.contrib.sites.models import Site
 
+from django.db import models
+from django.conf import settings
+
 from mptt.managers import TreeManager
-from django.contrib.sites.managers import CurrentSiteManager
 
 from mptt.models import MPTTModel, TreeForeignKey
 from django.utils.translation import ugettext_lazy as _
@@ -103,13 +103,9 @@ class BaseItem(models.Model):
     """
     Base class for a few generic relationships
     """
-    site = models.ForeignKey(Site, editable=False, default=defaults.site_id)
-
     object_id = models.PositiveIntegerField()
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey("content_type", "object_id")
-
-    objects = CurrentSiteManager()
 
     class Meta:
         abstract = True
@@ -197,6 +193,7 @@ class Event(BaseItem):
 
 
 class GsxAccount(models.Model):
+
     site = models.ForeignKey(
         Site,
         editable=False,
@@ -324,12 +321,6 @@ class Tag(MPTTModel):
     The type attribute is used to group tags to make them easier
     to associate with different elements
     """
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
-
     title = models.CharField(
         unique=True,
         max_length=255,
@@ -386,7 +377,6 @@ class Tag(MPTTModel):
         return self.title
 
     objects = TreeManager()
-    on_site = CurrentSiteManager()
 
     class Meta:
         app_label = 'servo'
@@ -418,7 +408,11 @@ class Location(models.Model):
         max_length=32,
         verbose_name=_('phone')
     )
-    email = models.EmailField(blank=True, default='', verbose_name=_('email'))
+    email = models.EmailField(
+        blank=True,
+        default='',
+        verbose_name=_('email')
+    )
     address = models.CharField(
         blank=True,
         default='',
@@ -555,11 +549,11 @@ class Configuration(models.Model):
 
     @classmethod
     def track_inventory(cls):
-        return cls.conf('track_inventory') == 'True'
+        return cls.true('track_inventory')
 
     @classmethod
     def notify_location(cls):
-        return cls.conf('notify_location') == 'True'
+        return cls.true('notify_location')
 
     @classmethod
     def notify_email_address(cls):
@@ -576,11 +570,11 @@ class Configuration(models.Model):
 
     @classmethod
     def autocomplete_repairs(cls):
-        return cls.conf('autocomplete_repairs') == 'True'
+        return cls.true('autocomplete_repairs')
 
     @classmethod
     def smtp_ssl(cls):
-        return cls.conf('smtp_ssl') == 'True'
+        return cls.true('smtp_ssl')
 
     @classmethod
     def get_imap_server(cls):
@@ -626,16 +620,10 @@ class Configuration(models.Model):
 
 
 class Property(models.Model):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
-
     TYPES = (
-        ('customer', _('Customer')),
-        ('order', _('Order')),
-        ('product', _('Product'))
+        ('customer',    _('Customer')),
+        ('order',       _('Order')),
+        ('product',     _('Product'))
     )
 
     title = models.CharField(
@@ -678,11 +666,6 @@ class Property(models.Model):
 
 
 class Search(models.Model):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
     query = models.TextField()
     model = models.CharField(max_length=32)
     title = models.CharField(max_length=128)
@@ -708,12 +691,6 @@ class Notification(models.Model):
 
 
 class Template(models.Model):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
-
     title = models.CharField(
         blank=False,
         unique=True,

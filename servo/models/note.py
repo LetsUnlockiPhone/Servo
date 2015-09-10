@@ -42,17 +42,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
 from django.core.mail import send_mail, EmailMessage
-
-from django.contrib.sites.models import Site
-
 from django.contrib.contenttypes.fields import GenericRelation
 
 from django.template.defaultfilters import truncatechars
 from django.db.models.signals import pre_delete, post_save
 
 from mptt.managers import TreeManager
-from django.contrib.sites.managers import CurrentSiteManager
-
 from mptt.models import MPTTModel, TreeForeignKey
 
 from servo import defaults
@@ -87,11 +82,6 @@ def validate_phone_number(number):
 
 
 class Note(MPTTModel):
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
     subject = models.CharField(
         blank=True,
         max_length=255,
@@ -149,7 +139,6 @@ class Note(MPTTModel):
     )
 
     objects = TreeManager()
-    on_site = CurrentSiteManager()
 
     def __render__(self, tpl, ctx):
         from django import template

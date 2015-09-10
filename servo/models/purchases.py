@@ -27,7 +27,6 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 
 from django.dispatch import receiver
@@ -49,11 +48,6 @@ class PurchaseOrder(models.Model):
 
     Creating a PO from an SO only creates the PO, it does not submit it.
     """
-    site = models.ForeignKey(
-        Site,
-        editable=False,
-        default=defaults.site_id
-    )
     location = models.ForeignKey(
         Location,
         editable=False,
