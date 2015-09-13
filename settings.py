@@ -222,6 +222,7 @@ IGNORABLE_404_URLS = (
 
 TEST_RUNNER = 'servo.tests.NoDbTestRunner'
 
+SERVER_EMAIL = 'servo@localhost'
 EMAIL_HOST = 'mail.servoapp.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_HOST_USER = ''
