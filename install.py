@@ -33,4 +33,5 @@ fh = open('local_settings.py', 'w')
 fh.write(s)
 fh.close()
 
+call(['./manage.py', 'migrate', '--no-initial-data'])
 call(['./manage.py', 'createsuperuser'])
