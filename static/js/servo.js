@@ -1,8 +1,3 @@
-/**
- * servo.js
- * (c) 2014 First Party Software LTD
- */
-
 $(document).ready(function() {
 
     $('input[type="checkbox"]').click(function(e){

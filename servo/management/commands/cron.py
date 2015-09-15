@@ -92,9 +92,8 @@ class Command(BaseCommand):
 
         now = timezone.now()
         limit = now - timedelta(days=1)
-        locations = Location.objects.filter(site_id=settings.SITE_ID)
 
-        for l in locations:
+        for l in Location.objects.filter(enabled=True):
             table = CsvTable()
             table.addheader(['Order', 'Assigned To', 'Status', 'Days red'])
 
@@ -126,9 +125,7 @@ class Command(BaseCommand):
         except KeyError:
             raise ValueError('Default sender address not defined')
 
-        locations = Location.objects.filter(site_id=settings.SITE_ID)
-
-        for l in locations:
+        for l in Location.objects.filter(enabled=True):
             out_of_stock = Inventory.objects.filter(
                 location=l,
                 amount_stocked__lt=F('amount_minimum')

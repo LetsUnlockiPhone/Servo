@@ -505,13 +505,12 @@ def create_user_token(request, user_id):
 @staff_member_required
 def edit_user(request, pk=None):
     if pk is None:
-        user = User(site_id=app_settings.SITE_ID)
-        user.location = request.user.location
+        user = User(location=request.user.location)
         user.locale = request.user.locale
         user.region = request.user.region
         user.timezone = request.user.timezone
     else:
-        user = User.objects.get(pk=pk)
+        user = get_object_or_404(User, pk=pk)
 
     form = UserForm(instance=user)
 
