@@ -4,14 +4,24 @@ from __future__ import absolute_import
 
 from celery import shared_task
 
+from django.conf import settings
 from django.core.cache import cache
 
 from servo.models import Order, Note
 
 
 def get_rules():
+	"""
+	Get the rules from the JSON file and cache them.
+	Fail silently if not configured.
+	"""
 	import json
-	fh = open("local_rules.json", "r")
+
+	try:
+		fh = open("local_rules.json", "r")
+	except IOError:
+		return []
+		
 	rules = json.load(fh)
 	cache.set('rules', rules)
 	return rules
