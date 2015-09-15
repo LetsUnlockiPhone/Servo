@@ -7,8 +7,8 @@ from string import Template
 from subprocess import call
 
 args = {}
-args['secret_key'] = os.urandom(32).encode('base-64').strip()
 args['hostname'] = socket.gethostname()
+args['secret_key'] = os.urandom(32).encode('base-64').strip()
 args['install_country'] = raw_input('Country [SE]: ') or 'SE'
 args['install_locale'] = raw_input('Locale [sv_SE.UTF-8]: ') or 'sv_SE.UTF-8'
 args['install_language'] = raw_input('Language [sv]: ') or 'sv'
@@ -26,8 +26,11 @@ template = Template(raw)
 
 s = template.substitute(**args)
 
-print s
+call(['createuser', args['dbuser'], '-U', 'pgsql'])
+call(['createdb', args['dbname'], '-O', args['dbuser'], '-U', 'pgsql'])
 
-#call(['createuser', 'servo', '-U', 'pgsql'])
-#call(['createdb', 'servo', '-O', 'servo', '-U', 'pgsql'])
-#call(['manage.py'], 'createsuperuser')
+fh = open('local_settings.py', 'w')
+fh.write(s)
+fh.close()
+
+call(['./manage.py', 'createsuperuser'])
