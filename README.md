@@ -1,19 +1,21 @@
 Introduction
 ============
 
-Servo is a service management system for Authorised Apple Service Providers. It allows you to run your entire service business from within the same interface. Originally written in 2012 it is being used by service providers both large and small all around Europe.
+Servo is a service management system for Authorised Apple Service Providers. It allows you to run your entire service business from within the same interface. Originally created in 2012 it is being used by service providers both large and small all around Europe.
 
 Main features include:
 
-- Complete integration with GSX (do warranty and part lookups, create and edit repairs, stocking orders, part returns, etc)
 - Flexible workflow management (create separate queues for different types of work, customize statuses and time limits per queue)
+- Complete integration with GSX (do warranty and part lookups, create and edit repairs, stocking orders, part returns, etc)
 - A rich set of communication tools (two-way email support, SMS sending, GSX escalations, attachment support)
-- Inventory management (product categories, stocking per location)
+- Inventory management (product categories, stocking per location, bracketed markup)
 - Robust customer database (hierarchical customer data, custom fields)
 - Fast search
-- Statistics
+- Statistics and reporting
+- Rule-based automation
 - Dedicated check-in interface for customers and POS staff
 - API for integration with external systems
+- It's not FileMaker Pro
 
 
 System Requirements
