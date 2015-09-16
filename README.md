@@ -96,6 +96,12 @@ For testing, you can run Servo without any extra setup:
 Then fire up your browser and got to http://localhost:8080/
 
 
+The VMWare Image
+================
+
+You can also download a preconfigured VMWare image [here](http://files.servoapp.com/vmware/). Please read the included README files for instructions.
+
+
 Updating
 ========
 
