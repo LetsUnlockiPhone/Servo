@@ -15,10 +15,10 @@ args['install_language'] = raw_input('Language [sv]: ') or 'sv'
 args['timezone'] = raw_input('Timezone [Europe/Stockholm]: ') or 'Europe/Stockholm'
 args['install_id'] = raw_input('Installation ID [22]: ') or '22'
 
-args['dbhost'] = raw_input('Database host [localhost]: ') or 'localhost'
-args['dbname'] = raw_input('Database [servo]: ') or 'servo'
-args['dbuser'] = raw_input('DB user [servo]: ') or 'servo'
-args['dbpwd'] = raw_input('DB password []: ') or ''
+args['dbhost']  = raw_input('Database host [localhost]: ') or 'localhost'
+args['dbname']  = raw_input('Database [servo]: ') or 'servo'
+args['dbuser']  = raw_input('DB user [servo]: ') or 'servo'
+args['dbpwd']   = raw_input('DB password []: ') or ''
 
 tpl_url = 'https://gist.githubusercontent.com/filipp/cba2ffecd0d5790f7245/raw/'
 raw = requests.get(tpl_url).text
