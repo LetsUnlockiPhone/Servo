@@ -43,6 +43,7 @@ loc = {}
 
 print("** Setting up database tables **")
 call(['./manage.py', 'migrate', '--no-initial-data'])
+call(['psql', '-c', 'ALTER SEQUENCE servo_order_id_seq RESTART WITH 12345'])
 
 print("** Creating Super User **")
 call(['./manage.py', 'createsuperuser'])
