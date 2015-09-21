@@ -1,11 +1,11 @@
 django
+django-mptt
 django-countries
 django-bootstrap3
 djangorestframework
 babel
 markdown
 python-memcached
-django-mptt
 psycopg2
 pil
 reportlab

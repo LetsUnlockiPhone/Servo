@@ -546,6 +546,9 @@ class ProductCategory(MPTTModel):
     objects = TreeManager()
 
     def get_products(self):
+        """
+        Returns products under this entire category branch
+        """
         return Product.objects.filter(
             categories__lft__gte=self.lft,
             categories__rght__lte=self.rght,
