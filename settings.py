@@ -215,6 +215,7 @@ REST_FRAMEWORK = {
 
 ENABLE_RULES = False
 TIMEZONE = 'Europe/Helsinki'
+BACKUP_DIR = '/opt/servo/backups'
 
 GSX_CERT = 'uploads/settings/gsx_cert.pem'
 GSX_KEY = 'uploads/settings/gsx_key.pem'
