@@ -326,6 +326,7 @@ class SettingsForm(BaseForm):
             ('GBP', 'GBP'),
             ('SEK', 'SEK'),
             ('USD', 'USD'),
+            ('ZAR', 'ZAR'),
         ),
         initial='EUR'
     )
