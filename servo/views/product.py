@@ -34,6 +34,9 @@ def prep_list_view(request, group='all'):
 
     if group == 'all':
         group = ProductCategory(title=_('All'), slug='all')
+    elif group == 'None':
+        group = ProductCategory(title=_('None'), slug='none')
+        all_products = all_products.filter(categories=None)
     else:
         group = categories.get(slug=group)
         all_products = group.get_products()
@@ -60,6 +63,10 @@ def prep_list_view(request, group='all'):
                 tag = tag.tag
                 title += u" / %s" % tag
                 all_products = all_products.filter(tags__tag=tag)
+
+            location = fdata.get('location')
+            if location:
+                all_products = all_products.filter(inventory__contains=location.pk)
     else:
         form = ProductSearchForm()
 

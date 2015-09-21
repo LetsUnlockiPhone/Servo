@@ -53,6 +53,11 @@ class ProductSearchForm(forms.Form):
         label=_('Device model is'),
         queryset=TaggedItem.objects.none()
     )
+    location = forms.ModelChoiceField(
+        required=False,
+        label=_('Location is'),
+        queryset=Location.objects.filter(enabled=True)
+    )
 
     def __init__(self, *args, **kwargs):
         super(ProductSearchForm, self).__init__(*args, **kwargs)
