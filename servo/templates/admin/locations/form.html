@@ -4,6 +4,7 @@
 {% block third_column %}
 <ul class="nav nav-tabs">
   <li class="active"><a href="#tab1" data-toggle="tab">{% trans "General" %}</a></li>
+  <li><a href="#details" data-toggle="tab">{% trans "Details" %}</a></li>
   <li><a href="#tab3" data-toggle="tab">{% trans "GSX" %}</a></li>
 </ul>
 
@@ -17,9 +18,12 @@
       {% include "form_field_snippet.html" with field=form.address %}
       {% include "form_field_snippet.html" with field=form.zip_code %}
       {% include "form_field_snippet.html" with field=form.city %}
+      {% include "form_field_snippet.html" with field=form.enabled %}
+    </div>
+    <div class="tab-pane" id="details">
+      {% include "form_field_snippet.html" with field=form.manager %}
       {% include "form_field_snippet.html" with field=form.timezone %}
       {% include "form_field_snippet.html" with field=form.notes %}
-      {% include "form_field_snippet.html" with field=form.enabled %}
     </div>
     <div class="tab-pane" id="tab3">
       {% include "form_field_snippet.html" with field=form.gsx_shipto %}
@@ -28,11 +32,11 @@
     </div>
   </div>
   <div class="form-actions">
-    {% if location.pk %}
+  {% if location.pk %}
     <a class="btn btn-danger" data-modal="#modal" href="{% url 'admin-delete_location' location.pk %}">{% trans "Delete" %}</a>
-    {% else %}
+  {% else %}
     <a class="btn btn-danger disabled">{% trans "Delete" %}</a>
-    {% endif %}
+  {% endif %}
     <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
   </div>
 </form>

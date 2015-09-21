@@ -446,6 +446,14 @@ class Location(models.Model):
         help_text=_('Will be shown on print templates')
     )
 
+    manager = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        related_name="managed_locations",
+        limit_choices_to={'is_visible': True}
+    )
+
     enabled = models.BooleanField(
         default=True,
         verbose_name=_('Enabled')
@@ -471,11 +479,11 @@ class Location(models.Model):
 
     def gsx_address(self):
         return {
-            'city':         self.city,
-            'zipCode':      self.zip_code,
-            'country':      self.get_country(),
-            'primaryPhone': self.phone,
-            'emailAddress': self.email,
+            'city'          : self.city,
+            'zipCode'       : self.zip_code,
+            'country'       : self.get_country(),
+            'primaryPhone'  : self.phone,
+            'emailAddress'  : self.email,
         }
 
     def __unicode__(self):

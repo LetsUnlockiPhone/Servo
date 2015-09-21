@@ -116,7 +116,8 @@ class Command(BaseCommand):
             subject = _(u"Products stocked below limit")
 
             if Configuration.notify_location():
-                send_table(sender, l.email, subject, table)
+                email = l.manager.email if l.manager else l.email
+                send_table(sender, email, subject, table)
             if Configuration.notify_email_address():
                 send_table(sender, conf['notify_address'], subject, table)
 
