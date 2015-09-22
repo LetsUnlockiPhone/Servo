@@ -10,9 +10,8 @@ def strip_keypass(keypass, infile, outfile):
     Strips a passphrase from a private key
     """
     import subprocess
-    keypass = self.cleaned_data['gsx_keypass']
-    subprocess.call(['openssl', 'rsa', '-passin',
-                     'pass:' + keypass, '-in', infile, '-out', outfile])
+    subprocess.call(['openssl', 'rsa', '-passin', 'pass:' + keypass,
+                     '-in', infile, '-out', outfile])
 
 def multiprint(*args):
     """
