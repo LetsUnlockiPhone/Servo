@@ -552,6 +552,9 @@ class Repair(models.Model):
             pass
 
     def complete(self, user):
+        """
+        Marks this repair as being complete
+        """
         self.completed_at = timezone.now()
         self.completed_by = user
         self.save()
@@ -560,6 +563,12 @@ class Repair(models.Model):
         if queue.status_repair_completed:
             status = queue.status_repair_completed
             self.order.set_status(status, user)
+
+    def get_sn_update_parts(self):
+        """
+        Returns parts eligible for SN update
+        """
+        return self.servicepart_set.exclude(return_code='GPR')
 
     def close(self, user):
         """
@@ -570,7 +579,7 @@ class Repair(models.Model):
 
         try:
             # Update part serial numbers
-            [part.update_sn() for part in self.servicepart_set.all()]
+            [part.update_sn() for part in self.get_sn_update_parts()]
             repair.mark_complete()
         except gsxws.GsxError as e:
             """

@@ -224,6 +224,7 @@ class ServicePart(models.Model):
     def update_part(self, return_data, return_type, user):
         """
         gsx/returns/Parts Return Update
+        Updates the GSX status of this part
         """
         self.repair.connect_gsx(user)
 
