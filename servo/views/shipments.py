@@ -315,9 +315,9 @@ def update_part(request, part, return_type):
     return_type = int(return_type)
     part = ServicePart.objects.get(pk=part)
 
-    msg = ""
-    form = ""
-    title = ""
+    msg     = ""
+    form    = ""
+    title   = ""
 
     if return_type == Shipment.RETURN_DOA:
         title = _("Return DOA Part")
@@ -345,7 +345,7 @@ def update_part(request, part, return_type):
             try:
                 part.update_part(form.cleaned_data, return_type, request.user)
                 messages.success(request, _("Part updated"))
-            except Exception, e:
+            except Exception as e:
                 messages.error(request, e)
         else:
             messages.error(request, form.errors)

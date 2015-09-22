@@ -359,9 +359,9 @@ def view_product(request, pk=None, code=None, group=None):
     data = prep_list_view(request, group)
 
     data['product'] = product
-    data['title'] = product.title
     data['inventory'] = inventory
-
+    data['title'] = '%s - %s' % (product.code, product.title)
+    
     return render(request, "products/view.html", data)
 
 
