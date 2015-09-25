@@ -108,7 +108,7 @@ def login(request):
             else:
                 auth.login(request, user)
 
-                if user.location:
+                if user.location is not None:
                     lang = user.activate_locale()
                     request.session['django_language'] = lang
                     request.session['django_timezone'] = user.timezone
