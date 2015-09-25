@@ -16,11 +16,12 @@ class NoteForm(BaseModelForm):
         exclude = []
         widgets = {
             'recipient' : TextInput,
-            'labels'    : forms.CheckboxSelectMultiple,
+            'subject'   : TextInput,
             'order'     : forms.HiddenInput,
             'parent'    : forms.HiddenInput,
             'customer'  : forms.HiddenInput,
-            'subject'   : TextInput
+            'type'      : forms.HiddenInput,
+            'labels'    : forms.CheckboxSelectMultiple,
         }
 
     def __init__(self, *args, **kwargs):

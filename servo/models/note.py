@@ -58,6 +58,11 @@ def validate_phone_number(number):
 
 
 class Note(MPTTModel):
+
+    T_NOTE          = 0
+    T_PROBLEM       = 1
+    T_ESCALATION    = 2
+
     subject = models.CharField(
         blank=True,
         max_length=255,
@@ -102,16 +107,32 @@ class Note(MPTTModel):
     sent_at = models.DateTimeField(null=True, editable=False)
     order = models.ForeignKey(Order, null=True, blank=True)
 
-    is_reported = models.BooleanField(default=False, verbose_name=_("report"))
+    is_reported = models.BooleanField(
+        default=False,
+        verbose_name=_("Report")
+    )
     is_read = models.BooleanField(
         default=True,
         editable=False,
-        verbose_name=_("read")
+        verbose_name=_("Read")
     )
     is_flagged = models.BooleanField(
         default=False,
         editable=False,
-        verbose_name=_("flagged")
+        verbose_name=_("Flagged")
+    )
+
+    TYPES = (
+        (T_NOTE,        _('Note')),
+        (T_PROBLEM,     _('Problem')),
+        (T_ESCALATION,  _('Escalation')),
+    )
+
+    type = models.IntegerField(
+        blank=True,
+        default=T_NOTE,
+        choices=TYPES,
+        verbose_name=_('Type')
     )
 
     objects = TreeManager()

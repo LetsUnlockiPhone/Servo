@@ -51,6 +51,7 @@
       {% include "form_field_snippet.html" with field=form.sender %}
       {% include "form_field_snippet.html" with field=form.body %}
       {% include "form_field_snippet.html" with field=form.is_reported %}
+      {{ form.type }}
     </div>
     <div class="tab-pane" id="tab2">
     {% for f in formset %}

@@ -216,7 +216,7 @@ def edit(request, pk=None, order_id=None, parent=None, recipient=None, customer=
                     f.content_object = note
                     try:
                         f.save()
-                    except ValueError, e:
+                    except ValueError as e:
                         messages.error(request, e)
                         return redirect(note)
 
@@ -226,7 +226,7 @@ def edit(request, pk=None, order_id=None, parent=None, recipient=None, customer=
                 try:
                     msg = note.send_and_save(request.user)
                     messages.success(request, msg)
-                except ValueError, e:
+                except ValueError as e:
                     messages.error(request, e)
 
             return redirect(note)
