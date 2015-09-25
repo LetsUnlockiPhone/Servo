@@ -24,7 +24,9 @@ from servo.models.queue import Queue, Status, QueueStatus
 
 
 class Order(models.Model):
-
+    """
+    The Service Order
+    """
     code = models.CharField(max_length=8, unique=True, null=True)
     url_code = models.CharField(max_length=8, unique=True, null=True)
     # Device description or something else
@@ -130,7 +132,7 @@ class Order(models.Model):
         (STATE_CLOSED,  _("Closed"))
     )
 
-    state = models.IntegerField(default=0, choices=STATES)
+    state = models.IntegerField(default=STATE_QUEUED, choices=STATES)
     
     status_name = models.CharField(max_length=128, default="")
     status_started_at = models.DateTimeField(null=True)
@@ -138,6 +140,9 @@ class Order(models.Model):
     status_limit_yellow = models.DateTimeField(null=True) # turn red after this
     
     api_fields = ('status_name', 'status_description',)
+
+    def get_issues(self):
+        return self.note_set.filter(type=1)
 
     def apply_rules(self):
         pass
@@ -315,10 +320,13 @@ class Order(models.Model):
         return self.queue or _("Select queue")
 
     def get_queue_url(self):
+        if self.queue is not None:
+            return self.queue.get_absolute_url()
+
         return reverse("orders-index")
 
     def get_queue_title(self):
-        if self.queue:
+        if self.queue is not None:
             return self.queue.title
         else:
             return _("Orders")
@@ -1116,7 +1124,9 @@ def trigger_device_removed(sender, instance, **kwargs):
         order = instance.order
     except Order.DoesNotExist:
         return # Means the whole order was deleted, not just the device
+        
     devices = order.devices.all()
+
     if devices.count() > 0:
         order.description = devices[0].description
     else:

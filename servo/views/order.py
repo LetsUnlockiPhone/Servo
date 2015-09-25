@@ -804,7 +804,7 @@ def products(request, pk, item_id=None, action='list'):
 
 @permission_required('servo.change_order')
 def list_products(request, pk):
-    order = Order.objects.get(pk=pk)
+    order = get_object_or_404(Order, pk=pk)
     return render(request, "orders/list_products.html", locals())
 
 
@@ -828,7 +828,7 @@ def select_customer(request, pk, customer_id):
     """
     Selects a specific customer for this order
     """
-    order = Order.objects.get(pk=pk)
+    order = get_object_or_404(Order, pk=pk)
     order.customer_id = customer_id
     order.save()
 

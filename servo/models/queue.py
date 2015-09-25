@@ -159,6 +159,9 @@ class Queue(models.Model):
     def get_admin_url(self):
         return reverse('admin-edit_queue', args=[self.pk])
 
+    def get_absolute_url(self):
+        return reverse('orders-list_queue', args=[self.pk])
+
     def get_order_count(self, max_state=2):
         count = self.order_set.filter(state__lt=max_state).count()
         return count if count > 0 else ''
