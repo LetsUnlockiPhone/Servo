@@ -17,11 +17,13 @@ Main features include:
 - API for integration with external systems
 - It's not FileMaker Pro
 
+![The Obligatory Screenshot](http://www.servoapp.com/img/screenshots/940/order1.png)
+
 
 System Requirements
 ===================
 
-The application is written in Python on top of the Django web framework and depends on the latest stable versions of the following components for operation:
+The application is written in Python on top of the excellent [Django web framework](https://www.djangoproject.com) and depends on the latest stable versions of the following components for operation:
 
 - PostgreSQL
 - Memcache
@@ -117,3 +119,13 @@ Documentation
 =============
 
 End-user documentation for the system is available [here](https://docs.servoapp.com).
+
+
+FAQ
+===
+
+Q: Why use Django?
+A: Because it works. Django also has the best documentation of any framework I've seen (especially from from PHP and Zend Framework)
+----
+Q: Why is Servo open-source?
+A: Because it's a mission-critical application and open-sourcing it means that companies will always have access to it.
