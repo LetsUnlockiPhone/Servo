@@ -20,39 +20,39 @@
 "B":
     category: iPhone
     symptoms:
-        B08: No Service - dropped calls # No service or data connection at all. Do not use for dropped calls or activation issues.
+        B08: Cellular - No Connection # No service or data connection at all. Do not use for dropped calls or activation issues.
         B09: Issue with Accessory # Issue With Accessory
-        B0A: Rear/iSight Camera Issue # Problems with the iPhone built in Rear/iSight camera, taking photos.
+        B0A: Rear/iSight Camera Issue # Problems with the iPhone built in Rear/iSight camera, taking photos. Do not use for Flash issues.
         B0J: iTunes Connection Issue # Not seen by computer, content transfer via USB cable. Not able to connect/restore via iTunes. Issue is caused by accessory use B09.
         B0M: Unusual Noise or Temperature # Temperature or noise related issues. Unusual temperature, unusually noise device.
         B0N: Front / FaceTime Camera # Problems with the iPhone built in Front/FaceTime camera, taking photos.
-        B26: Frozen - At Apple Logo # Frozen at Apple Logo, system wide freezing.
         B32: Vibration Motor # No vibration felt when selecting settings> sounds>vibrate. For Ringer switch issues use B37.
         B33: SIM # SIM card not recognized, SIM card issues. Do not use for activation issues.
         B35: Touch ID # Cannot enroll, not reading fingerprint, not unlocking phone. For Home button issues, use B36.
-        B36: Button/Switch - Home # Tactility or mechanical issues
-        B37: Button/Switch - Ringer/Side switch # Tactility or mechanical issues
-        B38: Button/Switch - Sleep/Wake # Tactility or mechanical issues
-        B39: Button/Switch - Volume # Tactility or mechanical issues
+        B36: Button - Home # Mechanical issues involving responsiveness, feel, or press of the Home Button.
+        B37: Switch - Ringer/Side # Mechanical issues involving responsiveness, feel, or sliding of the Ringer/Slide Switch.
+        B38: Button - Sleep/Wake # Mechanical issues involving responsiveness, feel, or press of the Sleep/Wake Button.
+        B39: Button - Volume # Mechanical issues involving responsiveness, feel, or press of the Volume Buttons.
         B45: WiFi/Bluetooth # WiFi/Bluetooth related issues
         B54: Display - Image Quality # Bad colors, out of focus, white screen, ambient light sensor issues, lines/blocks.
         B56: Display - Multi Touch # All or specific area not recognizing touch, too sensitive to touch
         B57: Display - Pixels/Foreign Material # Stuck, missing, or dead pixels. Or foreign material in the display.
-        B5B: Sensors - Proximity Sensor Issue # Proximity Sensor does not function properly
-        B5C: Sensors - Accelerometer/Gyroscope # Issues related to compass and other location based symptoms such as GPS
-        B5H: Display - Blank/Black Screen # Device has power, is recognized by iTunes, but display remains black.
+        B5B: Sensor - Proximity Issues # Proximity Sensor does not function properly
+        B5C: Sensors-Direction-Motion/Flash # Issues related to compass, other location based symptoms such as GPS, and not tracking health app stats properly. Flash issues shall be recorded under this symptom
+        B5H: Display - White/Black Screen-Power On # Device has power and it’s recognized by iTunes, but display remains black or it’s completely white.
         B5J: Any Apple Pay issues related to the iPhone hardware
-        B63: Sound - Internal Speaker # Sound issues related to the built-in speaker
-        B64: Sound - Internal Microphone # Issues related to built-in microphones
+        B5K: Display – 3D Touch # Display – 3D Touch
+        B63: Sound - Speaker # Sound issues related to the built-in speaker
+        B64: Sound - Microphone # Issues related to built-in microphones
         B68: Sound - Headset Jack # Sound related issues related to the headset/ headphone jack on the device
         B7A: Receiver / Calls - Audio Quality # Audio issues related to Receiver or on phone calls. Poor or low audio, distortion, etc.
-        B7B: Dropped Calls / Signal Strength # All cellular connection related issues where a signal is present.
-        B81: Power - Unexpected Power Off # Device unexpectedly powers off or restarts at random. Do not replace if related to an app or any software.
-        B83: Power - Will Not Power On # No power at all, not recognized by iTunes, not a blank/black display issue, shows no signs of power.
-        B8A: Power - Any Battery Issue # Any Battery related issue including battery life too short, battery won’t charge, etc.
+        B7B: Cellular-Dropped Calls/Poor Signal # All cellular connection related issues where a signal is present.
+        B81: Unexpectedly Restarted/Frozen # Device unexpectedly powers off or restarts at random. Frozen at Apple Logo, system wide freezing. Flashes a Red, Blue or any other color screen. Do not replace if related to an app.
+        B83: No Power/Charging Issues # No power at all, not recognized by iTunes, not a white/black display issue, shows no signs of power; or battery won’t charge.
+        B8A: Battery Life/Performance # Any Battery Life / Performance related issues including battery life too short.
         B90: Physical Damage - Liquid Damage # Liquid damage related issues
-        B91: Physical Damage - Other # Damage to phone modules (for example, camera lens, headphone jack, dock connector). Not for display or enclosure damage.
-        B92: Physical Damage - Multiple Cracks # Multiple cracks on display
+        B91: Physical Damage - Other # Damage to phone modules (for example, camera lens, headphone jack, dock connector). Includes display separation, cover glass separating from LCM, and clicking or noise not caused by physical damage. Not for display or enclosure damage. 
+        B92: Multiple cracks on display, including LCD fractures under the cover glass # Multiple cracks on display
         B95: Physical Damage - Enclosure # Any enclosure damage related issues. Chips, scratches, dings, cracks in the housing/enclosure. Includes clicking or noise caused by physical damage.
         B98: Physical Damage - Glass Single Crack # Single hairline crack on display with no point of impact.
         Z47: REP iPhone Swollen battery
