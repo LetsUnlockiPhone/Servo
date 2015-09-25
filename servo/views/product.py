@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import json
 from decimal import *
 
 from django.db.models import Q
@@ -66,7 +65,7 @@ def prep_list_view(request, group='all'):
 
             location = fdata.get('location')
             if location:
-                all_products = all_products.filter(inventory__contains=location.pk)
+                all_products = all_products.filter(inventory__location=location)
     else:
         form = ProductSearchForm()
 
@@ -88,9 +87,10 @@ def tags(request):
     """
     Returns all product tags
     """
+    from servo.lib.utils import json_response
     tags = TaggedItem.objects.filter(content_type__model="product")
     tags = tags.distinct("tag").values_list("tag", flat=True)
-    return HttpResponse(json.dumps(list(tags)), content_type='application/json')
+    return json_response(list(tags))
 
 
 def list_products(request, group='all'):
@@ -361,7 +361,7 @@ def view_product(request, pk=None, code=None, group=None):
     data['product'] = product
     data['inventory'] = inventory
     data['title'] = '%s - %s' % (product.code, product.title)
-    
+
     return render(request, "products/view.html", data)
 
 
@@ -451,7 +451,7 @@ def update_price(request, pk):
         GsxAccount.default(request.user)
         product.update_price()
         messages.success(request, _('Price info updated from GSX'))
-    except Exception, e:
+    except Exception as e:
         messages.error(request, _('Failed to update price from GSX'))
 
     return redirect(product)
