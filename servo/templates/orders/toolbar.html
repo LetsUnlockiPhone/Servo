@@ -98,11 +98,9 @@
     </li>
     <li class="divider"></li>
   {% if order.can_order_products %}
-    <li><a href="{% url 'orders-reserve_products' order.pk %}" data-modal="#modal">{% trans "Reserve Products" %}</a></li>
-    <li><a href="{% url 'purchases-create_po' order_id=order.pk %}">{% trans "Order Products" %}</a></li>
+    <li><a href="{% url 'purchases-create_po' order_id=order.pk %}">{% trans "Create Purchase Order" %}</a></li>
   {% else %}
-    <li class="disabled"><a href="#">{% trans "Reserve Products" %}</a></li>
-    <li class="disabled"><a href="#">{% trans "Order Products" %}</a></li>
+    <li class="disabled"><a href="#">{% trans "Create Purchase Order" %}</a></li>
   {% endif %}
     <li class="divider"></li>
   {% if perms.servo.delete_order and order.is_editable %}

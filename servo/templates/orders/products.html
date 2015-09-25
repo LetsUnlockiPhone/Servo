@@ -88,7 +88,10 @@
   {% endfor %}
   </tbody>
 </table>
-<a href="{% url 'products-choose' order_id=order.pk %}" data-modal="#modal" class="btn {% if not order.is_editable %}disabled{% endif %} pull-right"><i class="icon-plus"></i> {% trans "Add Product" %}</a>
+<div class="pull-right">
+  <a class="btn {% if not order.can_order_products %}disabled{% endif %}" href="{% url 'orders-reserve_products' order.pk %}" data-modal="#modal">{% trans "Reserve Products" %}</a>
+  <a href="{% url 'products-choose' order_id=order.pk %}" data-modal="#modal" class="btn {% if not order.is_editable %}disabled{% endif %}"><i class="icon-plus"></i> {% trans "Add Product" %}</a>
+</div>
 {% endwith %}
 <p class="clearfix">
   <hr/>
