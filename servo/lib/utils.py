@@ -1,15 +1,28 @@
 # -*- coding: utf-8 -*-
 
 import json
+import subprocess
 from django.db.models import Model
+from django.http import HttpResponse
 from django.core.serializers.json import DjangoJSONEncoder
 
+
+def csv_response(data):
+    """
+    Shortcut for sending a CSV response
+    """
+    return HttpResponse(data, content_type='text/csv')
+
+def json_response(data):
+    """
+    Shortcut for sending a JSON response
+    """
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 def strip_keypass(keypass, infile, outfile):
     """
     Strips a passphrase from a private key
     """
-    import subprocess
     subprocess.call(['openssl', 'rsa', '-passin', 'pass:' + keypass,
                      '-in', infile, '-out', outfile])
 
