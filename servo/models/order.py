@@ -125,11 +125,13 @@ class Order(models.Model):
     STATE_QUEUED    = 0 # order hasn't been started
     STATE_OPEN      = 1 # order is being worked on
     STATE_CLOSED    = 2 # order is closed
+    STATE_WAITING   = 3 # order is waiting (do not track duration)
 
     STATES = (
-        (STATE_QUEUED,  _("Unassigned")),
-        (STATE_OPEN,    _("Open")),
-        (STATE_CLOSED,  _("Closed"))
+        (STATE_QUEUED,   _("Unassigned")),
+        (STATE_OPEN,     _("Open")),
+        (STATE_CLOSED,   _("Closed")),
+        (STATE_WAITING,  _("Waiting"))
     )
 
     state = models.IntegerField(default=STATE_QUEUED, choices=STATES)
@@ -1096,6 +1098,7 @@ def trigger_order_presave(sender, instance, **kwargs):
     if instance.checkout_location is None:
         instance.checkout_location = location
 
+
 @receiver(post_save, sender=Order)
 def trigger_order_created(sender, instance, created, **kwargs):
     if created:
@@ -1124,7 +1127,7 @@ def trigger_device_removed(sender, instance, **kwargs):
         order = instance.order
     except Order.DoesNotExist:
         return # Means the whole order was deleted, not just the device
-        
+
     devices = order.devices.all()
 
     if devices.count() > 0:
