@@ -118,7 +118,7 @@ After which you should restart your Servo instance.
 Documentation
 =============
 
-End-user documentation for the system is available [here](https://docs.servoapp.com).
+End-user documentation for the system is available [here](https://docs.servoapp.com). A user-friendly list of changes is published [here](https://docs.servoapp.com/changelog/).
 
 
 FAQ

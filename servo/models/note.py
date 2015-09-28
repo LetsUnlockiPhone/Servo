@@ -419,11 +419,11 @@ class Note(MPTTModel):
             sender = location.title
 
         data = urllib.urlencode({
-            'username': settings.SMS_HTTP_USERNAME,
-            'password': settings.SMS_HTTP_PASSWORD,
-            'numberto': recipient.replace(' ', ''),
+            'username'  : settings.SMS_HTTP_USERNAME,
+            'password'  : settings.SMS_HTTP_PASSWORD,
+            'numberto'  : recipient.replace(' ', ''),
             'numberfrom': sender.encode(SMS_ENCODING),
-            'message': self.body.encode(SMS_ENCODING),
+            'message'   : self.body.encode(SMS_ENCODING),
         })
 
         from ssl import _create_unverified_context
@@ -544,16 +544,16 @@ class Message(models.Model):
     sent_at = models.DateTimeField(null=True)
     received_at = models.DateTimeField(null=True)
     STATUSES = (
-        ('SENT', 'SENT'),
+        ('SENT',      'SENT'),
         ('DELIVERED', 'DELIVERED'),
-        ('RECEIVED', 'RECEIVED'),
-        ('FAILED', 'FAILED'),
+        ('RECEIVED',  'RECEIVED'),
+        ('FAILED',    'FAILED'),
     )
     status = models.CharField(max_length=16, choices=STATUSES)
     METHODS = (
         ('EMAIL', 'EMAIL'),
-        ('SMS', 'SMS'),
-        ('GSX', 'GSX'),
+        ('SMS',   'SMS'),
+        ('GSX',   'GSX'),
     )
     method = models.CharField(
         max_length=16,

@@ -110,7 +110,7 @@ class Invoice(models.Model):
         return reverse("invoices-view_invoice", args=[self.pk])
 
     class Meta:
-        ordering = ('-id', )
+        ordering = ('-id',)
         app_label = 'servo'
         get_latest_by = "id"
 
@@ -176,6 +176,7 @@ def trigger_order_dispatched(sender, instance, created, **kwargs):
     if created:
         description = _(u'Order %s dispatched') % instance.order.code
         instance.order.notify('dispatched', description, instance.created_by)
+
 
 @receiver(post_save, sender=Payment)
 def trigger_payment_received(sender, instance, created, **kwargs):
