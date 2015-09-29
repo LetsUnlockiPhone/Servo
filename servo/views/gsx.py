@@ -160,7 +160,7 @@ def check_parts_warranty(request, repair):
     try:
         wty = repair.warranty_status()
         wty_parts = wty.parts
-    except Exception, e:
+    except Exception as e:
         return render(request, 'search/results/gsx_error.html', {'message': e})
 
     try:
@@ -349,7 +349,7 @@ def update_sn(request, pk, part):
         part.update_sn()
         msg = _(u'%s serial numbers updated') % part.part_number
         messages.success(request, msg)
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
 
     return redirect(part.repair.order)

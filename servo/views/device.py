@@ -302,7 +302,7 @@ def get_gsx_search_results(request, what, param, query):
             try:
                 results = device.get_parts()
                 data['device'] = device
-            except Exception, e:
+            except Exception as e:
                 return render(request, error_template, {'message': e})
 
         if param == "productName":
@@ -532,7 +532,7 @@ def upload_devices(request):
                 if gsx_account:
                     try:
                         device = Device.from_gsx(row[0])
-                    except Exception, e:
+                    except Exception as e:
                         messages.error(request, e)
                         break
                 else:
@@ -569,7 +569,7 @@ def update_gsx_details(request, pk):
         GsxAccount.default(request.user)
         device.update_gsx_details()
         messages.success(request, _("Warranty status updated successfully"))
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
 
     if request.session.get('return_to'):

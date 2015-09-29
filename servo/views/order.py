@@ -457,7 +457,7 @@ def remove_user(request, pk, user_id):
         if user == order.user:
             order.set_user(None, request.user)
         order.notify("unset_user", _('User %s removed from followers') % user, request.user)
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
 
     return redirect(order)
@@ -632,7 +632,7 @@ def device_from_product(request, pk, item_id):
         device.save()
         event = order.add_device(device, request.user)
         messages.success(request, event)
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
 
     return redirect(order)
@@ -676,7 +676,7 @@ def edit_product(request, pk, item_id):
     if item.product.component_code:
         try:
             GsxAccount.default(request.user, order.queue)
-        except Exception, e:
+        except Exception as e:
             return render(request, "snippets/error_modal.html", {'error': e})
 
     form = OrderItemForm(instance=item)

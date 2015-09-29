@@ -33,7 +33,7 @@ class Command(BaseCommand):
                 i.update_price()
                 i.save()
                 counter += 1
-            except Exception, e:
+            except Exception as e:
                 logging.debug(e)
 
         print '%d product prices updated' % counter

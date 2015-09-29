@@ -34,13 +34,13 @@ class PurchaseOrder(models.Model):
         blank=True,
         default='',
         max_length=32,
-        verbose_name=_("reference"),
+        verbose_name=_("Reference"),
     )
     confirmation = models.CharField(
         blank=True,
         default='',
         max_length=32,
-        verbose_name=_("confirmation"),
+        verbose_name=_("Confirmation"),
     )
 
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False)
@@ -50,22 +50,22 @@ class PurchaseOrder(models.Model):
     supplier = models.CharField(
         blank=True,
         max_length=32,
-        verbose_name=_("supplier")
+        verbose_name=_("Supplier")
     )
     carrier = models.CharField(
         blank=True,
         max_length=32,
-        verbose_name=_("carrier")
+        verbose_name=_("Carrier")
     )
     tracking_id = models.CharField(
         blank=True,
         max_length=128,
-        verbose_name=_("tracking ID")
+        verbose_name=_("Tracking ID")
     )
     days_delivered = models.IntegerField(
         blank=True,
         default=1,
-        verbose_name=_("delivery Time")
+        verbose_name=_("Delivery Time")
     )
 
     has_arrived = models.BooleanField(default=False)
@@ -79,9 +79,14 @@ class PurchaseOrder(models.Model):
     )
 
     def only_apple_parts(self):
+        """
+        Returns True if PO contains only Apple parts
+        Useful for Stocking Orders
+        """
         for p in self.purchaseorderitem_set.all():
             if not p.product.is_apple_part:
                 return False
+
         return True
 
     @property
@@ -98,6 +103,7 @@ class PurchaseOrder(models.Model):
         from django.core.urlresolvers import reverse
         if self.submitted_at:
             return reverse("purchases-view_po", args=[self.pk])
+
         return reverse("purchases-edit_po", args=[self.pk])
 
     def sum(self):
@@ -115,7 +121,9 @@ class PurchaseOrder(models.Model):
         return amount
 
     def submit(self, user):
-        "Submits this Purchase Order"
+        """
+        Submits this Purchase Order
+        """
         if self.submitted_at is not None:
             raise ValueError(_("Purchase Order %d has already been submitted") % self.pk)
 
@@ -171,6 +179,7 @@ class PurchaseOrder(models.Model):
     def delete(self, *args, **kwargs):
         if self.submitted_at:
             raise ValueError(_('Submitted orders cannot be deleted'))
+
         return super(PurchaseOrder, self).delete(*args, **kwargs)
 
     class Meta:

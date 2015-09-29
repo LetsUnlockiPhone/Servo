@@ -17,7 +17,7 @@
         <th>{% trans "Part" %}</th>
         <th>{% trans "Service Order" %}</th>
         <th>{% trans "Confirmation" %}</th>
-        <th>{% trans "Ordered" %}</th>
+        <th>{% trans "Ordered By" %}</th>
       </tr>
     </thead>
     <tbody class="searchable">
@@ -57,5 +57,5 @@
 {% endblock second_column %}
 
 {% block breadcrumb %}
-<li class="active"><span class="divider">/</span><a href="{% url 'shipments-list_incoming' %}">{% trans "Incoming" %}</a></li>
+  <li class="active"><span class="divider">/</span><a href="{% url 'shipments-list_incoming' %}">{% trans "Incoming" %}</a></li>
 {% endblock breadcrumb %}

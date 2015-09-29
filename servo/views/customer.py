@@ -296,7 +296,7 @@ def move(request, pk, new_parent=None):
             customer.move_to(new_parent)
             customer.save()  # To update fullname
             messages.success(request, msg)
-        except Exception, e:
+        except Exception as e:
             messages.error(request, e)
 
         return redirect(customer)

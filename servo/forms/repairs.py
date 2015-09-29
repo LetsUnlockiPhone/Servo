@@ -34,8 +34,9 @@ class GsxCustomerForm(BaseForm):
 class GsxComponentForm(forms.Form):
     def __init__(self, *args, **kwargs):
         components = kwargs.get('components')
-        del kwargs['components']
+        del(kwargs['components'])
         super(GsxComponentForm, self).__init__(*args, **kwargs)
+        
         if len(components):
             components = json.loads(components)
             for k, v in components.items():

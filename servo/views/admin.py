@@ -454,7 +454,7 @@ def delete_user(request, user_id):
         try:
             user.delete()
             messages.success(request, _("User deleted"))
-        except Exception, e:
+        except Exception as e:
             messages.error(request, e)
 
         return redirect(list_users)
@@ -563,7 +563,7 @@ def delete_location(request, pk):
         try:
             location.delete()
             messages.success(request, _(u'%s deleted') % location.title)
-        except Exception, e:
+        except Exception as e:
             messages.error(request, e)
 
         return redirect(locations)
@@ -654,47 +654,6 @@ def edit_notification(request, nid):
     return render(request, 'admin/notifications/form.html')
 
 
-def list_sites(request):
-    if not request.user.is_superuser:
-        messages.error(request, _(u"Access denied"))
-        return redirect('/login/')
-
-    data = {'sites': Site.objects.all()}
-    data['title'] = _(u"Manage Sites")
-
-    return render(request, "admin/sites/index.html", data)
-
-
-def edit_site(request, pk=None):
-    if not request.user.is_superuser:
-        messages.add_message(request, messages.ERROR, _(u"Access denied"))
-        return redirect('/login/')
-
-    site = Site()
-    data = {'title': _(u"New Site")}
-
-    if pk is not None:
-        site = Site.objects.get(pk=pk)
-        data['title'] = site.name
-
-    SiteForm = modelform_factory(Site, exclude=[])
-    form = SiteForm(instance=site)
-
-    if request.method == "POST":
-
-        form = SiteForm(request.POST, instance=site)
-
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS, _(u"Site saved"))
-            return redirect(list_sites)
-
-    data['form'] = form
-    data['sites'] = Site.objects.all()
-
-    return render(request, "admin/sites/edit_site.html", data)
-
-
 def upload_users(request):
     """
     """
@@ -708,7 +667,7 @@ def upload_users(request):
             try:
                 users = form.save()
                 messages.success(request, _('%d users imported') % len(users))
-            except Exception, e:
+            except Exception as e:
                 messages.error(request, e)
         else:
             messages.error(request, form.errors)

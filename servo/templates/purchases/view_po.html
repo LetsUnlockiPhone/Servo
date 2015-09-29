@@ -9,48 +9,48 @@
 {% endblock filter_bar %}
 
 {% block detail_view %}
-    <div class="row">
-        <div class="span4">
-            <dl class="dl-horizontal">
-                <dt>{% trans "Created By" %}</dt>
-                <dd>{{ po.created_by }}</dd>
-                <dt>{% trans "Created At" %}</dt>
-                <dd>{{ po.created_at|date:"SHORT_DATE_FORMAT" }}</dd>
-                <dt>{% trans "Sales Order" %}</dt>
-                <dd>{{ po.sales_order|default:"" }}</dd>
-                <dt>{% trans "Reference" %}</dt>
-                <dd>{{ po.reference }}</dd>
-                <dt>{% trans "Confirmation" %}</dt>
-                <dd>{{ po.confirmation }}</dd>
-            </dl>
-        </div>
-        <div class="span8">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>{% trans "Product" %}</th>
-                        <th>{% trans "Reference" %}</th>
-                        <th>{% trans "Amount" %}</th>
-                        <th>{% trans "Purchase Price" %}</th>
-                        <th>{% trans "Received At" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for i in po.purchaseorderitem_set.all %}
-                    <tr>
-                        <td><strong>{{ i.code }}</strong><br/>{{ i.title }}</td>
-                        <td>{{ i.reference }}</td>
-                        <td>{{ i.amount }}</td>
-                        <td>{{ i.price|currency }}</td>
-                        <td>{{ i.received_at|date:"SHORT_DATE_FORMAT"|default:"-" }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="row">
+  <div class="span4">
+    <dl class="dl-horizontal">
+      <dt>{% trans "Created By" %}</dt>
+      <dd>{{ po.created_by }}</dd>
+      <dt>{% trans "Created At" %}</dt>
+      <dd>{{ po.created_at|date:"SHORT_DATE_FORMAT" }}</dd>
+      <dt>{% trans "Sales Order" %}</dt>
+      <dd>{{ po.sales_order|default:"" }}</dd>
+      <dt>{% trans "Reference" %}</dt>
+      <dd>{{ po.reference }}</dd>
+      <dt>{% trans "Confirmation" %}</dt>
+      <dd>{{ po.confirmation }}</dd>
+    </dl>
+  </div>
+  <div class="span8">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{% trans "Product" %}</th>
+          <th>{% trans "Reference" %}</th>
+          <th>{% trans "Amount" %}</th>
+          <th>{% trans "Purchase Price" %}</th>
+          <th>{% trans "Received At" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for i in products %}
+        <tr>
+          <td><strong>{{ i.code }}</strong><br/>{{ i.title }}</td>
+          <td>{{ i.reference }}</td>
+          <td>{{ i.amount }}</td>
+          <td>{{ i.price|currency }}</td>
+          <td>{{ i.received_at|date:"SHORT_DATE_FORMAT"|default:"-" }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock detail_view %}
 
 {% block crumbs %}
-    <li><a href="{% url 'purchases-list_pos' %}">{% trans "Purchase Orders" %}</a></li>
+  <li><a href="{% url 'purchases-list_pos' %}">{% trans "Purchase Orders" %}</a></li>
 {% endblock crumbs %}

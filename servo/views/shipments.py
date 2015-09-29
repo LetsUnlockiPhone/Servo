@@ -145,7 +145,7 @@ def view_incoming(request, pk):
         if form.is_valid():
             try:
                 item = form.save()
-            except gsxws.GsxError, e:
+            except gsxws.GsxError as e:
                 messages.error(request, e)
                 return redirect(view_incoming, date, pk)
 
@@ -176,7 +176,7 @@ def return_label(request, code, return_order):
     try:
         label = gsxws.Returns(return_order)
         return HttpResponse(label.returnLabelFileData, content_type="application/pdf")
-    except Exception, e:
+    except Exception as e:
         messages.add_message(request, messages.ERROR, e)
         return redirect('products-list')
 
@@ -252,7 +252,7 @@ def edit_bulk_return(request, pk=None, ship_to=None):
                         msg = _(u"Bulk return %s submitted") % shipment.return_id
                         messages.success(request, msg)
                         return redirect(view_bulk_return, shipment.pk)
-                    except Exception, e:
+                    except Exception as e:
                         messages.error(request, e)
                         return redirect(edit_bulk_return, ship_to=ship_to)
                 messages.success(request, msg)

@@ -73,7 +73,7 @@ class User(AbstractUser):
         max_length=32,
         choices=LOCALES,
         default=LOCALES[0][0],
-        verbose_name=_('language'),
+        verbose_name=_('Language'),
         help_text=_("Select which language you want to use Servo in.")
     )
 
@@ -108,7 +108,7 @@ class User(AbstractUser):
     )
     notify_by_email = models.BooleanField(
         default=False,
-        verbose_name=_('email notifications'),
+        verbose_name=_('Email notifications'),
         help_text=_("Event notifications will also be emailed to you.")
     )
     autoprint = models.BooleanField(
@@ -120,7 +120,7 @@ class User(AbstractUser):
         blank=True,
         default='',
         max_length=16,
-        verbose_name=_("tech ID")
+        verbose_name=_("Tech ID")
     )
     gsx_userid = models.CharField(
         blank=True,
@@ -141,7 +141,7 @@ class User(AbstractUser):
         null=True,
         blank=True,
         upload_to="avatars",
-        verbose_name=_('photo'),
+        verbose_name=_('Photo'),
         help_text=_("Maximum avatar size is 1MB")
     )
 
@@ -168,6 +168,10 @@ class User(AbstractUser):
 
     @classmethod
     def refresh_nomail(cls):
+        """
+        Refreshes the list of emails that shouldn't
+        be notified by email
+        """
         users = cls.active.filter(notify_by_email=False)
         nomail = [u.email for u in users]
         cache.set('nomail', nomail)

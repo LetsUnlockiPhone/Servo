@@ -49,7 +49,7 @@ class Command(BaseCommand):
                     po = PurchaseOrder.objects.get(pk=details.purchaseOrderNumber)
                     po.invoice_id = i
                     po.invoice.save("%s.pdf" % i, File(open(details.invoiceData)))
-            except Exception, e:
+            except Exception as e:
                 raise e
 
     def update_warranty(self):

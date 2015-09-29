@@ -67,8 +67,8 @@ def list_pos(request):
         orders = paginator.page(paginator.num_pages)
 
     data['orders'] = orders
-    data['form'] = form
-    data['total'] = all_orders.aggregate(Sum('total'))
+    data['form']   = form
+    data['total']  = all_orders.aggregate(Sum('total'))
     return render(request, "purchases/list_pos.html", data)
 
 
@@ -92,7 +92,8 @@ def add_to_po(request, pk, product_id):
 
 
 def view_po(request, pk):
-    po = PurchaseOrder.objects.get(pk=pk)
+    po = get_object_or_404(PurchaseOrder, pk=pk)
+    products = po.purchaseorderitem_set.all()
     title = _('Purchase Order %d' % po.pk)
     return render(request, "purchases/view_po.html", locals())
 
@@ -158,7 +159,8 @@ def order_stock(request, po_id):
 
     if request.method == "POST":
         if po.submitted_at:
-            messages.error(request, _(u'Purchase Order %s has already been submitted') % po.pk)
+            msg = _(u'Purchase Order %s has already been submitted') % po.pk
+            messages.error(request, msg)
             return list_pos(request)
 
         act = GsxAccount.default(request.user)
@@ -201,12 +203,12 @@ def delete_po(request, po_id):
 @permission_required('servo.add_purchaseorder')
 def create_po(request, product_id=None, order_id=None):
     po = PurchaseOrder(created_by=request.user)
-    location = request.user.get_location()
-    po.location = location
+    po.location = request.user.get_location()
     po.save()
 
     if order_id is not None:
         po.sales_order_id = order_id
+        po.save()
         for i in ServiceOrderItem.objects.filter(order_id=order_id):
             po.add_product(i, amount=1, user=request.user)
 

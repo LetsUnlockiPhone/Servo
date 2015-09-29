@@ -153,7 +153,7 @@ def edit(request, pk=None, order_id=None, parent=None, recipient=None, customer=
 
     try:
         note.escalation = Escalation(created_by=request.user)
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
         return redirect(request.META['HTTP_REFERER'])
 

@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for p in parts %}
+    {% for p in parts %}
       <tr>
         <td><input type="checkbox" name="items" value="{{ p.returnOrderNumber }}"/></td>
         <td>{{ p.partNumber }}</td>
@@ -28,11 +28,11 @@
         <td>{{ p.registeredForReturn }}</td>
         <td>{{ p.kbbSerialNumber }}</td>
       </tr>
-      {% empty %}
+    {% empty %}
       <tr>
         <td colspan="7" class="muted empty">{% trans "No parts pending return" %}</td>
       </tr>
-      {% endfor %}
+    {% endfor %}
     </tbody>
   </table>
   <button type="submit" class="btn btn-primary pull-right" disabled="disabled">{% trans "Submit" %}</button>

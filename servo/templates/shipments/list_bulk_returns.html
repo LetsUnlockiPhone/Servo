@@ -26,6 +26,10 @@
       <td>{{ i.num_parts }}</td>
       <td>{{ i.dispatched_by }}<br/><small class="muted">{{ i.dispatched_at|date:"SHORT_DATETIME_FORMAT" }}</small></td>
     </tr>
+  {% empty %}
+      <tr>
+        <td colspan="5" class="muted empty">{% trans "No bulk returns" %}</td>
+      </tr>
   {% endfor %}
   </tbody>
 </table>
@@ -33,5 +37,5 @@
 {% endblock second_column %}
 
 {% block breadcrumb %}
-<li class="active"><span class="divider">/</span> {% trans "Browse Returns" %}</li>
+  <li class="active"><span class="divider">/</span> {% trans "Browse Returns" %}</li>
 {% endblock breadcrumb %}
