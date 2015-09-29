@@ -286,6 +286,7 @@ class Order(models.Model):
         if self.closed_at:
             if (now - self.closed_at).seconds < moment_seconds:
                 return _("Closed a moment ago")
+
             return _(u"Closed for %(time)s") % {'time': timesince(self.closed_at)}
 
         if self.status and self.status_started_at is not None:
@@ -300,10 +301,14 @@ class Order(models.Model):
                 return _("Created a moment ago")
             return _("Unassigned for %(delta)s") % {'delta': timesince(self.created_at)}
 
-        if self.started_at and self.user is not None:
+        if self.in_progress():
             if (now - self.started_at).seconds < moment_seconds:
                 return _("Started a moment ago")
+
             return _("Open for %(delta)s") % {'delta': timesince(self.started_at)}
+
+    def in_progress(self):
+        return self.started_at and self.user is not None
 
     def get_place(self):
         return self.place or _("Select place")
@@ -425,10 +430,17 @@ class Order(models.Model):
         pass
 
     def set_location(self, new_location, user):
+        # move the products too
+        for soi in self.serviceorderitem_set.all():
+            product = soi.product
+            source = Inventory.objects.get(location=self.location, product=product)
+            source.move(new_location, soi.amount)
+            
         self.location = new_location
         msg = _(u"Order %s moved to %s") % (self.code, new_location.title)
         self.notify("set_location", msg, user)
         self.save()
+
         return msg
 
     def set_checkin_location(self, new_location, user):
@@ -493,8 +505,8 @@ class Order(models.Model):
             return # fail silently
 
         self.status = None
-        self.status_started_at = None
-        self.status_limit_green = None
+        self.status_started_at   = None
+        self.status_limit_green  = None
         self.status_limit_yellow = None
         self.save()
 
@@ -625,7 +637,7 @@ class Order(models.Model):
         try:
             return self.devices.all()[0].slug
         except Exception:
-            return None
+            pass
 
     def net_total(self):
         total = 0
@@ -1069,10 +1081,10 @@ class Accessory(models.Model):
     """
     An accessory that came with the device in this Service Order
     """
-    name = models.TextField()
-    qty = models.IntegerField(default=1)
-    device = models.ForeignKey(Device)
-    order = models.ForeignKey(Order)
+    name    = models.TextField()
+    qty     = models.IntegerField(default=1)
+    device  = models.ForeignKey(Device)
+    order   = models.ForeignKey(Order)
 
     def __unicode__(self):
         return self.name

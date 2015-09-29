@@ -16,9 +16,9 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 from django.utils.translation import ugettext_lazy as _
 
-from mptt.models import MPTTModel, TreeForeignKey
 from mptt.managers import TreeManager
 from gsxws import comptia, parts, validate
+from mptt.models import MPTTModel, TreeForeignKey
 
 from servo import defaults
 from servo.lib.shorturl import from_time
@@ -29,7 +29,7 @@ def get_margin(price=0.0):
     """
     Returns the proper margin % for this price
     """
-    price = Decimal(price)
+    price  = Decimal(price)
     margin = defaults.margin()
 
     try:
@@ -82,7 +82,7 @@ class AbstractBaseProduct(models.Model):
         unique=True,
         max_length=32,
         default=from_time,
-        verbose_name=_("code")
+        verbose_name=_("Code")
     )
 
     subst_code = models.CharField(
@@ -171,7 +171,7 @@ class AbstractBaseProduct(models.Model):
 
     is_serialized = models.BooleanField(
         default=False,
-        verbose_name=_('is serialized'),
+        verbose_name=_('Is serialized'),
         help_text=_("Product has a serial number")
     )
 
@@ -181,6 +181,9 @@ class AbstractBaseProduct(models.Model):
 
 
 class Product(AbstractBaseProduct):
+    """
+    An item in the inventory
+    """
     warranty_period = models.PositiveIntegerField(
         default=0,
         verbose_name=_("Warranty (months)")
@@ -205,17 +208,17 @@ class Product(AbstractBaseProduct):
     device_models = models.ManyToManyField(
         "DeviceGroup",
         blank=True,
-        verbose_name=_("device models")
+        verbose_name=_("Device models")
     )
     tags = GenericRelation(TaggedItem)
     photo = models.ImageField(
         null=True,
         blank=True,
         upload_to="products",
-        verbose_name=_("photo")
+        verbose_name=_("Photo")
     )
 
-    shipping = models.FloatField(default=0, verbose_name=_('shipping'))
+    shipping = models.FloatField(default=0, verbose_name=_('Shipping'))
 
     # component code is used to identify Apple parts
     component_code = models.CharField(
@@ -223,26 +226,26 @@ class Product(AbstractBaseProduct):
         default='',
         max_length=1,
         choices=comptia.GROUPS,
-        verbose_name=_("component group")
+        verbose_name=_("Component group")
     )
 
     labour_tier = models.CharField(max_length=15, blank=True, default='')
 
     # We need this to call the correct GSX SN Update API
     PART_TYPES = (
-        ('ADJUSTMENT', _("Adjustment")),
-        ('MODULE', _("Module")),
+        ('ADJUSTMENT',  _("Adjustment")),
+        ('MODULE',      _("Module")),
         ('REPLACEMENT', _("Replacement")),
-        ('SERVICE', _("Service")),
+        ('SERVICE',     _("Service")),
         ('SERVICE CONTRACT', _("Service Contract")),
-        ('OTHER', _("Other")),
+        ('OTHER',       _("Other")),
     )
 
     part_type = models.CharField(
         max_length=18,
         default='OTHER',
         choices=PART_TYPES,
-        verbose_name=_("part type")
+        verbose_name=_("Part type")
     )
 
     eee_code = models.CharField(
@@ -266,7 +269,8 @@ class Product(AbstractBaseProduct):
             return _("%d months") % self.warranty_period
 
     def can_order_from_gsx(self):
-        return self.component_code and self.part_type in ("MODULE", "REPLACEMENT", "OTHER",)
+        ok_types = ("MODULE", "REPLACEMENT", "OTHER",)
+        return self.component_code and self.part_type in ok_types
 
     def can_update_price(self):
         return self.can_order_from_gsx() and not self.fixed_price
@@ -310,7 +314,7 @@ class Product(AbstractBaseProduct):
         margin = get_margin(price)
         vat = Decimal(conf.get("pct_vat", 0.0))
 
-        # TWOPLACES = Decimal(10) ** -2       # same as Decimal('0.01')
+        # TWOPLACES = Decimal(10) ** -2  # same as Decimal('0.01')
         # @TODO: make rounding configurable!
         wo_tax = ((price*100)/(100-margin)+shipping).to_integral_exact(rounding=ROUND_CEILING)
         with_tax = (wo_tax*(vat+100)/100).to_integral_exact(rounding=ROUND_CEILING)
@@ -322,7 +326,7 @@ class Product(AbstractBaseProduct):
             return
 
         purchase_sp = self.price_purchase_stock
-        sp, vat_sp = self.calculate_price(purchase_sp, self.shipping)
+        sp, vat_sp  = self.calculate_price(purchase_sp, self.shipping)
         self.price_notax_stock = sp
         self.price_sales_stock = vat_sp
 
@@ -331,7 +335,7 @@ class Product(AbstractBaseProduct):
             return
 
         purchase_ep = self.price_purchase_exchange
-        ep, vat_ep = self.calculate_price(purchase_ep, self.shipping)
+        ep, vat_ep  = self.calculate_price(purchase_ep, self.shipping)
         self.price_notax_exhcange = ep
         self.price_sales_exchange = vat_ep
 
@@ -364,8 +368,8 @@ class Product(AbstractBaseProduct):
             # calculate stock price
             purchase_sp = part.stockPrice or 0.0
             purchase_sp = Decimal(purchase_sp)
-            sp, vat_sp = product.calculate_price(purchase_sp, shipping)
-            product.pct_margin_stock = get_margin(purchase_sp)
+            sp, vat_sp  = product.calculate_price(purchase_sp, shipping)
+            product.pct_margin_stock  = get_margin(purchase_sp)
             product.price_notax_stock = sp
             product.price_sales_stock = vat_sp
             # @TODO: make rounding configurable
@@ -430,18 +434,32 @@ class Product(AbstractBaseProduct):
     def latest_date_arrived(self):
         return '-'
 
+    def track_inventory(self):
+        if not Configuration.track_inventory():
+            return False
+
+        if self.part_type == "SERVICE":
+            return False
+
+        return True
+
     def sell(self, amount, location):
         """
         Deduct product from inventory with specified location
         """
-        track_inventory = Configuration.track_inventory()
-
-        if self.part_type == "SERVICE" or not track_inventory:
+        if not self.track_inventory():
             return
 
         try:
             inventory = Inventory.objects.get(product=self, location=location)
-            inventory.amount_stocked = inventory.amount_stocked - amount
+            
+            try:
+                inventory.amount_stocked  = inventory.amount_stocked - amount
+                inventory.amount_reserved = inventory.amount_reserved - amount
+            except Exception as e:
+                # @TODO: Would be nice to trigger a warning
+                pass
+
             inventory.save()
         except Inventory.DoesNotExist:
             raise ValueError(_(u"Product %s not found in inventory.") % self.code)
@@ -455,6 +473,7 @@ class Product(AbstractBaseProduct):
     def get_absolute_url(self):
         if self.pk is None:
             return reverse("products-view_product", kwargs={'code': self.code})
+
         return reverse("products-view_product", kwargs={'pk': self.pk})
 
     def get_amount_stocked(self, user):
@@ -581,7 +600,7 @@ class Inventory(models.Model):
     """
     Inventory tracks how much of Product X is in Location Y
     """
-    product = models.ForeignKey(Product)
+    product  = models.ForeignKey(Product)
     location = models.ForeignKey(Location)
 
     amount_minimum = models.PositiveIntegerField(
@@ -594,18 +613,34 @@ class Inventory(models.Model):
     )
     amount_stocked = models.IntegerField(
         default=0,
-        verbose_name=_("stocked amount")
+        verbose_name=_("stocked amount"),
     )
     amount_ordered = models.PositiveIntegerField(
         default=0,
         verbose_name=_("ordered amount")
     )
 
+    def move(self, new_location, amount=1):
+        """
+        Move this inventory to a new_location
+        """
+        if new_location == self.location:
+            raise ValueError(_('Cannot move products to the same location'))
+
+        target, created = Inventory.objects.get_or_create(location=new_location,
+                                                          product=self.product)
+        self.amount_stocked = self.amount_stocked - amount
+        self.save()
+        target.amount_stocked = target.amount_stocked + amount
+        target.save()
+
     def save(self, *args, **kwargs):
         super(Inventory, self).save(*args, **kwargs)
         total_amount = 0
+
         for i in self.product.inventory_set.all():
             total_amount += i.amount_stocked
+
         self.product.total_amount = total_amount
         self.product.save()
 
