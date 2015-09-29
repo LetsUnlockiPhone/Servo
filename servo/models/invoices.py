@@ -8,8 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-from servo import defaults
-from servo.models import User, Customer, Order, ServiceOrderItem, AbstractOrderItem
+from servo.models import (User, Customer, Order, Location, 
+                          AbstractOrderItem, ServiceOrderItem,)
 
 
 class Invoice(models.Model):
@@ -32,9 +32,15 @@ class Invoice(models.Model):
         verbose_name=_("Payment Method")
     )
 
-    is_paid = models.BooleanField(default=False, verbose_name=_("paid"))
+    is_paid = models.BooleanField(default=False, verbose_name=_("Paid"))
     paid_at = models.DateTimeField(null=True, editable=False)
     order = models.ForeignKey(Order, editable=False)
+    location = models.ForeignKey(
+        Location,
+        null=True,
+        blank=True,
+        editable=False
+    )
     customer = models.ForeignKey(
         Customer,
         null=True,
@@ -42,8 +48,8 @@ class Invoice(models.Model):
         on_delete=models.SET_NULL
     )
 
-    # We remember the following the following so that the customer info
-    # on the invoice doesn't change if the customer is modified or deleted
+    # We remember the following so that the customer info on the invoice 
+    # doesn't change if the customer is modified or deleted
     customer_name = models.CharField(
         max_length=255,
         default=_("Walk-in"),
@@ -97,6 +103,9 @@ class Invoice(models.Model):
         return [x.get_method_display() for x in payments]
 
     def dispatch(self, products):
+        """
+        Dispatches the products in this invoice from the inventory
+        """
         for p in products:
             soi = ServiceOrderItem.objects.get(pk=p)
             InvoiceItem.from_soi(soi, self)
@@ -108,6 +117,11 @@ class Invoice(models.Model):
     def get_absolute_url(self):
         from django.core.urlresolvers import reverse
         return reverse("invoices-view_invoice", args=[self.pk])
+
+    def save(self, *args, **kwargs):
+        if self.location is None:
+            self.location = self.order.location
+        return super(Invoice, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ('-id',)

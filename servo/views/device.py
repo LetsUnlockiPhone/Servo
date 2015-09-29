@@ -232,7 +232,7 @@ def diagnostics(request, pk):
                 diagnostics = DiagnosticResults(diagnostics)
                 return render(request, "devices/diagnostic_ios.html", locals())
             return render(request, "devices/diagnostic_results.html", locals())
-        except gsxws.GsxError, e:
+        except gsxws.GsxError as e:
             return render(request, "devices/diagnostic_error.html", {'error': e})
 
     return render(request, "devices/diagnostics.html", locals())
