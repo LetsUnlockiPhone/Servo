@@ -3,6 +3,7 @@
 import json
 import subprocess
 from django.db.models import Model
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -52,7 +53,6 @@ def cache_getset(k, v):
     Shortcut for getting and setting cache
     v should be a callable
     """
-    from django.core.cache import cache
     if cache.get(k):
         return cache.get(k)
 
