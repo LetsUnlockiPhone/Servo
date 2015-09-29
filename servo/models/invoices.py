@@ -32,9 +32,9 @@ class Invoice(models.Model):
         verbose_name=_("Payment Method")
     )
 
-    is_paid = models.BooleanField(default=False, verbose_name=_("Paid"))
-    paid_at = models.DateTimeField(null=True, editable=False)
-    order = models.ForeignKey(Order, editable=False)
+    is_paid  = models.BooleanField(default=False, verbose_name=_("Paid"))
+    paid_at  = models.DateTimeField(null=True, editable=False)
+    order    = models.ForeignKey(Order, editable=False)
     location = models.ForeignKey(
         Location,
         null=True,
@@ -80,9 +80,9 @@ class Invoice(models.Model):
         verbose_name=_("Reference")
     )
 
-    total_net = models.DecimalField(max_digits=8, decimal_places=2)     # total w/o taxes
-    total_tax = models.DecimalField(max_digits=8, decimal_places=2)     # total taxes
-    total_gross = models.DecimalField(max_digits=8, decimal_places=2)   # total with taxes
+    total_net   = models.DecimalField(max_digits=8, decimal_places=2) # total w/o taxes
+    total_tax   = models.DecimalField(max_digits=8, decimal_places=2) # total taxes
+    total_gross = models.DecimalField(max_digits=8, decimal_places=2) # total with taxes
 
     total_margin = models.DecimalField(
         max_digits=8,
@@ -110,7 +110,7 @@ class Invoice(models.Model):
             soi = ServiceOrderItem.objects.get(pk=p)
             InvoiceItem.from_soi(soi, self)
 
-            soi.product.sell(soi.amount, self.order.location)
+            soi.product.sell(soi.amount, self.location)
             soi.dispatched = True
             soi.save()
 
@@ -121,6 +121,11 @@ class Invoice(models.Model):
     def save(self, *args, **kwargs):
         if self.location is None:
             self.location = self.order.location
+
+        if self.pk is None:
+            description = _(u'Order %s dispatched') % self.order.code
+            self.order.notify('dispatched', description, self.created_by)
+
         return super(Invoice, self).save(*args, **kwargs)
 
     class Meta:
@@ -181,27 +186,17 @@ class Payment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
 
-    class Meta:
-        app_label = "servo"
-
-
-@receiver(post_save, sender=Invoice)
-def trigger_order_dispatched(sender, instance, created, **kwargs):
-    if created:
-        description = _(u'Order %s dispatched') % instance.order.code
-        instance.order.notify('dispatched', description, instance.created_by)
-
-
-@receiver(post_save, sender=Payment)
-def trigger_payment_received(sender, instance, created, **kwargs):
-    if created:
-        invoice = instance.invoice
+    def save(self, *args, **kwargs):
+        invoice = self.invoice
         
-        if instance.method > 0:
-            description = _(u'Payment for %0.2f received') % instance.amount
-            invoice.order.notify('paid', description, instance.created_by)
+        if self.method > 0:
+            description = _(u'Payment for %0.2f received') % self.amount
+            invoice.order.notify('paid', description, self.created_by)
 
         if invoice.paid_at is None:
             if invoice.get_payment_total() == invoice.total_gross:
                 invoice.paid_at = timezone.now()
                 invoice.save()
+
+    class Meta:
+        app_label = "servo"
