@@ -283,13 +283,12 @@ class PurchaseOrderItem(AbstractOrderItem):
         self.save()
 
     def save(self, *args, **kwargs):
-
         # The following four fields are used so much
         # that we store them for fast access
         if self.sales_order is None:
             self.sales_order = self.purchase_order.sales_order
 
-        if self.sales_order_ref == '':
+        if self.sales_order_ref == '' and self.sales_order:
             self.sales_order_ref = self.sales_order.code
 
         if self.purchase_order_ref == '':
