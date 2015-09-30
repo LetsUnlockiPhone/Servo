@@ -59,19 +59,19 @@ class BulkReturnPartForm(forms.ModelForm):
     class Meta:
         model = ServicePart
         widgets = {
-            'box_number': forms.Select(attrs={'class': 'input-small'}),
-            'part_number': forms.HiddenInput(),
-            'part_title': forms.HiddenInput(),
+            'box_number'   : forms.Select(attrs={'class': 'input-small'}),
+            'part_number'  : forms.HiddenInput(),
+            'part_title'   : forms.HiddenInput(),
             'service_order': forms.HiddenInput(),
-            'return_order': forms.HiddenInput(),
+            'return_order' : forms.HiddenInput(),
         }
         exclude = []
 
     def __init__(self, *args, **kwargs):
         super(BulkReturnPartForm, self).__init__(*args, **kwargs)
         if 'instance' in kwargs:
-            box_choices = [(0, 'Individual',)]
             instance = kwargs['instance']
+            box_choices = [(0, 'Individual',)]
             # @TODO: This seems like a totally unnecessary hack...
             # Why can't I just pass the number of options directly to the form?
             part_count = instance.shipment.servicepart_set.all().count()

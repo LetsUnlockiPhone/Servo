@@ -2,11 +2,11 @@
 {% load i18n %}
 
 {% block header %}
-    {% blocktrans with id=order.code %}Reserve all products in order {{ id }}?{% endblocktrans %}
+    {% blocktrans with id=order.code %}Reserve products in order {{ id }}{% endblocktrans %}
 {% endblock header %}
 
 {% block footer %}
-<form action="{{ action }}" method="post" accept-charset="utf-8">
+<form action="{{ request.path }}" method="post" accept-charset="utf-8">
     {% csrf_token %}
     <button class="btn btn-primary" type="submit">{% trans "Reserve" %}</button>
 </form>

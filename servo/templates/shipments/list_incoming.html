@@ -1,8 +1,7 @@
 {% extends "shipments/index.html" %}
 {% load i18n %}
 
-{% block toolbar %}
-{% endblock toolbar %}
+{% block toolbar %}{% endblock toolbar %}
 
 {% block second_column %}
 {% include "snippets/filtering_form.html" %}
@@ -26,24 +25,24 @@
       {% if can_receive %}
         <td><input type="checkbox" name="id" value="{{ i.pk|safe }}" class="toggle-submit"/></td>
       {% endif %}
-      {% with i.product as p %}
-        <td data-value="{{ p.code }}">
-          <strong><a href="{% url 'shipments-view_incoming' i.pk %}" data-modal="#modal">{{ p.code }}</a></strong><br/>{{ p.title }}
+        <td data-value="{{ i.code }}">
+          <strong><a href="{% url 'shipments-view_incoming' i.pk %}" data-modal="#modal">{{ i.code }}</a></strong><br/>{{ i.title }}
         </td>
-      {% endwith %}
       {% with i.purchase_order as po %}
-        <td data-value="{{ po.sales_order.code }}">
-        {% if po.sales_order %}
-          <a href="{% url 'orders-edit' po.sales_order.pk %}">{{ po.sales_order.code }}</a>
+        <td data-value="{{ i.sales_order_ref }}">
+        {% if i.sales_order %}
+          <a href="{% url 'orders-edit' i.sales_order_id %}">{{ i.sales_order_ref }}</a>
         {% endif %}
-          <br/><small class="muted">{{ po.reference }}</small>
+          <br/><small class="muted">{{ i.purchase_order_ref }}</small>
         </td>
         <td>{{ po.confirmation }}</td>
-        <td>{{ po.created_by }}<br/><small class="muted">{{ po.submitted_at|date:"SHORT_DATE_FORMAT" }}</small></td>
+        <td>{{ i.user_fullname }}<br/><small class="muted">{{ i.created_at|date:"SHORT_DATE_FORMAT" }}</small></td>
       {% endwith %}
       </tr>
       {% empty %}
-      <tr><td colspan="7" class="muted empty">{% trans "No incoming products" %}</td></tr>
+      <tr>
+        <td colspan="7" class="muted empty">{% trans "No incoming products" %}</td>
+      </tr>
       {% endfor %}
     </tbody>
   </table>

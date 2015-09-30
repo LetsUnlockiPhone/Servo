@@ -14,7 +14,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 
 from servo.models.order import ServiceOrderItem
-from servo.models import Product, GsxAccount, PurchaseOrder, PurchaseOrderItem
+from servo.models import (Order, Product, GsxAccount, 
+                          PurchaseOrder, PurchaseOrderItem,)
 from servo.forms import PurchaseOrderItemEditForm, PurchaseOrderSearchForm
 
 
@@ -202,12 +203,15 @@ def delete_po(request, po_id):
 
 @permission_required('servo.add_purchaseorder')
 def create_po(request, product_id=None, order_id=None):
+    """
+    Creates a new Purchase Order
+    """
     po = PurchaseOrder(created_by=request.user)
     po.location = request.user.get_location()
     po.save()
 
     if order_id is not None:
-        po.sales_order_id = order_id
+        po.sales_order = Order.objects.get(pk=order_id)
         po.save()
         for i in ServiceOrderItem.objects.filter(order_id=order_id):
             po.add_product(i, amount=1, user=request.user)

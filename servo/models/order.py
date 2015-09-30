@@ -931,8 +931,12 @@ class ServiceOrderItem(AbstractOrderItem):
         return self.order.repair_set.latest()
 
     def reserve_product(self):
+        """
+        Reserve this SOI for the inventory at this location
+        """
         location = self.order.location
-        inventory = Inventory.objects.get(location=location, product=self.product)
+        inventory, created = Inventory.objects.get_or_create(location=location, 
+                                                             product=self.product)
         inventory.amount_reserved += self.amount
         inventory.save()
 

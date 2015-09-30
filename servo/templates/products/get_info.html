@@ -38,7 +38,7 @@
 {% endifchanged %}
 <dl class="dl-horizontal">
   <dt>{% trans "Stocked" %}</dt>
-  <dd>{{ i.amount_stocked }}</dd>
+  <dd>{{ i.amount_stocked|default:"-" }}</dd>
   <dt>{% trans "Ordered" %}</dt>
   <dd>{{ i.amount_ordered|default:"-" }}</dd>
   <dt>{% trans "Reserved" %}</dt>

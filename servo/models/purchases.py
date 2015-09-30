@@ -188,7 +188,9 @@ class PurchaseOrder(models.Model):
 
 
 class PurchaseOrderItem(AbstractOrderItem):
-    "An item being purchased"
+    """
+    An item being purchased
+    """
     price = models.DecimalField(
         max_digits=8,
         decimal_places=2,
@@ -202,8 +204,34 @@ class PurchaseOrderItem(AbstractOrderItem):
         verbose_name=_("Purchase Order")
     )
 
+    # begin optimization
+    sales_order = models.ForeignKey(
+        Order,
+        null=True,
+        editable=False,
+    )
+
+    sales_order_ref = models.CharField(
+        default='',
+        max_length=8,
+        editable=False,
+    )
+
+    purchase_order_ref = models.CharField(
+        default='',
+        max_length=32,
+        editable=False,
+    )
+
+    user_fullname = models.CharField(
+        default='',
+        max_length=256,
+        editable=False,
+    )
+    # /end optimization
+
     order_item = models.ForeignKey(ServiceOrderItem, null=True, editable=False)
-    reference = models.CharField(default='', blank=True, max_length=128)
+    reference  = models.CharField(default='', blank=True, max_length=128)
     ordered_at = models.DateTimeField(null=True, editable=False)
 
     expected_ship_date = models.DateField(null=True, editable=False)
@@ -255,7 +283,23 @@ class PurchaseOrderItem(AbstractOrderItem):
         self.save()
 
     def save(self, *args, **kwargs):
+
+        # The following four fields are used so much
+        # that we store them for fast access
+        if self.sales_order is None:
+            self.sales_order = self.purchase_order.sales_order
+
+        if self.sales_order_ref == '':
+            self.sales_order_ref = self.sales_order.code
+
+        if self.purchase_order_ref == '':
+            self.purchase_order_ref = self.purchase_order.reference
+
+        if self.user_fullname == '':
+            self.user_fullname = self.created_by.get_name()
+
         super(PurchaseOrderItem, self).save(*args, **kwargs)
+
         # Sync SOI and POI serial numbers
         if self.order_item:
             if self.order_item.sn and not self.sn:
@@ -264,6 +308,9 @@ class PurchaseOrderItem(AbstractOrderItem):
                 self.order_item.sn = self.sn
 
             self.order_item.save()
+
+    def __unicode__(self):
+        return self.code
 
     class Meta:
         ordering = ('id',)

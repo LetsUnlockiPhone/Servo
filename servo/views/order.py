@@ -310,7 +310,8 @@ def toggle_task(request, order_id, item_id):
     checklist_item = get_object_or_404(ChecklistItem, pk=item_id)
     
     try:
-        item = ChecklistItemValue.objects.get(order_id=order_id, item=checklist_item)
+        item = ChecklistItemValue.objects.get(order_id=order_id,
+                                              item=checklist_item)
         item.delete()
     except ChecklistItemValue.DoesNotExist:
         item = ChecklistItemValue()
@@ -348,6 +349,7 @@ def repair(request, order_id, repair_id):
 @permission_required("servo.change_order")
 def complete_repair(request, order_id, repair_id):
     repair = get_object_or_404(Repair, pk=repair_id)
+    
     if request.method == 'POST':
         try:
             repair.close(request.user)
@@ -414,7 +416,8 @@ def delete(request, pk):
             return redirect(return_to)
         except Exception as e:
             ed = {'order': order.code, 'error': e}
-            messages.error(request, _(u'Cannot delete order %(order)s: %(error)s') % ed)
+            msg = _(u'Cannot delete order %(order)s: %(error)s') % ed
+            messages.error(request, msg)
             return redirect(order)
 
     action = request.path
@@ -450,13 +453,14 @@ def remove_user(request, pk, user_id):
     Removes this user from the follower list, unsets assignee
     """
     order = get_object_or_404(Order, pk=pk)
-    user = get_object_or_404(User, pk=user_id)
+    user  = get_object_or_404(User, pk=user_id)
 
     try:
         order.remove_follower(user)
         if user == order.user:
             order.set_user(None, request.user)
-        order.notify("unset_user", _('User %s removed from followers') % user, request.user)
+        msg = _('User %s removed from followers') % user
+        order.notify("unset_user", msg, request.user)
     except Exception as e:
         messages.error(request, e)
 
@@ -623,7 +627,7 @@ def device_from_product(request, pk, item_id):
     """
     Turns a SOI into a device and attaches it to this order
     """
-    order = Order.objects.get(pk=pk)
+    order = get_object_or_404(Order, pk=pk)
     soi = ServiceOrderItem.objects.get(pk=item_id)
 
     try:
@@ -640,8 +644,7 @@ def device_from_product(request, pk, item_id):
 
 @permission_required('servo.change_order')
 def reserve_products(request, pk):
-    order = Order.objects.get(pk=pk)
-    location = request.user.get_location()
+    order = get_object_or_404(Order, pk=pk)
 
     if request.method == 'POST':
         for p in order.products.all():
@@ -653,8 +656,7 @@ def reserve_products(request, pk):
 
         return redirect(order)
 
-    data = {'order': order, 'action': request.path}
-    return render(request, "orders/reserve_products.html", data)
+    return render(request, "orders/reserve_products.html", locals())
 
 
 @permission_required("servo.change_order")

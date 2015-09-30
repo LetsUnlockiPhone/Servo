@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 
 from servo.models import Location, User, TaggedItem
 from servo.models.purchases import PurchaseOrderItem
-from servo.models.product import Product, ProductCategory
+from servo.models.product import Product, ProductCategory, Inventory
 from servo.forms.base import BaseModelForm, DatepickerInput, TextInput
 
 
@@ -114,7 +114,8 @@ class ProductForm(forms.ModelForm):
     def clean_code(self):
         code = self.cleaned_data.get('code')
         if not re.match(r'^[\w\-/]+$', code):
-            raise ValidationError(_('Product code %s contains invalid characters') % code)
+            msg = _('Product code %s contains invalid characters') % code
+            raise ValidationError(msg)
 
         return code
 
@@ -207,3 +208,18 @@ class IncomingSearchForm(forms.Form):
         label=_('Service order is')
     )
 
+
+class ReserveProductForm(forms.Form):
+    """
+    Form for reserving products for a given SO
+    """
+    inventory = forms.ModelChoiceField(
+        queryset=Inventory.objects.none(),
+        label=_('Inventory')
+    )
+
+    def __init__(self, order, *args, **kwargs):
+        super(ReserveProductForm, self).__init__(*args, **kwargs)
+        inventory = Inventory.objects.filter(location=order.location,
+                                             product__in=order.products.all())
+        self.fields['inventory'].queryset = inventory

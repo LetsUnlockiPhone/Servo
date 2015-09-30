@@ -62,7 +62,7 @@ class Shipment(models.Model):
         default='',
         max_length=18,
         choices=gsxws.CARRIERS,
-        verbose_name=_('carrier')
+        verbose_name=_('Carrier')
     )
 
     created_at = models.DateTimeField(auto_now=True, editable=False)

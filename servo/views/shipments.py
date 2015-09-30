@@ -25,7 +25,9 @@ def prep_counts():
 
 
 def prep_list_view(request):
-
+    """
+    Prepares the list view for incoming parts and products
+    """
     from datetime import timedelta
     now = timezone.now()
 
@@ -33,7 +35,7 @@ def prep_list_view(request):
     data['counts'] = prep_counts()
     location = request.user.get_location()
 
-    ordered_date_range = [now - timedelta(days=30), timezone.now()]
+    ordered_date_range  = [now - timedelta(days=30), timezone.now()]
     received_date_range = [now - timedelta(days=30), timezone.now()]
 
     initial = {
@@ -47,7 +49,7 @@ def prep_list_view(request):
     else:
         data['form'] = IncomingSearchForm(initial=initial)
 
-    inventory = PurchaseOrderItem.objects.filter(received_at=None)
+    inventory = PurchaseOrderItem.objects.filter(received_at=None).select_related('purchase_order', 'sales_order')
     inventory = inventory.exclude(purchase_order__submitted_at=None)
 
     if request.method == 'POST':
@@ -106,7 +108,7 @@ def list_incoming(request, shipment=None, status=""):
             item = PurchaseOrderItem.objects.get(pk=i)
             try:
                 item.receive(request.user)
-            except ValueError, e:
+            except ValueError as e:
                 messages.error(request, e)
                 return redirect(list_incoming)
 
@@ -228,16 +230,16 @@ def edit_bulk_return(request, pk=None, ship_to=None):
         return redirect(edit_bulk_return, ship_to=ship_to)
 
     shipment = Shipment.get_current(request.user, location, ship_to)
-
     part_count = shipment.servicepart_set.all().count()
     PartFormSet = inlineformset_factory(Shipment,
                                         ServicePart,
                                         form=BulkReturnPartForm,
                                         extra=0,
                                         exclude=[])
+    
     form = BulkReturnForm(instance=shipment)
     formset = PartFormSet(instance=shipment)
-
+    
     if request.method == "POST":
         form = BulkReturnForm(request.POST, instance=shipment)
         if form.is_valid():
@@ -246,6 +248,7 @@ def edit_bulk_return(request, pk=None, ship_to=None):
                 shipment = form.save()
                 msg = _("Bulk return saved")
                 formset.save()
+                
                 if "confirm" in request.POST.keys():
                     try:
                         shipment.register_bulk_return(request.user)
