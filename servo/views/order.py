@@ -644,8 +644,7 @@ def reserve_products(request, pk):
     location = request.user.get_location()
 
     if request.method == 'POST':
-
-        for p in order.serviceorderitem_set.all():
+        for p in order.products.all():
             p.reserve_product()
 
         msg = _(u"Products of order %s reserved") % order.code
