@@ -433,9 +433,13 @@ class Order(models.Model):
         # move the products too
         for soi in self.serviceorderitem_set.all():
             product = soi.product
-            source = Inventory.objects.get(location=self.location, product=product)
-            source.move(new_location, soi.amount)
-            
+
+            try:
+                source = Inventory.objects.get(location=self.location, product=product)
+                source.move(new_location, soi.amount)
+            except Inventory.DoesNotExist:
+                pass # @TODO: Is this OK?
+
         self.location = new_location
         msg = _(u"Order %s moved to %s") % (self.code, new_location.title)
         self.notify("set_location", msg, user)
