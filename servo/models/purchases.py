@@ -295,7 +295,8 @@ class PurchaseOrderItem(AbstractOrderItem):
             self.purchase_order_ref = self.purchase_order.reference
 
         if self.user_fullname == '':
-            self.user_fullname = self.created_by.get_name()
+            user = self.created_by or self.purchase_order.created_by
+            self.user_fullname = user.get_name()
 
         super(PurchaseOrderItem, self).save(*args, **kwargs)
 
