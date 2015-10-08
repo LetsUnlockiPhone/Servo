@@ -72,6 +72,20 @@
     {% endif %}
     <a href="{% url 'orders-history' order.pk device.pk %}" class="btn btn-small" data-modal="#modal"><i class="icon-time"></i> {% trans "History" %}</a>
     <div class="btn-group">
+      <a class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+        <i class="icon-cog"></i> {% trans "Diagnostics" %} <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+      {% if device.is_ios %}
+        <li><a href="{% url 'devices-diagnostics' device.pk %}?a=init&amp;order={{ order.pk|safe }}" data-modal="#modal">{% trans "Initiate Diagnostics" %}</a></li>
+      {% else %}
+        <li class="disabled"><a href="#" data-modal="#modal">{% trans "Initiate Diagnostics" %}</a></li>
+      {% endif %}
+        <li><a href="{% url 'devices-diagnostics' device.pk %}" data-modal="#modal">{% trans "Fetch Diagnostics" %}</a></li>
+        <li><a href="{% url 'devices-diagnostics' device.pk %}" data-modal="#modal">{% trans "Open Diagnostics Console" %}</a></li>
+      </ul>
+    </div>
+    <div class="btn-group">
       <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="icon-cog"></i> <span class="caret"></span>
       </a>
@@ -100,13 +114,6 @@
         <li><a href="{% url 'repairs-import_repair' order.pk device.pk %}" data-modal="#modal">{% trans "Import GSX Repair" %}</a></li>
         <li class="divider"></li>
         <li><a href="{% url 'devices-update_gsx_details' device.pk %}" class="spin">{% trans "Update Warranty Status" %}</a></li>
-        <li class="divider"></li>
-      {% if device.is_ios %}
-        <li><a href="{% url 'devices-diagnostics' device.pk %}?a=init&amp;order={{ order.pk|safe }}" data-modal="#modal">{% trans "Initiate Diagnostics" %}</a></li>
-      {% else %}
-        <li class="disabled"><a href="#" data-modal="#modal">{% trans "Initiate Diagnostics" %}</a></li>
-      {% endif %}
-        <li><a href="{% url 'devices-diagnostics' device.pk %}" data-modal="#modal">{% trans "Fetch Diagnostics" %}</a></li>
         <li class="divider"></li>
         <li><a href="{{ device.get_absolute_url }}">{% trans "Show Device" %}</a></li>
       {% if device.sn == '' %}
