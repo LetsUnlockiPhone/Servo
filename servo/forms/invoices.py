@@ -34,6 +34,12 @@ class InvoiceForm(forms.ModelForm):
         }
         localized_fields = ('total_net', 'total_tax', 'total_gross')
 
+    close = forms.BooleanField(
+        initial=False,
+        required=False,
+        widget=forms.HiddenInput
+    )
+
 
 class InvoiceSearchForm(forms.Form):
     state = forms.ChoiceField(

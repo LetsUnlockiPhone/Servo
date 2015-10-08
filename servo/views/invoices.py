@@ -159,6 +159,11 @@ def create_invoice(request, order_id=None, numbers=None):
                 messages.success(request, _(u'Order %s dispatched') % order.code)
             except Exception as e:
                 messages.error(request, e)
+
+            if form.cleaned_data.get('close'):
+                order.close(request.user)
+                messages.success(request, _(u'Order %s closed') % order.code)
+
             return redirect(order)
         else:
             messages.error(request, form.errors)

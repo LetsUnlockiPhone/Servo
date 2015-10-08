@@ -12,6 +12,7 @@
 </div>
 <form method="post" action="" accept-charset="utf8">
   {% csrf_token %}
+  {{ form.close }}
   {{ formset.management_form }}
   <div class="row-fluid">
     <div class="span3">
@@ -92,6 +93,7 @@
       <div class="form-actions">
         <div class="pull-right">
           <a class="btn btn-default" href="{{ order.get_absolute_url }}">{% trans "Cancel" %}</a>
+          <button type="submit" class="btn btn-default" id="btn_dispatch_close">{% trans "Dispatch and Close" %}</button>
           <button type="submit" class="btn btn-primary">{% trans "Dispatch" %}</button>
         </div>
       </div>
@@ -108,6 +110,9 @@
 
 {% block media %}
 <script type="text/javascript">
+  $('#btn_dispatch_close').click(function(){
+    $('#id_invoice-close').val('True');
+  })
   $('.clonerow').click(function() {
     cloneMore('.formrow:last', 'payment', true);
   });
