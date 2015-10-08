@@ -58,7 +58,7 @@
     </div>
   </div>
   <div class="form-actions">
-  {% if user.pk %}
+  {% if user.pk and can_delete %}
     <a href="{% url 'admin-delete_user' user.pk %}" class="btn btn-danger" data-modal="#modal">{% trans "Delete" %}</a>
   {% else %}
     <a href="#" class="btn btn-danger disabled">{% trans "Delete" %}</a>
