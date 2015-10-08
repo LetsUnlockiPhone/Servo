@@ -1,6 +1,5 @@
 Introduction
 ============
-
 Servo is a service management system for Authorised Apple Service Providers. It allows you to run your entire service business from within the same interface. Originally created in 2012 it is being used by service providers both large and small all around Europe.
 
 Main features include:
@@ -22,7 +21,6 @@ Main features include:
 
 System Requirements
 ===================
-
 The application is written in Python on top of the excellent [Django web framework](https://www.djangoproject.com) and depends on the latest stable versions of the following components for operation:
 
 - PostgreSQL
@@ -34,7 +32,6 @@ The application is written in Python on top of the excellent [Django web framewo
 
 Installation
 ============
-
 Install PostgreSQL, nginx, memcached, rabbitMQ. Then install the necessary Python packages:
 
     $ pip install -U -r requirements.pip
@@ -48,7 +45,6 @@ Then clone the code:
 
 Configuration
 =============
-
 Edit local_settings.py (these are settings specific to your installation):
 
 	import logging
@@ -100,13 +96,11 @@ Then fire up your browser and got to http://localhost:8080/
 
 The VMWare Image
 ================
-
 You can also download a preconfigured VMWare image [here](http://files.servoapp.com/vmware/). Please read the included README files for instructions.
 
 
 Updating
 ========
-
 First, back up your database, then:
 
 	$ git pull origin master
@@ -117,15 +111,14 @@ After which you should restart your Servo instance.
 
 Documentation
 =============
-
 End-user documentation for the system is available [here](https://docs.servoapp.com). A user-friendly list of changes is published [here](https://docs.servoapp.com/changelog/).
 
 
 FAQ
 ===
-
-Q: Why use Django?
-A: Because it works. Django also has the best documentation of any framework I've seen (especially from from PHP and Zend Framework)
+- Q: Why use Django?
+- A: Because it works. Django also has the best documentation of any framework I've seen (especially coming from PHP and Zend Framework)
 ----
-Q: Why is Servo open-source?
-A: Because it's a mission-critical application and open-sourcing it means that companies will always have access to it.
+- Q: Why is Servo open-source?
+- A: Because it's a mission-critical application and open-sourcing it means that companies will always have access to it.
+----

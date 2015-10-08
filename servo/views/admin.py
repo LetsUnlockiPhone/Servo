@@ -76,12 +76,12 @@ def edit_gsx_account(request, pk=None):
 
 @staff_member_required
 def delete_gsx_account(request, pk=None):
-    act = GsxAccount.objects.get(pk=pk)
+    act = get_object_or_404(GsxAccount, pk=pk)
     if request.method == 'POST':
         try:
             act.delete()
             messages.success(request, _("GSX account deleted"))
-        except Exception, e:
+        except Exception as e:
             messages.error(request, e)
 
         return redirect(list_gsx_accounts)
@@ -138,7 +138,6 @@ def delete_checklist(request, pk):
         messages.success(request, _('Checklist deleted'))
         return redirect(checklists)
 
-    action = str(request.path)
     title = _('Really delete this checklist?')
     explanation = _('This will also delete all checklist values.')
 
@@ -166,7 +165,7 @@ def edit_tag(request, type, pk=None):
     if pk is None:
         tag = Tag(type=type)
     else:
-        tag = Tag.objects.get(pk=pk)
+        tag = get_object_or_404(Tag, pk=pk)
 
     TagForm = modelform_factory(Tag, exclude=[])
     form = TagForm(instance=tag)
@@ -187,7 +186,7 @@ def edit_tag(request, type, pk=None):
 
 @staff_member_required
 def delete_tag(request, pk):
-    tag = Tag.objects.get(pk=pk)
+    tag = get_object_or_404(Tag, pk=pk)
 
     if request.method == 'POST':
         tag.delete()
@@ -257,7 +256,7 @@ def edit_status(request, pk=None):
     if pk is None:
         status = Status()
     else:
-        status = Status.objects.get(pk=pk)
+        status = get_object_or_404(Status, pk=pk)
 
     header = _(u'Statuses')
     object_list = Status.objects.all()
@@ -276,8 +275,7 @@ def edit_status(request, pk=None):
 
 @staff_member_required
 def remove_status(request, pk):
-    status = Status.objects.get(pk=pk)
-    action = request.path
+    status = get_object_or_404(Status, pk=pk)
 
     if request.method == 'POST':
         status.delete()
@@ -328,7 +326,7 @@ def edit_field(request, type, pk=None):
 
 @staff_member_required
 def delete_field(request, pk=None):
-    field = Property.objects.get(pk=pk)
+    field = get_object_or_404(Property, pk=pk)
 
     if request.method == 'POST':
         field.delete()
@@ -345,8 +343,10 @@ def delete_field(request, pk=None):
 def list_templates(request):
     object_list = Template.objects.all()
     title = Template._meta.verbose_name_plural
+
     if object_list.count() > 0:
         return redirect(object_list[0].get_admin_url())
+
     return render(request, "admin/templates/list_templates.html", locals())
 
 
@@ -356,7 +356,7 @@ def edit_template(request, pk=None):
     if pk is None:
         template = Template()
     else:
-        template = Template.objects.get(pk=pk)
+        template = get_object_or_404(Template, pk=pk)
 
     form = TemplateForm(instance=template)
 
@@ -377,15 +377,14 @@ def edit_template(request, pk=None):
 
 @staff_member_required
 def delete_template(request, pk):
-    template = Template.objects.get(pk=pk)
+    template = get_object_or_404(Template, pk=pk)
 
     if request.method == 'POST':
         template.delete()
         messages.success(request, _(u'Template %s deleted') % template.title)
         return redirect(list_templates)
 
-    title = _('Really delete this template?')
-    action = str(request.path)
+    title = _('Delete this template?')
     return render(request, 'generic/delete.html', locals())
 
 
@@ -434,7 +433,7 @@ def edit_group(request, pk=None):
 
 @staff_member_required
 def delete_group(request, pk):
-    group = Group.objects.get(pk=pk)
+    group = get_object_or_404(Group, pk=pk)
 
     if request.method == "POST":
         group.delete()
@@ -448,9 +447,12 @@ def delete_group(request, pk):
 
 @staff_member_required
 def delete_user(request, user_id):
-    user = User.objects.get(pk=user_id)
+    user = get_object_or_404(User, pk=user_id)
 
     if request.method == "POST":
+        if user == request.user:
+            messages.error(request, _('Deleting yourself is not allowed'))
+            return redirect(list_users)
         try:
             user.delete()
             messages.success(request, _("User deleted"))
@@ -464,7 +466,7 @@ def delete_user(request, user_id):
 
 @staff_member_required
 def delete_user_token(request, user_id):
-    user = User.objects.get(pk=user_id)
+    user = get_object_or_404(User, pk=user_id)
     user.delete_tokens()
     messages.success(request, _('API tokens deleted'))
     return redirect(edit_user, user.pk)
@@ -514,6 +516,8 @@ def edit_user(request, pk=None):
     if len(object_list) > 0:
         header = _(u'%d users') % len(object_list)
 
+    can_delete = user != request.user
+
     return render(request, "admin/users/form.html", locals())
 
 
@@ -557,7 +561,7 @@ def edit_location(request, pk=None):
 
 @staff_member_required
 def delete_location(request, pk):
-    location = Location.objects.get(pk=pk)
+    location = get_object_or_404(Location, pk=pk)
 
     if request.method == 'POST':
         try:
@@ -570,7 +574,6 @@ def delete_location(request, pk):
 
     title = _(u'Really delete this location?')
     explanation = _(u'This will not delete the orders at this location')
-    action = request.path
 
     return render(request, 'generic/delete.html', locals())
 
@@ -594,7 +597,7 @@ def edit_queue(request, pk=None):
         locations = request.user.locations.all()
         form = QueueForm(initial={'locations': locations})
     else:
-        queue = Queue.objects.get(pk=pk)
+        queue = get_object_or_404(Queue, pk=pk)
         form = QueueForm(instance=queue, initial={'users': queue.user_set.all()})
 
     title = _(u'Queues')
@@ -629,7 +632,7 @@ def edit_queue(request, pk=None):
 
 @staff_member_required
 def delete_queue(request, pk=None):
-    queue = Queue.objects.get(pk=pk)
+    queue = get_object_or_404(Queue, pk=pk)
 
     if request.method == 'POST':
         try:

@@ -2,15 +2,15 @@
 {% load i18n %}
 
 {% block header %}
-    <h2>{% blocktrans with status.title as title %}Delete status "{{ title }}"?{% endblocktrans %}</h2>
+    {% blocktrans with status.title as title %}Delete status "{{ title }}"?{% endblocktrans %}
 {% endblock header %}
 
 {% block body %}
-  <p>{% trans "This action cannot be undone." %}</p>  
+    {% trans "This action cannot be undone." %}</p>
 {% endblock body %}
 
 {% block footer %}
-    <form action="{{ action }}" method="post">
+    <form action="{{ request.path }}" method="post">
       {% csrf_token %}
       <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
     </form>    

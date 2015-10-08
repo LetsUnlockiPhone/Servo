@@ -7,8 +7,8 @@ from django.forms.models import inlineformset_factory
 
 from django.utils.translation import ugettext as _
 
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.contrib import messages
@@ -76,7 +76,7 @@ def list_pos(request):
 @permission_required("servo.change_purchaseorder")
 def delete_from_po(request, pk, item_id):
     # @TODO - decrement amount_ordered?
-    po = PurchaseOrder.objects.get(pk=pk)
+    po = get_object_or_404(PurchaseOrder, pk=pk)
     poi = PurchaseOrderItem.objects.get(pk=item_id)
     poi.delete()
     messages.success(request, _(u'Product %s removed' % poi.product.code))
@@ -85,8 +85,8 @@ def delete_from_po(request, pk, item_id):
 
 @permission_required("servo.change_purchaseorder")
 def add_to_po(request, pk, product_id):
-    po = PurchaseOrder.objects.get(pk=pk)
-    product = Product.objects.get(pk=product_id)
+    po = get_object_or_404(PurchaseOrder, pk=pk)
+    product = get_object_or_404(Product, pk=product_id)
     po.add_product(product, 1, request.user)
     messages.success(request, _(u"Product %s added" % product.code))
     return redirect(edit_po, po.pk)
@@ -101,7 +101,6 @@ def view_po(request, pk):
 
 @permission_required("servo.change_purchaseorder")
 def edit_po(request, pk, item_id=None):
-
     if pk is not None:
         po = get_object_or_404(PurchaseOrder, pk=pk)
     else:
@@ -181,7 +180,7 @@ def order_stock(request, po_id):
             po.submit(request.user)
             msg = _("Products ordered with confirmation %s" % po.confirmation)
             messages.success(request, msg)
-        except gsxws.GsxError, e:
+        except gsxws.GsxError as e:
             messages.error(request, e)
 
         return redirect(list_pos)
@@ -192,7 +191,7 @@ def order_stock(request, po_id):
 
 @permission_required('servo.delete_purchaseorder')
 def delete_po(request, po_id):
-    po = PurchaseOrder.objects.get(pk=po_id)
+    po = get_object_or_404(PurchaseOrder, pk=po_id)
     try:
         po.delete()
         messages.success(request, _("Purchase Order %s deleted" % po_id))
@@ -211,13 +210,13 @@ def create_po(request, product_id=None, order_id=None):
     po.save()
 
     if order_id is not None:
-        po.sales_order = Order.objects.get(pk=order_id)
+        po.sales_order = get_object_or_404(Order, pk=order_id)
         po.save()
         for i in ServiceOrderItem.objects.filter(order_id=order_id):
             po.add_product(i, amount=1, user=request.user)
 
     if product_id is not None:
-        product = Product.objects.get(pk=product_id)
+        product = get_object_or_404(Product, pk=product_id)
         po.add_product(product, amount=1, user=request.user)
 
     messages.success(request, _("Purchase Order %d created" % po.pk))

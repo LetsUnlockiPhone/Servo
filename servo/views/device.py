@@ -214,7 +214,7 @@ def diagnostics(request, pk):
                 msg = _('Diagnostics initiated - diags://%s') % res
                 order.notify("init_diags", msg, request.user)
                 messages.success(request, msg)
-            except gsxws.GsxError, e:
+            except gsxws.GsxError as e:
                 messages.error(request, e)
 
             return redirect(order)

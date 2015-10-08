@@ -28,7 +28,7 @@ class RepairDetails(object):
 
 @permission_required("servo.change_order")
 def register_return(request, part_id):
-    part = ServicePart.objects.get(pk=part_id)
+    part = get_object_or_404(ServicePart, pk=part_id)
     try:
         part.register_for_return(request.user)
         messages.success(request, _(u"Part %s updated") % part.order_item.code)
@@ -70,7 +70,7 @@ def return_label(request, repair, part):
     """
     Returns the return label PDF for this repair and part
     """
-    repair = Repair.objects.get(pk=repair)
+    repair = get_object_or_404(Repair, pk=repair)
 
     try:
         repair.connect_gsx(request.user)
@@ -86,7 +86,7 @@ def add_part(request, repair, part):
     """
     Adds this part to this GSX repair
     """
-    rep = Repair.objects.get(pk=repair)
+    rep = get_object_or_404(Repair, pk=repair)
     soi = rep.order.serviceorderitem_set.get(pk=part)
 
     if request.method == "POST":
@@ -108,8 +108,8 @@ def add_part(request, repair, part):
 
 
 def remove_part(request, repair, part):
-    rep = Repair.objects.get(pk=repair)
-    part = ServicePart.objects.get(pk=part)
+    rep = get_object_or_404(Repair, pk=repair)
+    part = get_object_or_404(ServicePart, pk=part)
 
     if request.method == "POST":
 
@@ -154,7 +154,7 @@ def check_parts_warranty(request, repair):
     Checks this (new) repair warranty status
     with the included device and parts
     """
-    repair = Repair.objects.get(pk=repair)
+    repair = get_object_or_404(Repair, pk=repair)
     parts = repair.order.get_parts()
 
     try:
@@ -333,7 +333,7 @@ def copy_repair(request, pk):
     """
     Duplicates a local GSX repair
     """
-    repair = Repair.objects.get(pk=pk)
+    repair = get_object_or_404(Repair, pk=pk)
     new_repair = repair.duplicate(request.user)
     return redirect(edit_repair, new_repair.order_id, new_repair.pk)
 
@@ -342,7 +342,7 @@ def update_sn(request, pk, part):
     """
     Updates the parts serial number
     """
-    part = ServicePart.objects.get(pk=part)
+    part = get_object_or_404(ServicePart, pk=part)
 
     try:
         part.repair.connect_gsx(request.user)

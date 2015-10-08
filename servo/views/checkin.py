@@ -15,6 +15,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from django.shortcuts import render, redirect, get_object_or_404
 
+from servo.lib.utils import json_response
 from servo.views.order import put_on_paper
 from servo.validators import apple_sn_validator
 from servo.models import (User, Device, GsxAccount, Order,
@@ -148,13 +149,16 @@ def thanks(request, order):
 
 
 def get_customer(request):
+    """
+    Returns the selected customer data
+    """
     if not request.user.is_authenticated():
         return
 
     if not request.GET.get('c'):
         return
 
-    customer = Customer.objects.get(pk=request.GET['c'])
+    customer = get_object_or_404(Customer, pk=request.GET['c'])
     request.session['checkin_customer'] = customer.pk
 
     fdata = {'fname': customer.firstname}
@@ -166,7 +170,7 @@ def get_customer(request):
     fdata['address'] = customer.street_address
     fdata['postal_code'] = customer.zip_code
 
-    return HttpResponse(json.dumps(fdata), content_type='application/json')
+    return json_response(fdata)
 
 
 def status(request):
@@ -196,7 +200,7 @@ def status(request):
 
 
 def print_confirmation(request, code):
-    order = Order.objects.get(url_code=code)
+    order = get_object_or_404(Order, url_code=code)
     return put_on_paper(request, order.pk)
 
 
@@ -359,18 +363,20 @@ def index(request):
         # Checklists probably not configured
         pass
 
-    if request.GET.get('phone'):
+    phone = request.GET.get('phone')
+
+    if phone:
 
         if not request.user.is_authenticated():
             return
 
         results = []
 
-        for c in Customer.objects.filter(phone=request.GET['phone']):
+        for c in Customer.objects.filter(phone=phone):
             title = '%s - %s' % (c.phone, c.name)
             results.append({'id': c.pk, 'name': c.name, 'title': title})
 
-        return HttpResponse(json.dumps(results), content_type='application/json')
+        return json_response(results)
 
     if request.GET.get('sn'):
 

@@ -82,9 +82,9 @@
     <li><a href="{% url 'orders-toggle_follow' order.pk %}">{% trans "Follow Order" %}</a></li>
   {% endif %}
   {% if perms.servo.add_order and perms.servo.copy_order %}
-    <li><a href="{% url 'orders-copy_order' order.pk %}">{% trans "Copy Order" %}</a></li>
+    <li><a href="{% url 'orders-copy_order' order.pk %}">{% trans "Duplicate Order" %}</a></li>
   {% else %}
-    <li><a class="disabled" href="#">{% trans "Copy Order" %}</a></li>
+    <li><a class="disabled" href="#">{% trans "Duplicate Order" %}</a></li>
   {% endif %}
     <li><a href="{% url 'barcodes-view' order.code %}?f=svg" target="_blank">{% trans "Show Barcode" %}</a></li>
     <li class="divider"></li>

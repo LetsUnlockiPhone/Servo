@@ -2,16 +2,16 @@
 {% load i18n %}
 
 {% block header %}
-    {{ title }}
+  {{ title }}
 {% endblock header %}
 
 {% block body %}
-    {{ explanation }}
+  {{ explanation }}
 {% endblock body %}
 
 {% block footer %}
-    <form method="post" action="{{ action }}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
-    </form>
+<form method="post" action="{{ action|default:request.path }}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+</form>
 {% endblock footer %}

@@ -136,7 +136,7 @@ def edit(request, pk=None, order_id=None, parent=None, recipient=None, customer=
             customer = order.customer_id
 
     if customer is not None:
-        customer = Customer.objects.get(pk=customer)
+        customer = get_object_or_404(Customer, pk=customer)
         note.customer = customer
 
         if order_id is None:
@@ -169,7 +169,7 @@ def edit(request, pk=None, order_id=None, parent=None, recipient=None, customer=
         formset = AttachmentFormset(queryset=note.attachments.all())
 
     if parent is not None:
-        parent = Note.objects.get(pk=parent)
+        parent = get_object_or_404(Note, pk=parent)
         note.parent = parent
         note.body = parent.quote()
 
@@ -263,7 +263,7 @@ def render_template(request):
     """
     content = ''
     title = request.POST.get('title')
-    tpl = Template.objects.get(title=title)
+    tpl = get_object_or_404(Template, title=title)
 
     if request.session.get('current_order_id'):
         tpl = template.Template(tpl.content)
@@ -319,7 +319,7 @@ def list_notes(request, kind="inbox"):
 
 
 def view_note(request, kind, pk):
-    note = Note.objects.get(pk=pk)
+    note = get_object_or_404(Note, pk=pk)
     data = prep_list_view(request, kind)
     data['title'] = note.subject
     data['note'] = note
@@ -334,8 +334,9 @@ def search(request):
     query = request.GET.get("q")
     request.session['search_query'] = query
 
-    title = _(u'Notes containing "%s"') % query
     results = Note.objects.filter(body__icontains=query).order_by('-created_at')
+    title = _(u'%d search results for "%s"') % (results.count(), query,)
+
     paginator = Paginator(results, 10)
 
     page = request.GET.get("page")
