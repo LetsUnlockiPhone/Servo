@@ -46,7 +46,7 @@ class InvoiceSearchForm(forms.Form):
         required=False,
         label=_('State is'),
         choices=(
-            ('', _('Any')),
+            ('',     _('Any')),
             ('OPEN', _('Open')),
             ('PAID', _('Paid')),
         ),

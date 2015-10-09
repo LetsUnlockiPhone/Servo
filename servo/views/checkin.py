@@ -214,7 +214,7 @@ def index(request):
     if request.method == 'GET':
         reset_session(request)
         
-    title = _('Service Order Check-In')    
+    title = _('Service Order Check-In')
 
     dcat = request.GET.get('d', 'mac')
     dmap = {
