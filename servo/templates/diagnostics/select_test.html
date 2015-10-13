@@ -1,0 +1,13 @@
+{% extends "modal.html" %}
+{% load i18n %}
+{% block header %}{% trans "Choose test to run" %}{% endblock header %}
+{% block body %}
+  {% if error %}
+    <h2>{{ error }}</h2>
+  {% endif %}
+  <ul class="nav nav-pills nav-stacked">
+  {% for i in tests %}
+    <li><a href="{% url 'devices-run_test' device.pk i.0 %}">{{ i.1 }}</a></li>
+  {% endfor %}
+  </ul>
+{% endblock body %}

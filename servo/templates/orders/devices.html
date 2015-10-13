@@ -83,6 +83,7 @@
       {% endif %}
         <li><a href="{% url 'devices-diagnostics' device.pk %}" data-modal="#modal">{% trans "Fetch Diagnostics" %}</a></li>
         <li><a href="{% url 'devices-diagnostics' device.pk %}" data-modal="#modal">{% trans "Open Diagnostics Console" %}</a></li>
+        <li><a href="{% url 'devices-select_test' device.pk %}" data-modal="#modal">{% trans "Select Test" %}</a></li>
       </ul>
     </div>
     <div class="btn-group">

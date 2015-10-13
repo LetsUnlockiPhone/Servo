@@ -203,7 +203,7 @@ class Device(models.Model):
 
     @property
     def has_warranty(self):
-        return self.warranty_status in ('ALW', 'APP', 'CBC')
+        return self.warranty_status in ('ALW', 'APP', 'CBC',)
 
     @property
     def tag_choices(self):
@@ -474,6 +474,21 @@ class Device(models.Model):
             return self.purchase_country
 
         return countries.countries.get(self.purchase_country, '')
+
+    def run_test(self, test_id, request):
+        from gsxws import diagnostics
+        GsxAccount.default(request.user)
+        diags = diagnostics.Diagnostics(self.sn)
+        diags.shipTo = request.user.location.gsx_shipto
+        diags.diagnosticSuiteId = test_id
+        return diags.run_test()
+
+    def fetch_tests(self, request):
+        from gsxws import diagnostics
+        GsxAccount.default(request.user)
+        diags = diagnostics.Diagnostics(self.sn)
+        diags.shipTo = request.user.location.gsx_shipto
+        return diags.fetch_suites()
 
     def __unicode__(self):
         return '%s (%s)' % (self.description, self.sn)
