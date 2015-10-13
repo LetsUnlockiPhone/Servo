@@ -55,7 +55,8 @@ loc['address']  = raw_input('4/6 Address [Somestreet 1]: ') or 'Somestreet 1'
 loc['zip_code'] = raw_input('5/6 Postal code [1234]: ') or '1234'
 loc['city']     = raw_input('6/6 City [Stockholm]: ') or 'Stockholm'
 
-from servo.models import Location, User
+from servo.models.common import Location
+from servo.models.account import User
 
 first_loc = Location(**loc)
 first_loc.save()

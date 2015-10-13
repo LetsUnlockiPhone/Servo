@@ -19,11 +19,11 @@ from servo.lib.utils import json_response
 from servo.views.order import put_on_paper
 from servo.validators import apple_sn_validator
 from servo.models import (User, Device, GsxAccount, Order,
-                        Customer, Location, Note, Attachment,
-                        Configuration, ChecklistItem, Tag,)
+                          Customer, Location, Note, Attachment,
+                          Configuration, ChecklistItem, Tag,)
 from servo.forms import (SerialNumberForm, AppleSerialNumberForm,
-                        DeviceForm, IssueForm, CustomerForm,
-                        QuestionForm, AttachmentForm, StatusCheckForm,)
+                         DeviceForm, IssueForm, CustomerForm,
+                         QuestionForm, AttachmentForm, StatusCheckForm,)
 
 
 def init_locale(request):

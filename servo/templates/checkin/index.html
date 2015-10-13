@@ -40,6 +40,8 @@
               <ul class="dropdown-menu">
               {% for u in request.session.checkin_users %}
                 <li{% if u.pk == request.session.checkin_user %} class="active"{% endif %}><a href="?u={{ u.pk|safe }}">{{ u.name }}</a></li>
+              {% empty %}
+                <li class="disabled"><a href="#">{% trans "No users found" %}</a></li>
               {% endfor %}
                 <li class="divider"></li>
                 <li><a href="{% url 'accounts-list_orders' user.username %}">{% bootstrap_icon "log-in" %} {% trans "Go to Servo" %}</a></li>
