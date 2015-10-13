@@ -8,7 +8,7 @@ from datetime import date
 from django.conf import settings
 from django_countries import countries
 from django.core.validators import RegexValidator
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.forms.extras.widgets import SelectDateWidget
 
 from servo.validators import apple_sn_validator, phone_validator, file_upload_validator
