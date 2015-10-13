@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-23 10:41+0300\n"
+"POT-Creation-Date: 2015-10-13 20:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,63 +17,63 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms/account.py:36 forms/account.py:70 forms/account.py:78
-#: forms/admin.py:364 forms/admin.py:407 forms/admin.py:435
-#: models/account.py:138 models/common.py:197
-#: templates/devices/get_info.html:33 templates/devices/summary.html:24
-#: templates/orders/devices.html:41
+#: forms/account.py:35 forms/account.py:69 forms/account.py:77
+#: forms/admin.py:400 forms/admin.py:443 forms/admin.py:471
+#: templates/accounts/settings.html:12 templates/devices/get_info.html:33
+#: templates/devices/summary.html:24 templates/orders/devices.html:45
 msgid "Password"
 msgstr "Lösenord"
 
-#: forms/account.py:41 templates/checkin/confirmation.html:6
-#: templates/orders/repair.html:28 templates/products/receive_item.html:33
+#: forms/account.py:40 forms/repairs.py:18 models/purchases.py:43
+#: templates/checkin/confirmation.html:6 templates/orders/repair.html:28
+#: templates/products/receive_item.html:33
 #: templates/purchases/list_pos.html:55 templates/purchases/view_po.html:23
-#: templates/shipments/list_incoming.html:19
+#: templates/shipments/list_incoming.html:18
 msgid "Confirmation"
 msgstr "Bekräftelse"
 
-#: forms/account.py:54
+#: forms/account.py:53
 msgid "Password and confirmation do not match!"
 msgstr ""
 
-#: forms/account.py:61
+#: forms/account.py:60
 msgid "File size of photo is too large"
 msgstr ""
 
-#: forms/account.py:67
+#: forms/account.py:66
 msgid "First Name"
 msgstr "Förnamn"
 
-#: forms/account.py:68
+#: forms/account.py:67
 msgid "Last Name"
 msgstr "Efternamn"
 
-#: forms/account.py:69 templates/accounts/print_calendar.html:23
+#: forms/account.py:68 templates/accounts/print_calendar.html:23
 #: templates/orders/print_confirmation.html:24
 #: templates/orders/print_confirmation.html:54
 #: templates/orders/print_receipt.html:12
 msgid "Email Address"
 msgstr "E-postadress"
 
-#: forms/account.py:75 forms/admin.py:358 forms/admin.py:403
-#: forms/admin.py:431 templates/devices/get_info.html:29
-#: templates/devices/summary.html:20 templates/orders/devices.html:37
+#: forms/account.py:74 forms/admin.py:394 forms/admin.py:439
+#: forms/admin.py:467 templates/devices/get_info.html:29
+#: templates/devices/summary.html:20 templates/orders/devices.html:41
 msgid "Username"
 msgstr "Användar"
 
-#: forms/admin.py:43 views/product.py:173
+#: forms/admin.py:43 views/product.py:183
 msgid "Unsupported file encoding"
 msgstr ""
 
-#: forms/admin.py:90
+#: forms/admin.py:83
 msgid "Group members"
 msgstr ""
 
-#: forms/admin.py:97 templates/admin/users/form.html:9
+#: forms/admin.py:90 templates/admin/users/form.html:9
 msgid "Permissions"
 msgstr ""
 
-#: forms/admin.py:133
+#: forms/admin.py:128
 msgid "A location with that name already exists"
 msgstr ""
 
@@ -82,399 +82,456 @@ msgstr ""
 msgid "\"%s\" cannot be used as a username"
 msgstr ""
 
-#: forms/admin.py:234
+#: forms/admin.py:236
 #, python-format
 msgid "Syntax error in template: %s"
 msgstr ""
 
-#: forms/admin.py:241
+#: forms/admin.py:243
 msgid "Company Name"
 msgstr "Företag"
 
-#: forms/admin.py:243
+#: forms/admin.py:245
 #, fuzzy
 msgid "Company Logo"
 msgstr "Företag"
 
-#: forms/admin.py:245
+#: forms/admin.py:247
 msgid "Company-wide logo to use in print templates"
 msgstr ""
 
-#: forms/admin.py:250
+#: forms/admin.py:252
 msgid "Terms of Service"
 msgstr "Servicevillkor"
 
-#: forms/admin.py:252
+#: forms/admin.py:254
 msgid ""
 "These terms will be added to your work confirmations and public check-in "
 "site."
 msgstr ""
 
-#: forms/admin.py:258
+#: forms/admin.py:260
 msgid "Autocomplete GSX repairs"
 msgstr ""
 
-#: forms/admin.py:259
+#: forms/admin.py:261
 msgid "Complete the GSX repair when closing a Service Order"
 msgstr ""
 
-#: forms/admin.py:264 forms/admin.py:371
+#: forms/admin.py:267 forms/admin.py:407
 msgid "User Account"
 msgstr ""
 
-#: forms/admin.py:266
+#: forms/admin.py:269
 msgid "User account to use for the public check-in service"
 msgstr ""
 
-#: forms/admin.py:270 templates/admin/users/groups.html:12 views/stats.py:276
+#: forms/admin.py:273 stats/forms.py:59 templates/admin/users/groups.html:12
 msgid "Group"
 msgstr ""
 
-#: forms/admin.py:272
+#: forms/admin.py:275
 msgid "Users to choose from in the check-in interface"
 msgstr ""
 
-#: forms/admin.py:276 models/repair.py:54
+#: forms/admin.py:279 models/repair.py:49
 msgid "Checklist"
 msgstr ""
 
-#: forms/admin.py:278
+#: forms/admin.py:281
 msgid "Checklist to show during check-in"
 msgstr ""
 
-#: forms/admin.py:282 models/queue.py:174
+#: forms/admin.py:285 models/queue.py:175 models/rules.py:79
 msgid "Queue"
-msgstr ""
+msgstr "Kö"
 
-#: forms/admin.py:284
+#: forms/admin.py:287
 msgid "Orders created through the check-in interface will go into this queue"
 msgstr ""
 
-#: forms/admin.py:289
+#: forms/admin.py:292
 msgid "Show timeline"
 msgstr ""
 
-#: forms/admin.py:290
+#: forms/admin.py:293
 msgid "Show status timeline on public repair status page"
 msgstr ""
 
-#: forms/admin.py:295
+#: forms/admin.py:298
 #, fuzzy
 msgid "Show password"
 msgstr "Lösenord"
 
-#: forms/admin.py:296
+#: forms/admin.py:299
 msgid "Make checkin device password field readable"
 msgstr ""
 
-#: forms/admin.py:301
+#: forms/admin.py:304
 msgid "Show checklist results"
 msgstr ""
 
-#: forms/admin.py:302
+#: forms/admin.py:305
 msgid "Show checklist results in order confirmation"
 msgstr ""
 
-#: forms/admin.py:306
+#: forms/admin.py:311
+msgid "Require device password"
+msgstr ""
+
+#: forms/admin.py:316
+#, fuzzy
+msgid "Require device condition"
+msgstr "Kundsnamn"
+
+#: forms/admin.py:322
 msgid "Currency"
+msgstr "Valuta"
+
+#: forms/admin.py:336
+msgid "Default account"
 msgstr ""
 
-#: forms/admin.py:319
-msgid "Default GSX account"
-msgstr ""
-
-#: forms/admin.py:321
+#: forms/admin.py:338
 msgid "Use this GSX account before and order is assigned to a queue"
 msgstr ""
 
-#: forms/admin.py:327 models/product.py:107 models/product.py:134
-msgid "Margin %"
+#: forms/admin.py:343
+msgid "SSL certificate"
 msgstr ""
 
-#: forms/admin.py:328
-msgid "Default margin for new products"
-msgstr ""
-
-#: forms/admin.py:334 models/product.py:88
-msgid "VAT %"
-msgstr ""
-
-#: forms/admin.py:335
-msgid "Default VAT for new products"
-msgstr ""
-
-#: forms/admin.py:341
-msgid "Shipping Cost"
-msgstr ""
-
-#: forms/admin.py:342
-msgid "Default shipping cost for new products"
-msgstr ""
-
-#: forms/admin.py:348
-msgid "Track inventory"
+#: forms/admin.py:344
+msgid "SSL client certificate for GSX connections"
 msgstr ""
 
 #: forms/admin.py:349
-msgid "Unchecking this will disable tracking product amounts in your inventory"
+msgid "SSL private key"
 msgstr ""
 
-#: forms/admin.py:353
-msgid "IMAP server"
+#: forms/admin.py:350
+msgid "SSL private key for certificate"
 msgstr ""
 
-#: forms/admin.py:368 forms/admin.py:410 forms/admin.py:445
-msgid "Use SSL"
+#: forms/admin.py:356
+msgid "Private key passphrase"
 msgstr ""
 
-#: forms/admin.py:373
-msgid "User account to use when creating notes from messages"
+#: forms/admin.py:357
+msgid "Passphrase for private key"
+msgstr ""
+
+#: forms/admin.py:363 models/product.py:128 models/product.py:155
+msgid "Margin %"
+msgstr ""
+
+#: forms/admin.py:364
+msgid "Default margin for new products"
+msgstr ""
+
+#: forms/admin.py:370 models/product.py:109
+msgid "VAT %"
+msgstr ""
+
+#: forms/admin.py:371
+msgid "Default VAT for new products"
+msgstr ""
+
+#: forms/admin.py:377
+msgid "Shipping Cost"
 msgstr ""
 
 #: forms/admin.py:378
-msgid "Default Sender"
-msgstr ""
-
-#: forms/admin.py:380 models/account.py:241
-#, fuzzy
-msgid "User"
-msgstr "Användar"
-
-#: forms/admin.py:381 forms/returns.py:53 models/common.py:507
-#: templates/admin/users/form.html:10 views/stats.py:265
-msgid "Location"
-msgstr ""
-
-#: forms/admin.py:382
-msgid "Custom..."
+msgid "Default shipping cost for new products"
 msgstr ""
 
 #: forms/admin.py:384
+msgid "Track inventory"
+msgstr ""
+
+#: forms/admin.py:385
+msgid "Unchecking this will disable tracking product amounts in your inventory"
+msgstr ""
+
+#: forms/admin.py:389
+msgid "IMAP server"
+msgstr ""
+
+#: forms/admin.py:404 forms/admin.py:446 forms/admin.py:481
+msgid "Use SSL"
+msgstr ""
+
+#: forms/admin.py:409
+msgid "User account to use when creating notes from messages"
+msgstr ""
+
+#: forms/admin.py:414
+msgid "Default Sender"
+msgstr ""
+
+#: forms/admin.py:416 models/account.py:275
+msgid "User"
+msgstr "Användar"
+
+#: forms/admin.py:417 forms/returns.py:53 models/common.py:496
+#: stats/forms.py:51 templates/admin/users/form.html:10
+msgid "Location"
+msgstr "Plats"
+
+#: forms/admin.py:418
+msgid "Custom..."
+msgstr ""
+
+#: forms/admin.py:420
 msgid "Select the default sender address for outgoing emails"
 msgstr ""
 
-#: forms/admin.py:396
+#: forms/admin.py:432
 msgid "Default subject"
 msgstr ""
 
-#: forms/admin.py:401
+#: forms/admin.py:437
 msgid "SMTP server"
 msgstr ""
 
-#: forms/admin.py:413
+#: forms/admin.py:449
 msgid "SMS Gateway"
 msgstr ""
 
-#: forms/admin.py:415
+#: forms/admin.py:451
 msgid "Built-in"
 msgstr ""
 
-#: forms/admin.py:423 forms/admin.py:456 forms/checkin.py:100
+#: forms/admin.py:459 forms/admin.py:492 forms/checkin.py:134
 msgid "Email address"
 msgstr "E-postadress"
 
-#: forms/admin.py:426
+#: forms/admin.py:462
 msgid "URL"
 msgstr ""
 
-#: forms/admin.py:428
+#: forms/admin.py:464
 msgid "SMS Server URL"
 msgstr ""
 
-#: forms/admin.py:441
+#: forms/admin.py:477
 msgid "Sender"
 msgstr ""
 
-#: forms/admin.py:451
+#: forms/admin.py:487
 msgid "Notify locations"
 msgstr ""
 
-#: forms/admin.py:452
+#: forms/admin.py:488
 msgid "Daily reports will be sent to the location's email address"
 msgstr ""
 
-#: forms/admin.py:457
+#: forms/admin.py:493
 msgid "Send daily reports to this email address"
 msgstr ""
 
-#: forms/admin.py:465
-msgid "Invalid margin %"
+#: forms/admin.py:513
+msgid "Invalid margin format"
 msgstr ""
 
-#: forms/checkin.py:26 models/note.py:54
-#, python-format
-msgid "%s is not a valid phone number"
-msgstr "%s är inte ett giltigt telefonnummer"
-
-#: forms/checkin.py:31
-#, python-format
-msgid "%s is not a valid serial or IMEI number"
-msgstr "%s är inte ett giltigt serienummer eller IMEI-nummer"
-
-#: forms/checkin.py:40 forms/repairs.py:22 models/customer.py:99
-#: templates/customers/view.html:38
+#: forms/checkin.py:44 forms/checkin.py:147 forms/repairs.py:30
+#: models/customer.py:94 templates/customers/view.html:38
 msgid "Country"
 msgstr "Land"
 
-#: forms/checkin.py:46 templates/orders/devices.html:54
+#: forms/checkin.py:50 templates/orders/devices.html:58
+#: templates/orders/devices.html.py:69 templates/orders/devices.html:71
 #: templates/orders/print_confirmation.html:79
 msgid "Accessories"
 msgstr "Tillbehör"
 
-#: forms/checkin.py:48
+#: forms/checkin.py:52
 msgid ""
 "Please list here any accessories you'd like to check in with your device "
 "(cables, power adapters, bags, etc)"
-msgstr "Skriv in tillbehör om du skickar med något mer är bara enheten (ex. laddare, väska mm)"
+msgstr ""
+"Skriv in tillbehör om du skickar med något mer är bara enheten (ex. laddare, "
+"väska mm)"
 
-#: forms/checkin.py:53
+#: forms/checkin.py:57
 msgid "Proof of Purchase"
 msgstr "Kvitto"
 
-#: forms/checkin.py:54
+#: forms/checkin.py:59
 msgid "Proof of Purchase is required when setting purchase date manually"
 msgstr "Att bifoga ett kvitto krävs om du ändrar inköpsdatumet"
 
-#: forms/checkin.py:93 forms/repairs.py:15
+#: forms/checkin.py:63
+msgid "Condition of device"
+msgstr "Enhetens skick"
+
+#: forms/checkin.py:66
+msgid "Please describe the condition of the device"
+msgstr "Beskriv problemet så detaljerat som möjligt."
+
+#: forms/checkin.py:103
+msgid "Passcode"
+msgstr "Lösenord"
+
+#: forms/checkin.py:121 forms/repairs.py:23
 msgid "First name"
 msgstr "Förnamn"
 
-#: forms/checkin.py:94 forms/repairs.py:16
+#: forms/checkin.py:125 forms/repairs.py:24
 msgid "Last name"
 msgstr "Efternamn"
 
-#: forms/checkin.py:97
+#: forms/checkin.py:131
 msgid "Company (optional)"
 msgstr "Företag"
 
-#: forms/checkin.py:104
+#: forms/checkin.py:139
 msgid "Phone number"
 msgstr "Telefonnummer"
 
-#: forms/checkin.py:107 forms/repairs.py:19 models/invoices.py:75
-#: templates/customers/find.html:51 templates/customers/view.html:30
+#: forms/checkin.py:144 forms/repairs.py:27 models/invoices.py:74
+#: templates/customers/find.html:50 templates/customers/view.html:30
 #: templates/orders/print_confirmation.html:57
 #: templates/orders/print_receipt.html:15
 msgid "Address"
 msgstr "Gatuadress"
 
-#: forms/checkin.py:108 forms/repairs.py:21 templates/customers/find.html:53
+#: forms/checkin.py:151 forms/repairs.py:29 templates/customers/find.html:52
 msgid "City"
 msgstr "Ort"
 
-#: forms/checkin.py:109 templates/customers/find.html:52
+#: forms/checkin.py:155 templates/customers/find.html:51
 msgid "Postal Code"
 msgstr "Postnummer"
 
-#: forms/checkin.py:112
+#: forms/checkin.py:160
 msgid "Check-in location"
 msgstr "Inlämningsställe"
 
-#: forms/checkin.py:115
+#: forms/checkin.py:163
 msgid "Choose where you want to leave the device"
-msgstr "Välj om du vill skicka in den med post, bud eller om du vill lämna in den i en av våra butiker"
+msgstr ""
+"Välj om du vill skicka in den med post, bud eller om du vill lämna in den i "
+"en av våra butiker"
 
-#: forms/checkin.py:119
+#: forms/checkin.py:167
 msgid "Check-out location"
 msgstr "Utlämningsställe"
 
-#: forms/checkin.py:122
+#: forms/checkin.py:170
 msgid "Choose where you want to pick up the device"
-msgstr "Välja om du vill att vi skickar tillbaka den med post, bud eller om du vill hämta i en av våra butiker"
+msgstr ""
+"Välja om du vill att vi skickar tillbaka den med post, bud eller om du vill "
+"hämta i en av våra butiker"
 
-#: forms/checkin.py:124
+#: forms/checkin.py:172
 msgid ""
 "I agree to the <a href=\"/checkin/terms/\" target=\"_blank\">terms of "
 "service.</a>"
 msgstr ""
-"Jag godkänner <a href=\"/checkin/terms/\" target=\"_blank\">servicevillkoren</a>"
+"Jag godkänner <a href=\"/checkin/terms/\" target=\"_blank"
+"\">servicevillkoren</a>"
 
-#: forms/checkin.py:139
+#: forms/checkin.py:178
+msgid "Notify by SMS"
+msgstr ""
+
+#: forms/checkin.py:183
+msgid "Notify by Email"
+msgstr ""
+
+#: forms/checkin.py:217
 msgid "Serial number or IMEI"
 msgstr "Serienummer eller IMEI"
 
-#: forms/checkin.py:146 templates/notes/view_note.html:21
+#: forms/checkin.py:229
+#, fuzzy
+#| msgid "Serial Number"
+msgid "Serial number"
+msgstr "Serienummer"
+
+#: forms/checkin.py:240 templates/notes/view_note.html:21
 #: templates/products/receive_item.html:17
 #: templates/repairs/get_details.html:10
 #: templates/search/results/gsx_repair_details.html:6
-#: templates/shipments/list_incoming.html:18
+#: templates/shipments/list_incoming.html:17
 msgid "Service Order"
 msgstr "Service Order"
 
-#: forms/checkin.py:147
+#: forms/checkin.py:241
 msgid "Invalid Service Order number"
 msgstr "Ogiltig Service Order nummer"
 
-#: forms/checkin.py:155 templates/checkin/issue.html:7
+#: forms/checkin.py:252 templates/checkin/newindex.html:76
 msgid "Problem description"
 msgstr "Problembeskrivning"
 
-#: forms/checkin.py:160 templates/orders/repair.html:23
+#: forms/checkin.py:257 templates/orders/repair.html:23
 msgid "Attachment"
 msgstr "Bifoga fil"
 
-#: forms/checkin.py:161
+#: forms/checkin.py:259
 msgid "Please use this to attach relevant documents"
 msgstr "Här kan du ladda upp relevant dokumentation"
 
-#: forms/checkin.py:166 models/common.py:457
+#: forms/checkin.py:264 models/common.py:445
 #: templates/accounts/print_calendar.html:45
 #: templates/accounts/view_calendar.html:32 templates/customers/view.html:42
 #: templates/devices/get_info.html:41
-#: templates/devices/search_gsx_warranty.html:48
-#: templates/devices/summary.html:28 templates/notes/list_notes.html:74
-#: templates/orders/devices.html:49 templates/orders/repair.html:32
-#: templates/repairs/get_details.html:16 templates/search/spotlight.html:27
+#: templates/devices/search_gsx_warranty.html:55
+#: templates/devices/summary.html:40 templates/notes/list_notes.html:74
+#: templates/orders/devices.html:53 templates/orders/repair.html:32
+#: templates/repairs/get_details.html:16
 #: templates/search/results/gsx_repair_details.html:12
+#: templates/search/spotlight.html:27
 msgid "Notes"
 msgstr "Anmärkningar"
 
-#: forms/checkin.py:168
+#: forms/checkin.py:266
 msgid "Will not appear on the print-out"
-msgstr ""
+msgstr "Kommer inte att visas på utskriften"
 
-#: forms/customer.py:35
+#: forms/customer.py:36
 msgid "Enter a valid phone number"
 msgstr "Skriv in ett giltigt telefonnummer"
 
-#: forms/customer.py:44 forms/product.py:17
+#: forms/customer.py:45 forms/product.py:17
 msgid "Name contains"
 msgstr "Namnet innehåller"
 
-#: forms/customer.py:48
+#: forms/customer.py:49
 msgid "Email contains"
 msgstr "E-post innehåller"
 
-#: forms/customer.py:52
+#: forms/customer.py:53
 msgid "Address contains"
 msgstr "Adress innehåller"
 
-#: forms/customer.py:56
+#: forms/customer.py:57
 #, fuzzy
 msgid "Checked in between"
 msgstr "Mottagen av"
 
-#: forms/customer.py:72
+#: forms/customer.py:73
 msgid "Please specify at least one parameter"
 msgstr "Vänligen ange minst en parameter"
 
-#: forms/customer.py:76
+#: forms/customer.py:77
 msgid "CSV file"
 msgstr ""
 
-#: forms/customer.py:80
+#: forms/customer.py:81
 msgid "Skip duplicates"
 msgstr ""
 
-#: forms/customer.py:81
+#: forms/customer.py:82
 msgid "Skip customers with existing email addresses"
 msgstr ""
 
-#: forms/customer.py:87
+#: forms/customer.py:88
 msgid "Data file should be in text format"
 msgstr ""
 
-#: forms/devices.py:26 forms/orders.py:97
+#: forms/devices.py:26 forms/orders.py:136
 #, fuzzy
 msgid "Created between"
 msgstr "Mottagen av"
@@ -488,115 +545,149 @@ msgstr "Serienummer eller IMEI"
 msgid "Description contains"
 msgstr "Arbetsbeskrivning innehåller"
 
-#: forms/devices.py:61
-msgid "Serial numbers may not include spaces"
-msgstr "Serienummer får inte innehålla mellanslag"
-
-#: forms/invoices.py:39 forms/orders.py:57 forms/product.py:125
+#: forms/invoices.py:47 forms/orders.py:96 forms/product.py:132
 msgid "State is"
 msgstr ""
 
-#: forms/invoices.py:41 forms/invoices.py:50 forms/product.py:127
+#: forms/invoices.py:49 forms/invoices.py:58 forms/product.py:134
+#: models/rules.py:24
 msgid "Any"
 msgstr "Alla"
 
-#: forms/invoices.py:42 forms/product.py:128 models/order.py:128
+#: forms/invoices.py:50 forms/product.py:135 models/order.py:132
 msgid "Open"
 msgstr ""
 
-#: forms/invoices.py:43
+#: forms/invoices.py:51 models/invoices.py:35
 msgid "Paid"
-msgstr "Öppen"
+msgstr "Betalad"
 
-#: forms/invoices.py:49
+#: forms/invoices.py:57
 msgid "Payment method is"
 msgstr ""
 
-#: forms/invoices.py:55
+#: forms/invoices.py:63
 msgid "Status is not"
 msgstr "Status är inte"
 
-#: forms/invoices.py:61 forms/invoices.py:64 forms/product.py:140
-#: forms/product.py:143 forms/product.py:173 forms/product.py:187
-#: views/stats.py:250
+#: forms/invoices.py:69 forms/invoices.py:72 forms/product.py:147
+#: forms/product.py:150 forms/product.py:180 forms/product.py:194
+#: stats/forms.py:26
 msgid "Start date"
 msgstr ""
 
-#: forms/invoices.py:69 forms/invoices.py:72 forms/product.py:148
-#: forms/product.py:151 forms/product.py:180 forms/product.py:194
-#: views/stats.py:255
+#: forms/invoices.py:77 forms/invoices.py:80 forms/product.py:155
+#: forms/product.py:158 forms/product.py:187 forms/product.py:201
+#: stats/forms.py:30
 msgid "End date"
 msgstr ""
 
-#: forms/invoices.py:77
+#: forms/invoices.py:85
 msgid "Customer name contains"
 msgstr "Kundnamn innehåller"
 
-#: forms/invoices.py:81 forms/notes.py:43
+#: forms/invoices.py:89 forms/notes.py:45
 msgid "Service Order is"
 msgstr ""
 
-#: forms/notes.py:29 models/note.py:81 templates/notes/view_note.html:19
+#: forms/notes.py:31 models/note.py:84 templates/notes/view_note.html:19
 msgid "From"
 msgstr ""
 
-#: forms/notes.py:40
+#: forms/notes.py:42
 msgid "Body contains"
 msgstr ""
 
-#: forms/notes.py:41
+#: forms/notes.py:43
 msgid "Recipient contains"
 msgstr ""
 
-#: forms/notes.py:42
+#: forms/notes.py:44
 msgid "Sender contains"
 msgstr ""
 
-#: forms/orders.py:52 forms/product.py:165
+#: forms/orders.py:21
+#, fuzzy
+#| msgid "Service Order"
+msgid "Service order(s)"
+msgstr "Service Order"
+
+#: forms/orders.py:26
+#, fuzzy
+#| msgid "Status is not"
+msgid "Set status to"
+msgstr "Status är inte"
+
+#: forms/orders.py:31
+msgid "Set queue to"
+msgstr ""
+
+#: forms/orders.py:37
+#, fuzzy
+#| msgid "Search for customers"
+msgid "Send SMS to customer"
+msgstr "Sök för kunder"
+
+#: forms/orders.py:42
+#, fuzzy
+#| msgid "Search for customers"
+msgid "Send E-mail to customer"
+msgstr "Sök för kunder"
+
+#: forms/orders.py:47
+msgid "Add note to order"
+msgstr ""
+
+#: forms/orders.py:86
+#, fuzzy
+msgid "Checked in at"
+msgstr "Mottagen av"
+
+#: forms/orders.py:91 forms/product.py:34 forms/product.py:172
 msgid "Location is"
 msgstr ""
 
-#: forms/orders.py:62
+#: forms/orders.py:101
 msgid "Queue is"
 msgstr ""
 
-#: forms/orders.py:67 models/queue.py:236 templates/admin/queues/form.html:27
+#: forms/orders.py:106 models/queue.py:236 models/rules.py:80
+#: stats/forms.py:66 templates/admin/queues/form.html:28
 #: templates/devices/search_gsx_repairs.html:9
 #: templates/invoices/index.html:47 templates/orders/list.html:14
-#: templates/repairs/get_details.html:20
-#: templates/search/results/gsx_repair_details.html:16 views/stats.py:286
+#: templates/search/results/gsx_repair_details.html:16
 msgid "Status"
 msgstr ""
 
-#: forms/orders.py:72
+#: forms/orders.py:111
 msgid "Created by"
 msgstr ""
 
-#: forms/orders.py:77 templates/orders/list.html:13
+#: forms/orders.py:116 templates/orders/list.html:13
 msgid "Assigned to"
 msgstr ""
 
-#: forms/orders.py:82 templates/orders/edit.html:91
+#: forms/orders.py:121 templates/orders/edit.html:91
 msgid "Label"
 msgstr ""
 
-#: forms/orders.py:87 models/common.py:345
+#: forms/orders.py:126 models/common.py:331
 msgid "Green"
 msgstr ""
 
-#: forms/orders.py:88
+#: forms/orders.py:127
 msgid "Yellow"
 msgstr ""
 
-#: forms/orders.py:89 models/common.py:347
+#: forms/orders.py:128 models/common.py:333
 msgid "Red"
 msgstr ""
 
-#: forms/orders.py:90
+#: forms/orders.py:129
 msgid "Grey"
 msgstr ""
 
-#: forms/orders.py:92
+#: forms/orders.py:131
 msgid "Color"
 msgstr ""
 
@@ -609,85 +700,97 @@ msgstr "Kundsnamn"
 msgid "Device model is"
 msgstr ""
 
-#: forms/product.py:40
+#: forms/product.py:45
 msgid "Product datafile"
 msgstr ""
 
-#: forms/product.py:48
+#: forms/product.py:53
 msgid "Parts database file"
 msgstr ""
 
-#: forms/product.py:52
+#: forms/product.py:57
 msgid "Import vintage parts"
 msgstr ""
 
-#: forms/product.py:57
+#: forms/product.py:62
 msgid "Update product prices"
 msgstr ""
 
-#: forms/product.py:112
+#: forms/product.py:117
 #, python-format
 msgid "Product code %s contains invalid characters"
 msgstr ""
 
-#: forms/product.py:129
+#: forms/product.py:136
 msgid "Submitted"
 msgstr ""
 
-#: forms/product.py:130 templates/products/receive_item.html:26
+#: forms/product.py:137 templates/products/receive_item.html:26
 #: templates/products/view.html:158 templates/purchases/list_pos.html:56
 msgid "Received"
 msgstr ""
 
-#: forms/product.py:156
+#: forms/product.py:163
 #, fuzzy
 msgid "Reference contains"
 msgstr "Kundsnamn"
 
-#: forms/product.py:170
+#: forms/product.py:177
 msgid "Ordered between"
 msgstr ""
 
-#: forms/product.py:184
+#: forms/product.py:191
 #, fuzzy
 msgid "Received between"
 msgstr "Mottagen av"
 
-#: forms/product.py:198
+#: forms/product.py:205
 #, fuzzy
 msgid "Confirmation is"
 msgstr "Bekräftelse"
 
-#: forms/product.py:201
+#: forms/product.py:208
 msgid "Service order is"
 msgstr ""
 
-#: forms/repairs.py:17 models/invoices.py:69 templates/customers/find.html:49
-#: templates/customers/view.html:22
+#: forms/product.py:218 templates/default.html:36
+msgid "Inventory"
+msgstr ""
+
+#: forms/repairs.py:25 models/invoices.py:68 templates/customers/find.html:48
+#: templates/customers/view.html:22 templates/devices/diagnostic_init.html:10
 msgid "Email"
 msgstr ""
 
-#: forms/repairs.py:18 models/invoices.py:63
-#: templates/accounts/print_calendar.html:24 templates/customers/find.html:50
-#: templates/customers/search.html:18 templates/customers/view.html:26
+#: forms/repairs.py:26 models/invoices.py:62
+#: templates/accounts/print_calendar.html:24 templates/customers/find.html:49
+#: templates/customers/search.html:31 templates/customers/view.html:26
 #: templates/orders/print_confirmation.html:25
 #: templates/search/results/customers.html:14
 msgid "Phone"
 msgstr "Telefon"
 
-#: forms/repairs.py:20 models/common.py:413 models/customer.py:88
+#: forms/repairs.py:28 models/common.py:402 models/customer.py:82
 msgid "ZIP Code"
 msgstr "Postnummer"
 
-#: forms/repairs.py:23 models/common.py:325 models/product.py:224
+#: forms/repairs.py:31 models/common.py:311 models/product.py:241
 msgid "Other"
 msgstr ""
 
-#: forms/repairs.py:58 models/repair.py:103
+#: forms/repairs.py:69 models/repair.py:108 templates/stats/newstats.html:43
 msgid "Technician"
 msgstr ""
 
-#: forms/repairs.py:73
+#: forms/repairs.py:82
+msgid "Symptom group"
+msgstr ""
+
+#: forms/repairs.py:90
+msgid "Issue code"
+msgstr ""
+
+#: forms/repairs.py:96
 msgid "Replacement serial number must be set"
 msgstr ""
 
@@ -719,7 +822,7 @@ msgstr ""
 msgid "Customer refused order"
 msgstr ""
 
-#: forms/returns.py:27
+#: forms/returns.py:27 models/note.py:135
 msgid "Type"
 msgstr ""
 
@@ -739,201 +842,218 @@ msgstr ""
 msgid "Symptom Modifier"
 msgstr ""
 
-#: management/commands/cron.py:81 models/order.py:127
+#: management/commands/cron.py:84 models/order.py:131
 msgid "Unassigned"
 msgstr ""
 
-#: management/commands/cron.py:82
+#: management/commands/cron.py:85
 msgid "No Status"
 msgstr ""
 
-#: management/commands/cron.py:86
+#: management/commands/cron.py:89
 #, python-format
 msgid "Repairs aging beyond limits at %s"
 msgstr ""
 
-#: management/commands/cron.py:115
+#: management/commands/cron.py:116
 msgid "Products stocked below limit"
 msgstr ""
 
-#: messaging/sms.py:14
+#: messaging/sms.py:16
 msgid "SMS sender not configured"
 msgstr ""
 
-#: messaging/sms.py:51
+#: messaging/sms.py:62
 msgid "SMS sender name not configured"
 msgstr ""
 
-#: messaging/sms.py:77
+#: messaging/sms.py:89
 #, python-format
 msgid "Failed to send message to %s"
 msgstr ""
 
-#: messaging/sms.py:90
+#: messaging/sms.py:101
+msgid "Lack of valid phone numbers (invalid or blacklisted numbers)"
+msgstr ""
+
+#: messaging/sms.py:102
 msgid "Wrong sender name"
 msgstr ""
 
-#: messaging/sms.py:91
+#: messaging/sms.py:103
 msgid "Too many messages in one request"
 msgstr ""
 
-#: messaging/sms.py:92
+#: messaging/sms.py:104
 msgid "Invalid username or password"
 msgstr ""
 
-#: messaging/sms.py:93
+#: messaging/sms.py:105
 msgid "Insufficient credits on your account"
 msgstr ""
 
-#: messaging/sms.py:94
+#: messaging/sms.py:106
 msgid "Unsuccessful message submission"
 msgstr ""
 
-#: messaging/sms.py:95 messaging/sms.py:96
+#: messaging/sms.py:107 messaging/sms.py:108
 msgid "Internal system error"
 msgstr ""
 
-#: messaging/sms.py:118
+#: messaging/sms.py:144
 #, python-format
 msgid "Unknown error (%s)"
 msgstr ""
 
-#: messaging/sms.py:132
+#: messaging/sms.py:158
 msgid "No SMS HTTP gateway defined"
 msgstr ""
 
-#: models/account.py:53 templates/admin/users/index.html:7
+#: models/account.py:49 templates/admin/users/index.html:7
 msgid "New User"
 msgstr ""
 
-#: models/account.py:64 templates/orders/edit.html:33
+#: models/account.py:60 templates/orders/edit.html:33
 msgid "Current Location"
 msgstr ""
 
-#: models/account.py:65
+#: models/account.py:61
 msgid "Orders you create will be registered to this location."
 msgstr ""
 
-#: models/account.py:71
+#: models/account.py:63
 msgid "queues"
 msgstr ""
 
-#: models/account.py:74
+#: models/account.py:65
 msgid "Danish"
 msgstr ""
 
-#: models/account.py:75
+#: models/account.py:66
 msgid "Dutch"
 msgstr ""
 
-#: models/account.py:76
+#: models/account.py:67
 msgid "English"
 msgstr ""
 
-#: models/account.py:77
+#: models/account.py:68
 msgid "Estonian"
 msgstr ""
 
-#: models/account.py:78
+#: models/account.py:69
 msgid "Finnish"
 msgstr ""
 
-#: models/account.py:79
+#: models/account.py:70
 msgid "Swedish"
 msgstr ""
 
-#: models/account.py:85
-msgid "language"
+#: models/account.py:76
+msgid "Language"
 msgstr ""
 
-#: models/account.py:86
+#: models/account.py:77
 msgid "Select which language you want to use Servo in."
 msgstr ""
 
-#: models/account.py:94 models/common.py:428
+#: models/account.py:85 models/common.py:417
 #, fuzzy
 msgid "Time zone"
 msgstr "Telefon"
 
-#: models/account.py:98
+#: models/account.py:86
+msgid "Your current timezone"
+msgstr ""
+
+#: models/account.py:90
 msgid "Denmark"
 msgstr ""
 
-#: models/account.py:99
+#: models/account.py:91
 msgid "Estonia"
 msgstr ""
 
-#: models/account.py:100
+#: models/account.py:92
 msgid "Finland"
 msgstr ""
 
-#: models/account.py:101
+#: models/account.py:93
 msgid "United States"
 msgstr ""
 
-#: models/account.py:102
+#: models/account.py:94
 msgid "Netherlands"
 msgstr ""
 
-#: models/account.py:103
+#: models/account.py:95
 msgid "Sweden"
 msgstr ""
 
-#: models/account.py:109
+#: models/account.py:101
 msgid "region"
 msgstr ""
 
-#: models/account.py:110
+#: models/account.py:102
 msgid "Affects formatting of numbers, dates and currencies."
 msgstr ""
 
-#: models/account.py:114
-msgid "email notifications"
+#: models/account.py:106
+msgid "Enable notifications"
 msgstr ""
 
-#: models/account.py:115
+#: models/account.py:107
+msgid "Enable notifications in the toolbar."
+msgstr ""
+
+#: models/account.py:111
+#, fuzzy
+#| msgid "Email contains"
+msgid "Email notifications"
+msgstr "E-post innehåller"
+
+#: models/account.py:112
 msgid "Event notifications will also be emailed to you."
 msgstr ""
 
-#: models/account.py:119
+#: models/account.py:116
 msgid "print automatically"
 msgstr ""
 
-#: models/account.py:120
+#: models/account.py:117
 msgid "Opens print dialog automatically."
 msgstr ""
 
-#: models/account.py:126
-msgid "tech ID"
+#: models/account.py:123
+msgid "Tech ID"
 msgstr ""
 
-#: models/account.py:132 models/common.py:190
+#: models/account.py:129 models/common.py:193
 msgid "User ID"
 msgstr ""
 
-#: models/account.py:144
+#: models/account.py:136
 msgid "PO prefix"
 msgstr ""
 
-#: models/account.py:145
+#: models/account.py:137
 msgid "GSX repairs you create will be prefixed"
 msgstr ""
 
-#: models/account.py:152 models/customer.py:107 models/device.py:152
-#: models/product.py:202
-msgid "photo"
+#: models/account.py:144 models/product.py:218
+msgid "Photo"
 msgstr ""
 
-#: models/account.py:153
+#: models/account.py:145
 msgid "Maximum avatar size is 1MB"
 msgstr ""
 
-#: models/account.py:242 templates/admin/index.html:24 views/admin.py:405
+#: models/account.py:276 templates/admin/index.html:24 views/admin.py:406
 msgid "Users & Groups"
 msgstr ""
 
-#: models/calendar.py:25 models/common.py:632 models/common.py:709
-#: models/order.py:704 models/repair.py:32
+#: models/calendar.py:25 models/common.py:616 models/common.py:682
+#: models/order.py:788 models/repair.py:29
 msgid "title"
 msgstr ""
 
@@ -960,63 +1080,64 @@ msgstr ""
 msgid "%(hours)s hours total in %(workdays)s days."
 msgstr ""
 
-#: models/common.py:176
+#: models/common.py:179
 msgid "New GSX Account"
 msgstr ""
 
-#: models/common.py:177 models/queue.py:126
+#: models/common.py:180 models/queue.py:126
 msgid "Sold-To"
 msgstr ""
 
-#: models/common.py:178 models/common.py:444
+#: models/common.py:181 models/common.py:432
 msgid "Ship-To"
 msgstr ""
 
-#: models/common.py:183
+#: models/common.py:186
 msgid "Region"
 msgstr ""
 
-#: models/common.py:202
+#: models/common.py:198
 msgid "Environment"
 msgstr ""
 
-#: models/common.py:227
+#: models/common.py:224
 msgid "Default GSX account not configured"
 msgstr ""
 
-#: models/common.py:252
+#: models/common.py:249
 #, fuzzy
 msgid "Configuration error"
 msgstr "Konfiguration"
 
-#: models/common.py:297 models/escalations.py:25
+#: models/common.py:289 models/escalations.py:27
 msgid "GSX Account"
 msgstr ""
 
-#: models/common.py:298 templates/admin/index.html:12
+#: models/common.py:290 templates/admin/index.html:12
 msgid "GSX Accounts"
 msgstr ""
 
-#: models/common.py:317 templates/admin/tags/index.html:6
+#: models/common.py:303 templates/admin/tags/index.html:6
 msgid "New Tag"
 msgstr ""
 
-#: models/common.py:318 models/common.py:393 models/customer.py:25
-#: models/customer.py:59 models/queue.py:197
+#: models/common.py:304 models/common.py:378 models/customer.py:24
+#: models/customer.py:53 models/queue.py:198
 msgid "name"
 msgstr ""
 
-#: models/common.py:322 templates/devices/index.html:49
-#: templates/devices/search_gsx.html:8 templates/devices/search_gsx.html:10
+#: models/common.py:308 templates/checkin/newindex.html:10
+#: templates/devices/index.html:49 templates/devices/search_gsx.html:8
+#: templates/devices/search_gsx.html:10
 #: templates/devices/search_gsx_error.html:8 templates/devices/view.html:7
 #: templates/search/results/gsx.html:8 templates/search/results/gsx.html:10
 msgid "Device"
-msgstr ""
+msgstr "Enhet"
 
-#: models/common.py:323 models/common.py:625
+#: models/common.py:309 models/common.py:609
 #: templates/accounts/updates.html:37 templates/invoices/index.html:44
-#: templates/notes/form.html:109 templates/orders/dispatch.html:105
-#: templates/orders/edit.html:114 templates/orders/gsx_repair_form.html:89
+#: templates/notes/form.html:110 templates/orders/dispatch.html:107
+#: templates/orders/edit.html:114 templates/orders/gsx_repair_form.html:97
 #: templates/orders/list.html:10 templates/orders/parts.html:33
 #: templates/orders/tabs.html:4 templates/products/index_outgoing.html:25
 #: templates/products/view.html:129 templates/products/view.html.py:155
@@ -1025,91 +1146,89 @@ msgstr ""
 msgid "Order"
 msgstr "Arbet"
 
-#: models/common.py:324 templates/notes/form.html:37
+#: models/common.py:310 models/note.py:126 templates/notes/form.html:37
 msgid "Note"
 msgstr ""
 
-#: models/common.py:331 models/common.py:639
+#: models/common.py:317 models/common.py:623
 msgid "type"
 msgstr ""
 
-#: models/common.py:344
+#: models/common.py:330
 msgid "Default"
 msgstr ""
 
-#: models/common.py:346
+#: models/common.py:332
 msgid "Orange"
 msgstr ""
 
-#: models/common.py:348
+#: models/common.py:334
 msgid "Blue"
 msgstr ""
 
-#: models/common.py:374 templates/orders/notes.html:32
+#: models/common.py:359 templates/orders/notes.html:32
 msgid "Tag"
 msgstr ""
 
-#: models/common.py:375 templates/admin/index.html:30
-#: templates/devices/form.html:25 templates/products/form.html:51
+#: models/common.py:360 templates/admin/index.html:30
+#: templates/checkin/newindex.html:82 templates/devices/form.html:26
+#: templates/products/form.html:51
 msgid "Tags"
-msgstr ""
+msgstr "Taggar"
 
-#: models/common.py:394 templates/admin/locations/index.html:5
+#: models/common.py:379 templates/admin/locations/index.html:5
 msgid "New Location"
 msgstr ""
 
-#: models/common.py:400 models/customer.py:71
+#: models/common.py:385 models/customer.py:65
 msgid "phone"
 msgstr "telefon"
 
-#: models/common.py:402 models/customer.py:76
+#: models/common.py:390 models/customer.py:70
 msgid "email"
-msgstr ""
+msgstr "e-post"
 
-#: models/common.py:407 models/customer.py:82
+#: models/common.py:396 models/customer.py:76
 msgid "address"
 msgstr ""
 
-#: models/common.py:419 models/customer.py:94
+#: models/common.py:408 models/customer.py:88
 msgid "city"
 msgstr ""
 
-#: models/common.py:437
+#: models/common.py:425
 msgid "Accounts"
 msgstr ""
 
-#: models/common.py:450
+#: models/common.py:438
 msgid "Timezone"
 msgstr ""
 
-#: models/common.py:458
+#: models/common.py:446
 msgid "Will be shown on print templates"
 msgstr ""
 
-#: models/common.py:465
-msgid "Logo"
-msgstr ""
-
-#: models/common.py:470
+#: models/common.py:459 models/repair.py:38
 msgid "Enabled"
 msgstr ""
 
-#: models/common.py:508 templates/admin/index.html:15
+#: models/common.py:497 templates/admin/index.html:15
 #: templates/stats/index.html:9 templates/stats/locations.html:6
-#: templates/stats/queues.html:6 templates/stats/sales.html:6
-#: templates/stats/statuses.html:6 views/admin.py:510
+#: templates/stats/newstats.html:9 templates/stats/queues.html:6
+#: templates/stats/sales.html:6 templates/stats/statuses.html:6
+#: views/admin.py:537
 msgid "Locations"
 msgstr ""
 
-#: models/common.py:624 templates/customers/view.html:7
-#: templates/devices/search_gsx_repairs.html:8
-#: templates/invoices/index.html:45 templates/orders/dispatch.html:20
+#: models/common.py:608 templates/checkin/newindex.html:70
+#: templates/customers/view.html:7 templates/devices/search_gsx_repairs.html:8
+#: templates/invoices/index.html:45 templates/orders/dispatch.html:21
 #: templates/orders/gsx_repair_form.html:44 templates/orders/list.html:11
 #: templates/products/view.html:130
 msgid "Customer"
 msgstr "Kund"
 
-#: models/common.py:626 templates/orders/dispatch.html:63
+#: models/common.py:610 templates/orders/dispatch.html:64
 #: templates/orders/print_confirmation.html:105
 #: templates/orders/print_dispatch.html:13 templates/orders/products.html:10
 #: templates/products/list.html:7 templates/products/view.html:43
@@ -1117,87 +1236,95 @@ msgstr "Kund"
 msgid "Product"
 msgstr ""
 
-#: models/common.py:631 templates/admin/fields/index.html:6
+#: models/common.py:615 templates/admin/fields/index.html:6
 msgid "New Field"
 msgstr ""
 
-#: models/common.py:645
+#: models/common.py:629
 msgid "format"
 msgstr ""
 
-#: models/common.py:647
+#: models/common.py:631
 msgid "value"
 msgstr ""
 
-#: models/common.py:664
+#: models/common.py:648
 msgid "Field"
 msgstr ""
 
-#: models/common.py:665 templates/admin/index.html:27
+#: models/common.py:649 templates/admin/index.html:27
 msgid "Fields"
 msgstr ""
 
-#: models/common.py:710 templates/admin/templates/list_templates.html:6
+#: models/common.py:683 templates/admin/templates/list_templates.html:6
 msgid "New Template"
 msgstr ""
 
-#: models/common.py:713
+#: models/common.py:686
 msgid "content"
 msgstr ""
 
-#: models/common.py:732
+#: models/common.py:705
 msgid "Template"
 msgstr ""
 
-#: models/common.py:733 templates/admin/index.html:33
+#: models/common.py:706 templates/admin/index.html:33
 #: templates/admin/queues/form.html:13
 msgid "Templates"
 msgstr ""
 
-#: models/common.py:741
+#: models/common.py:716
 msgid "file"
 msgstr ""
 
-#: models/common.py:761
+#: models/common.py:738
 #, python-format
 msgid "%s is not of an allowed file type"
 msgstr ""
 
-#: models/customer.py:24 templates/admin/users/index.html:12
+#: models/customer.py:23 templates/admin/users/index.html:12
 #: templates/customers/index.html:16
 msgid "New Group"
 msgstr ""
 
-#: models/customer.py:54 models/customer.py:142
+#: models/customer.py:48 models/customer.py:134
 msgid "company"
 msgstr ""
 
-#: models/customer.py:60 templates/customers/choose.html:17
+#: models/customer.py:54 templates/customers/choose.html:31
 #: templates/customers/index.html:7 templates/customers/search.html:5
 #: templates/search/spotlight.html:6
 msgid "New Customer"
 msgstr ""
 
-#: models/customer.py:114 templates/admin/users/tabs.html:6
-#: templates/customers/index.html:55
+#: models/customer.py:102 models/device.py:167
+msgid "photo"
+msgstr ""
+
+#: models/customer.py:108 templates/admin/users/tabs.html:6
+#: templates/customers/index.html:56
 msgid "Groups"
 msgstr ""
 
-#: models/customer.py:121
+#: models/customer.py:114
 msgid "tags"
 msgstr ""
 
-#: models/customer.py:128 models/device.py:146
+#: models/customer.py:121 models/device.py:161
 msgid "notes"
 msgstr ""
 
-#: models/customer.py:136
+#: models/customer.py:128
 msgid "devices"
 msgstr ""
 
-#: models/device.py:39 templates/devices/find.html:27
+#: models/customer.py:135
+msgid "Companies can contain contacts"
+msgstr ""
+
+#: models/device.py:37 templates/devices/find.html:27
 #: templates/devices/get_info.html:14
-#: templates/devices/search_gsx_warranty.html:15
+#: templates/devices/search_gsx_warranty.html:18
 #: templates/devices/summary.html:13 templates/orders/devices.html:20
 #: templates/orders/print_confirmation.html:72
 #: templates/orders/products.html:28 templates/products/index_outgoing.html:28
@@ -1206,183 +1333,210 @@ msgstr ""
 msgid "Serial Number"
 msgstr "Serienummer"
 
-#: models/device.py:43 templates/devices/choose.html:17
+#: models/device.py:42 templates/devices/choose.html:17
 #: templates/devices/index.html:7 templates/devices/index.html.py:10
 msgid "New Device"
-msgstr ""
+msgstr "Nya Enhet"
 
-#: models/device.py:44 models/order.py:708 models/queue.py:44
-#: models/queue.py:202
+#: models/device.py:43 models/order.py:792 models/queue.py:44
+#: models/queue.py:203
 msgid "description"
 msgstr "Enhet"
 
-#: models/device.py:49
+#: models/device.py:48
 msgid "Apple"
 msgstr ""
 
-#: models/device.py:50 models/product.py:183
+#: models/device.py:49 models/product.py:201
 msgid "Brand"
 msgstr ""
 
-#: models/device.py:57 templates/orders/print_confirmation.html:68
+#: models/device.py:55
+msgid "Reseller"
+msgstr ""
+
+#: models/device.py:62 templates/orders/print_confirmation.html:68
 msgid "IMEI Number"
 msgstr ""
 
-#: models/device.py:63 templates/devices/search_gsx_warranty.html:24
-#: templates/orders/devices.html:31
+#: models/device.py:68 templates/devices/search_gsx_warranty.html:27
+#: templates/devices/summary.html:32 templates/orders/devices.html:31
 msgid "Initial Activation Policy"
 msgstr ""
 
-#: models/device.py:69 templates/devices/search_gsx_warranty.html:22
-#: templates/orders/devices.html:29
+#: models/device.py:74 templates/devices/search_gsx_warranty.html:25
+#: templates/devices/summary.html:30 templates/orders/devices.html:29
 msgid "Applied Activation Policy"
 msgstr ""
 
-#: models/device.py:79 templates/devices/index.html:26
+#: models/device.py:80 templates/devices/search_gsx_warranty.html:29
+#: templates/orders/devices.html:33
+msgid "Next Tether Policy"
+msgstr ""
+
+#: models/device.py:90 templates/devices/index.html:26
 msgid "Product Line"
 msgstr ""
 
-#: models/device.py:85
+#: models/device.py:95
 msgid "Products that are compatible with this device instance"
 msgstr ""
 
-#: models/device.py:92
+#: models/device.py:102
 msgid "configuration"
 msgstr ""
 
-#: models/device.py:96 models/parts.py:78
+#: models/device.py:106 models/parts.py:83
+msgid "Quality Program"
+msgstr ""
+
+#: models/device.py:107 models/parts.py:76
+#, fuzzy
+msgid "Customer Satisfaction"
+msgstr "Kundinformation"
+
+#: models/device.py:108 models/parts.py:78
 msgid "Apple Limited Warranty"
 msgstr ""
 
-#: models/device.py:97 models/parts.py:82
+#: models/device.py:109 models/parts.py:82
 msgid "AppleCare Protection Plan"
 msgstr ""
 
-#: models/device.py:98
-msgid "Customer Satisfaction (CS) Code"
-msgstr ""
-
-#: models/device.py:99 models/parts.py:75
+#: models/device.py:110 models/device.py:111 models/parts.py:75
 msgid "Custom Bid Contracts"
 msgstr ""
 
-#: models/device.py:100
+#: models/device.py:112
 msgid "3'rd Party Warranty"
 msgstr ""
 
-#: models/device.py:101
+#: models/device.py:113
 msgid "Out Of Warranty (No Coverage)"
 msgstr ""
 
-#: models/device.py:102 views/gsx.py:131
+#: models/device.py:114 views/gsx.py:171
 msgid "Unknown"
 msgstr "Okänd"
 
-#: models/device.py:109 templates/checkin/device.html:16
+#: models/device.py:121 templates/checkin/device_form.html:31
 #: templates/devices/find.html:30 templates/devices/get_info.html:10
-#: templates/devices/search_gsx_warranty.html:11
+#: templates/devices/search_gsx_warranty.html:14
 #: templates/devices/summary.html:9 templates/orders/devices.html:16
 #: templates/orders/print_confirmation.html:65
 #: templates/search/results/gsx_warranty.html:11
 msgid "Warranty Status"
 msgstr "Garantistatus"
 
-#: models/device.py:115
+#: models/device.py:127
 msgid "username"
 msgstr ""
 
-#: models/device.py:121
+#: models/device.py:133
 msgid "password"
 msgstr ""
 
-#: models/device.py:126
-msgid "Date Purchased"
+#: models/device.py:138
+#| msgid "Date Purchased"
+msgid "Date of Purchase"
 msgstr "Inköpsdatum"
 
-#: models/device.py:134
+#: models/device.py:146
 msgid "Purchase Country"
 msgstr ""
 
-#: models/device.py:158
+#: models/device.py:152
+msgid "Device is eligible for onsite repairs in GSX"
+msgstr ""
+
+#: models/device.py:173
 msgid "Image URL"
 msgstr ""
 
-#: models/device.py:163
+#: models/device.py:178
 msgid "Manual URL"
 msgstr ""
 
-#: models/device.py:168 templates/devices/view.html:38
+#: models/device.py:183 templates/devices/view.html:38
 #: templates/devices/view.html.py:40
 msgid "Exploded View"
 msgstr ""
 
-#: models/device.py:285
-#, python-format
-msgid "Invalid argument for warranty check: %s"
+#: models/device.py:189
+msgid "Device is considered vintage in GSX"
 msgstr ""
 
-#: models/device.py:352
+#: models/device.py:304
+#, python-format
+msgid "Invalid input for warranty check: %s"
+msgstr ""
+
+#: models/device.py:396
+msgid "Active"
+msgstr ""
+
+#: models/device.py:396
+msgid "Inactive"
+msgstr ""
+
+#: models/device.py:401
 #, python-format
 msgid "SLA Group: %s"
 msgstr ""
 
-#: models/device.py:354
+#: models/device.py:403
 msgid "This unit is eligible for Onsite Service."
 msgstr ""
 
-#: models/device.py:356
+#: models/device.py:405
 msgid "Parts and Labor are covered."
 msgstr ""
 
-#: models/escalations.py:96
+#: models/escalations.py:97
 #, python-format
 msgid "Escalation %s"
 msgstr ""
 
-#: models/invoices.py:27 models/invoices.py:163
+#: models/invoices.py:20 models/invoices.py:173
 msgid "No Charge"
 msgstr "Utan kostnad"
 
-#: models/invoices.py:28 models/invoices.py:164
+#: models/invoices.py:21 models/invoices.py:174
 msgid "Cash"
 msgstr ""
 
-#: models/invoices.py:29 models/invoices.py:165
+#: models/invoices.py:22 models/invoices.py:175
 #: templates/products/view.html:179
 msgid "Invoice"
 msgstr "Faktura"
 
-#: models/invoices.py:30 models/invoices.py:166
+#: models/invoices.py:23 models/invoices.py:176
 msgid "Credit Card"
 msgstr "Kreditkort"
 
-#: models/invoices.py:31 models/invoices.py:167
+#: models/invoices.py:24 models/invoices.py:177
 msgid "Mail payment"
 msgstr ""
 
-#: models/invoices.py:32 models/invoices.py:168
+#: models/invoices.py:25 models/invoices.py:178
 msgid "Online payment"
 msgstr ""
 
-#: models/invoices.py:39 models/invoices.py:173
+#: models/invoices.py:32 models/invoices.py:183
 #: templates/invoices/index.html:50
 msgid "Payment Method"
 msgstr ""
 
-#: models/invoices.py:42
-msgid "paid"
-msgstr ""
-
-#: models/invoices.py:56
+#: models/invoices.py:55
 msgid "Walk-in"
 msgstr ""
 
-#: models/invoices.py:57 templates/customers/find.html:48
+#: models/invoices.py:56 templates/customers/find.html:47
 #: templates/orders/print_confirmation.html:177
 msgid "Name"
 msgstr "Namn"
 
-#: models/invoices.py:81 models/repair.py:127
+#: models/invoices.py:80 models/purchases.py:37 models/repair.py:132
 #: templates/devices/search_gsx_repairs.html:6 templates/orders/repair.html:30
 #: templates/products/receive_item.html:23
 #: templates/products/receive_item.html:30 templates/purchases/edit_po.html:33
@@ -1392,312 +1546,354 @@ msgstr "Namn"
 msgid "Reference"
 msgstr ""
 
-#: models/invoices.py:132
-msgid "Sales Price"
-msgstr ""
-
-#: models/invoices.py:186 views/invoices.py:159
+#: models/invoices.py:126 views/invoices.py:159
 #, python-format
 msgid "Order %s dispatched"
 msgstr ""
 
-#: models/invoices.py:195
+#: models/invoices.py:142
+msgid "Sales Price"
+msgstr ""
+
+#: models/invoices.py:193
 #, python-format
 msgid "Payment for %0.2f received"
 msgstr ""
 
-#: models/note.py:66
-msgid "subject"
+#: models/note.py:57 validators.py:16
+#, python-format
+msgid "%s is not a valid phone number"
+msgstr "%s är inte ett giltigt telefonnummer"
+
+#: models/note.py:70 templates/notes/view_note.html:24
+msgid "Subject"
 msgstr ""
 
-#: models/note.py:70
+#: models/note.py:73
 msgid "Message"
 msgstr ""
 
-#: models/note.py:87
+#: models/note.py:90
 msgid "To"
 msgstr ""
 
-#: models/note.py:112 models/order.py:763
-msgid "report"
+#: models/note.py:112 templates/orders/devices.html:130
+#: templates/orders/devices.html.py:132
+msgid "Report"
 msgstr ""
 
-#: models/note.py:116
-msgid "read"
+#: models/note.py:117
+msgid "Read"
 msgstr ""
 
-#: models/note.py:121
-msgid "flagged"
+#: models/note.py:122 templates/notes/list_notes.html:38
+msgid "Flagged"
 msgstr ""
 
-#: models/note.py:159
+#: models/note.py:127
+msgid "Problem"
+msgstr ""
+
+#: models/note.py:128 templates/notes/form.html:40
+msgid "Escalation"
+msgstr ""
+
+#: models/note.py:191
 #, fuzzy, python-format
 msgid "Default Address <%s>"
 msgstr "E-postadress"
 
-#: models/note.py:271
+#: models/note.py:301
 msgid "As Unreported"
 msgstr ""
 
-#: models/note.py:271
+#: models/note.py:301
 msgid "As Reported"
 msgstr ""
 
-#: models/note.py:274
+#: models/note.py:304
 msgid "As Unread"
 msgstr ""
 
-#: models/note.py:274
+#: models/note.py:304
 msgid "As Read"
 msgstr ""
 
-#: models/note.py:277
+#: models/note.py:307
 msgid "As Unflagged"
 msgstr ""
 
-#: models/note.py:277
+#: models/note.py:307
 msgid "As Flagged"
 msgstr ""
 
-#: models/note.py:319 models/note.py:409
+#: models/note.py:349 models/note.py:440
 #, python-format
 msgid "Already sent message to %s"
 msgstr ""
 
-#: models/note.py:364 models/note.py:448
+#: models/note.py:394 models/note.py:479
 #, python-format
 msgid "Message sent to %s"
 msgstr ""
 
-#: models/note.py:385
+#: models/note.py:415
 msgid "System is not configured for built-in SMS support."
 msgstr ""
 
-#: models/note.py:417
+#: models/note.py:446
 msgid "SMS gateway not configured"
 msgstr ""
 
-#: models/note.py:473
+#: models/note.py:505
 #, python-format
 msgid "Escalation %s created"
 msgstr ""
 
-#: models/note.py:476
+#: models/note.py:508
 #, python-format
 msgid "Escalation %s updated"
 msgstr ""
 
-#: models/note.py:481
+#: models/note.py:513
 msgid "Note saved"
 msgstr ""
 
-#: models/order.py:41 models/queue.py:60
+#: models/order.py:39 models/queue.py:60
 msgid "priority"
 msgstr ""
 
-#: models/order.py:106 models/repair.py:39
+#: models/order.py:109 models/repair.py:35
 msgid "queue"
 msgstr ""
 
-#: models/order.py:112
+#: models/order.py:115
 msgid "status"
 msgstr ""
 
-#: models/order.py:129
+#: models/order.py:133
 msgid "Closed"
 msgstr ""
 
-#: models/order.py:215
+#: models/order.py:134
+msgid "Waiting"
+msgstr ""
+
+#: models/order.py:243
 #, python-format
 msgid "%s added"
 msgstr ""
 
-#: models/order.py:219
+#: models/order.py:247
 msgid "This device has already been added to this order"
-msgstr ""
-
-#: models/order.py:237
-#, python-format
-msgid "%s removed"
-msgstr ""
-
-#: models/order.py:260
-msgid "Closed a moment ago"
-msgstr ""
-
-#: models/order.py:261
-#, python-format
-msgid "Closed for %(time)s"
 msgstr ""
 
 #: models/order.py:265
 #, python-format
+msgid "%s removed"
+msgstr ""
+
+#: models/order.py:288
+msgid "Closed a moment ago"
+msgstr ""
+
+#: models/order.py:290
+#, python-format
+msgid "Closed for %(time)s"
+msgstr ""
+
+#: models/order.py:294
+#, python-format
 msgid "%s a moment ago"
 msgstr ""
 
-#: models/order.py:268
+#: models/order.py:297
 #, python-format
 msgid "%(status)s for %(time)s"
 msgstr ""
 
-#: models/order.py:272
+#: models/order.py:301
 msgid "Created a moment ago"
 msgstr ""
 
-#: models/order.py:273
+#: models/order.py:302
 #, python-format
 msgid "Unassigned for %(delta)s"
 msgstr ""
 
-#: models/order.py:277
+#: models/order.py:306
 msgid "Started a moment ago"
 msgstr ""
 
-#: models/order.py:278
+#: models/order.py:308
 #, python-format
 msgid "Open for %(delta)s"
 msgstr ""
 
-#: models/order.py:281
+#: models/order.py:314
 msgid "Select place"
 msgstr ""
 
-#: models/order.py:284
+#: models/order.py:317
 msgid "Select status"
 msgstr ""
 
-#: models/order.py:291
+#: models/order.py:324
 msgid "Select user"
 msgstr ""
 
-#: models/order.py:294
+#: models/order.py:327
 msgid "Select queue"
 msgstr ""
 
-#: models/order.py:303 templates/default.html:35
-#: templates/accounts/orders.html:58 templates/accounts/tabs.html:7
-#: templates/customers/view.html:8 templates/devices/view.html:8
-#: templates/orders/index.html:49 templates/search/spotlight.html:22
-#: views/order.py:43
+#: models/order.py:339 templates/accounts/orders.html:58
+#: templates/accounts/tabs.html:7 templates/customers/view.html:8
+#: templates/default.html:35 templates/devices/search_gsx.html:13
+#: templates/devices/search_gsx.html:15 templates/devices/view.html:8
+#: templates/orders/index.html:54 templates/search/spotlight.html:22
+#: views/order.py:43 views/order.py:910
 msgid "Orders"
 msgstr ""
 
-#: models/order.py:312 views/order.py:195
+#: models/order.py:348 views/invoices.py:165 views/order.py:211
 #, python-format
 msgid "Order %s closed"
 msgstr ""
 
-#: models/order.py:411
+#: models/order.py:365
+#, python-format
+msgid "Order %s reopened"
+msgstr ""
+
+#: models/order.py:444
+#, fuzzy, python-format
+#| msgid "Order %s not found"
+msgid "Order %s moved to %s"
+msgstr "Arbet %s hittades inte"
+
+#: models/order.py:483
 msgid "Order must belong to a queue to set status"
 msgstr ""
 
-#: models/order.py:445
+#: models/order.py:517
 msgid "Status unassigned"
 msgstr ""
 
-#: models/order.py:475
+#: models/order.py:551
 msgid "Removed from queue"
 msgstr ""
 
-#: models/order.py:501
+#: models/order.py:562 models/order.py:577 views/order.py:479
+msgid "Closed orders cannot be modified"
+msgstr ""
+
+#: models/order.py:583
 msgid "Order unassigned"
 msgstr ""
 
-#: models/order.py:505
+#: models/order.py:587
 #, python-format
 msgid "Order %(order)s assigned to %(user)s"
 msgstr ""
 
-#: models/order.py:598 views/order.py:693 views/purchases.py:90
+#: models/order.py:681 views/order.py:714 views/purchases.py:91
 #, python-format
 msgid "Product %s added"
 msgstr ""
 
-#: models/order.py:604
+#: models/order.py:687
 #, python-format
 msgid "Product %s removed from order"
 msgstr ""
 
-#: models/order.py:685
+#: models/order.py:768
 msgid "Can set assignee"
 msgstr ""
 
-#: models/order.py:686
+#: models/order.py:769
 msgid "Can change status"
 msgstr ""
 
-#: models/order.py:687
+#: models/order.py:770
 msgid "Can follow order"
 msgstr ""
 
-#: models/order.py:719
+#: models/order.py:771
+#, fuzzy
+msgid "Can copy order"
+msgstr "Arbet"
+
+#: models/order.py:772
+#, fuzzy
+#| msgid "Waiting to be processed"
+msgid "Can batch process"
+msgstr "Väntar på att behandlas"
+
+#: models/order.py:803
 msgid "amount"
 msgstr ""
 
-#: models/order.py:724
+#: models/order.py:808
 #, fuzzy
 msgid "KGB Serial Number"
 msgstr "Arbetsorder"
 
-#: models/order.py:759
+#: models/order.py:843
 msgid "dispatched"
 msgstr ""
 
-#: models/order.py:768
+#: models/order.py:847
+msgid "report"
+msgstr ""
+
+#: models/order.py:852
 msgid "sales price"
 msgstr ""
 
-#: models/order.py:783
+#: models/order.py:867
 msgid "KBB Serial Number"
 msgstr ""
 
-#: models/order.py:790 templates/orders/print_confirmation.html:120
+#: models/order.py:874 templates/devices/search_gsx_warranty.html:23
+#: templates/devices/summary.html:28 templates/orders/devices.html:27
+#: templates/orders/print_confirmation.html:120
 #: templates/orders/print_receipt.html:23
 msgid "IMEI"
 msgstr ""
 
-#: models/order.py:794 templates/orders/print_confirmation.html:106
+#: models/order.py:878 templates/orders/print_confirmation.html:106
 #: templates/orders/print_dispatch.html:14
 msgid "Warranty"
 msgstr "Garanti"
 
-#: models/order.py:795 templates/devices/parts.html:11
+#: models/order.py:879 templates/devices/parts.html:11
 #: templates/products/form.html:11 templates/products/get_info.html:23
 #: templates/products/list.html:9 templates/products/view.html:64
 msgid "Exchange Price"
 msgstr ""
 
-#: models/order.py:796 templates/devices/parts.html:10
+#: models/order.py:880 templates/devices/parts.html:10
 #: templates/products/form.html:12 templates/products/get_info.html:21
 #: templates/products/list.html:8 templates/products/view.html:62
 msgid "Stock Price"
 msgstr ""
 
-#: models/order.py:803
+#: models/order.py:887
 msgid "Price category"
 msgstr "Priskategorin"
 
-#: models/order.py:810
+#: models/order.py:894
 msgid "symptom code"
 msgstr ""
 
-#: models/order.py:816
+#: models/order.py:900
 msgid "symptom modifier"
 msgstr ""
 
-#: models/order.py:1005 models/product.py:589
-msgid "New Shipping Method"
-msgstr ""
-
-#: models/order.py:1034 views/order.py:238
+#: models/order.py:1127 views/order.py:243
 #, python-format
 msgid "Order %s created"
 msgstr ""
-
-#: models/parts.py:76
-#, fuzzy
-msgid "Customer Satisfaction"
-msgstr "Kundinformation"
 
 #: models/parts.py:77
 msgid "DOA Coverage"
@@ -1708,15 +1904,11 @@ msgid "Missing Upon First Use"
 msgstr ""
 
 #: models/parts.py:80
-msgid "Out of Warranty (no coverage)"
+msgid "Out of Warranty (No Coverage)"
 msgstr ""
 
 #: models/parts.py:81
 msgid "AppleCare Parts Agreement"
-msgstr ""
-
-#: models/parts.py:83
-msgid "Quality Program"
 msgstr ""
 
 #: models/parts.py:84
@@ -1743,221 +1935,234 @@ msgstr ""
 msgid "Consumer Law Coverage"
 msgstr ""
 
-#: models/parts.py:231
+#: models/parts.py:246
 msgid "Unregister from Return"
 msgstr ""
 
-#: models/parts.py:233 templates/repairs/part_menu.html:8
+#: models/parts.py:248 templates/repairs/part_menu.html:8
 msgid "Register for Return"
 msgstr ""
 
-#: models/parts.py:328
+#: models/parts.py:353
 msgid "GSX repair has no dispatch ID"
 msgstr ""
 
-#: models/product.py:64
-msgid "code"
+#: models/product.py:85 templates/products/index_outgoing.html:23
+#: templates/purchases/edit_po.html:31
+#: templates/shipments/list_returns.html:12
+msgid "Code"
 msgstr ""
 
-#: models/product.py:71
+#: models/product.py:92
 msgid "Substituted (new) code of this part"
 msgstr ""
 
-#: models/product.py:76 templates/products/index.html:9
+#: models/product.py:97 templates/products/index.html:9
 msgid "New Product"
 msgstr ""
 
-#: models/product.py:77 models/queue.py:27
+#: models/product.py:98 models/queue.py:27
 #: templates/products/index_outgoing.html:24
 #: templates/shipments/list_returns.html:13
 msgid "Title"
 msgstr ""
 
-#: models/product.py:82 models/repair.py:64 templates/devices/find.html:28
+#: models/product.py:103 models/repair.py:59 templates/devices/find.html:28
 msgid "Description"
 msgstr "Enhet"
 
-#: models/product.py:93
+#: models/product.py:114
 msgid "Don't update price when recalculating prices or importing parts"
 msgstr ""
 
-#: models/product.py:100 models/product.py:128
+#: models/product.py:121 models/product.py:149
 msgid "Purchase price"
 msgstr ""
 
-#: models/product.py:113 models/product.py:140
+#: models/product.py:134 models/product.py:161
 msgid "Net price"
 msgstr ""
 
-#: models/product.py:114 models/product.py:141
+#: models/product.py:135 models/product.py:162
 msgid "Purchase price + margin %"
 msgstr ""
 
-#: models/product.py:120 models/product.py:147
+#: models/product.py:141 models/product.py:168
 msgid "Sales price"
 msgstr ""
 
-#: models/product.py:121 models/product.py:148
+#: models/product.py:142 models/product.py:169
 msgid "Purchase price + margin % + shipping + VAT %"
 msgstr ""
 
-#: models/product.py:153
-msgid "is serialized"
+#: models/product.py:174
+msgid "Is serialized"
 msgstr ""
 
-#: models/product.py:154
+#: models/product.py:175
 #, fuzzy
 msgid "Product has a serial number"
 msgstr "Produkter och tjänster"
 
-#: models/product.py:171
+#: models/product.py:189
 #, fuzzy
 msgid "Warranty (months)"
 msgstr "Garanti"
 
-#: models/product.py:177
+#: models/product.py:195
 msgid "Shelf code"
 msgstr ""
 
-#: models/product.py:189 templates/admin/inventory/index.html:9
+#: models/product.py:206 templates/admin/inventory/index.html:9
 #: templates/products/index.html:60 templates/products/view.html:10
 msgid "Categories"
 msgstr ""
 
-#: models/product.py:195
-msgid "device models"
+#: models/product.py:211
+#, fuzzy
+#| msgid "1/3: Device details"
+msgid "Device models"
+msgstr "1/3: Enhetsinformation"
+
+#: models/product.py:221
+msgid "Shipping"
 msgstr ""
 
-#: models/product.py:205
-msgid "shipping"
+#: models/product.py:229
+msgid "Component group"
 msgstr ""
 
-#: models/product.py:213
-msgid "component group"
-msgstr ""
+#: models/product.py:236
+#, fuzzy
+#| msgid "Attachment"
+msgid "Adjustment"
+msgstr "Bifoga fil"
 
-#: models/product.py:220
+#: models/product.py:237
 msgid "Module"
 msgstr ""
 
-#: models/product.py:221
+#: models/product.py:238
 msgid "Replacement"
 msgstr ""
 
-#: models/product.py:222
+#: models/product.py:239
 msgid "Service"
 msgstr ""
 
-#: models/product.py:223
+#: models/product.py:240
 msgid "Service Contract"
 msgstr ""
 
-#: models/product.py:231
-msgid "part type"
+#: models/product.py:248
+msgid "Part type"
 msgstr ""
 
-#: models/product.py:238
+#: models/product.py:255
 msgid "EEE code"
 msgstr ""
 
-#: models/product.py:252
+#: models/product.py:269
 #, python-format
 msgid "%d months"
 msgstr ""
 
-#: models/product.py:419
+#: models/product.py:465
 #, python-format
 msgid "Product %s not found in inventory."
 msgstr ""
 
-#: models/product.py:495
+#: models/product.py:542
 msgid "Can change product amount"
 msgstr ""
 
-#: models/product.py:507 templates/products/index.html:12
+#: models/product.py:555 templates/products/index.html:12
 msgid "New Category"
 msgstr ""
 
-#: models/product.py:557
+#: models/product.py:608
 msgid "minimum amount"
 msgstr ""
 
-#: models/product.py:561
+#: models/product.py:612
 msgid "reserved amount"
 msgstr ""
 
-#: models/product.py:565
+#: models/product.py:616
 msgid "stocked amount"
 msgstr ""
 
-#: models/product.py:569
+#: models/product.py:620
 msgid "ordered amount"
 msgstr ""
 
-#: models/purchases.py:35
+#: models/product.py:628
+msgid "Cannot move products to the same location"
+msgstr ""
+
+#: models/product.py:656
+msgid "New Shipping Method"
+msgstr ""
+
+#: models/purchases.py:30
 msgid "The location from which this PO was created"
 msgstr ""
 
-#: models/purchases.py:42
-msgid "reference"
+#: models/purchases.py:53
+msgid "Supplier"
 msgstr ""
 
-#: models/purchases.py:48
-msgid "confirmation"
+#: models/purchases.py:58 models/shipments.py:65
+#: templates/shipments/edit_bulk_return.html:28
+#: templates/shipments/view_bulk_return.html:6
+msgid "Carrier"
 msgstr ""
 
-#: models/purchases.py:58
-msgid "supplier"
-msgstr ""
-
-#: models/purchases.py:63 models/shipments.py:65
-msgid "carrier"
+#: models/purchases.py:63 models/shipments.py:43
+#: templates/shipments/list_bulk_returns.html:10
+msgid "Tracking ID"
 msgstr ""
 
 #: models/purchases.py:68
-msgid "tracking ID"
+msgid "Delivery Time"
 msgstr ""
 
-#: models/purchases.py:73
-msgid "delivery Time"
-msgstr ""
-
-#: models/purchases.py:125
+#: models/purchases.py:128
 #, python-format
 msgid "Purchase Order %d has already been submitted"
 msgstr ""
 
-#: models/purchases.py:178
+#: models/purchases.py:181
 msgid "Submitted orders cannot be deleted"
 msgstr ""
 
-#: models/purchases.py:191 templates/products/receive_item.html:36
+#: models/purchases.py:197 templates/products/receive_item.html:36
 #: templates/purchases/edit_po.html:35 templates/purchases/view_po.html:34
 msgid "Purchase Price"
 msgstr ""
 
-#: models/purchases.py:192
+#: models/purchases.py:198
 msgid "Purchase price without taxes"
 msgstr ""
 
-#: models/purchases.py:198
+#: models/purchases.py:204
 msgid "Purchase Order"
 msgstr ""
 
-#: models/purchases.py:210
+#: models/purchases.py:242
 msgid "arrived"
 msgstr ""
 
-#: models/purchases.py:248
+#: models/purchases.py:280
 msgid "Product has already been received"
 msgstr ""
 
-#: models/purchases.py:291
+#: models/purchases.py:342
 #, python-format
 msgid "Cannot receive item %(prod)s (%(ref)s)"
 msgstr ""
 
-#: models/purchases.py:318 views/purchases.py:215
+#: models/purchases.py:369 views/purchases.py:222
 #, python-format
 msgid "Purchase Order %d created"
 msgstr ""
@@ -2076,134 +2281,202 @@ msgstr ""
 msgid "HTML template for dispatched order"
 msgstr ""
 
-#: models/queue.py:175 templates/admin/index.html:21
+#: models/queue.py:176 templates/admin/index.html:21
 #: templates/stats/index.html:10 templates/stats/locations.html:7
-#: templates/stats/queues.html:7 templates/stats/sales.html:7
-#: templates/stats/statuses.html:7 views/admin.py:577
+#: templates/stats/newstats.html:10 templates/stats/queues.html:7
+#: templates/stats/sales.html:7 templates/stats/statuses.html:7
+#: views/admin.py:603
 msgid "Queues"
 msgstr ""
 
-#: models/queue.py:187
+#: models/queue.py:188
 msgid "Minutes"
 msgstr ""
 
-#: models/queue.py:188
+#: models/queue.py:189
 msgid "Hours"
 msgstr ""
 
-#: models/queue.py:189
+#: models/queue.py:190
 msgid "Days"
 msgstr ""
 
-#: models/queue.py:190
+#: models/queue.py:191
 msgid "Weeks"
 msgstr ""
 
-#: models/queue.py:191
+#: models/queue.py:192
 msgid "Months"
 msgstr ""
 
-#: models/queue.py:196 templates/admin/statuses/index.html:5
+#: models/queue.py:197 templates/admin/statuses/index.html:5
 msgid "New Status"
 msgstr ""
 
-#: models/queue.py:206 models/queue.py:249
+#: models/queue.py:207 models/queue.py:249
 msgid "green limit"
 msgstr ""
 
-#: models/queue.py:210 models/queue.py:250
+#: models/queue.py:211 models/queue.py:250
 msgid "yellow limit"
 msgstr ""
 
-#: models/queue.py:215 models/queue.py:253
+#: models/queue.py:216 models/queue.py:253
 msgid "time unit"
 msgstr ""
 
 #: models/queue.py:237 templates/accounts/updates.html:28
 #: templates/admin/index.html:18 templates/admin/queues/form.html:10
-#: templates/stats/index.html:11 templates/stats/locations.html:8
-#: templates/stats/queues.html:8 templates/stats/sales.html:8
-#: templates/stats/statuses.html:8 views/admin.py:261
+#: templates/stats/index.html:12 templates/stats/locations.html:9
+#: templates/stats/newstats.html:12 templates/stats/queues.html:9
+#: templates/stats/sales.html:9 templates/stats/statuses.html:9
+#: views/admin.py:261
 msgid "Statuses"
 msgstr ""
 
-#: models/repair.py:33 templates/admin/checklist/index.html:5
+#: models/repair.py:30 templates/admin/checklist/index.html:5
 msgid "New Checklist"
 msgstr ""
 
-#: models/repair.py:42
-msgid "enabled"
-msgstr ""
-
-#: models/repair.py:55 templates/admin/index.html:36
+#: models/repair.py:50 templates/admin/index.html:36
 msgid "Checklists"
 msgstr ""
 
-#: models/repair.py:60
+#: models/repair.py:55
 msgid "Task"
 msgstr ""
 
-#: models/repair.py:107
+#: models/repair.py:112
 #, fuzzy
 msgid "Unit Received"
 msgstr "Mottagen av"
 
-#: models/repair.py:120
+#: models/repair.py:125
 msgid "Repair should be reviewed by Apple before confirmation"
 msgstr ""
 
-#: models/repair.py:135
+#: models/repair.py:141
 msgid "Notes are mandatory when requesting review."
 msgstr ""
 
-#: models/repair.py:142
+#: models/repair.py:148
 msgid "Choose files to be sent with the repair creation request"
 msgstr ""
 
-#: models/repair.py:148
+#: models/repair.py:154
 msgid "mark complete"
 msgstr ""
 
-#: models/repair.py:149
+#: models/repair.py:155
 msgid "Requires replacement serial number"
 msgstr ""
 
-#: models/repair.py:155
+#: models/repair.py:161
 msgid "New serial number"
 msgstr "Nya serienummer"
 
-#: models/repair.py:156
+#: models/repair.py:162
 msgid "Serial Number of replacement part"
 msgstr ""
 
-#: models/repair.py:175
+#: models/repair.py:181
 msgid "Unit is eligible for consumer law coverage"
 msgstr ""
 
-#: models/repair.py:223
+#: models/repair.py:226
+#, python-format
+msgid "Repair %(repair)s already exists for order %(order)s"
+msgstr ""
+
+#: models/repair.py:243
+#, fuzzy, python-format
+#| msgid "Order %s not found"
+msgid "Repair %s not found in GSX"
+msgstr "Arbet %s hittades inte"
+
+#: models/repair.py:275
 msgid "New GSX Repair"
 msgstr ""
 
-#: models/repair.py:278
+#: models/repair.py:330
 msgid "Please add some parts to the repair"
 msgstr ""
 
-#: models/repair.py:281
+#: models/repair.py:333
 msgid "Order has not been assigned to a queue"
 msgstr ""
 
-#: models/repair.py:327 views/gsx.py:193
+#: models/repair.py:379 views/gsx.py:241
 #, python-format
 msgid "GSX repair %s created"
 msgstr ""
 
-#: models/repair.py:582
+#: models/repair.py:647
 #, python-format
 msgid "Repair %d"
 msgstr ""
 
-#: models/shipments.py:43 templates/shipments/list_bulk_returns.html:10
-msgid "Tracking ID"
+#: models/rules.py:22 templates/rules/list.html:5
+#: templates/rules/list_rules.html:6
+msgid "New Rule"
+msgstr ""
+
+#: models/rules.py:25 templates/customers/choose.html:18
+#: templates/customers/index.html:58 templates/customers/search.html:15
+#: templates/devices/specs.html:7 templates/products/index.html:61
+#: templates/products/view.html:11 views/product.py:35 views/product.py:343
+msgid "All"
+msgstr ""
+
+#: models/rules.py:81
+msgid "Device name"
+msgstr "Enhet"
+
+#: models/rules.py:82 templates/customers/merge.html:12
+#: templates/customers/move.html:12
+#, fuzzy
+msgid "Customer name"
+msgstr "Kundsnamn"
+
+#: models/rules.py:87
+msgid "Equals"
+msgstr ""
+
+#: models/rules.py:88
+#, fuzzy
+msgid "Contains"
+msgstr "Kundsnamn"
+
+#: models/rules.py:89
+msgid "Less than"
+msgstr ""
+
+#: models/rules.py:90
+msgid "Greater than"
+msgstr ""
+
+#: models/rules.py:113
+msgid "Send SMS"
+msgstr ""
+
+#: models/rules.py:114
+msgid "Send email"
+msgstr ""
+
+#: models/rules.py:115
+msgid "Add Tag"
+msgstr ""
+
+#: models/rules.py:116
+msgid "Set Priority"
+msgstr ""
+
+#: models/rules.py:117
+msgid "Set Queue"
+msgstr ""
+
+#: models/rules.py:118
+msgid "Assign to"
 msgstr ""
 
 #: models/shipments.py:90
@@ -2222,192 +2495,37 @@ msgstr ""
 msgid "weight"
 msgstr ""
 
-#: templates/default.html:34 templates/default.html.py:66
-msgid "Homepage"
+#: stats/forms.py:18
+msgid "Time Scale"
 msgstr ""
 
-#: templates/default.html:36
-msgid "Inventory"
+#: stats/forms.py:20 templates/accounts/view_calendar.html:10
+msgid "Day"
 msgstr ""
 
-#: templates/default.html:37 templates/customers/view.html:9
-#: templates/devices/index.html:77 templates/devices/search.html:14
-#: templates/search/spotlight.html:16 views/device.py:48
-msgid "Devices"
+#: stats/forms.py:21 templates/accounts/view_calendar.html:11
+msgid "Week"
 msgstr ""
 
-#: templates/default.html:38 templates/customers/index.html:82
-#: templates/customers/list.html:5 templates/customers/search.html:33
-#: templates/customers/view.html:117 templates/search/spotlight.html:13
-#: views/customer.py:27
-msgid "Customers"
-msgstr ""
-
-#: templates/default.html:39 templates/accounts/updates.html:27
-#: templates/customers/view.html:10 templates/notes/list_notes.html:36
-#: views/note.py:54
-msgid "Messages"
-msgstr ""
-
-#: templates/default.html:40 templates/accounts/tabs.html:16
-#: templates/stats/index.html:58 views/stats.py:296
-msgid "Statistics"
-msgstr ""
-
-#: templates/default.html:44 templates/accounts/orders.html:44
-#: templates/accounts/stats.html:19 templates/customers/choose.html:18
-#: templates/customers/find.html:16 templates/customers/find.html.py:31
-#: templates/customers/index.html:44 templates/devices/choose.html:18
-#: templates/devices/find.html:8 templates/devices/find.html.py:21
-#: templates/devices/index.html:20 templates/invoices/index.html:31
-#: templates/notes/find.html:9 templates/notes/find.html.py:25
-#: templates/notes/list_notes.html:29 templates/orders/index.html:36
-#: templates/products/choose.html:18 templates/products/index.html:84
-#: templates/purchases/list_pos.html:37
-#: templates/snippets/filtering_form.html:12 templates/stats/index.html:30
-msgid "Search"
-msgstr ""
-
-#: templates/default.html:67 templates/accounts/calendars.html:36
-#: templates/accounts/calendars.html:54 templates/accounts/tabs.html:13
-#: templates/accounts/view_calendar.html:64 views/account.py:128
-msgid "Calendars"
-msgstr ""
-
-#: templates/default.html:68 templates/accounts/settings.html:11
-#: templates/admin/users/form.html:11
-msgid "Profile"
-msgstr ""
-
-#: templates/default.html:70 templates/admin/index.html:7 views/admin.py:205
-msgid "System Settings"
-msgstr ""
-
-#: templates/default.html:73 templates/accounts/logout.html:15
-#: templates/checkin/index.html:47
-msgid "Log out"
-msgstr "Logga ut"
-
-#: templates/default.html:100
-msgid "No new alerts"
-msgstr ""
-
-#: templates/default.html:105
-msgid "See All Alerts"
-msgstr ""
-
-#: templates/default.html:133
-msgid "No new messages"
-msgstr ""
-
-#: templates/default.html:139
-msgid "Read All Messages"
-msgstr ""
-
-#: templates/default.html:168
-msgid "Terms"
-msgstr ""
-
-#: templates/error.html:12
-#, fuzzy
-msgid "An Error Occurred"
-msgstr "Ett fel uppstod"
-
-#: templates/error.html:27 templates/checkin/error.html:9
-msgid "Oops!"
-msgstr "Hoppsan!"
-
-#: templates/error.html:28 templates/checkin/error.html:10
-msgid "It appears that an error has occurred."
-msgstr "Det verkar som om ett fel har uppstått."
-
-#: templates/error.html:28
-msgid ""
-"I've notified the developers, but I'm sure they would really appreciate if "
-"you could briefly describe what you were doing before this happened."
-msgstr ""
-
-#: templates/error.html:33 templates/orders/dispatch.html:96
-#: templates/products/form.html:74 templates/products/form.html.py:76
-#: templates/products/receive_item.html:47
-msgid "Cancel"
-msgstr ""
-
-#: templates/error.html:34 templates/accounts/register.html:11
-#: templates/checkin/confirmation.html:11 templates/checkin/customer.html:62
-#: templates/notes/edit_escalation.html:13
-#: templates/orders/gsx_repair_form.html:79
-#: templates/products/index_outgoing.html:49
-#: templates/purchases/edit_po.html:87 templates/purchases/order_stock.html:15
-#: templates/shipments/edit_bulk_return.html:96
-#: templates/shipments/list_returns.html:38
-#: templates/shipments/submit_bulk_return.html:13
-msgid "Submit"
-msgstr "Fortsätt"
-
-#: templates/error.html:38
-msgid "Thanks!"
-msgstr "Tack!"
-
-#: templates/error.html:39
-msgid ""
-"Your error report has been submitted. Thanks for helping make Servo better!"
-msgstr ""
-
-#: templates/error.html:40
-#, fuzzy
-msgid "Return Home"
-msgstr "Produkter och tjänster"
-
-#: templates/form_buttons.html:3 templates/accounts/register.html:10
-#: templates/admin/users/form.html:50 templates/checkin/choose_model.html:137
-#: templates/checkin/customer.html:61 templates/checkin/device.html:56
-#: templates/checkin/issue.html:19 templates/checkin/sn.html:14
-#: templates/checkin/status.html:14
-msgid "Back"
-msgstr "Bakåt"
-
-#: templates/form_buttons.html:4 templates/admin/settings.html:110
-#: templates/admin/checklist/form.html:28 templates/admin/fields/form.html:14
-#: templates/admin/gsx/form.html:17 templates/admin/locations/form.html:37
-#: templates/admin/notifications/index.html:36
-#: templates/admin/statuses/form.html:18 templates/admin/tags/form.html:14
-#: templates/admin/templates/form.html:18 templates/admin/users/form.html:51
-#: templates/notes/form.html:101 templates/orders/gsx_repair_form.html:79
-#: templates/products/form.html:78 templates/purchases/edit_po.html:87
-#: templates/shipments/edit_bulk_return.html:96
-msgid "Save"
-msgstr ""
-
-#: templates/modal.html:10 templates/admin/fields/remove.html:7
-#: templates/admin/statuses/remove.html:9 templates/admin/users/remove.html:9
-msgid "This action cannot be undone."
-msgstr ""
-
-#: templates/modal.html:15 templates/orders/parts.html:20
-#: templates/products/get_info.html:58 templates/snippets/modal.html:12
-msgid "Done"
-msgstr "Klar"
-
-#: templates/pagination.html:11
-msgid "Page"
+#: stats/forms.py:22 templates/accounts/view_calendar.html:12
+msgid "Month"
 msgstr ""
 
 #: templates/accounts/calendars.html:9
 msgid "New Event"
 msgstr ""
 
-#: templates/accounts/calendars.html:15 templates/checkin/thanks.html:13
+#: templates/accounts/calendars.html:15 templates/checkin/thanks.html:14
 #: templates/orders/toolbar.html:20
 msgid "Print"
 msgstr "Skriv ut"
 
-#: templates/accounts/calendars.html:16 templates/customers/find.html:75
-#: templates/customers/find.html.py:77 templates/customers/view.html:85
-#: templates/customers/view.html.py:87 templates/devices/find.html:54
+#: templates/accounts/calendars.html:16 templates/customers/find.html:73
+#: templates/customers/find.html.py:75 templates/customers/view.html:85
+#: templates/customers/view.html.py:87 templates/devices/find.html:53
 #: templates/devices/list.html:27 templates/devices/view.html:60
 #: templates/generic/index.html:15 templates/orders/customer.html:20
-#: templates/orders/devices.html:119 templates/orders/products.html:67
+#: templates/orders/devices.html:137 templates/orders/products.html:67
 #: templates/products/get_info.html:56 templates/products/view.html:119
 #: templates/products/view.html.py:121 templates/purchases/list_pos.html:92
 #: templates/purchases/list_pos.html:94
@@ -2421,26 +2539,26 @@ msgstr ""
 #: templates/admin/checklist/form.html:26 templates/admin/fields/form.html:10
 #: templates/admin/fields/form.html:12 templates/admin/gsx/form.html:13
 #: templates/admin/gsx/form.html.py:15 templates/admin/gsx/remove.html:11
-#: templates/admin/locations/form.html:33
-#: templates/admin/locations/form.html:35 templates/admin/queues/form.html:29
+#: templates/admin/locations/form.html:36
+#: templates/admin/locations/form.html:38 templates/admin/queues/form.html:30
 #: templates/admin/queues/remove.html:15 templates/admin/statuses/form.html:14
 #: templates/admin/statuses/form.html:16
 #: templates/admin/statuses/remove.html:15 templates/admin/tags/form.html:10
 #: templates/admin/tags/form.html.py:12 templates/admin/templates/form.html:14
 #: templates/admin/templates/form.html:16
 #: templates/admin/users/delete_group.html:9
-#: templates/admin/users/form.html:46 templates/admin/users/form.html.py:48
+#: templates/admin/users/form.html:62 templates/admin/users/form.html.py:64
 #: templates/admin/users/remove.html:15
-#: templates/customers/delete_group.html:15 templates/customers/find.html:81
-#: templates/customers/find.html.py:83 templates/customers/remove.html:5
+#: templates/customers/delete_group.html:15 templates/customers/find.html:79
+#: templates/customers/find.html.py:81 templates/customers/remove.html:5
 #: templates/customers/remove.html.py:15 templates/customers/view.html:77
-#: templates/customers/view.html.py:79 templates/devices/find.html:56
+#: templates/customers/view.html.py:79 templates/devices/find.html:55
 #: templates/devices/list.html:29 templates/devices/remove.html:15
 #: templates/devices/view.html:52 templates/devices/view.html.py:54
 #: templates/generic/delete.html:15 templates/generic/index.html:16
-#: templates/notes/form.html:99 templates/notes/remove.html:15
+#: templates/notes/form.html:100 templates/notes/remove.html:15
 #: templates/notes/view_note.html:34 templates/orders/delete_order.html:15
-#: templates/orders/gsx_repair_form.html:77 templates/orders/notes.html:50
+#: templates/orders/gsx_repair_form.html:85 templates/orders/notes.html:50
 #: templates/orders/products.html:77 templates/orders/remove_product.html:15
 #: templates/products/delete_category.html:15
 #: templates/products/list_rows.html:44 templates/products/list_rows.html:46
@@ -2448,13 +2566,20 @@ msgstr ""
 #: templates/products/view.html.py:113 templates/purchases/edit_po.html:37
 #: templates/purchases/list_pos.html:97 templates/purchases/list_pos.html:99
 #: templates/repairs/delete_part.html:10
-#: templates/repairs/delete_repair.html:14
+#: templates/repairs/delete_repair.html:14 templates/rules/form.html:72
+#: templates/rules/form.html.py:74
 msgid "Delete"
 msgstr ""
 
 #: templates/accounts/calendars.html:26 templates/customers/find.html:7
 #: templates/customers/find.html.py:9
 msgid "Download"
+msgstr ""
+
+#: templates/accounts/calendars.html:36 templates/accounts/calendars.html:54
+#: templates/accounts/tabs.html:13 templates/accounts/view_calendar.html:64
+#: templates/default.html:69 views/account.py:140
+msgid "Calendars"
 msgstr ""
 
 #: templates/accounts/calendars.html:47
@@ -2465,7 +2590,12 @@ msgstr ""
 msgid "This will also delete all events in this calendar"
 msgstr ""
 
-#: templates/accounts/login.html:18
+#: templates/accounts/login.html:18 templates/admin/settings.html:17
+#, fuzzy
+msgid "Check-in"
+msgstr "Kontrollera"
+
+#: templates/accounts/login.html:19
 msgid "Login"
 msgstr ""
 
@@ -2478,21 +2608,41 @@ msgstr "Logga ut"
 msgid "This will terminate your Servo session."
 msgstr ""
 
-#: templates/accounts/orders.html:7 templates/checkin/welcome.html:12
-#: templates/notes/view_note.html:33 templates/orders/customer.html:18
-#: templates/orders/index.html:7
+#: templates/accounts/logout.html:15 templates/checkin/index.html:48
+#: templates/default.html:76
+msgid "Log out"
+msgstr "Logga ut"
+
+#: templates/accounts/orders.html:7 templates/notes/view_note.html:33
+#: templates/orders/customer.html:18 templates/orders/index.html:7
+#: templates/orders/index.html.py:12
 msgid "Create Order"
 msgstr "Skapa ärende"
 
 #: templates/accounts/orders.html:18 templates/devices/search.html:6
-#: templates/orders/index.html:18 templates/orders/parts.html:19
+#: templates/orders/index.html:23 templates/orders/parts.html:19
 #: templates/products/index.html:49 templates/products/search.html:5
 #: templates/shipments/index.html:12
 msgid "Filter results"
 msgstr ""
 
-#: templates/accounts/orders.html:43 templates/orders/index.html:35
+#: templates/accounts/orders.html:43 templates/orders/index.html:40
 msgid "Reset"
+msgstr ""
+
+#: templates/accounts/orders.html:44 templates/accounts/stats.html:19
+#: templates/customers/choose.html:14 templates/customers/choose.html.py:32
+#: templates/customers/find.html:16 templates/customers/find.html.py:31
+#: templates/customers/index.html:45 templates/default.html:44
+#: templates/devices/choose.html:18 templates/devices/find.html:8
+#: templates/devices/find.html.py:21 templates/devices/index.html:20
+#: templates/invoices/index.html:31 templates/notes/find.html:9
+#: templates/notes/find.html.py:25 templates/notes/list_notes.html:29
+#: templates/orders/index.html:41 templates/products/choose.html:18
+#: templates/products/index.html:84 templates/purchases/list_pos.html:37
+#: templates/snippets/filtering_form.html:12 templates/stats/index.html:31
+#: templates/stats/newstats.html:30
+msgid "Search"
 msgstr ""
 
 #: templates/accounts/print_calendar.html:29
@@ -2530,14 +2680,14 @@ msgid "No events found"
 msgstr ""
 
 #: templates/accounts/print_calendar.html:63 templates/invoices/index.html:48
-#: templates/notes/form.html:25 templates/orders/dispatch.html:67
-#: templates/orders/dispatch.html.py:83
+#: templates/notes/form.html:25 templates/orders/dispatch.html:68
+#: templates/orders/dispatch.html.py:84
 #: templates/orders/gsx_repair_form.html:34
 #: templates/orders/list_products.html:20
 #: templates/orders/print_confirmation.html:111
 #: templates/orders/print_confirmation.html:139
 #: templates/orders/products.html:14 templates/purchases/edit_po.html:67
-#: templates/purchases/list_pos.html:59
+#: templates/purchases/list_pos.html:59 templates/stats/newstats.html:65
 msgid "Total"
 msgstr ""
 
@@ -2545,17 +2695,45 @@ msgstr ""
 msgid "Manager"
 msgstr ""
 
-#: templates/accounts/register.html:6 views/account.py:326
+#: templates/accounts/register.html:6 views/account.py:338
 msgid "Register"
 msgstr ""
 
-#: templates/accounts/settings.html:12 templates/admin/locations/form.html:7
-#: templates/admin/queues/form.html:12 templates/admin/users/form.html:12
-#: templates/products/form.html:15 templates/search/spotlight.html:19
+#: templates/accounts/register.html:10 templates/admin/users/form.html:66
+#: templates/checkin/status.html:14 templates/form_buttons.html:3
+msgid "Back"
+msgstr "Bakåt"
+
+#: templates/accounts/register.html:11 templates/checkin/confirmation.html:11
+#: templates/checkin/newindex.html:137 templates/checkin/newindex.html:139
+#: templates/error.html:34 templates/notes/edit_escalation.html:13
+#: templates/orders/batch_process.html:11
+#: templates/orders/gsx_repair_form.html:87
+#: templates/products/index_outgoing.html:49
+#: templates/purchases/edit_po.html:87 templates/purchases/order_stock.html:15
+#: templates/shipments/edit_bulk_return.html:96
+#: templates/shipments/list_returns.html:38
+#: templates/shipments/submit_bulk_return.html:13
+msgid "Submit"
+msgstr "Fortsätt"
+
+#: templates/accounts/settings.html:10 templates/admin/users/form.html:11
+#: templates/default.html:70
+msgid "Profile"
+msgstr ""
+
+#: templates/accounts/settings.html:11
+msgid "Locale"
+msgstr ""
+
+#: templates/accounts/settings.html:13 templates/admin/locations/form.html:8
+#: templates/admin/queues/form.html:12 templates/admin/settings.html:13
+#: templates/admin/users/form.html:12 templates/products/form.html:15
+#: templates/search/spotlight.html:19
 msgid "GSX"
 msgstr ""
 
-#: templates/accounts/settings.html:39 templates/accounts/tabs.html:19
+#: templates/accounts/settings.html:44 templates/accounts/tabs.html:19
 #: templates/admin/index.html:9
 msgid "Settings"
 msgstr ""
@@ -2571,100 +2749,74 @@ msgid ""
 msgstr ""
 
 #: templates/accounts/tabs.html:10 templates/accounts/updates.html:26
-#: templates/accounts/updates.html.py:64 views/account.py:401
+#: templates/accounts/updates.html.py:64 views/account.py:413
 #, fuzzy
 msgid "Updates"
 msgstr "Inköpsdatum"
 
+#: templates/accounts/tabs.html:16 templates/default.html:40
+#: templates/stats/index.html:59 templates/stats/newstats.html:86
+#: views/stats.py:42
+msgid "Statistics"
+msgstr ""
+
 #: templates/accounts/updates.html:7
 msgid "Clear all"
+msgstr ""
+
+#: templates/accounts/updates.html:27 templates/customers/view.html:10
+#: templates/default.html:39 templates/notes/list_notes.html:36
+#: views/note.py:60
+msgid "Messages"
 msgstr ""
 
 #: templates/accounts/updates.html:36
 msgid "Event"
 msgstr ""
 
-#: templates/accounts/view_calendar.html:10 views/stats.py:243
-msgid "Day"
-msgstr ""
-
-#: templates/accounts/view_calendar.html:11 views/stats.py:244
-msgid "Week"
-msgstr ""
-
-#: templates/accounts/view_calendar.html:12 views/stats.py:245
-msgid "Month"
-msgstr ""
-
 #: templates/accounts/view_calendar.html:19
 msgid "Today"
 msgstr ""
 
-#: templates/admin/index.html:46
-msgid "Systen Settings"
-msgstr ""
+#: templates/admin/backups.html:5 templates/admin/index.html:39
+#: views/admin.py:713
+#, fuzzy
+#| msgid "Back"
+msgid "Backups"
+msgstr "Bakåt"
 
-#: templates/admin/settings.html:11 templates/admin/checklist/form.html:9
-#: templates/admin/gsx/form.html:6 templates/admin/locations/form.html:6
-#: templates/admin/queues/form.html:9 templates/admin/statuses/form.html:6
+#: templates/admin/checklist/form.html:9 templates/admin/gsx/form.html:6
+#: templates/admin/locations/form.html:6 templates/admin/queues/form.html:9
+#: templates/admin/settings.html:11 templates/admin/statuses/form.html:6
 #: templates/admin/tags/index.html:31 templates/admin/templates/form.html:6
 #: templates/admin/users/form.html:8 templates/customers/form.html:8
 #: templates/devices/form.html:8 templates/products/form.html:10
 msgid "General"
 msgstr ""
 
-#: templates/admin/settings.html:12 templates/admin/inventory/index.html:8
-#: templates/products/form.html:13
-msgid "Stock"
-msgstr ""
-
-#: templates/admin/settings.html:13
-msgid "Outgoing Mail"
-msgstr ""
-
-#: templates/admin/settings.html:14
-msgid "Incoming Mail"
-msgstr ""
-
-#: templates/admin/settings.html:15
-msgid "Text Messages"
-msgstr ""
-
-#: templates/admin/settings.html:16
-#, fuzzy
-msgid "Check-in"
-msgstr "Kontrollera"
-
-#: templates/admin/settings.html:35
-msgid "Update prices"
-msgstr ""
-
-#: templates/admin/settings.html:37
-msgid "Applies the new settings to existing products after saving"
-msgstr ""
-
-#: templates/admin/settings.html:52 views/admin.py:622
-msgid "Notifications"
-msgstr ""
-
-#: templates/admin/settings.html:67
-msgid "Sending SMS messages will be handled by Servo"
-msgstr ""
-
-#: templates/admin/settings.html:98
-msgid "Shipping Methods"
-msgstr ""
-
-#: templates/admin/settings.html:105
-msgid "Add Method"
-msgstr ""
-
 #: templates/admin/checklist/form.html:10
 msgid "Tasks"
 msgstr ""
 
+#: templates/admin/checklist/form.html:28 templates/admin/fields/form.html:14
+#: templates/admin/gsx/form.html:17 templates/admin/locations/form.html:40
+#: templates/admin/notifications/index.html:36
+#: templates/admin/settings.html:118 templates/admin/statuses/form.html:18
+#: templates/admin/tags/form.html:14 templates/admin/templates/form.html:18
+#: templates/admin/users/form.html:67 templates/form_buttons.html:4
+#: templates/notes/form.html:102 templates/orders/gsx_repair_form.html:87
+#: templates/products/form.html:78 templates/purchases/edit_po.html:87
+#: templates/shipments/edit_bulk_return.html:96
+msgid "Save"
+msgstr ""
+
 #: templates/admin/fields/remove.html:6
 msgid "Are you sure you want to delete this field?"
+msgstr ""
+
+#: templates/admin/fields/remove.html:7 templates/admin/statuses/remove.html:9
+#: templates/admin/users/remove.html:9 templates/modal.html:10
+msgid "This action cannot be undone."
 msgstr ""
 
 #: templates/admin/gsx/index.html:5
@@ -2674,6 +2826,27 @@ msgstr ""
 #: templates/admin/gsx/remove.html:5
 msgid "Remove GSX account"
 msgstr ""
+
+#: templates/admin/index.html:7 templates/default.html:72 views/admin.py:204
+msgid "System Settings"
+msgstr ""
+
+#: templates/admin/index.html:49
+msgid "Systen Settings"
+msgstr ""
+
+#: templates/admin/inventory/index.html:8 templates/admin/settings.html:12
+#: templates/products/form.html:13
+msgid "Stock"
+msgstr ""
+
+#: templates/admin/locations/form.html:7 templates/customers/form.html:9
+#: templates/devices/form.html:9 templates/devices/get_info.html:37
+#: templates/devices/search_gsx_warranty.html:43
+#: templates/orders/devices.html:49 templates/orders/gsx_repair_form.html:40
+#: templates/products/form.html:14
+msgid "Details"
+msgstr "Detaljer"
 
 #: templates/admin/notifications/index.html:6
 msgid "Reports"
@@ -2703,11 +2876,15 @@ msgstr ""
 msgid "Defaults"
 msgstr ""
 
-#: templates/admin/queues/form.html:28
+#: templates/admin/queues/form.html:14 templates/admin/users/tabs.html:5
+msgid "Users"
+msgstr ""
+
+#: templates/admin/queues/form.html:29
 msgid "Time limits"
 msgstr ""
 
-#: templates/admin/queues/form.html:46
+#: templates/admin/queues/form.html:47
 #, fuzzy
 msgid "Add Status"
 msgstr "Kontrollera status"
@@ -2721,7 +2898,43 @@ msgstr ""
 msgid "Orders in this queue will not be deleted."
 msgstr ""
 
-#: templates/admin/sites/index.html:6 views/admin.py:648
+#: templates/admin/settings.html:14
+msgid "Outgoing Mail"
+msgstr ""
+
+#: templates/admin/settings.html:15
+msgid "Incoming Mail"
+msgstr ""
+
+#: templates/admin/settings.html:16
+msgid "Text Messages"
+msgstr ""
+
+#: templates/admin/settings.html:35
+msgid "Update prices"
+msgstr ""
+
+#: templates/admin/settings.html:37
+msgid "Applies the new settings to existing products after saving"
+msgstr ""
+
+#: templates/admin/settings.html:58 views/admin.py:651
+msgid "Notifications"
+msgstr ""
+
+#: templates/admin/settings.html:73
+msgid "Sending SMS messages will be handled by Servo"
+msgstr ""
+
+#: templates/admin/settings.html:106
+msgid "Shipping Methods"
+msgstr ""
+
+#: templates/admin/settings.html:113
+msgid "Add Method"
+msgstr ""
+
+#: templates/admin/sites/index.html:6
 msgid "New Site"
 msgstr ""
 
@@ -2751,6 +2964,14 @@ msgstr ""
 msgid "Group member accounts will not be deleted."
 msgstr ""
 
+#: templates/admin/users/form.html:29
+msgid "API Tokens"
+msgstr ""
+
+#: templates/admin/users/form.html:37 templates/admin/users/form.html.py:39
+msgid "New Token"
+msgstr ""
+
 #: templates/admin/users/groups.html:13
 msgid "Members"
 msgstr ""
@@ -2759,7 +2980,7 @@ msgstr ""
 msgid "No groups defined"
 msgstr ""
 
-#: templates/admin/users/index.html:13 views/admin.py:675
+#: templates/admin/users/index.html:13 views/admin.py:665
 msgid "Upload Users"
 msgstr ""
 
@@ -2768,225 +2989,55 @@ msgstr ""
 msgid "Delete user %(user)s?"
 msgstr ""
 
-#: templates/admin/users/tabs.html:5
-msgid "Users"
+#: templates/checkin/device_form.html:6
+msgid "Find My iPhone is active!"
 msgstr ""
 
-#: templates/checkin/choose_model.html:6
-msgid "Choose your device"
-msgstr "Välj din enhet"
-
-#: templates/checkin/choose_model.html:7
-msgid "Please choose your device model"
-msgstr "Välj din enhetsmodell"
-
-#: templates/checkin/choose_model.html:14
-msgid "MacBook Air"
+#: templates/checkin/device_form.html:7 templates/checkin/device_form.html:14
+#: templates/checkin/index.html:72 templates/customers/merge.html:18
+#: templates/customers/move.html:19 templates/orders/close.html:15
+#: templates/orders/toolbar.html:67 templates/orders/toolbar.html.py:71
+#: templates/products/choose.html:17 templates/snippets/modal.html:11
+msgid "Close"
 msgstr ""
-
-#: templates/checkin/choose_model.html:20
-msgid "MacBook"
-msgstr ""
-
-#: templates/checkin/choose_model.html:26
-msgid "MacBook Pro"
-msgstr ""
-
-#: templates/checkin/choose_model.html:32
-msgid "iMac"
-msgstr ""
-
-#: templates/checkin/choose_model.html:40
-#, fuzzy
-msgid "iPhone"
-msgstr "Telefon"
-
-#: templates/checkin/choose_model.html:46
-msgid "iPad"
-msgstr ""
-
-#: templates/checkin/choose_model.html:52
-msgid "Apple TV"
-msgstr ""
-
-#: templates/checkin/choose_model.html:60
-msgid "Mac Pro"
-msgstr ""
-
-#: templates/checkin/choose_model.html:66
-msgid "Display"
-msgstr ""
-
-#: templates/checkin/choose_model.html:72
-msgid "Mac mini"
-msgstr ""
-
-#: templates/checkin/choose_model.html:78
-#, fuzzy
-msgid "Power Mac"
-msgstr "Nätadapter"
-
-#: templates/checkin/choose_model.html:86
-msgid "iPod Touch"
-msgstr ""
-
-#: templates/checkin/choose_model.html:92
-msgid "iPod nano"
-msgstr ""
-
-#: templates/checkin/choose_model.html:98
-msgid "iPod Shuffle"
-msgstr ""
-
-#: templates/checkin/choose_model.html:104
-msgid "iPod Classic"
-msgstr ""
-
-#: templates/checkin/choose_model.html:112
-msgid "Keyboard or Mouse"
-msgstr "Tangentbord eller mus"
-
-#: templates/checkin/choose_model.html:118 views/checkin.py:283
-msgid "Power Adapter"
-msgstr "Nätadapter"
-
-#: templates/checkin/choose_model.html:124
-msgid "AirPort and Wireless"
-msgstr ""
-
-#: templates/checkin/choose_model.html:130
-msgid "Other Device"
-msgstr "Andra enheten"
-
-#: templates/checkin/customer.html:7
-msgid "Your contact details"
-msgstr "Dina kontaktuppgifter"
-
-#: templates/checkin/customer.html:8
-msgid "Please make sure your contact details are filled out correctly."
-msgstr "Se till att dina kontaktuppgifter är rätt ifyllda."
-
-#: templates/checkin/device.html:8
-msgid "Please provide additional details about your device here."
-msgstr "Ange ytterligare uppgifter om din enhet här."
-
-#: templates/checkin/device.html:8
-msgid ""
-"Providing a username and password helps us diagnose the problem faster, "
-"especially with software-related issues."
-msgstr ""
-"Att tillhandahålla ett användarnamn och lösenord hjälper oss att "
-"diagnostisera problemet snabbare, särskilt med mjukvarurelaterade frågor."
-
-#: templates/checkin/device.html:8
-msgid "For faster service time, please upload your purchase receipt."
-msgstr "Ladda alltid upp kvitto för snabbare hantering."
-
-#: templates/checkin/device.html:20
-msgid "Purchased"
-msgstr "Inköpt"
-
-#: templates/checkin/device.html:24 templates/devices/get_info.html:17
-#: templates/devices/search_gsx_warranty.html:17
-#: templates/devices/summary.html:16 templates/orders/devices.html:23
-#: templates/search/results/gsx_warranty.html:17
-msgid "Configration"
-msgstr "Konfiguration"
-
-#: templates/checkin/device.html:28 templates/devices/get_info.html:23
-#: templates/devices/summary.html:34
-#: templates/search/results/gsx_warranty.html:22
-msgid "Activation Profile"
-msgstr "Aktiveringsprofil"
-
-#: templates/checkin/device.html:30 templates/devices/get_info.html:25
-#: templates/devices/search_gsx_warranty.html:26
-#: templates/devices/summary.html:36 templates/orders/devices.html:33
-#: templates/search/results/gsx_warranty.html:24
-msgid "Unlocked"
-msgstr "Olåst"
-
-#: templates/checkin/device.html:34 templates/customers/form.html:9
-#: templates/devices/form.html:9 templates/devices/get_info.html:37
-#: templates/devices/search_gsx_warranty.html:36
-#: templates/orders/devices.html:45 templates/orders/gsx_repair_form.html:40
-#: templates/products/form.html:14
-msgid "Details"
-msgstr "Detaljer"
-
-#: templates/checkin/device.html:38
-#: templates/devices/search_gsx_warranty.html:40
-msgid "Onsite Coverage"
-msgstr ""
-
-#: templates/checkin/device.html:42
-#: templates/devices/search_gsx_warranty.html:44
-msgid "Contract Coverage"
-msgstr ""
-
-#: templates/checkin/device.html:57 templates/checkin/issue.html:20
-#: templates/checkin/sn.html:16
-msgid "Continue"
-msgstr "Fortsätt"
 
 #: templates/checkin/error.html:4
 msgid "An error occurred"
 msgstr "Ett fel uppstod"
 
+#: templates/checkin/error.html:9 templates/error.html:27
+msgid "Oops!"
+msgstr "Hoppsan!"
+
+#: templates/checkin/error.html:10 templates/error.html:28
+msgid "It appears that an error has occurred."
+msgstr "Det verkar som om ett fel har uppstått."
+
 #: templates/checkin/error.html:12
 msgid "Try again"
 msgstr "Försök igen"
 
-#: templates/checkin/issue.html:8
-msgid "Please describe the problem in as much detail as possible."
-msgstr "Beskriv problemet så detaljerat som möjligt."
+#: templates/checkin/index.html:44
+#, fuzzy
+#| msgid "Customer not found"
+msgid "No users found"
+msgstr "Kunden hittades inte"
 
-#: templates/checkin/sn.html:7
-msgid "Please enter your serial number"
-msgstr "Hej,"
-
-#: templates/checkin/sn.html:8
-msgid ""
-"You can find instructions for locating the serial number by <a href=\"http://"
-"support.apple.com/kb/ht1349\" target=\"_blank\">clicking here</a>."
+#: templates/checkin/index.html:47
+msgid "Go to Servo"
 msgstr ""
-"Skriv in Serienumret på den enhet som du vill skicka in på service och klicka på fortsätt. För instruktioner om hur du hittar ditt serienummer klicka <a "
-"href=\"http://support.apple.com/kb/HT1349?viewlocale=sv_SE\" target=\"_blank"
-"\">här</a>."
 
-#: templates/checkin/sn.html:8
-msgid ""
-"Clicking \"Choose\" will let you pick the type of your device if you don't "
-"know the serial number."
+#: templates/checkin/index.html:64 views/account.py:393
+msgid "Search results"
 msgstr ""
-"Klicka på \"Välj\" om du vill välja din enhet om du inte kan serienumret."
 
-#: templates/checkin/sn.html:8
-msgid "If you don't provide a serial number, the service time may be longer."
-msgstr ""
-"Om du inte skriver in ditt serienummer kan servicetiden i värsta fall bli "
-"lite längre."
+#: templates/checkin/newindex.html:108 templates/checkin/newindex.html:119
+msgid "Yes"
+msgstr "Ja"
 
-#: templates/checkin/sn.html:9
-msgid ""
-"When checking in an accessory, please provide the serial number of the "
-"device that the accessory is used with."
-msgstr ""
-"För tillbehör behöver vi serienumret som tillbehöret används till."
-
-#: templates/checkin/sn.html:9
-msgid ""
-"For example the serial number of your iPhone if the headset is broken, or "
-"the serial number of your Mac if you have a problem with the mouse."
-msgstr ""
-"Till exempel för ett par trasiga hörlurar behöver vi serienumret på iphonen."
-"Skulle inte enheten ha garanti men tillbehöret är köpt inom ett år så måste "
-"du ladda upp ett kvitto för att stryka garantin."
-
-#: templates/checkin/sn.html:15 templates/orders/customer.html:12
-#: templates/orders/statuses.html:3
-msgid "Choose"
-msgstr "Välj"
+#: templates/checkin/newindex.html:109 templates/checkin/newindex.html:120
+msgid "No"
+msgstr "Nej"
 
 #: templates/checkin/status-show.html:33
 msgid "Refresh"
@@ -3010,55 +3061,29 @@ msgstr "Arbetsorder numret finns på ditt servicekvitto"
 msgid "%(company)s terms of service"
 msgstr ""
 
-#: templates/checkin/thanks.html:7 views/checkin.py:228
+#: templates/checkin/thanks.html:7 views/checkin.py:135
 msgid "Done!"
 msgstr "Färdig"
 
 #: templates/checkin/thanks.html:8
-msgid "Your service order has been submitted."
+#, fuzzy, python-format
+#| msgid "Your service order has been submitted."
+msgid "Your service order <strong>%(code)s</strong> has been submitted. "
 msgstr "Din serviceorder har skickats till oss."
 
 #: templates/checkin/thanks.html:8
-msgid "Click <strong>Print</strong> to print the confirmation."
+#, fuzzy
+#| msgid "Click <strong>Print</strong> to print the confirmation."
+msgid "Please click <strong>Print</strong> to print the confirmation."
 msgstr ""
 "Klicka på <strong>skriv ut</strong> och bifoga serviceordern med ditt ärende."
 
-#: templates/checkin/thanks.html:8
-#, python-format
-msgid "You will be redirected to the start page in %(seconds)s seconds."
-msgstr "Du omdirigeras till startsidan om %(seconds)s sekunder."
-
-#: templates/checkin/troubleshoot.html:12
-msgid "Yes"
-msgstr "Ja"
-
-#: templates/checkin/troubleshoot.html:13
-msgid "No"
-msgstr "Nej"
-
-#: templates/checkin/welcome.html:7
-#, python-format
-msgid "Welcome to %(location)s service check-in."
-msgstr "Välkommen till %(location)s service check-in sida."
-
-#: templates/checkin/welcome.html:8
-msgid ""
-"From here you can <strong>create</strong> a service order or check the "
-"<strong>status</strong> of an existing order."
+#: templates/checkin/thanks.html:13 templates/generic/index.html:22
+msgid "Create New"
 msgstr ""
-"Här kan du skapa ett <strong>nytt ärende</strong> eller kontrollera "
-"<strong>status</strong> på ett befintligt ärende."
 
-#: templates/checkin/welcome.html:8
-msgid "Please choose an option below."
-msgstr "Välj ett alternativ nedan"
-
-#: templates/checkin/welcome.html:11
-msgid "Check Status"
-msgstr "Kontrollera status"
-
-#: templates/customers/choose-list.html:6 templates/customers/find.html:91
-#: templates/customers/search.html:28
+#: templates/customers/choose-list.html:6 templates/customers/find.html:89
+#: templates/customers/search.html:41
 #: templates/search/results/customers.html:24
 msgid "No customers found"
 msgstr ""
@@ -3067,8 +3092,22 @@ msgstr ""
 msgid "Search for customer"
 msgstr ""
 
-#: templates/customers/choose.html:11
+#: templates/customers/choose.html:19 templates/customers/search.html:16
+#, fuzzy
+#| msgid "Company Name"
+msgid "Companies"
+msgstr "Företag"
+
+#: templates/customers/choose.html:20 templates/customers/search.html:17
+msgid "People"
+msgstr ""
+
+#: templates/customers/choose.html:23
 msgid "Name, email or phone number"
+msgstr ""
+
+#: templates/customers/choose.html:27
+msgid "Enter search query"
 msgstr ""
 
 #: templates/customers/delete_group.html:5
@@ -3079,14 +3118,14 @@ msgstr ""
 msgid "This action will not delete the customers in this group."
 msgstr ""
 
-#: templates/customers/find.html:15 templates/customers/index.html:43
+#: templates/customers/find.html:15 templates/customers/index.html:44
 #: templates/devices/find.html:7 templates/devices/index.html:19
 #: templates/generic/index.html:6 templates/notes/find.html:8
 #: templates/notes/list_notes.html:28
 msgid "Browse"
 msgstr ""
 
-#: templates/customers/find.html:73 templates/devices/find.html:53
+#: templates/customers/find.html:71 templates/devices/find.html:52
 #: templates/devices/list.html:26 templates/products/get_info.html:55
 msgid "View"
 msgstr ""
@@ -3095,39 +3134,32 @@ msgstr ""
 msgid "New Contact"
 msgstr ""
 
-#: templates/customers/index.html:24 templates/devices/index.html:13
-msgid "Upload"
+#: templates/customers/index.html:24
+msgid "Import"
 msgstr ""
 
-#: templates/customers/index.html:27 templates/customers/index.html.py:30
-#: views/admin.py:412
-msgid "Edit Group"
+#: templates/customers/index.html:25
+msgid "Export"
 msgstr ""
 
 #: templates/customers/index.html:28 templates/customers/index.html.py:31
+#: views/admin.py:413
+msgid "Edit Group"
+msgstr ""
+
+#: templates/customers/index.html:29 templates/customers/index.html.py:32
 msgid "Delete Group"
 msgstr ""
 
-#: templates/customers/index.html:57 templates/devices/specs.html:7
-#: templates/products/index.html:61 templates/products/view.html:11
-#: views/product.py:36 views/product.py:326
-msgid "All"
-msgstr ""
-
-#: templates/customers/index.html:74
+#: templates/customers/index.html:75
 msgid "No customer selected"
 msgstr ""
 
-#: templates/customers/merge.html:12 templates/customers/move.html:12
-#, fuzzy
-msgid "Customer name"
-msgstr "Kundsnamn"
-
-#: templates/customers/merge.html:18 templates/customers/move.html:19
-#: templates/orders/close.html:15 templates/orders/toolbar.html:69
-#: templates/orders/toolbar.html.py:73 templates/products/choose.html:17
-#: templates/snippets/modal.html:11
-msgid "Close"
+#: templates/customers/index.html:83 templates/customers/list.html:5
+#: templates/customers/search.html:46 templates/customers/view.html:117
+#: templates/default.html:38 templates/search/spotlight.html:13
+#: views/customer.py:29
+msgid "Customers"
 msgstr ""
 
 #: templates/customers/move.html:5
@@ -3144,8 +3176,18 @@ msgid ""
 "deleted"
 msgstr ""
 
+#: templates/customers/search.html:14
+msgid "Show"
+msgstr ""
+
 #: templates/customers/upload.html:5
-msgid "Upload customer data"
+msgid "Import customer data"
+msgstr ""
+
+#: templates/customers/view.html:9 templates/default.html:37
+#: templates/devices/index.html:77 templates/devices/search.html:14
+#: templates/search/spotlight.html:16 views/device.py:48
+msgid "Devices"
 msgstr ""
 
 #: templates/customers/view.html:48
@@ -3162,9 +3204,9 @@ msgstr ""
 
 #: templates/customers/view.html:61 templates/devices/find.html:50
 #: templates/devices/list.html:23
-#: templates/devices/search_gsx_warranty.html:58
+#: templates/devices/search_gsx_warranty.html:65
 #: templates/devices/view.html:25
-#: templates/search/results/gsx_warranty.html:33
+#: templates/search/results/gsx_warranty.html:35
 msgid "Create Service Order"
 msgstr ""
 
@@ -3181,13 +3223,42 @@ msgstr ""
 msgid "No messages found"
 msgstr ""
 
+#: templates/default.html:34 templates/default.html.py:68
+msgid "Homepage"
+msgstr ""
+
+#: templates/default.html:75
+#, fuzzy
+msgid "Go to check-in"
+msgstr "Kontrollera"
+
+#: templates/default.html:103
+msgid "No new alerts"
+msgstr ""
+
+#: templates/default.html:108
+msgid "See All Alerts"
+msgstr ""
+
+#: templates/default.html:136
+msgid "No new messages"
+msgstr ""
+
+#: templates/default.html:142
+msgid "Read All Messages"
+msgstr ""
+
+#: templates/default.html:171
+msgid "Terms"
+msgstr ""
+
 #: templates/devices/accessories_edit.html:4
 msgid "Manage Accessories"
 msgstr ""
 
 #: templates/devices/accessories_edit.html:15
 #: templates/orders/customer.html:22 templates/orders/customer.html.py:24
-#: templates/orders/devices.html:120 templates/orders/followers.html:23
+#: templates/orders/devices.html:138 templates/orders/followers.html:23
 #: templates/orders/products.html:77 templates/orders/remove_customer.html:15
 #: templates/orders/remove_device.html:15
 msgid "Remove"
@@ -3197,7 +3268,7 @@ msgstr ""
 msgid "No accessories added"
 msgstr ""
 
-#: templates/devices/choose-list.html:10 templates/devices/find.html:62
+#: templates/devices/choose-list.html:10 templates/devices/find.html:61
 #: templates/devices/search_gsx_repairs.html:24
 #: templates/search/results/gsx_notfound.html:3
 msgid "No search results"
@@ -3209,6 +3280,10 @@ msgstr ""
 
 #: templates/devices/choose.html:11
 msgid "Serial number or IMEI code"
+msgstr ""
+
+#: templates/devices/diagnostic_init.html:4
+msgid "Initiate iOS diagnostics"
 msgstr ""
 
 #: templates/devices/diagnostic_results.html:4
@@ -3223,7 +3298,7 @@ msgstr ""
 msgid "Passed modules"
 msgstr ""
 
-#: templates/devices/diagnostics.html:4
+#: templates/devices/diagnostics.html:4 templates/orders/devices.html:76
 msgid "Diagnostics"
 msgstr ""
 
@@ -3243,23 +3318,42 @@ msgstr ""
 msgid "Use in"
 msgstr ""
 
-#: templates/devices/find.html:51 templates/devices/list.html:24
-msgid "Show Service Orders"
-msgstr ""
-
-#: templates/devices/form.html:27 templates/products/form.html:53
+#: templates/devices/form.html:28 templates/products/form.html:53
 msgid "Enter tag"
 msgstr ""
 
 #: templates/devices/get_info.html:12
-#: templates/devices/search_gsx_warranty.html:13
+#: templates/devices/search_gsx_warranty.html:16
 #: templates/devices/summary.html:11 templates/orders/devices.html:18
 #: templates/search/results/gsx_warranty.html:13
 msgid "Purchase Date"
 msgstr ""
 
+#: templates/devices/get_info.html:17
+#: templates/devices/search_gsx_warranty.html:20
+#: templates/devices/summary.html:16 templates/orders/devices.html:23
+#: templates/search/results/gsx_warranty.html:17
+msgid "Configration"
+msgstr "Konfiguration"
+
+#: templates/devices/get_info.html:23
+#: templates/search/results/gsx_warranty.html:22
+msgid "Activation Profile"
+msgstr "Aktiveringsprofil"
+
+#: templates/devices/get_info.html:25
+#: templates/devices/search_gsx_warranty.html:33
+#: templates/devices/summary.html:36 templates/orders/devices.html:37
+#: templates/search/results/gsx_warranty.html:24
+msgid "Unlocked"
+msgstr "Olåst"
+
 #: templates/devices/index.html:8 templates/devices/index.html.py:11
 msgid "Show Parts"
+msgstr ""
+
+#: templates/devices/index.html:13
+msgid "Upload"
 msgstr ""
 
 #: templates/devices/index.html:36 templates/orders/print_confirmation.html:64
@@ -3279,8 +3373,12 @@ msgstr ""
 msgid "No device selected"
 msgstr ""
 
+#: templates/devices/list.html:24
+msgid "Show Service Orders"
+msgstr ""
+
 #: templates/devices/parts.html:9 templates/shipments/edit_bulk_return.html:56
-#: templates/shipments/list_incoming.html:17
+#: templates/shipments/list_incoming.html:16
 msgid "Part"
 msgstr ""
 
@@ -3304,18 +3402,22 @@ msgstr ""
 msgid "This will also remove it from all service orders."
 msgstr ""
 
-#: templates/devices/search_gsx.html:13 templates/devices/search_gsx.html:15
-#: templates/devices/search_gsx_error.html:10
+#: templates/devices/search_gsx.html:18 templates/devices/search_gsx.html:20
+#: templates/devices/search_gsx_error.html:10 templates/orders/devices.html:64
+#: templates/orders/devices.html.py:66
 #: templates/orders/gsx_repair_form.html:31
-#: templates/repairs/get_details.html:22 templates/search/results/gsx.html:13
+#: templates/repairs/get_details.html:20 templates/search/results/gsx.html:13
 #: templates/search/results/gsx.html:15
 #: templates/shipments/list_bulk_returns.html:12
 msgid "Parts"
 msgstr ""
 
-#: templates/devices/search_gsx.html:18 templates/devices/search_gsx.html:20
+#: templates/devices/search_gsx.html:23 templates/devices/search_gsx.html:25
 #: templates/devices/search_gsx_error.html:11
 #: templates/search/results/gsx.html:18 templates/search/results/gsx.html:20
+#: templates/stats/index.html:11 templates/stats/locations.html:8
+#: templates/stats/newstats.html:11 templates/stats/queues.html:8
+#: templates/stats/sales.html:8 templates/stats/statuses.html:8
 msgid "Repairs"
 msgstr ""
 
@@ -3329,18 +3431,33 @@ msgid "Number"
 msgstr ""
 
 #: templates/devices/search_gsx_warranty.html:31
+#: templates/devices/summary.html:34 templates/orders/devices.html:35
+#: templates/search/results/gsx_warranty.html:26
+#, fuzzy
+msgid "Find My iPhone"
+msgstr "Telefon"
+
+#: templates/devices/search_gsx_warranty.html:38
 #: templates/purchases/view_po.html:19
 msgid "Sales Order"
 msgstr ""
 
-#: templates/devices/search_gsx_warranty.html:55
-#: templates/search/results/gsx_warranty.html:35
+#: templates/devices/search_gsx_warranty.html:47
+msgid "Onsite Coverage"
+msgstr ""
+
+#: templates/devices/search_gsx_warranty.html:51
+msgid "Contract Coverage"
+msgstr ""
+
+#: templates/devices/search_gsx_warranty.html:62
+#: templates/search/results/gsx_warranty.html:37
 msgid "Use in order"
 msgstr ""
 
-#: templates/devices/search_gsx_warranty.html:60
-#: templates/search/results/gsx_warranty.html:39
+#: templates/devices/search_gsx_warranty.html:67
 #: templates/search/results/gsx_warranty.html:41
+#: templates/search/results/gsx_warranty.html:43
 msgid "Download Manual"
 msgstr ""
 
@@ -3369,11 +3486,12 @@ msgid "Service Manual"
 msgstr ""
 
 #: templates/devices/view.html:44 templates/devices/view.html.py:47
-#: templates/orders/devices.html:93
+#: templates/orders/devices.html:117
 msgid "Update Warranty Status"
 msgstr ""
 
 #: templates/devices/view.html:45 templates/devices/view.html.py:48
+#: templates/orders/devices.html:84
 msgid "Fetch Diagnostics"
 msgstr ""
 
@@ -3381,9 +3499,40 @@ msgstr ""
 msgid "Fetching repairs..."
 msgstr ""
 
-#: templates/generic/index.html:22
-msgid "Create New"
+#: templates/diagnostics/select_test.html:3
+msgid "Choose test to run"
 msgstr ""
+
+#: templates/error.html:12
+#, fuzzy
+msgid "An Error Occurred"
+msgstr "Ett fel uppstod"
+
+#: templates/error.html:28
+msgid ""
+"I've notified the developers, but I'm sure they would really appreciate if "
+"you could briefly describe what you were doing before this happened."
+msgstr ""
+
+#: templates/error.html:33 templates/orders/dispatch.html:95
+#: templates/products/form.html:74 templates/products/form.html.py:76
+#: templates/products/receive_item.html:47 templates/rules/form.html:76
+msgid "Cancel"
+msgstr ""
+
+#: templates/error.html:38
+msgid "Thanks!"
+msgstr "Tack!"
+
+#: templates/error.html:39
+msgid ""
+"Your error report has been submitted. Thanks for helping make Servo better!"
+msgstr ""
+
+#: templates/error.html:40
+#, fuzzy
+msgid "Return Home"
+msgstr "Produkter och tjänster"
 
 #: templates/invoices/index.html:7 templates/invoices/index.html.py:105
 #: templates/products/tabs.html:17 templates/products/view.html:46
@@ -3415,6 +3564,11 @@ msgstr ""
 msgid "No invoices found"
 msgstr ""
 
+#: templates/modal.html:15 templates/orders/parts.html:20
+#: templates/products/get_info.html:58 templates/snippets/modal.html:12
+msgid "Done"
+msgstr "Klar"
+
 #: templates/notes/form.html:38
 msgid "Attachments"
 msgstr "Bifogade filer"
@@ -3423,11 +3577,7 @@ msgstr "Bifogade filer"
 msgid "Labels"
 msgstr ""
 
-#: templates/notes/form.html:40
-msgid "Escalation"
-msgstr ""
-
-#: templates/notes/form.html:110
+#: templates/notes/form.html:111
 msgid "Edit Note"
 msgstr ""
 
@@ -3441,10 +3591,6 @@ msgstr ""
 
 #: templates/notes/list_notes.html:37
 msgid "Inbox"
-msgstr ""
-
-#: templates/notes/list_notes.html:38
-msgid "Flagged"
 msgstr ""
 
 #: templates/notes/list_notes.html:39
@@ -3479,16 +3625,18 @@ msgstr ""
 msgid "No notes found"
 msgstr ""
 
-#: templates/notes/search.html:7
-msgid "Create Note"
-msgstr ""
-
-#: templates/notes/view_note.html:24
-msgid "Subject"
-msgstr ""
+#: templates/notes/search.html:5
+#, fuzzy
+#| msgid "Notes"
+msgid "New Note"
+msgstr "Anmärkningar"
 
 #: templates/notes/view_note.html:35 templates/orders/notes.html:21
 msgid "Reply"
+msgstr ""
+
+#: templates/orders/batch_process.html:6 views/order.py:935
+msgid "Batch Processing"
 msgstr ""
 
 #: templates/orders/close.html:5
@@ -3511,6 +3659,10 @@ msgstr ""
 msgid "Complete"
 msgstr ""
 
+#: templates/orders/customer.html:12 templates/orders/statuses.html:3
+msgid "Choose"
+msgstr "Välj"
+
 #: templates/orders/customer.html:14 templates/orders/customer.html.py:16
 msgid "Add contact"
 msgstr ""
@@ -3525,98 +3677,104 @@ msgid ""
 "This will also delete all the order's notes. This action cannot be undone."
 msgstr ""
 
-#: templates/orders/devices.html:61 templates/orders/devices.html.py:63
-msgid "View Parts"
-msgstr ""
-
-#: templates/orders/devices.html:63
+#: templates/orders/devices.html:66
 msgid "Assign order to a queue first"
 msgstr ""
 
-#: templates/orders/devices.html:65
-msgid "View History"
+#: templates/orders/devices.html:73
+msgid "History"
 msgstr ""
 
-#: templates/orders/devices.html:67 templates/orders/devices.html.py:69
-msgid "View Accessories"
+#: templates/orders/devices.html:80 templates/orders/devices.html.py:82
+msgid "Initiate Diagnostics"
 msgstr ""
 
-#: templates/orders/devices.html:78 templates/orders/devices.html.py:80
+#: templates/orders/devices.html:85
+msgid "Open Diagnostics Console"
+msgstr ""
+
+#: templates/orders/devices.html:86
+msgid "Select Test"
+msgstr ""
+
+#: templates/orders/devices.html:95 templates/orders/devices.html.py:97
 msgid "Create Carry-In Repair"
 msgstr ""
 
-#: templates/orders/devices.html:80
+#: templates/orders/devices.html:97
 msgid "Device has open GSX repairs"
 msgstr ""
 
-#: templates/orders/devices.html:83 templates/orders/devices.html.py:85
+#: templates/orders/devices.html:100 templates/orders/devices.html.py:102
 msgid "Create Onsite Repair"
 msgstr ""
 
-#: templates/orders/devices.html:88 templates/orders/devices.html.py:90
+#: templates/orders/devices.html:105 templates/orders/devices.html.py:107
+msgid "Create Mail-In Repair"
+msgstr ""
+
+#: templates/orders/devices.html:110 templates/orders/devices.html.py:112
 msgid "Create Whole-Unit Exchange"
 msgstr ""
 
-#: templates/orders/devices.html:94
-msgid "Get Diagnostics"
+#: templates/orders/devices.html:115 templates/repairs/import_repair.html:5
+msgid "Import GSX Repair"
 msgstr ""
 
-#: templates/orders/devices.html:97 templates/orders/devices.html.py:99
-#: templates/orders/toolbar.html:91
+#: templates/orders/devices.html:119
+#, fuzzy
+#| msgid "Device"
+msgid "Show Device"
+msgstr "Enhet"
+
+#: templates/orders/devices.html:121 templates/orders/devices.html.py:123
+#: templates/orders/toolbar.html:89
 msgid "Show Barcode"
 msgstr ""
 
-#: templates/orders/devices.html:102
-msgid "Show Service Manual"
-msgstr ""
-
-#: templates/orders/devices.html:105
-msgid "Show Exploded View"
-msgstr ""
-
-#: templates/orders/devices.html:112 templates/orders/devices.html.py:114
-msgid "Report"
-msgstr ""
-
-#: templates/orders/devices.html:131
+#: templates/orders/devices.html:149
 msgid "Order doesn't contain any devices"
 msgstr ""
 
-#: templates/orders/devices.html:136 templates/orders/toolbar.html:14
+#: templates/orders/devices.html:154 templates/orders/toolbar.html:14
 msgid "Add Device"
 msgstr ""
 
-#: templates/orders/dispatch.html:40
+#: templates/orders/dispatch.html:41
 #, fuzzy
 msgid "Payment"
 msgstr "Betalningssätt"
 
-#: templates/orders/dispatch.html:58 templates/products/index.html:100
+#: templates/orders/dispatch.html:59 templates/products/index.html:100
 #: templates/products/search.html:18 templates/products/tabs.html:8
 #: templates/products/view.html:25 templates/purchases/edit_po.html:21
-#: templates/purchases/list_pos.html:58 views/product.py:31
+#: templates/purchases/list_pos.html:58 views/product.py:30
 msgid "Products"
 msgstr ""
 
-#: templates/orders/dispatch.html:64
+#: templates/orders/dispatch.html:65
 #: templates/orders/print_confirmation.html:108
 #: templates/orders/print_dispatch.html:16
 msgid "Qty"
 msgstr "ant."
 
-#: templates/orders/dispatch.html:65
+#: templates/orders/dispatch.html:66
 #: templates/orders/print_confirmation.html:110
 #: templates/orders/products.html:13 templates/products/view.html:131
 #: templates/products/view.html.py:157 templates/products/view.html:182
 msgid "Price"
 msgstr "Pris"
 
-#: templates/orders/dispatch.html:66
+#: templates/orders/dispatch.html:67
 msgid "Price w/ tax"
 msgstr ""
 
-#: templates/orders/dispatch.html:97 templates/orders/dispatch.html.py:106
-#: templates/orders/toolbar.html:64 templates/orders/toolbar.html.py:66
+#: templates/orders/dispatch.html:96
+msgid "Dispatch and Close"
+msgstr ""
+
+#: templates/orders/dispatch.html:97 templates/orders/dispatch.html.py:108
+#: templates/orders/toolbar.html:62 templates/orders/toolbar.html.py:64
 #: templates/purchases/edit_po.html:22
 msgid "Dispatch"
 msgstr ""
@@ -3681,10 +3839,20 @@ msgstr ""
 msgid "Components"
 msgstr ""
 
-#: templates/orders/gsx_repair_form.html:73
+#: templates/orders/gsx_repair_form.html:81
 #: templates/purchases/edit_po.html:85
 #: templates/shipments/edit_bulk_return.html:94
 msgid "Confirm"
+msgstr ""
+
+#: templates/orders/history.html:4
+#, fuzzy
+#| msgid "Order %s"
+msgid "Order History"
+msgstr "Arbet %s"
+
+#: templates/orders/index.html:9
+msgid "Download Results"
 msgstr ""
 
 #: templates/orders/list.html:22
@@ -3718,8 +3886,10 @@ msgid "No products added"
 msgstr ""
 
 #: templates/orders/notes.html:8
-msgid "Order doesn't contain any notes."
-msgstr ""
+#, fuzzy
+#| msgid "Order does not exist"
+msgid "Order doesn't contain any notes"
+msgstr "Beställnings existerar inte"
 
 #: templates/orders/notes.html:40
 msgid "Mark"
@@ -3747,7 +3917,7 @@ msgstr "Produkter och tjänster"
 msgid "Fetching parts..."
 msgstr ""
 
-#: templates/orders/parts.html:35 templates/stats/sales.html:21
+#: templates/orders/parts.html:35 templates/stats/sales.html:22
 msgid "Service Parts"
 msgstr ""
 
@@ -3868,15 +4038,19 @@ msgid "Create Device"
 msgstr ""
 
 #: templates/orders/products.html:86
-msgid "Order doesn't contain any products."
+msgid "Order doesn't contain any products"
 msgstr ""
 
-#: templates/orders/products.html:91 templates/orders/toolbar.html:15
+#: templates/orders/products.html:92
+msgid "Reserve Products"
+msgstr ""
+
+#: templates/orders/products.html:93 templates/orders/toolbar.html:15
 #: templates/purchases/edit_po.html:6
 msgid "Add Product"
 msgstr ""
 
-#: templates/orders/products.html:96
+#: templates/orders/products.html:99
 #, fuzzy
 msgid "Order Total"
 msgstr "Arbet"
@@ -3924,7 +4098,7 @@ msgstr ""
 
 #: templates/orders/reserve_products.html:5
 #, python-format
-msgid "Reserve all products in order %(id)s?"
+msgid "Reserve products in order %(id)s"
 msgstr ""
 
 #: templates/orders/reserve_products.html:11
@@ -3957,44 +4131,45 @@ msgstr ""
 msgid "Remove Queue"
 msgstr ""
 
-#: templates/orders/toolbar.html:59
+#: templates/orders/toolbar.html:57
 msgid "Remove Status"
 msgstr ""
 
-#: templates/orders/toolbar.html:71
+#: templates/orders/toolbar.html:69
 msgid "Reopen"
 msgstr ""
 
-#: templates/orders/toolbar.html:82
+#: templates/orders/toolbar.html:80
 msgid "Unfollow Order"
 msgstr ""
 
-#: templates/orders/toolbar.html:84
+#: templates/orders/toolbar.html:82
 #, fuzzy
 msgid "Follow Order"
 msgstr "Arbet"
 
-#: templates/orders/toolbar.html:87 templates/orders/toolbar.html.py:89
+#: templates/orders/toolbar.html:85 templates/orders/toolbar.html.py:87
 #, fuzzy
-msgid "Copy Order"
-msgstr "Arbet"
+msgid "Duplicate Order"
+msgstr "Skapa ärende"
 
-#: templates/orders/toolbar.html:94
+#: templates/orders/toolbar.html:92
 msgid "Priority"
 msgstr ""
 
-#: templates/orders/toolbar.html:103 templates/orders/toolbar.html.py:106
-msgid "Reserve Products"
+#: templates/orders/toolbar.html:101 templates/orders/toolbar.html.py:103
+#: templates/products/list_rows.html:36
+msgid "Create Purchase Order"
 msgstr ""
 
-#: templates/orders/toolbar.html:104 templates/orders/toolbar.html.py:107
-msgid "Order Products"
-msgstr ""
-
-#: templates/orders/toolbar.html:111 templates/orders/toolbar.html.py:113
+#: templates/orders/toolbar.html:107 templates/orders/toolbar.html.py:109
 #, fuzzy
 msgid "Delete Order"
 msgstr "Skapa ärende"
+
+#: templates/pagination.html:11
+msgid "Page"
+msgstr ""
 
 #: templates/products/category_form.html:5
 msgid "Edit Product Group"
@@ -4039,7 +4214,6 @@ msgstr ""
 
 #: templates/products/get_info.html:42 templates/products/receive_item.html:15
 #: templates/products/view.html:84 templates/purchases/list_pos.html:53
-#: templates/shipments/list_incoming.html:20
 msgid "Ordered"
 msgstr ""
 
@@ -4089,12 +4263,6 @@ msgstr ""
 msgid "Shipped"
 msgstr ""
 
-#: templates/products/index_outgoing.html:23
-#: templates/purchases/edit_po.html:31
-#: templates/shipments/list_returns.html:12
-msgid "Code"
-msgstr ""
-
 #: templates/products/index_outgoing.html:26
 #: templates/shipments/edit_bulk_return.html:58
 #: templates/shipments/list_returns.html:15
@@ -4123,10 +4291,6 @@ msgstr ""
 msgid "Create Sales Order"
 msgstr ""
 
-#: templates/products/list_rows.html:36
-msgid "Create Purchase Order"
-msgstr ""
-
 #: templates/products/list_rows.html:39
 msgid "Use in Purchase Order"
 msgstr ""
@@ -4136,7 +4300,7 @@ msgid "Stocking Order"
 msgstr ""
 
 #: templates/products/receive_item.html:49
-#: templates/shipments/list_incoming.html:52
+#: templates/shipments/list_incoming.html:51
 msgid "Receive"
 msgstr ""
 
@@ -4150,7 +4314,7 @@ msgid "Shipments"
 msgstr ""
 
 #: templates/products/tabs.html:14 templates/purchases/list_pos.html:131
-#: templates/purchases/view_po.html:55 views/purchases.py:28
+#: templates/purchases/view_po.html:55 views/purchases.py:29
 msgid "Purchase Orders"
 msgstr ""
 
@@ -4158,14 +4322,14 @@ msgstr ""
 msgid "Upload GSX Parts"
 msgstr ""
 
-#: templates/products/view.html:44 templates/stats/index.html:12
-#: templates/stats/locations.html:9 templates/stats/queues.html:9
-#: templates/stats/sales.html:9 templates/stats/sales.html.py:13
-#: templates/stats/statuses.html:9
+#: templates/products/view.html:44 templates/stats/index.html:13
+#: templates/stats/locations.html:10 templates/stats/newstats.html:13
+#: templates/stats/queues.html:10 templates/stats/sales.html:10
+#: templates/stats/sales.html.py:14 templates/stats/statuses.html:10
 msgid "Sales"
 msgstr ""
 
-#: templates/products/view.html:45 templates/stats/sales.html:17
+#: templates/products/view.html:45 templates/stats/sales.html:18
 msgid "Purchases"
 msgstr ""
 
@@ -4242,18 +4406,18 @@ msgid "Only repairs that have not been submitted can be deleted."
 msgstr ""
 
 #: templates/repairs/get_details.html:12
+#: templates/search/results/gsx_repair_details.html:14
+msgid "Warranty Coverage"
+msgstr ""
+
+#: templates/repairs/get_details.html:14
 #: templates/search/results/gsx_repair_details.html:8
 msgid "CS Code"
 msgstr ""
 
-#: templates/repairs/get_details.html:14
+#: templates/repairs/get_details.html:18
 #: templates/search/results/gsx_repair_details.html:10
 msgid "Tracking Number"
-msgstr ""
-
-#: templates/repairs/get_details.html:18
-#: templates/search/results/gsx_repair_details.html:14
-msgid "Warranty Coverage"
 msgstr ""
 
 #: templates/repairs/part_menu.html:4 templates/repairs/part_menu.html.py:7
@@ -4274,18 +4438,30 @@ msgid "Return DOA"
 msgstr ""
 
 #: templates/repairs/part_menu.html:18 templates/repairs/part_menu.html:28
-#: views/shipments.py:326
+#: views/shipments.py:330
 msgid "Return Good Part"
 msgstr ""
 
 #: templates/repairs/part_menu.html:19 templates/repairs/part_menu.html:29
-#: views/shipments.py:330
+#: views/shipments.py:334
 msgid "Convert to Stock"
 msgstr ""
 
 #: templates/repairs/part_menu.html:22 templates/repairs/part_menu.html:24
 #: templates/repairs/part_menu.html:31
 msgid "Remove from Repair"
+msgstr ""
+
+#: templates/rules/form.html:43
+msgid "Peform the following actions"
+msgstr ""
+
+#: templates/rules/form.html:77 views/note.py:313
+msgid "OK"
+msgstr ""
+
+#: templates/rules/list_rules.html:12 views/rules.py:16 views/rules.py:22
+msgid "Rules"
 msgstr ""
 
 #: templates/search/spotlight.html:11
@@ -4326,11 +4502,6 @@ msgstr ""
 msgid "Verify"
 msgstr ""
 
-#: templates/shipments/edit_bulk_return.html:28
-#: templates/shipments/view_bulk_return.html:6
-msgid "Carrier"
-msgstr ""
-
 #: templates/shipments/edit_bulk_return.html:34
 #: templates/shipments/view_bulk_return.html:8
 msgid "Tracking"
@@ -4355,7 +4526,7 @@ msgstr ""
 msgid "No parts registered for this shipment"
 msgstr ""
 
-#: templates/shipments/index.html:26 templates/shipments/list_incoming.html:60
+#: templates/shipments/index.html:26 templates/shipments/list_incoming.html:59
 msgid "Incoming"
 msgstr ""
 
@@ -4364,7 +4535,7 @@ msgid "Parts Pending Return"
 msgstr ""
 
 #: templates/shipments/index.html:31
-#: templates/shipments/list_bulk_returns.html:36
+#: templates/shipments/list_bulk_returns.html:40
 msgid "Browse Returns"
 msgstr ""
 
@@ -4380,7 +4551,17 @@ msgstr ""
 msgid "Returned"
 msgstr ""
 
-#: templates/shipments/list_incoming.html:46
+#: templates/shipments/list_bulk_returns.html:31
+msgid "No bulk returns"
+msgstr ""
+
+#: templates/shipments/list_incoming.html:19
+#, fuzzy
+#| msgid "Order"
+msgid "Ordered By"
+msgstr "Arbet"
+
+#: templates/shipments/list_incoming.html:44
 msgid "No incoming products"
 msgstr ""
 
@@ -4397,230 +4578,277 @@ msgid "An error occured..."
 msgstr ""
 
 #: templates/stats/index.html:8 templates/stats/locations.html:5
-#: templates/stats/queues.html:5 templates/stats/sales.html:5
-#: templates/stats/statuses.html:5
+#: templates/stats/newstats.html:8 templates/stats/queues.html:5
+#: templates/stats/sales.html:5 templates/stats/statuses.html:5
 msgid "Technicians"
 msgstr ""
 
-#: templates/stats/index.html:40
+#: templates/stats/index.html:41
 #, fuzzy
 msgid "Orders Assigned"
 msgstr "Arbet"
 
-#: templates/stats/index.html:41
+#: templates/stats/index.html:42
 msgid ""
 "Shows how many new orders have been assigned to each technician over the "
 "given time period."
 msgstr ""
 
-#: templates/stats/index.html:44 templates/stats/locations.html:13
-#: templates/stats/queues.html:13
+#: templates/stats/index.html:45 templates/stats/locations.html:14
+#: templates/stats/queues.html:14
 msgid "Orders Created"
 msgstr ""
 
-#: templates/stats/index.html:45
+#: templates/stats/index.html:46
 msgid "This graph shows how many orders are checked in by each user."
 msgstr ""
 
-#: templates/stats/index.html:48 templates/stats/locations.html:29
-#: templates/stats/queues.html:25
+#: templates/stats/index.html:49 templates/stats/locations.html:30
+#: templates/stats/queues.html:26
 #, fuzzy
 msgid "Work Distribution"
 msgstr "Arbetsbeskrivning"
 
-#: templates/stats/index.html:49
+#: templates/stats/index.html:50
 msgid ""
 "Shows you how the total number of service orders is distributed across the "
 "technicians at this location."
 msgstr ""
 
-#: templates/stats/locations.html:14
+#: templates/stats/locations.html:15
 msgid "Shows you how many orders are created at each location."
 msgstr ""
 
-#: templates/stats/locations.html:17 templates/stats/queues.html:17
+#: templates/stats/locations.html:18 templates/stats/queues.html:18
 #, fuzzy
 msgid "Orders Closed"
 msgstr "Arbet"
 
-#: templates/stats/locations.html:18
+#: templates/stats/locations.html:19
 msgid "Shows you how many orders have been closed at each location."
 msgstr ""
 
-#: templates/stats/locations.html:21 templates/stats/queues.html:21
+#: templates/stats/locations.html:22 templates/stats/queues.html:22
 msgid "Average Turnaround"
 msgstr ""
 
-#: templates/stats/locations.html:22
+#: templates/stats/locations.html:23
 msgid "Shows how many hours it takes to complete an order at each location."
 msgstr ""
 
-#: templates/stats/locations.html:25
+#: templates/stats/locations.html:26
 msgid "Average Runrate"
 msgstr ""
 
-#: templates/stats/locations.html:26
+#: templates/stats/locations.html:27
 msgid "Shows you how many orders people are working on at each location."
 msgstr ""
 
-#: templates/stats/locations.html:30
+#: templates/stats/locations.html:31
 msgid ""
 "This shows you how your overall work load is distributed across your service "
 "locations."
 msgstr ""
 
-#: templates/stats/queues.html:14
+#: templates/stats/newstats.html:44
+msgid "Cases Created"
+msgstr ""
+
+#: templates/stats/newstats.html:45
+#, fuzzy
+msgid "Cases Assigned"
+msgstr "Arbet"
+
+#: templates/stats/newstats.html:46
+#, fuzzy
+#| msgid "Repair Status"
+msgid "Repairs Created"
+msgstr "Reparationsstatus"
+
+#: templates/stats/newstats.html:47
+msgid "Cases Dispatched"
+msgstr ""
+
+#: templates/stats/newstats.html:74
+msgid "Average turnaround time"
+msgstr ""
+
+#: templates/stats/newstats.html:75
+msgid "days"
+msgstr ""
+
+#: templates/stats/newstats.html:75
+msgid "hours"
+msgstr ""
+
+#: templates/stats/queues.html:15
 msgid ""
 "This is your total number of orders per queue in the specified time period"
 msgstr ""
 
-#: templates/stats/queues.html:18
+#: templates/stats/queues.html:19
 msgid "Shows you how many orders have been closed in each queue."
 msgstr ""
 
-#: templates/stats/queues.html:22
+#: templates/stats/queues.html:23
 msgid "Shows how many hours it takes to complete an order in each queue."
 msgstr ""
 
-#: templates/stats/queues.html:26
+#: templates/stats/queues.html:27
 msgid ""
 "This shows your total ratio of orders over the time period distributed over "
 "each queue."
 msgstr ""
 
-#: templates/stats/sales.html:14
+#: templates/stats/sales.html:15
 msgid "Shows you invoice totals per queue within the selected time period."
 msgstr ""
 
-#: templates/stats/sales.html:18
+#: templates/stats/sales.html:19
 msgid ""
 "Shows you Purchase Order totals per queue within the selected time period."
 msgstr ""
 
-#: templates/stats/sales.html:22
+#: templates/stats/sales.html:23
 msgid "Shows you how many parts have been ordered for each labour tier."
 msgstr ""
 
-#: templates/stats/statuses.html:13
+#: templates/stats/statuses.html:14
 msgid "Orders per location"
 msgstr ""
 
-#: templates/stats/statuses.html:14
+#: templates/stats/statuses.html:15
 msgid ""
 "Shows the number of orders with a particular status at the selected location "
 "that have been assigned to a technician over the specified time period."
 msgstr ""
 
-#: templates/stats/statuses.html:17
+#: templates/stats/statuses.html:18
 #, fuzzy
 msgid "Orders per user"
 msgstr "Arbet"
 
-#: templates/stats/statuses.html:18
+#: templates/stats/statuses.html:19
 msgid ""
 "Shows the number of orders with a particular status per each user at the "
 "given location that have been assigned to a technician over the specified "
 "time period."
 msgstr ""
 
-#: views/account.py:26
+#: validators.py:20
+#, python-format
+msgid "%s is not a valid serial or IMEI number"
+msgstr "%s är inte ett giltigt serienummer eller IMEI-nummer"
+
+#: validators.py:24
+#, fuzzy
+#| msgid "Serial numbers may not include spaces"
+msgid "Serial numbers may only contain letters and numbers"
+msgstr "Serienummer får inte innehålla mellanslag"
+
+#: validators.py:30
+#, python-format
+msgid "Invalid file type: %s"
+msgstr ""
+
+#: views/account.py:30
 msgid "Profile Settings"
 msgstr ""
 
-#: views/account.py:34 views/admin.py:235
+#: views/account.py:39 views/admin.py:235
 msgid "Settings saved"
 msgstr ""
 
-#: views/account.py:47
+#: views/account.py:54
 msgid "Error in user details"
 msgstr ""
 
-#: views/account.py:73
+#: views/account.py:80
 msgid "My Orders"
 msgstr ""
 
-#: views/account.py:81
+#: views/account.py:91
 msgid "Sign In"
 msgstr ""
 
-#: views/account.py:102
+#: views/account.py:105
+msgid "Incorrect username or password"
+msgstr ""
+
+#: views/account.py:107
+msgid "Your account has been deactivated"
+msgstr ""
+
+#: views/account.py:116
 #, python-format
 msgid "%s logged in"
 msgstr ""
 
-#: views/account.py:109
-msgid "Incorrect username or password"
+#: views/account.py:123
+msgid "Invalid input for login"
 msgstr ""
 
-#: views/account.py:111
-msgid "Login failed"
-msgstr ""
-
-#: views/account.py:119
+#: views/account.py:131
 msgid "You have logged out"
 msgstr ""
 
-#: views/account.py:223
+#: views/account.py:235
 msgid "Users can only delete their own calendars!"
 msgstr ""
 
-#: views/account.py:229
+#: views/account.py:241
 msgid "Calendar deleted"
 msgstr ""
 
-#: views/account.py:232
+#: views/account.py:244
 msgid "Really delete this calendar?"
 msgstr ""
 
-#: views/account.py:251
+#: views/account.py:263
 msgid "Calendar saved"
 msgstr ""
 
-#: views/account.py:274
+#: views/account.py:286
 msgid "Calendar event created"
 msgstr ""
 
-#: views/account.py:284
+#: views/account.py:296
 msgid "Event saved"
 msgstr ""
 
-#: views/account.py:287
+#: views/account.py:299
 msgid "Edit Event"
 msgstr ""
 
-#: views/account.py:298
+#: views/account.py:310
 msgid "Calendar event updated"
 msgstr ""
 
-#: views/account.py:305
+#: views/account.py:317
 msgid "Users can only delete their own events!"
 msgstr ""
 
-#: views/account.py:313
+#: views/account.py:325
 msgid "Calendar event deleted"
 msgstr ""
 
-#: views/account.py:316
+#: views/account.py:328
 msgid "Really delete this event?"
 msgstr ""
 
-#: views/account.py:340
+#: views/account.py:352
 msgid "Your registration is now pending approval."
 msgstr ""
 
-#: views/account.py:354
+#: views/account.py:366
 msgid "All notifications cleared"
 msgstr ""
 
-#: views/account.py:365 views/order.py:855
+#: views/account.py:377 views/order.py:889
 msgid "Search query is too short"
 msgstr ""
 
-#: views/account.py:381
-msgid "Search results"
-msgstr ""
-
-#: views/admin.py:65 views/admin.py:270 views/customer.py:140
+#: views/admin.py:65 views/admin.py:270 views/customer.py:143
 #: views/device.py:152
 #, python-format
 msgid "%s saved"
@@ -4642,24 +4870,24 @@ msgstr ""
 msgid "Checklist deleted"
 msgstr ""
 
-#: views/admin.py:142
+#: views/admin.py:141
 msgid "Really delete this checklist?"
 msgstr ""
 
-#: views/admin.py:143
+#: views/admin.py:142
 msgid "This will also delete all checklist values."
 msgstr ""
 
-#: views/admin.py:179
+#: views/admin.py:178
 #, python-format
 msgid "Tag %s saved"
 msgstr ""
 
-#: views/admin.py:194
+#: views/admin.py:193
 msgid "Tag deleted"
 msgstr ""
 
-#: views/admin.py:197
+#: views/admin.py:196
 msgid "Really delete this tag?"
 msgstr ""
 
@@ -4667,248 +4895,225 @@ msgstr ""
 msgid "Check your settings"
 msgstr ""
 
-#: views/admin.py:283 views/admin.py:542 views/customer.py:154
+#: views/admin.py:282 views/admin.py:569 views/customer.py:157
 #, python-format
 msgid "%s deleted"
 msgstr ""
 
-#: views/admin.py:322
+#: views/admin.py:321
 msgid "Field saved"
 msgstr ""
 
-#: views/admin.py:334
+#: views/admin.py:333
 msgid "Field deleted"
 msgstr ""
 
-#: views/admin.py:337
+#: views/admin.py:336
 msgid "Really delete this field?"
 msgstr ""
 
-#: views/admin.py:367
+#: views/admin.py:368
 #, python-format
 msgid "Template %s saved"
 msgstr ""
 
-#: views/admin.py:383
+#: views/admin.py:384
 #, python-format
 msgid "Template %s deleted"
 msgstr ""
 
-#: views/admin.py:386
-msgid "Really delete this template?"
+#: views/admin.py:387
+msgid "Delete this template?"
 msgstr ""
 
-#: views/admin.py:427
+#: views/admin.py:428
 msgid "Group saved"
 msgstr ""
 
-#: views/admin.py:439
+#: views/admin.py:440
 msgid "Group deleted"
 msgstr ""
 
 #: views/admin.py:454
+msgid "Deleting yourself is not allowed"
+msgstr ""
+
+#: views/admin.py:458
 msgid "User deleted"
 msgstr ""
 
-#: views/admin.py:483
+#: views/admin.py:471
+#, fuzzy
+#| msgid "Customer deleted"
+msgid "API tokens deleted"
+msgstr "Kunden utgår"
+
+#: views/admin.py:479
+msgid "API token created"
+msgstr ""
+
+#: views/admin.py:503
 #, python-format
 msgid "User %s saved"
 msgstr ""
 
-#: views/admin.py:486
+#: views/admin.py:506
 msgid "Error in user profile data"
 msgstr ""
 
-#: views/admin.py:492
+#: views/admin.py:517
 #, python-format
 msgid "%d users"
 msgstr ""
 
-#: views/admin.py:527
+#: views/admin.py:554
 #, python-format
 msgid "Location %s saved"
 msgstr ""
 
-#: views/admin.py:548
+#: views/admin.py:575
 msgid "Really delete this location?"
 msgstr ""
 
-#: views/admin.py:549
+#: views/admin.py:576
 msgid "This will not delete the orders at this location"
 msgstr ""
 
-#: views/admin.py:560
+#: views/admin.py:586
 msgid "Create, edit and delete service queues"
 msgstr ""
 
-#: views/admin.py:587
+#: views/admin.py:616
 msgid "Failed to save queue"
 msgstr ""
 
-#: views/admin.py:594
+#: views/admin.py:623
 #, python-format
 msgid "%s queue saved"
 msgstr ""
 
-#: views/admin.py:611
+#: views/admin.py:640
 msgid "Queue deleted"
 msgstr ""
 
-#: views/admin.py:613
+#: views/admin.py:642
 msgid "Cannot delete queue"
 msgstr ""
 
-#: views/admin.py:633 views/admin.py:644
-msgid "Access denied"
-msgstr ""
-
-#: views/admin.py:637
-msgid "Manage Sites"
-msgstr ""
-
-#: views/admin.py:663
-msgid "Site saved"
-msgstr ""
-
-#: views/admin.py:682
+#: views/admin.py:672
 #, python-format
 msgid "%d users imported"
 msgstr ""
 
-#: views/checkin.py:109
-msgid "Welcome"
-msgstr "Välkommen"
-
-#: views/checkin.py:120
-msgid "1/3: Enter serial number, IMEI code or choose a device"
-msgstr "1/3: Ange serienummer, IMEI-kod eller välj en enhet"
-
-#: views/checkin.py:123
-msgid "Please enable cookies in your browser"
-msgstr "Vänligen aktivera cookies i din webbläsare"
-
-#: views/checkin.py:134 views/checkin.py:161
-msgid "Your session has expired, please try again."
-msgstr "Din session har gått ut, var god försök igen."
-
-#: views/checkin.py:140
-msgid "The serial number you entered is not valid."
-msgstr "Serienumret du angav är ogiltigt."
-
-#: views/checkin.py:142
-msgid ""
-"Couldn't check warranty status, please choose device type manually or try "
-"again later."
-msgstr "Det gick inte att kontrollera garantistatus, försök igen senare."
-
-#: views/checkin.py:155
-msgid "1/3: Device details"
-msgstr "1/3: Enhetsinformation"
-
-#: views/checkin.py:192
-msgid "2/3: Problem description"
-msgstr "2/3: Problembeskrivning"
-
-#: views/checkin.py:206
-msgid "3/3: Your contact details"
-msgstr "3/3: Dina kontaktuppgifter"
-
-#: views/checkin.py:234
+#: views/checkin.py:145
 msgid "Order does not exist"
 msgstr "Beställnings existerar inte"
 
-#: views/checkin.py:244
-msgid "2/3: Troubleshooting"
-msgstr "2/3: Felsökning"
-
-#: views/checkin.py:281
-msgid "1/3: Choose your device"
-msgstr "1/3: Välj din enhet"
-
-#: views/checkin.py:284
-msgid "Apple Keyboard"
-msgstr "Apple tangentbord"
-
-#: views/checkin.py:285
-msgid "Apple Wireless Device"
-msgstr "Apple trådlös enhet"
-
-#: views/checkin.py:289
-#, python-format
-msgid "1/3: %s"
-msgstr "1/3: %s"
-
-#: views/checkin.py:320
+#: views/checkin.py:180
 msgid "Repair Status"
 msgstr "Reparationsstatus"
 
-#: views/checkin.py:332
+#: views/checkin.py:192
 msgid "Waiting to be processed"
 msgstr "Väntar på att behandlas"
 
-#: views/checkin.py:334
+#: views/checkin.py:194
 #, python-format
 msgid "Order %s not found"
 msgstr "Arbet %s hittades inte"
 
-#: views/checkin.py:359
-msgid "Your session has expired"
-msgstr "Din session har gått ut"
+#: views/checkin.py:217
+#, fuzzy
+#| msgid "Service Order"
+msgid "Service Order Check-In"
+msgstr "Service Order"
 
-#: views/customer.py:89
+#: views/checkin.py:221
+msgid "Mac"
+msgstr ""
+
+#: views/checkin.py:222
+#, fuzzy
+msgid "iPhone"
+msgstr "Telefon"
+
+#: views/checkin.py:223
+msgid "iPad"
+msgstr ""
+
+#: views/checkin.py:224
+msgid "iPod"
+msgstr ""
+
+#: views/checkin.py:225
+#, fuzzy
+#| msgid "Apple Keyboard"
+msgid "Apple Accessory"
+msgstr "Apple tangentbord"
+
+#: views/checkin.py:226
+msgid "Beats Products"
+msgstr ""
+
+#: views/checkin.py:227
+#, fuzzy
+#| msgid "Other Device"
+msgid "Other Devices"
+msgstr "Andra enheten"
+
+#: views/checkin.py:384
+msgid "Other Device"
+msgstr "Andra enheten"
+
+#: views/customer.py:92
 msgid "Customer added"
 msgstr "Kunden sattes"
 
-#: views/customer.py:105
+#: views/customer.py:108
 msgid "Customer not found"
 msgstr "Kunden hittades inte"
 
-#: views/customer.py:206
+#: views/customer.py:214
 msgid "Customer saved"
 msgstr "Kunden sparas"
 
-#: views/customer.py:232
+#: views/customer.py:240
 msgid "Customer deleted"
 msgstr "Kunden utgår"
 
-#: views/customer.py:250
+#: views/customer.py:258
 #, python-format
 msgid "Merge %s with"
 msgstr ""
 
-#: views/customer.py:265
+#: views/customer.py:273
 msgid "Customer records merged succesfully"
 msgstr ""
 
-#: views/customer.py:281
+#: views/customer.py:289
 #, python-format
 msgid "Customer %s moved to top level"
 msgstr ""
 
-#: views/customer.py:285
+#: views/customer.py:293
 #, python-format
 msgid "Customer %(customer)s moved to %(target)s"
 msgstr ""
 
-#: views/customer.py:307 views/device.py:282 views/order.py:875
-#: views/product.py:325 views/search.py:35
+#: views/customer.py:325 views/order.py:911
 #, python-format
-msgid "Search results for \"%s\""
+msgid "%d results for \"%s\""
 msgstr ""
 
-#: views/customer.py:357
+#: views/customer.py:380
 msgid "Search for customers"
 msgstr "Sök för kunder"
 
-#: views/customer.py:376
-msgid "Please specify search query first"
-msgstr ""
-
-#: views/customer.py:419
+#: views/customer.py:450
 msgid "Invalid upload data"
 msgstr ""
 
-#: views/customer.py:439
+#: views/customer.py:470
 #, python-format
 msgid "%d customer(s) imported"
 msgstr ""
@@ -4921,85 +5126,100 @@ msgstr ""
 msgid "Cannot delete device with GSX repairs"
 msgstr ""
 
-#: views/device.py:314
+#: views/device.py:277 views/product.py:342 views/search.py:35
+#, python-format
+msgid "Search results for \"%s\""
+msgstr ""
+
+#: views/device.py:320
 #, python-format
 msgid "Devices matching \"%s\""
 msgstr ""
 
-#: views/device.py:333
+#: views/device.py:329
 msgid "Device search"
 msgstr ""
 
-#: views/device.py:386
+#: views/device.py:384
 msgid "Invalid serial number for parts lookup"
 msgstr ""
 
-#: views/device.py:389
+#: views/device.py:387
 msgid "Error calculating prices. Please check your system settings."
 msgstr ""
 
-#: views/device.py:486
+#: views/device.py:485
 #, python-format
 msgid "%d devices imported"
 msgstr ""
 
-#: views/device.py:499
+#: views/device.py:501
 msgid "Warranty status updated successfully"
 msgstr ""
 
-#: views/error.py:24
+#: views/diagnostics.py:81
+#, python-format
+msgid "Diagnostics initiated - diags://%s"
+msgstr ""
+
+#: views/error.py:26
 #, python-format
 msgid "Browser: %s"
 msgstr ""
 
-#: views/gsx.py:21
+#: views/gsx.py:34
 #, python-format
 msgid "Part %s updated"
 msgstr ""
 
-#: views/gsx.py:56
+#: views/gsx.py:59
+#, python-format
+msgid "GSX repair %s imported successfully"
+msgstr ""
+
+#: views/gsx.py:96
 #, python-format
 msgid "Part %(part)s added to repair %(repair)s"
 msgstr ""
 
-#: views/gsx.py:85
+#: views/gsx.py:125
 #, python-format
 msgid "Part %(part)s removed from %(repair)s"
 msgstr ""
 
-#: views/gsx.py:99
+#: views/gsx.py:139
 msgid "Submitted repairs cannot be deleted"
 msgstr ""
 
-#: views/gsx.py:105
+#: views/gsx.py:145
 msgid "GSX repair deleted"
 msgstr ""
 
-#: views/gsx.py:147
+#: views/gsx.py:187
 msgid "Submitted repairs cannot be edited"
 msgstr ""
 
-#: views/gsx.py:150
+#: views/gsx.py:190
 msgid "Please add some parts before creating repair"
 msgstr ""
 
-#: views/gsx.py:153
+#: views/gsx.py:193
 msgid "Cannot create GSX repair without valid customer data"
 msgstr ""
 
-#: views/gsx.py:190
+#: views/gsx.py:238
 msgid "GSX repair saved"
 msgstr ""
 
-#: views/gsx.py:216
+#: views/gsx.py:264
 msgid "Invalid component data"
 msgstr ""
 
-#: views/gsx.py:231
+#: views/gsx.py:279
 msgid "Invalid customer info"
 msgstr ""
 
-#: views/gsx.py:296
+#: views/gsx.py:350
 #, python-format
 msgid "%s serial numbers updated"
 msgstr ""
@@ -5023,277 +5243,286 @@ msgstr ""
 msgid "Walk-In Customer"
 msgstr ""
 
-#: views/note.py:170
+#: views/note.py:177
 #, python-format
 msgid "Re: %s"
 msgstr ""
 
-#: views/note.py:237
+#: views/note.py:245
 msgid "Note deleted"
 msgstr ""
 
-#: views/note.py:305
-msgid "OK"
-msgstr ""
-
-#: views/note.py:329
+#: views/note.py:338
 #, python-format
-msgid "Notes containing \"%s\""
-msgstr ""
-
-#: views/note.py:373
-msgid "Message search"
+msgid "%d search results for \"%s\""
 msgstr ""
 
 #: views/note.py:384
+msgid "Message search"
+msgstr ""
+
+#: views/note.py:395
 msgid "Edit Escalation"
 msgstr ""
 
-#: views/order.py:142
+#: views/order.py:146
 #, python-format
 msgid "%d search results"
 msgstr ""
 
-#: views/order.py:153
+#: views/order.py:161
 #, python-format
 msgid "Order %s"
 msgstr "Arbet %s"
 
-#: views/order.py:212
-#, python-format
-msgid "Order %s reopened"
-msgstr ""
-
-#: views/order.py:349
+#: views/order.py:356
 #, python-format
 msgid "Repair %s marked complete."
 msgstr ""
 
-#: views/order.py:404
+#: views/order.py:415
 #, python-format
 msgid "Order %s deleted"
 msgstr ""
 
-#: views/order.py:408
+#: views/order.py:419
 #, python-format
 msgid "Cannot delete order %(order)s: %(error)s"
 msgstr ""
 
-#: views/order.py:418
+#: views/order.py:430
 msgid "Follow"
 msgstr ""
 
-#: views/order.py:424
+#: views/order.py:436
 msgid "Unfollow"
 msgstr ""
 
-#: views/order.py:461
-msgid "Closed orders cannot be updated"
-msgstr ""
-
-#: views/order.py:475
+#: views/order.py:462
 #, python-format
-msgid "User %s does not exist"
+msgid "User %s removed from followers"
 msgstr ""
 
-#: views/order.py:503
+#: views/order.py:493
+#, fuzzy, python-format
+#| msgid "Order %s not found"
+msgid "User %s not found"
+msgstr "Arbet %s hittades inte"
+
+#: views/order.py:521
 #, python-format
 msgid "Label %s does not exist"
 msgstr ""
 
-#: views/order.py:508 views/order.py:514 views/order.py:523
+#: views/order.py:526 views/order.py:532
 msgid "Order updated"
 msgstr ""
 
-#: views/order.py:520
-#, python-format
-msgid "Order moved to %s"
-msgstr ""
-
-#: views/order.py:536
+#: views/order.py:555
 #, python-format
 msgid "Service Order #%s"
 msgstr ""
 
-#: views/order.py:633
+#: views/order.py:653
 #, python-format
 msgid "Products of order %s reserved"
 msgstr ""
 
-#: views/order.py:674 views/product.py:271
+#: views/order.py:695 views/product.py:288
 #, python-format
 msgid "Product %s saved"
 msgstr ""
 
-#: views/order.py:761
+#: views/order.py:788
 #, fuzzy
 msgid "Order item does not exist"
 msgstr "Beställnings existerar inte"
 
-#: views/order.py:842
+#: views/order.py:876
 #, python-format
 msgid "Customer %s removed"
 msgstr ""
 
-#: views/product.py:117
+#: views/order.py:942
+msgid "Request accepted for batch processing"
+msgstr ""
+
+#: views/product.py:37
+msgid "None"
+msgstr ""
+
+#: views/product.py:124
 msgid "Parts database uploaded for processing"
 msgstr ""
 
-#: views/product.py:206
+#: views/product.py:217
 #, python-format
 msgid "%d products imported"
 msgstr ""
 
-#: views/product.py:211
+#: views/product.py:222
 msgid "Upload products"
 msgstr ""
 
-#: views/product.py:274
+#: views/product.py:291
 msgid "Error in inventory details"
 msgstr ""
 
-#: views/product.py:276
+#: views/product.py:293
 msgid "Error in product info"
 msgstr ""
 
-#: views/product.py:296
+#: views/product.py:313
 msgid "Product deleted"
 msgstr ""
 
-#: views/product.py:298
+#: views/product.py:315
 msgid "Cannot delete product"
 msgstr ""
 
-#: views/product.py:371
+#: views/product.py:388
 #, python-format
 msgid "Category %s already exists"
 msgstr ""
 
-#: views/product.py:373
+#: views/product.py:390
 #, python-format
 msgid "Category %s saved"
 msgstr ""
 
-#: views/product.py:389
+#: views/product.py:406
 msgid "Category deleted"
 msgstr ""
 
-#: views/product.py:437
+#: views/product.py:453
 msgid "Price info updated from GSX"
 msgstr ""
 
-#: views/product.py:439
+#: views/product.py:455
 msgid "Failed to update price from GSX"
 msgstr ""
 
-#: views/purchases.py:81
+#: views/purchases.py:82
 #, python-format
 msgid "Product %s removed"
 msgstr ""
 
-#: views/purchases.py:96
+#: views/purchases.py:98
 #, python-format
 msgid "Purchase Order %d"
 msgstr ""
 
-#: views/purchases.py:132
+#: views/purchases.py:134
 #, python-format
 msgid "Purchase Order %d saved"
 msgstr ""
 
-#: views/purchases.py:136
+#: views/purchases.py:138
 #, python-format
 msgid "Purchase Order %d submitted"
 msgstr ""
 
-#: views/purchases.py:144
+#: views/purchases.py:147
 #, python-format
 msgid "Purchase Order #%d"
 msgstr ""
 
-#: views/purchases.py:159
+#: views/purchases.py:162
 #, python-format
 msgid "Purchase Order %s has already been submitted"
 msgstr ""
 
-#: views/purchases.py:177
+#: views/purchases.py:181
 #, python-format
 msgid "Products ordered with confirmation %s"
 msgstr ""
 
-#: views/purchases.py:193
+#: views/purchases.py:197
 #, python-format
 msgid "Purchase Order %s deleted"
 msgstr ""
 
-#: views/shipments.py:83
+#: views/rules.py:69
+#, fuzzy
+msgid "Delete rule"
+msgstr "Skapa ärende"
+
+#: views/rules.py:74
+#, fuzzy
+#| msgid "Customer deleted"
+msgid "Rule deleted"
+msgstr "Kunden utgår"
+
+#: views/shipments.py:85
 #, python-format
 msgid "%d incoming products"
 msgstr ""
 
-#: views/shipments.py:113
+#: views/shipments.py:115
 #, python-format
 msgid "%d products received"
 msgstr ""
 
-#: views/shipments.py:152
+#: views/shipments.py:154
 #, python-format
 msgid "Product %s received"
 msgstr ""
 
-#: views/shipments.py:186
+#: views/shipments.py:188
 msgid "Browse Bulk Returns"
 msgstr ""
 
-#: views/shipments.py:210
+#: views/shipments.py:212
 msgid "View bulk return"
 msgstr ""
 
-#: views/shipments.py:223
+#: views/shipments.py:225
 #, python-format
 msgid "Location %s has no Ship-To"
 msgstr ""
 
-#: views/shipments.py:246
+#: views/shipments.py:249
 msgid "Bulk return saved"
 msgstr ""
 
-#: views/shipments.py:251
+#: views/shipments.py:255
 #, python-format
 msgid "Bulk return %s submitted"
 msgstr ""
 
-#: views/shipments.py:266
+#: views/shipments.py:270
 #, python-format
 msgid "%d parts pending return"
 msgstr ""
 
-#: views/shipments.py:279
+#: views/shipments.py:283
 #, python-format
 msgid "Part %s removed from bulk return"
 msgstr ""
 
-#: views/shipments.py:296
+#: views/shipments.py:300
 #, python-format
 msgid "Part %s added to return"
 msgstr ""
 
-#: views/shipments.py:322
+#: views/shipments.py:326
 msgid "Return DOA Part"
 msgstr ""
 
-#: views/shipments.py:331
+#: views/shipments.py:335
 msgid "This part will be converted to regular inventory"
 msgstr ""
 
-#: views/shipments.py:346
+#: views/shipments.py:350
 msgid "Part updated"
 msgstr ""
 
-#: views/stats.py:241
-msgid "Time Scale"
-msgstr ""
-
-#: views/stats.py:465
+#: views/stats.py:248
 msgid "No Queue"
 msgstr ""
+
+#: views/stats.py:320
+#, fuzzy
+#| msgid "Repair Status"
+msgid "Repair statistics"
+msgstr "Reparationsstatus"
