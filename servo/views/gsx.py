@@ -322,10 +322,17 @@ def repair_details(request, confirmation):
     """
     Returns GSX repair details for confirmation number
     """
-    repair = RepairDetails(confirmation)
+    try:
+        repair = RepairDetails(confirmation)
+    except Exception as e:
+        data = {'error': e}
+        return render(request, "snippets/error_modal.html", data)
+    
     data = {'repair': repair}
+
     if request.method == "POST":
         data = save_repair(request, data)
+
     return render(request, "repairs/get_details.html", data)
 
 
