@@ -40,7 +40,7 @@ class Device(models.Model):
     description = models.CharField(
         max_length=128,
         default=_("New Device"),
-        verbose_name=_("description")
+        verbose_name=_("Description")
     )
     brand = models.CharField(
         blank=True,
@@ -99,7 +99,7 @@ class Device(models.Model):
         blank=True,
         default='',
         max_length=256,
-        verbose_name=_("configuration")
+        verbose_name=_("Configuration")
     )
 
     WARRANTY_CHOICES = (
@@ -124,13 +124,13 @@ class Device(models.Model):
         blank=True,
         default='',
         max_length=32,
-        verbose_name=_("username")
+        verbose_name=_("Username")
     )
     password = models.CharField(
         blank=True,
         default='',
         max_length=32,
-        verbose_name=_("password")
+        verbose_name=_("Password")
     )
     purchased_on = models.DateField(
         null=True,
@@ -164,7 +164,7 @@ class Device(models.Model):
         null=True,
         blank=True,
         upload_to="devices",
-        verbose_name=_("photo")
+        verbose_name=_("Photo")
     )
 
     image_url = models.URLField(
@@ -185,7 +185,7 @@ class Device(models.Model):
 
     is_vintage = models.BooleanField(
         default=False,
-        verbose_name='vintage',
+        verbose_name=_('Vintage'),
         help_text=_('Device is considered vintage in GSX')
     )
     fmip_active = models.BooleanField(default=False, editable=False)

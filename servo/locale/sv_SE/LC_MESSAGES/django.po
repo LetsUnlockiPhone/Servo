@@ -429,7 +429,7 @@ msgid ""
 "service.</a>"
 msgstr ""
 "Jag godkänner <a href=\"/checkin/terms/\" target=\"_blank"
-"\">servicevillkoren</a>"
+"\">servicevillkoren.</a>"
 
 #: forms/checkin.py:178
 msgid "Notify by SMS"

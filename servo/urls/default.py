@@ -22,7 +22,8 @@ urlpatterns = patterns(
 
     url(r'^queues/(\d+)/statuses/$', 'servo.views.queue.statuses'),
 
-    url(r'^barcode/([\w\-]+)/$', 'servo.views.note.show_barcode', name='barcodes-view'),
+    url(r'^barcode/([\w\-]+)/$', 'servo.views.note.show_barcode',
+        name='barcodes-view'),
     url(r'^files/(?P<pk>\d+)/view/$', files.view_file),
     url(r'^files/(?P<path>.+)/$', files.get_file),
 
@@ -34,11 +35,13 @@ urlpatterns = patterns(
 
     url(r'^repairs/(\d+)/parts/(\d+)/return_label/$', gsx.return_label,
         name="parts-return_label"),
-    url(r'^repairs/([A-Z0-9]+)/details/$', gsx.repair_details, name="repairs-get_details"),
+    url(r'^repairs/([A-Z0-9]+)/details/$', gsx.repair_details,
+        name="repairs-get_details"),
     url(r'^returns/part/(?P<part_id>\d+)/register_return/$', gsx.register_return,
         name='parts-register_return'),
 
-    url(r'^events/(\d+)/ack/', 'servo.views.events.acknowledge', name="events-ack_event"),
+    url(r'^events/(\d+)/ack/', 'servo.views.events.acknowledge',
+        name="events-ack_event"),
     url(r'^tags/(\d+)/clear/', 'servo.views.tags.clear', name="tags-clear"),
 
     (r'^api/', include('servo.urls.api')),
