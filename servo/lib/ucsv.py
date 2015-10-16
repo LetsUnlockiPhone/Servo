@@ -1,5 +1,5 @@
 """
-Borrwed from
+Borrowed from
 http://stackoverflow.com/questions/1846135/python-csv-library-with-unicode-utf-8-support-that-just-works
 """
 

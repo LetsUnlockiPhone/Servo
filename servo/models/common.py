@@ -305,10 +305,10 @@ class Tag(MPTTModel):
     )
 
     TYPES = (
-        ('device', _('Device')),
-        ('order', _('Order')),
-        ('note', _('Note')),
-        ('other', _('Other')),
+        ('device',  _('Device')),
+        ('order',   _('Order')),
+        ('note',    _('Note')),
+        ('other',   _('Other')),
     )
 
     type = models.CharField(
@@ -327,11 +327,11 @@ class Tag(MPTTModel):
     times_used = models.IntegerField(default=0, editable=False)
 
     COLORS = (
-        ('default', _('Default')),
-        ('success', _('Green')),
-        ('warning', _('Orange')),
-        ('important', _('Red')),
-        ('info', _('Blue')),
+        ('default',     _('Default')),
+        ('success',     _('Green')),
+        ('warning',     _('Orange')),
+        ('important',   _('Red')),
+        ('info',        _('Blue')),
     )
 
     color = models.CharField(
@@ -375,25 +375,25 @@ class Location(models.Model):
 
     title = models.CharField(
         max_length=255,
-        verbose_name=_(u'name'),
+        verbose_name=_(u'Name'),
         default=_('New Location'),
     )
     phone = models.CharField(
         blank=True,
         default='',
         max_length=32,
-        verbose_name=_('phone')
+        verbose_name=_('Phone')
     )
     email = models.EmailField(
         blank=True,
         default='',
-        verbose_name=_('email')
+        verbose_name=_('Email')
     )
     address = models.CharField(
         blank=True,
         default='',
         max_length=32,
-        verbose_name=_(u'address')
+        verbose_name=_(u'Address')
     )
     zip_code = models.CharField(
         blank=True,
@@ -405,7 +405,7 @@ class Location(models.Model):
         blank=True,
         default='',
         max_length=16,
-        verbose_name=_(u'city')
+        verbose_name=_(u'City')
     )
 
     TIMEZONES = tuple((t, t) for t in common_timezones)
