@@ -59,7 +59,7 @@ msgstr "E-postadress"
 #: forms/admin.py:467 templates/devices/get_info.html:29
 #: templates/devices/summary.html:20 templates/orders/devices.html:41
 msgid "Username"
-msgstr "Användar"
+msgstr "Användare"
 
 #: forms/admin.py:43 views/product.py:183
 msgid "Unsupported file encoding"
@@ -1753,7 +1753,7 @@ msgstr ""
 #: templates/orders/index.html:54 templates/search/spotlight.html:22
 #: views/order.py:43 views/order.py:910
 msgid "Orders"
-msgstr ""
+msgstr "Serviceärenden"
 
 #: models/order.py:348 views/invoices.py:165 views/order.py:211
 #, python-format
@@ -4765,7 +4765,7 @@ msgstr ""
 
 #: views/account.py:80
 msgid "My Orders"
-msgstr ""
+msgstr "Mina serviceärenden"
 
 #: views/account.py:91
 msgid "Sign In"
@@ -4943,8 +4943,6 @@ msgid "User deleted"
 msgstr ""
 
 #: views/admin.py:471
-#, fuzzy
-#| msgid "Customer deleted"
 msgid "API tokens deleted"
 msgstr "Kunden utgår"
 
@@ -5023,8 +5021,6 @@ msgid "Order %s not found"
 msgstr "Arbet %s hittades inte"
 
 #: views/checkin.py:217
-#, fuzzy
-#| msgid "Service Order"
 msgid "Service Order Check-In"
 msgstr "Service Order"
 
@@ -5033,17 +5029,16 @@ msgid "Mac"
 msgstr ""
 
 #: views/checkin.py:222
-#, fuzzy
 msgid "iPhone"
-msgstr "Telefon"
+msgstr "iPhone"
 
 #: views/checkin.py:223
 msgid "iPad"
-msgstr ""
+msgstr "iPad"
 
 #: views/checkin.py:224
 msgid "iPod"
-msgstr ""
+msgstr "iPod"
 
 #: views/checkin.py:225
 #, fuzzy
