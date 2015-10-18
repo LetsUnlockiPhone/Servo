@@ -772,6 +772,31 @@ class Order(models.Model):
             ("batch_process",   _("Can batch process")),
         )
 
+    def save(self, *args, **kwargs):
+
+        location = self.created_by.location
+
+        if self.location_id is None:
+            self.location = location
+            
+        if self.checkin_location is None:
+            self.checkin_location = location
+
+        if self.checkout_location is None:
+            self.checkout_location = location
+
+        if self.customer and self.customer_name == '':
+            self.customer_name = self.customer.fullname
+
+        super(Order, self).save(*args, **kwargs)
+
+        if self.code is None:
+            self.url_code = encode_url(self.id).upper()
+            self.code = settings.INSTALL_ID + str(self.id).rjust(6, '0')
+            event = _('Order %s created') % self.code
+            self.notify('created', event, self.created_by)
+            self.save()
+
     def get_absolute_url(self):
         return reverse("orders-edit", args=[self.pk])
 
@@ -1099,34 +1124,6 @@ class Accessory(models.Model):
 
     class Meta:
         app_label = "servo"
-
-
-@receiver(pre_save, sender=Order)
-def trigger_order_presave(sender, instance, **kwargs):
-    instance.customer_name = ''
-    if instance.customer is not None:
-        instance.customer_name = instance.customer.fullname
-
-    location = instance.created_by.location
-
-    if instance.checkin_location is None:
-        instance.checkin_location = location
-
-    if instance.location_id is None:
-        instance.location = location
-
-    if instance.checkout_location is None:
-        instance.checkout_location = location
-
-
-@receiver(post_save, sender=Order)
-def trigger_order_created(sender, instance, created, **kwargs):
-    if created:
-        instance.url_code = encode_url(instance.id).upper()
-        instance.code = settings.INSTALL_ID + str(instance.id).rjust(6, '0')
-        description = _('Order %s created') % instance.code
-        instance.notify('created', description, instance.created_by)
-        instance.save()
 
 
 @receiver(post_save, sender=OrderDevice)
