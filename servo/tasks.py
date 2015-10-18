@@ -7,113 +7,133 @@ from celery import shared_task
 from django.conf import settings
 from django.core.cache import cache
 
-from servo.models import Order, Note
+from servo.models import Order, Note, Template
 
 
 def get_rules():
-	"""
-	Get the rules from the JSON file and cache them.
-	Fail silently if not configured.
-	"""
-	import json
+    """
+    Get the rules from the JSON file and cache them.
+    Fail silently if not configured.
+    """
+    import json
 
-	try:
-		fh = open("local_rules.json", "r")
-	except IOError:
-		return []
-		
-	rules = json.load(fh)
-	cache.set('rules', rules)
-	return rules
+    try:
+        fh = open("local_rules.json", "r")
+    except IOError:
+        return []
+        
+    rules = json.load(fh)
+    cache.set('rules', rules)
+    return rules
 
 
 @shared_task
 def apply_rules(event):
 
-	rules = cache.get('rules', get_rules())
+    rules = cache.get('rules', get_rules())
+    order = event.content_object
 
-	for r in rules:
-		if (r['event'] == event.action) and (r['match'] == event.description):
+    for r in rules:
+        if r['event'] == 'create':
+            event.description = r['event']
 
-			if r['action'] == "set_queue":
-				order = event.content_object
-				order.set_queue(r['data'], event.triggered_by)
+        if (r['event'] == event.action) and (r['match'] == event.description):
 
-			if r['action'] == "send_sms":
-				number = 0
-				order = event.content_object
+            if isinstance(r['data'], dict):
+                tpl_id = r['data']['template']
+                r['data'] = Template.objects.get(pk=tpl_id).render(order)
 
-				try:
-					number = order.customer.get_standard_phone()
-				except Exception as e:
-					continue
+            if r['action'] == "set_queue":
+                order.set_queue(r['data'], event.triggered_by)
 
-				note = Note(order=order, created_by=event.triggered_by)
+            if r['action'] == "send_email":
 
-				note.body = r['data']
-				note.render_body({'order': order})
-				note.save()
+                try:
+                    email = order.customer.valid_email()
+                except Exception:
+                    continue
+                
+                note = Note(order=order, created_by=event.triggered_by)
+                note.body = r['data']
+                note.recipient = email
+                note.render_subject({'note': note})
+                note.save()
 
-				return note.send_sms(number, event.triggered_by)
+                note.send_mail(event.triggered_by)
+
+            if r['action'] == "send_sms":
+                number = 0
+
+                try:
+                    number = order.customer.get_standard_phone()
+                except Exception:
+                    continue # skip invalid numbers
+
+                note = Note(order=order, created_by=event.triggered_by)
+
+                note.body = r['data']
+                note.save()
+
+                return note.send_sms(number, event.triggered_by)
 
 
 @shared_task
 def batch_process(user, data):
-	"""
-	/orders/batch
-	"""
-	processed = 0
-	orders = data['orders'].strip().split("\r\n")
-	
-	for o in orders:
-		try:
-			order = Order.objects.get(code=o)
-		except Exception as e:
-			continue
+    """
+    /orders/batch
+    """
+    processed = 0
+    orders = data['orders'].strip().split("\r\n")
+    
+    for o in orders:
+        try:
+            order = Order.objects.get(code=o)
+        except Exception as e:
+            continue
 
-		if data['status'] and order.queue:
-			status = order.queue.queuestatus_set.get(status_id=data['status'])
-			order.set_status(status, user)
-		
-		if data['queue']:
-			order.set_queue(data['queue'], user)
+        if data['status'] and order.queue:
+            status = order.queue.queuestatus_set.get(status_id=data['status'])
+            order.set_status(status, user)
+        
+        if data['queue']:
+            order.set_queue(data['queue'], user)
 
-		if len(data['sms']) > 0:
-			try:
-				number = order.customer.get_standard_phone()
-				note = Note(order=order, created_by=user, body=data['sms'])
-				note.render_body({'order': order})
-				note.save()
+        if len(data['sms']) > 0:
+            try:
+                number = order.customer.get_standard_phone()
+                note = Note(order=order, created_by=user, body=data['sms'])
+                note.render_body({'order': order})
+                note.save()
 
-				try:
-					note.send_sms(number, user)
-				except Exception as e:
-					note.delete()
-					print("Failed to send SMS to: %s" % number)
+                try:
+                    note.send_sms(number, user)
+                except Exception as e:
+                    note.delete()
+                    print("Failed to send SMS to: %s" % number)
 
-			except AttributeError as e: # customer has no phone number
-				continue
+            except AttributeError as e: # customer has no phone number
+                continue
 
-		if len(data['email']) > 0:
-			note = Note(order=order, created_by=user, body=data['email'])
-			note.sender = user.email
+        if len(data['email']) > 0:
+            note = Note(order=order, created_by=user, body=data['email'])
+            note.sender = user.email
 
-			try:
-				note.recipient = order.customer.email
-				note.render_subject({'note': note})
-				note.render_body({'order': order})
-				note.save()
-				note.send_mail(user)
-			except Exception as e:
-				# customer has no email address or some other error...
-				pass
+            try:
+                note.recipient = order.customer.email
+                note.render_subject({'note': note})
+                note.render_body({'order': order})
+                note.save()
+                note.send_mail(user)
+            except Exception as e:
+                # customer has no email address or some other error...
+                pass
 
-		if len(data['note']) > 0:
-			note = Note(order=order, created_by=user, body=data['note'])
-			note.render_body({'order': order})
-			note.save()
+        if len(data['note']) > 0:
+            note = Note(order=order, created_by=user, body=data['note'])
+            note.render_body({'order': order})
+            note.save()
 
-		processed += 1
+        processed += 1
 
-	return '%d/%d orders processed' % (processed, len(orders))
+    return '%d/%d orders processed' % (processed, len(orders))
 

@@ -679,16 +679,21 @@ class Template(models.Model):
         blank=False,
         unique=True,
         max_length=128,
-        verbose_name=_('title'),
+        verbose_name=_('Title'),
         default=_('New Template')
     )
 
-    content = models.TextField(blank=False, verbose_name=_('content'))
+    content = models.TextField(blank=False, verbose_name=_('Content'))
 
     @classmethod
     def templates(self):
         choices = Template.objects.all().values_list('title', flat=True)
         return list(choices)
+
+    def render(self, context):
+        from django import template
+        tpl = template.Template(self.content)
+        return tpl.render(template.Context({'order': context}))
 
     def get_absolute_url(self):
         return reverse('notes-template', args=[self.pk])

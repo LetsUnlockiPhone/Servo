@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 
 from mptt.managers import TreeManager
+from django.core.validators import validate_email
 from django.template.defaultfilters import slugify
 from mptt.models import MPTTModel, TreeForeignKey
 from django.utils.translation import ugettext_lazy as _
@@ -157,6 +158,13 @@ class Customer(MPTTModel):
         n = self.get_phone()
         fmt = phonenumbers.PhoneNumberFormat.NATIONAL
         return phonenumbers.format_number(n, fmt)
+
+    def valid_email(self):
+        try:
+            validate_email(self.email)
+            return self.email
+        except Exception:
+            pass
 
     def get_email_address(self):
         return '%s <%s>' % (self.name, self.email)
