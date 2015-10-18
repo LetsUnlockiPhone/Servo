@@ -289,7 +289,11 @@ $(document).ready(function() {
         },
         updater: function(item){
             var that = $(this);
-            $.post('/notes/render_template/', {title: item}, function(r){
+            var url = '/notes/render/';
+            if (that[0].$element.data('url')) {
+                url = that[0].$element.data('url');
+            }
+            $.post(url, {title: item}, function(r){
                 that[0].$element.val(r);
             });
         }

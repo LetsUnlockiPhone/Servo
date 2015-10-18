@@ -256,19 +256,18 @@ def delete_note(request, pk):
 
 
 @csrf_exempt
-def render_template(request):
+def render_template(request, order_id=None):
     """
     Renders the template with this title with the current
     Service Order as the context
     """
-    content = ''
     title = request.POST.get('title')
     tpl = get_object_or_404(Template, title=title)
+    content = tpl.content
 
-    if request.session.get('current_order_id'):
-        tpl = template.Template(tpl.content)
-        order = Order.objects.get(pk=request.session['current_order_id'])
-        content = tpl.render(template.Context({'order': order}))
+    if order_id:
+        order = get_object_or_404(Order, pk=order_id)
+        content = tpl.render(order)
 
     return HttpResponse(content)
 

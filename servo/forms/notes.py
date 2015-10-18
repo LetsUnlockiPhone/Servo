@@ -3,6 +3,7 @@
 import json
 from django import forms
 from gsxws import escalations
+from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
@@ -32,10 +33,15 @@ class NoteForm(BaseModelForm):
             choices=note.get_sender_choices(),
             widget=forms.Select(attrs={'class': 'span12'})
         )
+
         self.fields['body'].widget = AutocompleteTextarea(
             rows=20,
             choices=Template.templates()
         )
+
+        if note.order:
+            url = reverse('notes-render_template', args=[note.order.pk])
+            self.fields['body'].widget.attrs['data-url'] = url
 
 
 class NoteSearchForm(forms.Form):
