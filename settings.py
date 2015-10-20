@@ -2,6 +2,7 @@
 
 import os
 import re
+import socket
 from django.contrib.messages import constants as messages
 
 DEBUG = False
@@ -198,11 +199,11 @@ IGNORABLE_404_URLS = (
 
 TEST_RUNNER = 'servo.tests.NoDbTestRunner'
 
-SERVER_EMAIL = 'servo@localhost'
 EMAIL_HOST = 'mail.servoapp.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_HOST_USER = ''
 EMAIL_USE_TLS = True
+SERVER_EMAIL = 'servo@' + socket.gethostname()
 
 DEFAULT_FROM_EMAIL = 'support@servoapp.com' 
 
