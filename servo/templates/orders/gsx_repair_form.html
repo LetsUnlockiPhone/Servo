@@ -59,11 +59,12 @@
         </div>
         <div class="tab-pane" id="tab2">
           {% include "form_field_snippet.html" with field=repair_form.notes %}
+          {% include "form_field_snippet.html" with field=repair_form.request_review %}
           {% include "form_field_snippet.html" with field=repair_form.unit_received_at %}
           {% include "form_field_snippet.html" with field=repair_form.attachment %}
           {% include "form_field_snippet.html" with field=repair_form.reference %}
           {% include "form_field_snippet.html" with field=repair_form.consumer_law %}
-          {% include "form_field_snippet.html" with field=repair_form.request_review %}
+          {% include "form_field_snippet.html" with field=repair_form.acplus %}
         {% if repair.can_mark_complete %}
           {% include "form_field_snippet.html" with field=repair_form.replacement_sn %}
           {% include "form_field_snippet.html" with field=repair_form.mark_complete %}

@@ -178,7 +178,12 @@ class Repair(models.Model):
     component_data = models.TextField(default='', editable=False)
     consumer_law = models.NullBooleanField(
         default=None, 
-        help_text=_('Unit is eligible for consumer law coverage')
+        help_text=_('Repair is eligible for consumer law coverage')
+    )
+    acplus = models.NullBooleanField(
+        default=None,
+        verbose_name=_('AppleCare+'),
+        help_text=_('Repair is covered by AppleCare+')
     )
 
     symptom_code = models.CharField(max_length=7, default='')
@@ -438,6 +443,9 @@ class Repair(models.Model):
         if self.consumer_law is not None:
             data['consumerLawEligible'] = self.consumer_law
 
+        if self.acplus is not None:
+            data['acPlusFlag'] = self.acplus
+
         return data
 
     def has_serialized_parts(self):
@@ -463,7 +471,7 @@ class Repair(models.Model):
 
         try:
             r = l.component_check(parts)
-        except gsxws.GsxError, e:
+        except gsxws.GsxError as e:
             if e.code == "COMP.LKP.004":
                 return # Symptom Code not required for Replacement and Other category parts.
             raise e

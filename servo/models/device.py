@@ -189,7 +189,7 @@ class Device(models.Model):
         help_text=_('Device is considered vintage in GSX')
     )
     fmip_active = models.BooleanField(default=False, editable=False)
-
+    
     def is_apple_device(self):
         """
         Checks if this is a valid Apple device SN

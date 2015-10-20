@@ -160,6 +160,7 @@ def check_parts_warranty(request, repair):
     try:
         wty = repair.warranty_status()
         wty_parts = wty.parts
+        repair.acplus = wty.acPlusFlag
     except Exception as e:
         return render(request, 'search/results/gsx_error.html', {'message': e})
 
@@ -216,7 +217,6 @@ def edit_repair(request, order_id, repair_id):
     repair = get_object_or_404(Repair, pk=repair_id)
 
     if request.GET.get('c'):
-        from django import forms
         repair.symptom_code = request.GET['c']
         repair.save()
         choices = repair.get_issue_code_choices()
