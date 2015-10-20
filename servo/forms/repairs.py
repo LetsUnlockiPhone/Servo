@@ -94,4 +94,13 @@ class GsxRepairForm(forms.ModelForm):
         if self.instance.has_serialized_parts():
             if cd.get('mark_complete') and not cd.get('replacement_sn'):
                 raise forms.ValidationError(_('Replacement serial number must be set'))
+
         return cd
+
+    def clean_attachment(self):
+        MAX_FILESIZE = 10485760 # 10MB
+        from django.template.defaultfilters import filesizeformat
+        f = self.cleaned_data['attachment']
+        if f and f._size > MAX_FILESIZE:
+            error = _('Attachment should be no larger than %s') % filesizeformat(MAX_FILESIZE)
+            raise forms.ValidationError(error)
