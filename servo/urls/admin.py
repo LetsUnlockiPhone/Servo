@@ -18,8 +18,10 @@ urlpatterns = patterns(
     url(r'^users/upload/$', 'upload_users', name="admin-upload_users"),
     url(r'^users/(\d+)/edit/$', 'edit_user', name="admin-edit_user"),
     url(r'^users/(\d+)/delete/$', 'delete_user', name="admin-delete_user"),
-    url(r'^users/(\d+)/delete_tokens/$', 'delete_user_token', name="admin-delete_user_token"),
-    url(r'^users/(\d+)/create_token/$', 'create_user_token', name="admin-create_user_token"),
+    url(r'^users/(\d+)/delete_tokens/$', 'delete_user_token', 
+        name="admin-delete_user_token"),
+    url(r'^users/(\d+)/create_token/$', 'create_user_token', 
+        name="admin-create_user_token"),
 
     url(r'^groups/$', 'list_groups', name='admin-list_groups'),
     url(r'^groups/new/$', 'edit_group', name="admin-create_group"),
@@ -35,7 +37,8 @@ urlpatterns = patterns(
     url(r'^fields/(?P<type>[a-z]+)/$', 'fields', name='admin-fields'),
     url(r'^fields/(?P<type>[a-z]+)/new/$', 'edit_field', name="admin-create_field"),
     url(r'^fields/[a-z]+/(\d+)/delete/$', 'delete_field', name="admin-delete_field"),
-    url(r'^fields/(?P<type>[a-z]+)/(?P<pk>\d+)/edit/$', 'edit_field', name="admin-edit_field"),
+    url(r'^fields/(?P<type>[a-z]+)/(?P<pk>\d+)/edit/$', 'edit_field', 
+        name="admin-edit_field"),
 
     url(r'^templates/$', 'list_templates', name='admin-list_templates'),
     url(r'^templates/new/$', 'edit_template', name='admin-edit_template'),
@@ -43,16 +46,15 @@ urlpatterns = patterns(
     url(r'^templates/(\d+)/delete/$', 'delete_template', name='admin-delete_template'),
 
     url(r'^queues/$', 'queues', name='admin-queues'),
-    #url(r'^queues/$', admin.QueueListView.as_view(), name='admin-queues'),
     url(r'^queues/new/$', 'edit_queue', name="admin-create_queue"),
     url(r'^queues/(?P<pk>\d+)/edit/$', 'edit_queue', name="admin-edit_queue"),
-    #url(r'^queues/(?P<pk>\d+)/edit/$', admin.QueueListView.as_view(), name='admin-edit_queue'),
     url(r'^queues/(\d+)/delete/$', 'delete_queue', name="admin-delete_queue"),
 
     url(r'^gsx/accounts/$', 'list_gsx_accounts', name='admin-list_gsx_accounts'),
     url(r'^gsx/accounts/new/$', 'edit_gsx_account', name='admin-edit_gsx_account'),
     url(r'^gsx/accounts/(\d+)/$', 'edit_gsx_account', name='admin-edit_gsx_account'),
-    url(r'^gsx/accounts/(\d+)?/delete/$', 'delete_gsx_account', name='admin-delete_gsx_account'),
+    url(r'^gsx/accounts/(\d+)?/delete/$', 'delete_gsx_account', 
+        name='admin-delete_gsx_account'),
 
     url(r'^locations/$', 'locations', name='admin-locations'),
     url(r'^locations/new/$', 'edit_location', name='admin-create_location'),
@@ -64,8 +66,10 @@ urlpatterns = patterns(
 
     url(r'^checklists/$', 'checklists', name='admin-checklists'),
     url(r'^checklists/new/$', 'edit_checklist', name='admin-create_checklist'),
-    url(r'^checklists/(?P<pk>\d+)/edit/$', 'edit_checklist', name='admin-edit_checklist'),
-    url(r'^checklists/(?P<pk>\d+)/delete/$', 'delete_checklist', name='admin-delete_checklist'),
+    url(r'^checklists/(?P<pk>\d+)/edit/$', 'edit_checklist', 
+        name='admin-edit_checklist'),
+    url(r'^checklists/(?P<pk>\d+)/delete/$', 'delete_checklist', 
+        name='admin-delete_checklist'),
 
     url(r'^rules/', include('servo.urls.rules')),
 

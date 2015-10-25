@@ -246,13 +246,15 @@ class QueueStatus(models.Model):
     queue  = models.ForeignKey(Queue)
     status = models.ForeignKey(Status)
 
-    limit_green = models.IntegerField(default=1, verbose_name=_(u'green limit'))
-    limit_yellow = models.IntegerField(default=15, verbose_name=_(u'yellow limit'))
+    limit_green = models.IntegerField(default=1, verbose_name=_(u'Green limit'))
+    limit_yellow = models.IntegerField(default=15, verbose_name=_(u'Yellow limit'))
     limit_factor = models.IntegerField(
         choices=Status.FACTOR_CHOICES,
-        verbose_name=_(u'time unit'),
+        verbose_name=_(u'Time unit'),
         default=Status.FACTOR_CHOICES[0][0]
     )
+
+    idx = models.IntegerField(default=1, verbose_name=_(u'Ordering'))
 
     def get_green_limit(self):
         """
@@ -268,5 +270,6 @@ class QueueStatus(models.Model):
 
     class Meta:
         app_label = 'servo'
+        ordering = ('idx',)
         # A status should only be defined once per queue
         unique_together = ('queue', 'status',)

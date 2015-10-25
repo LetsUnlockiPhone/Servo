@@ -590,7 +590,10 @@ def queues(request):
 @staff_member_required
 def edit_queue(request, pk=None):
 
-    StatusFormSet = inlineformset_factory(Queue, QueueStatus, extra=1, exclude=[])
+    StatusFormSet = inlineformset_factory(Queue,
+                                          QueueStatus,
+                                          extra=1,
+                                          form=QueueStatusForm)
 
     if pk is None:
         queue = Queue()

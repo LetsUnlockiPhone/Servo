@@ -5,8 +5,8 @@ import io
 
 from django import forms
 from django import template
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import Permission
+from django.utils.translation import ugettext_lazy as _
 
 from servo.forms.base import BaseForm, BaseModelForm
 from servo.forms.account import ProfileForm
@@ -137,7 +137,8 @@ class QueueForm(BaseModelForm):
     gsx_soldto = forms.ChoiceField(required=False, choices=())
     users = forms.ModelMultipleChoiceField(queryset=User.active.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=False)
+        required=False
+    )
 
     class Meta:
         model = Queue
@@ -173,6 +174,20 @@ class StatusForm(BaseModelForm):
             'limit_green': forms.TextInput(attrs={'class': 'input-mini'}),
             'limit_yellow': forms.TextInput(attrs={'class': 'input-mini'}),
         }
+
+
+class QueueStatusForm(BaseModelForm):
+    class Meta:
+        model = QueueStatus
+        exclude = []
+        widgets = {'idx': forms.Select()}
+
+    def __init__(self, *args, **kwargs):
+        super(QueueStatusForm, self).__init__(*args, **kwargs)
+        statuses = QueueStatus.objects.filter(queue_id=self.instance.queue_id)
+        statuses = statuses.count() or 1
+        self.fields['idx'].widget.choices = [(i, i) for i in range(1, statuses+1)]
+
 
 class UserForm(ProfileForm):
     def clean_username(self):
@@ -218,6 +233,7 @@ class UserForm(ProfileForm):
             'locations': forms.CheckboxSelectMultiple,
             'queues': forms.CheckboxSelectMultiple
         }
+
 
 class TemplateForm(BaseModelForm):
     class Meta:
@@ -413,9 +429,9 @@ class SettingsForm(BaseForm):
         required=False,
         label=_('Default Sender'),
         choices=(
-            ('user', _("User")),
-            ('location', _("Location")),
-            ('custom', _("Custom..."))
+            ('user',        _("User")),
+            ('location',    _("Location")),
+            ('custom',      _("Custom..."))
         ),
         help_text=_('Select the default sender address for outgoing emails')
     )
@@ -449,13 +465,14 @@ class SettingsForm(BaseForm):
         label=_('SMS Gateway'),
         choices=(
             ('builtin', _('Built-in')),
-            ('hqsms', 'HQSMS'),
-            ('http', 'HTTP'),
-            ('smtp', 'SMTP'),
-            ('jazz', 'SMSjazz'),
+            ('hqsms',   'HQSMS'),
+            ('http',    'HTTP'),
+            ('smtp',    'SMTP'),
+            ('jazz',    'SMSjazz'),
         ),
         initial='http',
-        required=False)
+        required=False
+    )
     sms_smtp_address = forms.EmailField(required=False, label=_('Email address'))
     sms_http_url = forms.CharField(
         max_length=128,
