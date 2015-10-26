@@ -160,6 +160,9 @@ class Customer(MPTTModel):
         return phonenumbers.format_number(n, fmt)
 
     def valid_email(self):
+        """
+        Returns email address or raises ValidationError
+        """
         try:
             validate_email(self.email)
             return self.email

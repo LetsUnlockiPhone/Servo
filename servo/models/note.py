@@ -3,6 +3,9 @@
 import re
 import base64
 import urllib
+import chardet
+import html2text
+from email.header import decode_header
 
 from django.db import models, IntegrityError
 
@@ -10,7 +13,6 @@ from django.conf import settings
 from django.utils import timezone
 from django.core.cache import cache
 from django.dispatch import receiver
-from django.utils.html import strip_tags
 from django.core.files.base import ContentFile
 from django.core.exceptions import ValidationError
 
@@ -250,12 +252,20 @@ class Note(MPTTModel):
         """
         Creates a new Note from an email message
         """
-        note = cls(sender=msg['From'], created_by=user)
+        sender = decode_header(msg['From'])
+        detected = chardet.detect(i[0]).get('encoding')
+        sender = [i[0].decode(i[1] or detected) for i in sender]
+        sender = ' '.join(sender)
+
+        note = cls(sender=sender, created_by=user)
 
         note.is_read = False
         note.is_reported = False
         note.recipient = msg['To']
-        note.subject = msg['Subject']
+
+        subject = decode_header(msg['Subject'])[0]
+        detected = chardet.detect(subject[0]).get('encoding')
+        note.subject = subject[0].decode(subject[1] or detected)
 
         note.find_parent(note.subject)
 
@@ -267,12 +277,13 @@ class Note(MPTTModel):
                 payload = part.get_payload(decode=True)
                 note.body = unicode(payload, str(charset), "ignore")
                 if s == "html":
-                    note.body = strip_tags(note.body)
+                    note.body = html2text.html2text(note.body)
             else:
                 note.save()
                 if part.get_filename():
                     filename = unicode(part.get_filename())
-                    content = base64.b64decode(part.get_payload())
+                    payload = part.get_payload()
+                    content = base64.b64decode(payload)
                     content = ContentFile(content, filename)
                     attachment = Attachment(content=content, content_object=note)
                     attachment.save()
