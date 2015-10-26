@@ -43,10 +43,9 @@ def apply_rules(event):
     user  = event.triggered_by
 
     for r in rules:
-        if (r['event'] == event.action and 
-            r['match'] == event.description or
-            r['event'] == 'create'):
+        match = r.get('match', event.description)
 
+        if (r['event'] == event.action and match == event.description):
             if isinstance(r['data'], dict):
                 tpl_id = r['data']['template']
                 r['data'] = Template.objects.get(pk=tpl_id).render(order)
@@ -68,7 +67,7 @@ def apply_rules(event):
 
                 try:
                     note.send_mail(user)
-                except Exception as e:
+                except ValueError as e:
                     print('Sending email failed (%s)' % e)
 
             if r['action'] == "send_sms":
@@ -86,7 +85,7 @@ def apply_rules(event):
 
                 try:
                     note.send_sms(number, user)
-                except Exception as e:
+                except ValueError as e:
                     print('Sending SMS to %s failed (%s)' % (number, e))
 
             counter += 1
