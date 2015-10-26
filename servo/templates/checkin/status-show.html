@@ -6,7 +6,7 @@
 {% block main %}
   <div class="page-header">
     <h2>{{ order.status_name }} {{ order.status_started_at|naturaltime|default:"" }}</h2>
-    <p class="lead">{{ order.status.status.description }}</p>
+    <p class="lead">{{ status_description }}</p>
   </div>
   {% if timeline|length %}
   <ul class="timeline">

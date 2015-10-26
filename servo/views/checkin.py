@@ -190,6 +190,9 @@ def status(request):
                     timeline = order.orderstatus_set.all()
                 if order.status is None:
                     order.status_name = _(u'Waiting to be processed')
+                    status_description = _('Order is waiting to be processed')
+                else:
+                    status_description = order.status.status.description
             except Order.DoesNotExist:
                 messages.error(request, _(u'Order %s not found') % code)
             return render(request, "checkin/status-show.html", locals())
