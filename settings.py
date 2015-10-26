@@ -3,6 +3,7 @@
 import os
 import re
 import socket
+from datetime import timedelta
 from django.contrib.messages import constants as messages
 
 DEBUG = False
@@ -223,5 +224,12 @@ GSX_KEY = 'uploads/settings/gsx_key.pem'
 
 os.environ['GSX_CERT'] = GSX_CERT
 os.environ['GSX_KEY'] = GSX_KEY
+
+CELERYBEAT_SCHEDULE = {
+    'check_mail': {
+        'task': 'servo.tasks.check_mail',
+        'schedule': timedelta(seconds=300),
+    },
+}
 
 from local_settings import *

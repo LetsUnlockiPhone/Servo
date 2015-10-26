@@ -2,12 +2,15 @@
 
 from __future__ import absolute_import
 
+from email.parser import Parser
+
 from celery import shared_task
 
 from django.conf import settings
 from django.core.cache import cache
 
-from servo.models import Order, Note, Template
+from servo.lib.utils import empty
+from servo.models import Configuration, User, Order, Note, Template
 
 
 def get_rules():
@@ -137,3 +140,29 @@ def batch_process(user, data):
 
     return '%d/%d orders processed' % (processed, len(orders))
 
+
+@shared_task
+def check_mail():
+    """
+    Checks IMAP box for incoming mail
+    """
+    uid = Configuration.conf('imap_act')
+
+    if empty(uid):
+        raise ValueError('Incoming message user not configured')
+
+    user = User.objects.get(pk=uid)
+    server = Configuration.get_imap_server()
+    typ, data = server.search(None, "UnSeen")
+
+    for num in data[0].split():
+        #logging.debug("** Processing message %s" % num)
+        typ, data = server.fetch(num, "(RFC822)")
+        # parsestr() seems to return an email.message?
+        msg = Parser().parsestr(data[0][1])
+        Note.from_email(msg, user)
+        #server.copy(num, 'servo')
+        server.store(num, '+FLAGS', '\\Seen')
+
+    server.close()
+    server.logout()
