@@ -118,12 +118,14 @@ def edit(request, pk=None, order_id=None, parent=None, recipient=None, customer=
     """
     to = []
     order = None
+    command = _('Save')
     note = Note(order_id=order_id)
     excluded_emails = note.get_excluded_emails()
 
     if recipient is not None:
         to.append(recipient)
-
+        command = _('Send')
+        
     if order_id is not None:
         order = get_object_or_404(Order, pk=order_id)
 
