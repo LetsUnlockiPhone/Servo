@@ -385,7 +385,7 @@ class Order(models.Model):
     def get_status_description(self):
         if self.status is None:
             return _('Order is waiting to be processed')
-        else
+        else:
             return self.status.status.description
 
     def get_status_id(self):
