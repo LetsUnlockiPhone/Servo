@@ -38,10 +38,10 @@ def apply_rules(event):
     order = event.content_object
 
     for r in rules:
-        if r['event'] == 'create':
-            event.description = r['event']
 
-        if (r['event'] == event.action) and (r['match'] == event.description):
+        if (r['event'] == event.action) and 
+                (r['match'] == event.description) or
+                (r['event'] == 'create'):
 
             if isinstance(r['data'], dict):
                 tpl_id = r['data']['template']
