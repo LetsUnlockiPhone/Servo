@@ -66,7 +66,10 @@ def apply_rules(event):
                 note.render_subject({'note': note})
                 note.save()
 
-                note.send_mail(user)
+                try:
+                    note.send_mail(user)
+                except Exception as e:
+                    print('Sending email failed (%s)' % e)
 
             if r['action'] == "send_sms":
                 number = 0
