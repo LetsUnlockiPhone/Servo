@@ -51,6 +51,10 @@ For testing, you can run Servo without any extra setup:
 	$ cd my_servo_folder
 	$ python ./manage.py runserver
 
+If you want to run rules, set ENABLE_RULES = True and start the worker task:
+
+    $ celery -A servo worker -B -l info -s /tmp/celerybeat-schedule
+
 Then fire up your browser and got to http://localhost:8080/
 
 
