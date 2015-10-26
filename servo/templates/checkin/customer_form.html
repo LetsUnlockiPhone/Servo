@@ -76,7 +76,7 @@
 	ko.applyBindings(svm);
 
 	$('#id_phone').next('span').on('click', function(){
-		var q = $('#id_phone').val();
+		var q = encodeURIComponent($('#id_phone').val());
 		$.get('?phone=' + q, function(r){
 			svm.results(r);
 			$('#modal').modal();
