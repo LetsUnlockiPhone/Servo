@@ -33,6 +33,7 @@ def get_rules():
 @shared_task
 def apply_rules(event):
 
+    counter = 0
     rules = cache.get('rules', get_rules())
     order = event.content_object
 
@@ -77,7 +78,11 @@ def apply_rules(event):
                 note.body = r['data']
                 note.save()
 
-                return note.send_sms(number, event.triggered_by)
+                note.send_sms(number, event.triggered_by)
+
+            counter += 1
+
+    return '%d rules processed' % counter
 
 
 @shared_task

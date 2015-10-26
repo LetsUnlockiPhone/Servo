@@ -210,7 +210,10 @@ def terms(request):
 
 
 def index(request):
+    """The checkin page
 
+    @FIXME: would be nice to break this into smaller chunks...
+    """
     if request.method == 'GET':
         reset_session(request)
         
