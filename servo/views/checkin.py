@@ -186,13 +186,11 @@ def status(request):
             code = form.cleaned_data['code']
             try:
                 order = Order.objects.get(code=code)
+                status_description = order.get_status_description()
                 if Configuration.conf('checkin_timeline'):
                     timeline = order.orderstatus_set.all()
                 if order.status is None:
                     order.status_name = _(u'Waiting to be processed')
-                    status_description = _('Order is waiting to be processed')
-                else:
-                    status_description = order.status.status.description
             except Order.DoesNotExist:
                 messages.error(request, _(u'Order %s not found') % code)
             return render(request, "checkin/status-show.html", locals())

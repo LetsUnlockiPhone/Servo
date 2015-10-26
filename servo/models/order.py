@@ -383,10 +383,10 @@ class Order(models.Model):
             pass
 
     def get_status_description(self):
-        try:
+        if self.status is None:
+            return _('Order is waiting to be processed')
+        else
             return self.status.status.description
-        except Exception:
-            pass
 
     def get_status_id(self):
         """
