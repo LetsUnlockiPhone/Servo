@@ -3,10 +3,13 @@
 import re
 import urllib
 from hashlib import md5
+from ssl import _create_unverified_context
+
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from servo.models.common import Configuration
+
 
 class BaseSMSProvider:
     def __init__(self, recipient, note, msg):
@@ -82,7 +85,6 @@ class SMSJazzProvider:
             params['dlruri'] = dlruri
 
         params = urllib.urlencode(params)
-        from ssl import _create_unverified_context
         r = urllib.urlopen(self.URL, params, context=_create_unverified_context()).read()
 
         if not '1:OK' in r:
@@ -94,13 +96,14 @@ class HQSMSProvider(BaseSMSProvider):
     HQSMS Gateway Provider.
     API docs: http://www.hqsms.com/media/page/docs/HQSMS_https.pdf
     """
-    URL = 'https://ssl.hqsms.com/sms.do'
-    BACKUP_URL = 'https://ssl2.hqsms.com/sms.do'
+    URL        = "https://api.smsapi.com/sms.do"
+    BACKUP_URL = "https://api2.smsapi.com/sms.do"
 
     ERRORS = {
         "ERROR:13"  : _("Lack of valid phone numbers (invalid or blacklisted numbers)"),
         "ERROR:14"  : _("Wrong sender name"),
         "ERROR:19"  : _("Too many messages in one request"),
+        "ERROR:52"  : _("Too many attempts of sending messages to one number (maximum 10 attempts whin 60s)"),
         "ERROR:102" : _("Invalid username or password"),
         "ERROR:103" : _("Insufficient credits on your account"),
         "ERROR:200" : _("Unsuccessful message submission"),
@@ -137,7 +140,6 @@ class HQSMSProvider(BaseSMSProvider):
             params['notify_url'] = dlruri
 
         params = urllib.urlencode(params)
-        from ssl import _create_unverified_context
         r = urllib.urlopen(self.URL, params, context=_create_unverified_context()).read()
 
         if 'ERROR:' in r:
@@ -164,6 +166,5 @@ class HttpProvider:
             'to'        : number
         })
 
-        from ssl import _create_unverified_context
         f = urllib.urlopen("%s?%s" % (conf['sms_http_url'], params), context=_create_unverified_context())
         return f.read()
