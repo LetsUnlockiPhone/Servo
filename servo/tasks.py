@@ -14,9 +14,10 @@ from servo.models import Configuration, User, Order, Note, Template
 
 
 def get_rules():
-    """
-    Get the rules from the JSON file and cache them.
+    """Get the rules from the JSON file and cache them.
     Fail silently if not configured.
+
+    @FIXME: Need GUI for managing local_rules.json!
     """
     import json
 
@@ -32,13 +33,16 @@ def get_rules():
 
 @shared_task
 def apply_rules(event):
+    """Applies configured rules
 
+    event is the Event object that was triggered
+    """
     counter = 0
     rules = cache.get('rules', get_rules())
     order = event.content_object
+    user  = event.triggered_by
 
     for r in rules:
-
         if (r['event'] == event.action and 
             r['match'] == event.description or
             r['event'] == 'create'):
@@ -48,21 +52,21 @@ def apply_rules(event):
                 r['data'] = Template.objects.get(pk=tpl_id).render(order)
 
             if r['action'] == "set_queue":
-                order.set_queue(r['data'], event.triggered_by)
+                order.set_queue(r['data'], user)
 
             if r['action'] == "send_email":
                 try:
                     email = order.customer.valid_email()
                 except Exception:
-                    continue
+                    continue # skip customers w/o valid emails
                 
-                note = Note(order=order, created_by=event.triggered_by)
+                note = Note(order=order, created_by=user)
                 note.body = r['data']
                 note.recipient = email
                 note.render_subject({'note': note})
                 note.save()
 
-                note.send_mail(event.triggered_by)
+                note.send_mail(user)
 
             if r['action'] == "send_sms":
                 number = 0
@@ -70,14 +74,17 @@ def apply_rules(event):
                 try:
                     number = order.customer.get_standard_phone()
                 except Exception:
-                    continue # skip invalid numbers
+                    continue # skip customers w/o valid phone numbers
 
-                note = Note(order=order, created_by=event.triggered_by)
+                note = Note(order=order, created_by=user)
 
                 note.body = r['data']
                 note.save()
 
-                note.send_sms(number, event.triggered_by)
+                try:
+                    note.send_sms(number, user)
+                except Exception as e:
+                    print('Sending SMS to %s failed (%s)' % (number, e))
 
             counter += 1
 
