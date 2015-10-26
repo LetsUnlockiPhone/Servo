@@ -51,7 +51,6 @@ def apply_rules(event):
                 order.set_queue(r['data'], event.triggered_by)
 
             if r['action'] == "send_email":
-
                 try:
                     email = order.customer.valid_email()
                 except Exception:
@@ -82,7 +81,7 @@ def apply_rules(event):
 
             counter += 1
 
-    return '%d rules processed' % counter
+    return '%d/%d rules processed' % (counter, len(rules))
 
 
 @shared_task
