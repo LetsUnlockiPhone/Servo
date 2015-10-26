@@ -14,6 +14,8 @@ phonenumbers
 python-dateutil
 pyBarcode
 celery
+chardet
+html2text
 -e git+git://github.com/filipp/py-gsxws.git#egg=gsxws
 --allow-external pil
 --allow-unverified pil
