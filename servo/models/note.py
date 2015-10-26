@@ -253,7 +253,7 @@ class Note(MPTTModel):
         Creates a new Note from an email message
         """
         sender = decode_header(msg['From'])
-        detected = chardet.detect(i[0]).get('encoding')
+        detected = chardet.detect(sender[0][0]).get('encoding')
         sender = [i[0].decode(i[1] or detected) for i in sender]
         sender = ' '.join(sender)
 
