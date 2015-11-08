@@ -19,6 +19,7 @@ urlpatterns = patterns(
 
     url(r'^notes/', include('servo.urls.note')),
     url(r'^sales/', include('servo.urls.sales')),
+    url(r'^diagnostics/', include('servo.urls.diagnostics')),
 
     url(r'^queues/(\d+)/statuses/$', 'servo.views.queue.statuses'),
 

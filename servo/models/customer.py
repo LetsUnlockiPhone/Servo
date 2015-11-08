@@ -159,6 +159,12 @@ class Customer(MPTTModel):
         fmt = phonenumbers.PhoneNumberFormat.NATIONAL
         return phonenumbers.format_number(n, fmt)
 
+    def get_company_name(self):
+        """Since we don't really have a "company" field in Servo,
+        climb up the parent tree and return a concated name
+        """
+        return ', '.join([i for i in self.get_parents()])
+
     def valid_email(self):
         """
         Returns email address or raises ValidationError

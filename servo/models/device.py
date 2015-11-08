@@ -280,6 +280,7 @@ class Device(models.Model):
         return device
 
     def to_gsx(self):
+        """Returns the corresponding gsxws Product object"""
         if len(self.imei):
             return gsxws.Product(self.imei)
         return gsxws.Product(self.sn)
@@ -425,7 +426,15 @@ class Device(models.Model):
         Fetch GSX iOS or Repair diagnostics based on device type
         """
         GsxAccount.default(user)
-        return self.to_gsx().diagnostics()
+        from gsxws.diagnostics import Diagnostics
+
+        if len(self.imei):
+            diags = Diagnostics(alternateDeviceId=self.imei)
+        else:
+            diags = Diagnostics(serialNumber=self.sn)
+
+        diags.shipTo = user.location.gsx_shipto
+        return diags.fetch()
 
     def get_warranty(self):
         return gsxws.Product(self.sn).warranty()

@@ -38,11 +38,28 @@ class DiagnosticResults(object):
 
 def run_test(request, device, test_id):
     device = get_object_or_404(Device, pk=device)
+    GsxAccount.default(request.user)
+
     try:
-        device.run_test(test_id, request)
+        result = device.run_test(test_id, request)
+        messages.success(request, result.responseMessage)
     except Exception as e:
         messages.error(request, e)
+
+    return redirect(request.session['return_to'])
     
+
+def fetch_dc_url(request):
+    from gsxws.diagnostics import Diagnostics
+    GsxAccount.default(request.user)
+    ship_to = request.user.location.gsx_shipto
+    diags = Diagnostics(shipTo=ship_to)
+
+    try:
+        return redirect(diags.fetch_dc_url())
+    except Exception as e:
+        return messages.error(request, e)
+
 
 def select_test(request, pk):
     """
