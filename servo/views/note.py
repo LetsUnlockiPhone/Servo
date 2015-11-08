@@ -291,7 +291,7 @@ def templates(request, template_id=None):
 
 def toggle_flag(request, pk, flag):
     field = 'is_%s' % flag
-    note = Note.objects.get(pk=pk)
+    note = get_object_or_404(Note, pk=pk)
     attr = getattr(note, field)
     setattr(note, field, not attr)
     note.save()
@@ -300,8 +300,8 @@ def toggle_flag(request, pk, flag):
 
 
 def toggle_tag(request, pk, tag_id):
-    note = Note.objects.get(pk=pk)
-    tag = Tag.objects.get(pk=tag_id)
+    note = get_object_or_404(Note, pk=pk)
+    tag = get_object_or_404(Tag, pk=tag_id)
 
     if tag in note.labels.all():
         note.labels.remove(tag)

@@ -53,6 +53,9 @@ def apply_rules(event):
             if r['action'] == "set_queue":
                 order.set_queue(r['data'], user)
 
+            if r['action'] == "set_priority":
+                pass
+
             if r['action'] == "send_email":
                 try:
                     email = order.customer.valid_email()
@@ -156,14 +159,13 @@ def batch_process(user, data):
 
 @shared_task
 def check_mail():
-    """
-    Checks IMAP box for incoming mail
-    """
+    """Checks IMAP box for incoming mail"""
     uid = Configuration.conf('imap_act')
 
     if empty(uid):
         raise ValueError('Incoming message user not configured')
 
+    counter = 0
     user = User.objects.get(pk=uid)
     server = Configuration.get_imap_server()
     typ, data = server.search(None, "UnSeen")
@@ -176,6 +178,9 @@ def check_mail():
         Note.from_email(msg, user)
         #server.copy(num, 'servo')
         server.store(num, '+FLAGS', '\\Seen')
+        counter += 1
 
     server.close()
     server.logout()
+
+    return '%d/%d messages processed' % counter
