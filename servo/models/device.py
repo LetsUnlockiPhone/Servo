@@ -2,6 +2,7 @@
 
 import re
 import gsxws
+from gsxws import diagnostics
 from os.path import basename
 from django_countries import countries
 from django.core.validators import RegexValidator
@@ -280,7 +281,9 @@ class Device(models.Model):
         return device
 
     def to_gsx(self):
-        """Returns the corresponding gsxws Product object"""
+        """
+        Returns the corresponding gsxws Product object
+        """
         if len(self.imei):
             return gsxws.Product(self.imei)
         return gsxws.Product(self.sn)
@@ -472,7 +475,9 @@ class Device(models.Model):
         return super(Device, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('devices-view_device', args=[self.product_line, self.slug, self.pk])
+        return reverse('devices-view_device', args=[self.product_line,
+                                                    self.slug,
+                                                    self.pk])
 
     def get_purchase_country(self):
         # Return device's purchase country, can be 2-letter code (from checkin) or
@@ -485,7 +490,6 @@ class Device(models.Model):
         return countries.countries.get(self.purchase_country, '')
 
     def run_test(self, test_id, request):
-        from gsxws import diagnostics
         GsxAccount.default(request.user)
         diags = diagnostics.Diagnostics(self.sn)
         diags.shipTo = request.user.location.gsx_shipto
@@ -493,7 +497,6 @@ class Device(models.Model):
         return diags.run_test()
 
     def fetch_tests(self, request):
-        from gsxws import diagnostics
         GsxAccount.default(request.user)
         diags = diagnostics.Diagnostics(self.sn)
         diags.shipTo = request.user.location.gsx_shipto
