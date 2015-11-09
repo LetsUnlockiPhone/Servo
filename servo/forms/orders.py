@@ -18,7 +18,7 @@ from servo.forms.base import *
 class BatchProcessForm(forms.Form):
     orders = forms.CharField(
         widget=forms.Textarea,
-        label=_("Service order(s)")
+        label=_('Service order(s)')
     )
 
     status = forms.ModelChoiceField(
@@ -89,7 +89,7 @@ class OrderSearchForm(forms.Form):
     location = forms.ModelMultipleChoiceField(
         required=False,
         label=_("Location is"),
-        queryset=Location.objects.all(),
+        queryset=Location.objects.filter(enabled=True),
     )
     state = forms.MultipleChoiceField(
         required=False,
@@ -123,10 +123,10 @@ class OrderSearchForm(forms.Form):
     )
     color = forms.MultipleChoiceField(
         choices=(
-            ('green', _("Green")),
-            ('yellow', _("Yellow")),
-            ('red', _("Red")),
-            ('grey', _("Grey")),
+            ('green',   _("Green")),
+            ('yellow',  _("Yellow")),
+            ('red',     _("Red")),
+            ('grey',    _("Grey")),
         ),
         label=_("Color"),
         required=False,
@@ -141,3 +141,7 @@ class OrderSearchForm(forms.Form):
         label=mark_safe('&nbsp;'),
         widget=DatepickerInput(attrs={'class': "input-small"})
     )
+
+    def __init__(self, request, *args, **kwargs):
+        super(OrderSearchForm, self).__init__(*args, **kwargs)
+        self.fields['location'].queryset = request.user.locations.all()
