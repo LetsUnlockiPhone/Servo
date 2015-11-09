@@ -375,6 +375,7 @@ class Location(models.Model):
 
     title = models.CharField(
         max_length=255,
+        unique=True,
         verbose_name=_(u'Name'),
         default=_('New Location'),
     )
@@ -393,19 +394,19 @@ class Location(models.Model):
         blank=True,
         default='',
         max_length=32,
-        verbose_name=_(u'Address')
+        verbose_name=_('Address')
     )
     zip_code = models.CharField(
         blank=True,
         default='',
         max_length=8,
-        verbose_name=_(u'ZIP Code')
+        verbose_name=_('ZIP Code')
     )
     city = models.CharField(
         blank=True,
         default='',
         max_length=16,
-        verbose_name=_(u'City')
+        verbose_name=_('City')
     )
 
     TIMEZONES = tuple((t, t) for t in common_timezones)
@@ -663,7 +664,7 @@ class Notification(models.Model):
     """
     A notification is a user-configurable response to an event
     """
-    KINDS = (('order', u'Tilaus'), ('note', u'Merkintä'))
+    KINDS = (('ORDER', _('Order')), ('NOTE', _('Note')),)
     ACTIONS = (('created', u'Luotu'), ('edited', u'Muokattu'))
 
     kind = models.CharField(max_length=16)
@@ -754,10 +755,11 @@ class Attachment(BaseItem):
         pass
 
     def get_absolute_url(self):
+        return reverse("files-view_file", args=[self.pk])
         return "/files/%d/view" % self.pk
 
     class Meta:
-        app_label = 'servo'
+        app_label = "servo"
         get_latest_by = "id"
 
 
