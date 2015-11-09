@@ -28,7 +28,7 @@ class Calendar(models.Model):
     hours_per_day = models.FloatField(
         null=True,
         blank=True,
-        verbose_name=_("hours per day"),
+        verbose_name=_("Hours per day"),
         help_text=_("How many hours per day should be in this calendar")
     )
 
@@ -77,7 +77,7 @@ class Calendar(models.Model):
         return math.ceil(total/3600.0)
 
     def get_absolute_url(self):
-        return reverse('calendars.view', args=[self.user.username, self.pk])
+        return reverse('calendars.view', args=[self.pk])
 
     class Meta:
         app_label = "servo"

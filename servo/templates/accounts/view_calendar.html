@@ -15,9 +15,9 @@
 
 {% block browse_block %}
 <div class="btn-group pull-right">
-    <a href="{% url 'calendars-view_calendar' username=request.user.username pk=calendar.pk view=view start_date=previous|date:'Y-m-d' %}" class="btn"><i class="icon-chevron-left"></i></a>
+    <a href="{% url 'calendars-view_calendar' pk=calendar.pk view=view start_date=previous|date:'Y-m-d' %}" class="btn"><i class="icon-chevron-left"></i></a>
     <a href="{{ base_url }}" class="btn">{% trans "Today" %}</a>
-    <a href="{% url 'calendars-view_calendar' username=request.user.username pk=calendar.pk view=view start_date=next|date:'Y-m-d' %}" class="btn"><i class="icon-chevron-right"></i></a>
+    <a href="{% url 'calendars-view_calendar' pk=calendar.pk view=view start_date=next|date:'Y-m-d' %}" class="btn"><i class="icon-chevron-right"></i></a>
 </div>
 {% endblock browse_block %}
 </div>
@@ -61,6 +61,6 @@
 {% endblock detail_view %}
 
 {% block crumbs %}
-    <li><a href="{% url 'calendars-list' username=request.user.username %}">{% trans "Calendars" %}</a> <span class="divider">/</span></li>
+    <li><a href="{% url 'calendars-list' %}">{% trans "Calendars" %}</a> <span class="divider">/</span></li>
     <li class="active">{{ calendar.title }}</li>
 {% endblock crumbs %}

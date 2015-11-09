@@ -2,21 +2,19 @@
 {% load servo_tags %}
 
 <ul class="nav nav-tabs">
-{% with request.user.username as username %}
   <li class="{% active request "orders" %}">
-    <a href="{% url 'accounts-list_orders' username=username %}">{% trans "Orders" %}</a>
+    <a href="{% url 'accounts-list_orders' %}">{% trans "Orders" %}</a>
   </li>
   <li class="{% active request "updates" %}">
-    <a href="{% url 'accounts-updates' username=username %}">{% trans "Updates" %}</a>
+    <a href="{% url 'accounts-updates' %}">{% trans "Updates" %}</a>
   </li>
   <li class="{% active request "calendars" %}">
-    <a href="{% url 'calendars-list' username=username %}">{% trans "Calendars" %}</a>
+    <a href="{% url 'calendars-list' %}">{% trans "Calendars" %}</a>
   </li>
   <li class="{% active request "stats" %}">
-    <a href="{% url 'accounts-stats' username=username %}">{% trans "Statistics" %}</a>
+    <a href="{% url 'accounts-stats' %}">{% trans "Statistics" %}</a>
   </li>
   <li class="{% active request "settings" %}">
-    <a href="{% url 'accounts-settings' username=username %}">{% trans "Settings" %}</a>
+    <a href="{% url 'accounts-settings' %}">{% trans "Settings" %}</a>
   </li>
-{% endwith %}
 </ul>

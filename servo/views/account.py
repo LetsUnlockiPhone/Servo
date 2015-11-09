@@ -23,7 +23,7 @@ from servo.models import Order, User, Calendar, CalendarEvent
 from servo.forms.account import ProfileForm, RegistrationForm, LoginForm
 
 
-def settings(request, username):
+def settings(request):
     """
     User editing their profile preferences
     """
@@ -48,7 +48,7 @@ def settings(request, username):
             request.session[translation.LANGUAGE_SESSION_KEY] = lang
             request.session['django_timezone'] = user.timezone
 
-            return redirect(settings, username)
+            return redirect(settings)
         else:
             print("Error in user settings: %s" % form.errors)
             messages.error(request, _("Error in user details"))
@@ -56,7 +56,7 @@ def settings(request, username):
     return render(request, "accounts/settings.html", locals())
 
 
-def orders(request, username):
+def orders(request):
     """
     This is basically like orders/index, but limited to the user
     First, filter by the provided search criteria,
@@ -118,7 +118,7 @@ def login(request):
                 if request.GET.get('next'):
                     return redirect(request.GET['next'])
                 else:
-                    return redirect(orders, username=user.username)
+                    return redirect(orders)
         else:
             messages.error(request, _("Invalid input for login"))
 
@@ -136,13 +136,13 @@ def logout(request):
 
 
 @permission_required("servo.add_calendar")
-def calendars(request, username=None):
+def calendars(request):
     data = {'title': _('Calendars')}
     data['calendars'] = Calendar.objects.filter(user=request.user)
 
     if data['calendars'].count() > 0:
         cal = data['calendars'][0]
-        return redirect(view_calendar, username, cal.pk)
+        return redirect(view_calendar, cal.pk)
 
     return render(request, "accounts/calendars.html", data)
 
@@ -193,7 +193,7 @@ def prepare_calendar_view(request, pk, view, start_date):
 
 
 @permission_required("servo.add_calendar")
-def download_calendar(request, username, pk, view):
+def download_calendar(request, pk, view):
     calendar = Calendar.objects.get(pk=pk)
 
     response = HttpResponse(content_type="text/csv")
@@ -208,7 +208,7 @@ def download_calendar(request, username, pk, view):
 
 
 @permission_required("servo.add_calendar")
-def print_calendar(request, username, pk, view, start_date):
+def print_calendar(request, pk, view, start_date):
     data = prepare_calendar_view(request, pk, view, start_date)
     calendar = data['calendar']
 
@@ -220,26 +220,26 @@ def print_calendar(request, username, pk, view, start_date):
 
 
 @permission_required("servo.add_calendar")
-def view_calendar(request, username, pk, view, start_date=None):
+def view_calendar(request, pk, view, start_date=None):
     data = prepare_calendar_view(request, pk, view, start_date)
-    data['base_url'] = reverse(view_calendar, args=[username, pk, view])
+    data['base_url'] = reverse(view_calendar, args=[pk, view])
 
     return render(request, "accounts/view_calendar.html", data)
 
 
 @permission_required("servo.delete_calendar")
-def delete_calendar(request, username, pk):
+def delete_calendar(request, pk):
     calendar = Calendar.objects.get(pk=pk)
 
     if calendar.user != request.user:
         messages.error(request, _("Users can only delete their own calendars!"))
 
-        return redirect(calendars, username=username)
+        return redirect(calendars)
 
     if request.method == "POST":
         calendar.delete()
         messages.success(request, _('Calendar deleted'))
-        return redirect(calendars, username=request.user.username)
+        return redirect(calendars)
 
     data = {'title': _("Really delete this calendar?")}
     data['action'] = request.path
@@ -248,7 +248,7 @@ def delete_calendar(request, username, pk):
 
 
 @permission_required("servo.change_calendar")
-def edit_calendar(request, username, pk=None, view="week"):
+def edit_calendar(request, pk=None, view="week"):
     from servo.models.calendar import CalendarForm
     calendar = Calendar(user=request.user)
 
@@ -261,7 +261,7 @@ def edit_calendar(request, username, pk=None, view="week"):
         if form.is_valid():
             calendar = form.save()
             messages.success(request, _("Calendar saved"))
-            return redirect(view_calendar, username, calendar.pk, 'week')
+            return redirect(view_calendar, calendar.pk, 'week')
 
     form = CalendarForm(instance=calendar)
 
@@ -273,7 +273,7 @@ def edit_calendar(request, username, pk=None, view="week"):
 
 
 @permission_required('servo.change_calendar')
-def edit_calendar_event(request, username, cal_pk, pk=None):
+def edit_calendar_event(request, cal_pk, pk=None):
     from servo.models.calendar import CalendarEventForm
 
     calendar = Calendar.objects.get(pk=cal_pk)
@@ -304,21 +304,20 @@ def edit_calendar_event(request, username, cal_pk, pk=None):
 
 
 @permission_required("servo.change_calendar")
-def finish_calendar_event(request, username, cal_pk, pk):
+def finish_calendar_event(request, cal_pk, pk):
     event = CalendarEvent.objects.get(pk=pk)
     event.set_finished()
     messages.success(request, _(u'Calendar event updated'))
 
-    return redirect(view_calendar, username, cal_pk, 'week')
+    return redirect(view_calendar, cal_pk, 'week')
 
 
-def delete_calendar_event(request, username, cal_pk, pk):
-    if username != request.user.username:
-        messages.error(request, _(u'Users can only delete their own events!'))
-
-        return redirect(calendars, username=request.user.username)
-
+def delete_calendar_event(request, cal_pk, pk):
     event = CalendarEvent.objects.get(pk=pk)
+
+    if event.user != request.user:
+        messages.error(request, _(u'Users can only delete their own events!'))
+        return redirect(calendars)
 
     if request.method == 'POST':
         event.delete()
@@ -357,7 +356,7 @@ def register(request):
     return render(request, 'accounts/register.html', data)
 
 
-def clear_notifications(request, username):
+def clear_notifications(request):
     from datetime import datetime
     ts = [int(x) for x in request.GET.get('t').split('/')]
     ts = datetime(*ts, tzinfo=timezone.get_current_timezone())
@@ -367,7 +366,7 @@ def clear_notifications(request, username):
     return redirect(request.META['HTTP_REFERER'])
 
 
-def search(request, username):
+def search(request):
     """
     User searching for something from their homepage
     """
@@ -375,7 +374,7 @@ def search(request, username):
 
     if not query or len(query) < 3:
         messages.error(request, _('Search query is too short'))
-        return redirect('accounts-list_orders', username)
+        return redirect('accounts-list_orders')
 
     request.session['search_query'] = query
 
@@ -397,7 +396,7 @@ def search(request, username):
     return render(request, "accounts/orders.html", data)
 
 
-def stats(request, username):
+def stats(request):
     from servo.views.stats import prep_view, BasicStatsForm
     data = prep_view(request)
     form = BasicStatsForm(initial=data['initial'])
@@ -409,7 +408,7 @@ def stats(request, username):
     return render(request, "accounts/stats.html", data)
 
 
-def updates(request, username):
+def updates(request):
     title = _('Updates')
     kind = request.GET.get('kind', 'note_added')
     events = request.user.notifications.filter(action=kind)

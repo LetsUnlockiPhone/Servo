@@ -48,6 +48,6 @@ urlpatterns = patterns(
     (r'^api/', include('servo.urls.api')),
     (r'^kaboom/$', 'servo.views.error.report'),
     
-    url(r'^(?P<username>[\w@\+\-\._]+)/', include('servo.urls.account')),
+    url(r'^home/', include('servo.urls.account')),
 
 )

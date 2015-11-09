@@ -23,7 +23,7 @@
 
 <div class="row-fluid">
   <div class="span12">
-    {% include "accounts/tabs.html" %}
+  {% include "accounts/tabs.html" %}
   </div>
 </div>
 
@@ -32,15 +32,15 @@
 <div id="collapsable" class="collapse out">
   <div class="well clearfix">
     <form action="" method="get" class="form-inline">
-      {% for field in form %}
+    {% for field in form %}
       <div class="control-group pull-left">
         <label class="control-label">{{ field.label }}</label>
         <div class="controls">{{ field }}</div>
       </div>
-      {% endfor %}
+    {% endfor %}
       <p class="clearfix"><hr/></p>
       <div class="pull-right">
-        <a class="btn" href="{% url 'accounts-list_orders' username=request.user.username %}?user=state=1&amp;user={{ request.user.pk }}"><i class="icon-refresh"></i> {% trans "Reset" %}</a>
+        <a class="btn" href="{% url 'accounts-list_orders' %}?user=state=1&amp;user={{ request.user.pk }}"><i class="icon-refresh"></i> {% trans "Reset" %}</a>
         <button class="btn btn-primary" type="submit"><i class="icon-search icon-white"></i> {% trans "Search" %}</button>
       </div>
     </form>

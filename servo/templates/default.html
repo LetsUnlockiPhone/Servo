@@ -31,7 +31,7 @@
           </a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="{% active request request.user.username %}"><a href="{% url 'accounts-list_orders' request.user.username %}" title="{% trans "Homepage" %}"><i class="icon-home icon-white"></i></a></li>
+              <li class="{% active request request.user.username %}"><a href="{% url 'accounts-list_orders' %}" title="{% trans "Homepage" %}"><i class="icon-home icon-white"></i></a></li>
               <li class="{% active request '^orders' %}"><a href="{% url 'orders-index' %}?page=1"><i class="icon-inbox icon-white"></i> {% trans "Orders" %}</a></li>
               <li class="{% active request '^sales' %}"><a href="{% url 'products-list_products' %}"><i class="icon-shopping-cart icon-white"></i> {% trans "Inventory" %}</a></li>
               <li class="{% active request '^devices' %}"><a href="{% url 'devices-list' %}"><i class="icon-hdd icon-white"></i> {% trans "Devices" %}</a></li>
@@ -65,9 +65,9 @@
                 <ul class="dropdown-menu">
                   <li><a href="#"><i class="icon-user"></i> {{ request.user.get_name }}</a></li>
                   <li class="divider"></li>
-                  <li><a href="{% url 'accounts-list_orders' user.username %}"><i class="icon-home"></i> {% trans "Homepage" %}</a></li>
-                  <li><a href="{% url 'calendars-list' user.username %}"><i class="icon-calendar"></i> {% trans "Calendars" %}</a></li>
-                  <li><a href="{% url 'accounts-settings' user.username %}"><i class="icon-wrench"></i> {% trans "Profile" %}</a></li>
+                  <li><a href="{% url 'accounts-list_orders' %}"><i class="icon-home"></i> {% trans "Homepage" %}</a></li>
+                  <li><a href="{% url 'calendars-list' %}"><i class="icon-calendar"></i> {% trans "Calendars" %}</a></li>
+                  <li><a href="{% url 'accounts-settings' %}"><i class="icon-wrench"></i> {% trans "Profile" %}</a></li>
                 {% if request.user.is_staff %}
                   <li><a href="{% url 'admin-settings' %}"><i class="icon-cog"></i> {% trans "System Settings" %}</a></li>
                 {% endif %}
@@ -104,7 +104,7 @@
                 {% endfor %}
                   <li class="divider"></li>
                   <li>
-                    <a class="text-center" href="{% url 'accounts-updates' request.user.username %}?kind=set_status">
+                    <a class="text-center" href="{% url 'accounts-updates' %}?kind=set_status">
                       <strong>{% trans "See All Alerts" %}</strong> <i class="icon-chevron-right"></i>
                     </a>
                   </li>
@@ -138,7 +138,7 @@
                 {% endwith %}
                   <li class="divider"></li>
                   <li>
-                    <a class="text-center" href="{% url 'accounts-updates' request.user.username %}?kind=note_added">
+                    <a class="text-center" href="{% url 'accounts-updates' %}?kind=note_added">
                       <strong>{% trans "Read All Messages" %}</strong> <i class="icon-chevron-right"></i>
                     </a>
                   </li>
@@ -165,7 +165,7 @@
   <div class="footer">
     <div class="container-fluid">
       <ul class="breadcrumb pull-left">
-        <li><i class="icon-home"></i> <a href="{% url 'accounts-list_orders' request.user.username %}">{{ request.user.get_full_name }}</a> <span class="divider">/</span></li>
+        <li><i class="icon-home"></i> <a href="{% url 'accounts-list_orders' %}">{{ request.user.get_full_name }}</a> <span class="divider">/</span></li>
         {% block crumbs %}{% endblock crumbs %}
       </ul>
       <small class="copyright pull-right muted">&copy; {% now "Y" %} First Party Software | <a href="https://docs.servoapp.com/terms/" target="_blank">{% trans "Terms" %}</a></small>

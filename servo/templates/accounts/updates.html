@@ -4,7 +4,7 @@
 
 {% block toolbar %}
 {% if perms.servo.add_order %}
-  <a href="{% url 'accounts-clear_notifications' request.user.username %}?t={% now "Y/m/d/H/i" %}" class="btn"><i class="icon-ok"></i> {% trans "Clear all" %}</a>
+  <a href="{% url 'accounts-clear_notifications' %}?t={% now "Y/m/d/H/i" %}" class="btn"><i class="icon-ok"></i> {% trans "Clear all" %}</a>
 {% endif %}
 {% endblock toolbar %}
 

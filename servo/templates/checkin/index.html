@@ -44,7 +44,7 @@
                 <li class="disabled"><a href="#">{% trans "No users found" %}</a></li>
               {% endfor %}
                 <li class="divider"></li>
-                <li><a href="{% url 'accounts-list_orders' user.username %}">{% bootstrap_icon "log-in" %} {% trans "Go to Servo" %}</a></li>
+                <li><a href="{% url 'accounts-list_orders' %}">{% bootstrap_icon "log-in" %} {% trans "Go to Servo" %}</a></li>
                 <li><a href="{% url 'accounts-logout' %}" data-modal="#modal">{% bootstrap_icon "off" %} {% trans "Log out" %}...</a></li>
               </ul>
             </li>

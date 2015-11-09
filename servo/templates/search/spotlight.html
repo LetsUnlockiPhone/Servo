@@ -33,5 +33,5 @@
 {% endblock second_column %}
 
 {% block footer %}
-    <li><i class="icon-home"></i> <a href="{% url 'accounts-list_orders' request.user.username %}">{% trans "Home" %}</a> <span class="divider">/</span></li><li class="active">{{ title }}</li>
+    <li><i class="icon-home"></i> <a href="{% url 'accounts-list_orders'  %}">{% trans "Home" %}</a> <span class="divider">/</span></li><li class="active">{{ title }}</li>
 {% endblock footer %}

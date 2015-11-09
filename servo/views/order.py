@@ -3,6 +3,8 @@
 import json
 
 from gsxws.core import GsxError
+from datetime import datetime, timedelta
+
 from django.http import QueryDict
 
 from django.db.models import Q
@@ -64,7 +66,6 @@ def prepare_list_view(request, args):
         orders = orders.filter(created_at__range=[start_date, end_date])
 
     if args.get("status_older_than"):
-        from datetime import datetime, timedelta
         days = int(args.get("status_older_than"))
         limit = datetime.now() - timedelta(days=days)
         orders = orders.filter(status_started_at__lt=limit)
