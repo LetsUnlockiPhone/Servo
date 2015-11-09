@@ -141,6 +141,10 @@ class OrderSearchForm(forms.Form):
         label=mark_safe('&nbsp;'),
         widget=DatepickerInput(attrs={'class': "input-small"})
     )
+    status_older_than = forms.IntegerField(
+        required=False,
+        label=_('Status older than (days)'),
+    )
 
     def __init__(self, request, *args, **kwargs):
         super(OrderSearchForm, self).__init__(*args, **kwargs)

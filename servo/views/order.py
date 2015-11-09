@@ -42,8 +42,7 @@ def prepare_list_view(request, args):
     """
     data = {'title': _("Orders")}
 
-    form = OrderSearchForm(args)
-    form.fields['location'].queryset = request.user.locations
+    form = OrderSearchForm(request, args)
 
     if request.session.get("current_queue"):
         del(request.session['current_queue'])
@@ -63,6 +62,12 @@ def prepare_list_view(request, args):
     if start_date:
         end_date = args.get('end_date') or timezone.now()
         orders = orders.filter(created_at__range=[start_date, end_date])
+
+    if args.get("status_older_than"):
+        from datetime import datetime, timedelta
+        days = int(args.get("status_older_than"))
+        limit = datetime.now() - timedelta(days=days)
+        orders = orders.filter(status_started_at__lt=limit)
 
     if args.get("assigned_to"):
         users = args.getlist("assigned_to")
