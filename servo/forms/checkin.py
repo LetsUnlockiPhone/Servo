@@ -14,13 +14,14 @@ from django.forms.extras.widgets import SelectDateWidget
 from servo.validators import apple_sn_validator, phone_validator, file_upload_validator
 
 from servo.forms.base import SearchFieldInput
-from servo.models import (Configuration, 
-    Device, Attachment, Location, Customer,)
+from servo.models import (Configuration, Device, 
+                          Attachment, Location,
+                          Customer,)
 
 
 # Generate list of years for purchase date picker
 y = date.today().year
-YEARS = [x+1 for x in xrange(y-7, y)]
+YEARS = [x+1 for x in xrange(y-10, y)]
 
 
 def get_checkin_locations(user):
