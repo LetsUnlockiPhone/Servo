@@ -11,12 +11,12 @@ from django.contrib import messages
 from django.http import QueryDict
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect, render
 from dateutil.relativedelta import relativedelta
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import permission_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import redirect, render, get_object_or_404
 
+from servo.lib.utils import paginate
 from servo.views.order import prepare_list_view
 
 from servo.models import Order, User, Calendar, CalendarEvent
@@ -194,7 +194,7 @@ def prepare_calendar_view(request, pk, view, start_date):
 
 @permission_required("servo.add_calendar")
 def download_calendar(request, pk, view):
-    calendar = Calendar.objects.get(pk=pk)
+    calendar = get_object_or_404(Calendar, pk=pk)
 
     response = HttpResponse(content_type="text/csv")
     response['Content-Disposition'] = 'attachment; filename="%s.csv"' % calendar.title
@@ -412,15 +412,7 @@ def updates(request):
     title = _('Updates')
     kind = request.GET.get('kind', 'note_added')
     events = request.user.notifications.filter(action=kind)
-
     page = request.GET.get("page")
-    paginator = Paginator(events, 100)
-
-    try:
-        events = paginator.page(page)
-    except PageNotAnInteger:
-        events = paginator.page(1)
-    except EmptyPage:
-        events = paginator.page(paginator.num_pages)
+    events = paginate(events, page, 100)
 
     return render(request, "accounts/updates.html", locals())

@@ -3,7 +3,7 @@
 {% block header %}{% trans "Choose test to run" %}{% endblock header %}
 {% block body %}
   {% if error %}
-    <h2>{{ error }}</h2>
+    <h3 class="empty muted">{{ error }}</h3>
   {% endif %}
   <ul class="nav nav-pills nav-stacked">
   {% for i in tests %}
