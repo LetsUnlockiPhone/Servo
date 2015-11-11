@@ -6,7 +6,23 @@ from django.db.models import Model
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
+def paginate(queryset, page, count=10):
+    """
+    Shortcut for paginating a queryset
+    """
+    paginator = Paginator(queryset, count)
+
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+
+    return results
 
 def csv_response(data):
     """
