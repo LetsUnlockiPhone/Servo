@@ -3063,16 +3063,14 @@ msgstr ""
 
 #: templates/checkin/thanks.html:7 views/checkin.py:135
 msgid "Done!"
-msgstr "Färdig"
+msgstr "Färdig!"
 
 #: templates/checkin/thanks.html:8
-#, fuzzy, python-format
 #| msgid "Your service order has been submitted."
 msgid "Your service order <strong>%(code)s</strong> has been submitted. "
-msgstr "Din serviceorder har skickats till oss."
+msgstr "Din serviceorder <strong>%(code)s</strong> har skickats till oss."
 
 #: templates/checkin/thanks.html:8
-#, fuzzy
 #| msgid "Click <strong>Print</strong> to print the confirmation."
 msgid "Please click <strong>Print</strong> to print the confirmation."
 msgstr ""
@@ -3080,7 +3078,7 @@ msgstr ""
 
 #: templates/checkin/thanks.html:13 templates/generic/index.html:22
 msgid "Create New"
-msgstr ""
+msgstr "Skapa ny"
 
 #: templates/customers/choose-list.html:6 templates/customers/find.html:89
 #: templates/customers/search.html:41
