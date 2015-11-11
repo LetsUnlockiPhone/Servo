@@ -49,5 +49,6 @@ urlpatterns = patterns(
     (r'^kaboom/$', 'servo.views.error.report'),
     
     url(r'^home/', include('servo.urls.account')),
+    url(r'^search/', include('servo.urls.search')),
 
 )

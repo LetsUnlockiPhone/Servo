@@ -12,7 +12,6 @@ urlpatterns = patterns(
 
     url(r'^$', 'list_orders', name='orders-index'),
     url(r'^\?queue=(?P<queue>\d+)$', 'list_orders', name='orders-list_queue'),
-    url(r'^search/$', 'search', name="orders-search"),
     url(r'^batch/$', 'batch_process', name="orders-batch_process"),
     url(r'^download/$', 'download_results', name="orders-download_results"),
 

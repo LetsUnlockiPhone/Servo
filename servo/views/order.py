@@ -22,7 +22,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import permission_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from servo.lib.utils import paginate
 
 from servo.models.order import *
 from servo.forms.orders import *
@@ -137,18 +138,10 @@ def prepare_list_view(request, args):
             orders = orders.filter(status_limit_yellow__lte=now)
 
     page = request.GET.get("page")
-    paginator = Paginator(orders.distinct(), 100)
-
-    try:
-        order_pages = paginator.page(page)
-    except PageNotAnInteger:
-        order_pages = paginator.page(1)
-    except EmptyPage:
-        order_pages = paginator.page(paginator.num_pages)
 
     data['form'] = form
     data['queryset'] = orders
-    data['orders'] = order_pages
+    data['orders'] = paginate(orders.distinct(), page, 100)
     data['subtitle'] = _("%d search results") % orders.count()
 
     return data
@@ -888,43 +881,9 @@ def remove_customer(request, pk, customer_id):
     return render(request, "orders/remove_customer.html", data)
 
 
-def search(request):
-    query = request.GET.get("q")
-
-    if not query or len(query) < 3:
-        messages.error(request, _('Search query is too short'))
-        return redirect(list_orders)
-
-    request.session['search_query'] = query
-
-    # Redirect Order ID:s to the order
-    try:
-        order = Order.objects.get(code__iexact=query)
-        return redirect(order)
-    except Order.DoesNotExist:
-        pass
-
-    orders = Order.objects.filter(
-        Q(code=query) | Q(devices__sn__contains=query) |
-        Q(customer__fullname__icontains=query) |
-        Q(customer__phone__contains=query) |
-        Q(repair__confirmation=query) |
-        Q(repair__reference=query)
-    )
-
-    data = {
-        'title': _('Orders'),
-        'subtitle': _(u'%d results for "%s"') % (orders.count(), query)
-    }
-
-    data['orders'] = orders.distinct()
-
-    return render(request, "orders/index.html", data)
-
-
 @permission_required("servo.add_order")
 def copy_order(request, pk):
-    order = Order.objects.get(pk=pk)
+    order = get_object_or_404(Order, pk=pk)
     new_order = order.duplicate(request.user)
     return redirect(new_order)
 

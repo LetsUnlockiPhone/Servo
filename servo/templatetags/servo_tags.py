@@ -44,13 +44,6 @@ def count_or_empty(queryset):
 
 
 @register.filter
-def search_url(request):
-    "Returns the proper search URL"
-    prefix = request.path.split("/")[1]
-    return "/%s/search/" % prefix
-
-
-@register.filter
 def str_find(string, substr):
     return (string.find(substr) > -1)
 

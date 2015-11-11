@@ -11,8 +11,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import slugify
 from django.views.decorators.cache import cache_page
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from servo.lib.utils import paginate
 from servo.models import Device, Order, Product, GsxAccount, ServiceOrderItem
 from servo.forms.devices import DeviceForm, DeviceUploadForm, DeviceSearchForm
 
@@ -46,6 +46,7 @@ def model_from_slug(product_line, model=None):
 
 def prep_list_view(request, product_line=None, model=None):
     title = _('Devices')
+    search_hint = "devices"
     all_devices = Device.objects.all()
     product_lines = gsxws.products.models()
 
@@ -66,15 +67,7 @@ def prep_list_view(request, product_line=None, model=None):
         all_devices = all_devices.filter(slug=model)
 
     page = request.GET.get('page')
-    paginator = Paginator(all_devices, 50)
-
-    try:
-        devices = paginator.page(page)
-    except PageNotAnInteger:
-        devices = paginator.page(1)
-    except EmptyPage:
-        devices = paginator.page(paginator.num_pages)
-
+    devices = paginate(all_devices, page, 50)
     return locals()
 
 
@@ -168,160 +161,6 @@ def view_device(request, pk, product_line=None, model=None):
     return render(request, "devices/view.html", data)
 
 
-def get_gsx_search_results(request, what, param, query):
-    """
-    The second phase of a GSX search.
-    There should be an active GSX session open at this stage.
-    """
-    data    = {}
-    results = []
-    query   = query.upper()
-    device  = Device(sn=query)
-    error_template = "search/results/gsx_error.html"
-
-    # @TODO: this isn't a GSX search. Move it somewhere else.
-    if what == "orders":
-        try:
-            if param == 'serialNumber':
-                device = Device.objects.get(sn__exact=query)
-            if param == 'alternateDeviceId':
-                device = Device.objects.get(imei__exact=query)
-        except (Device.DoesNotExist, ValueError,):
-            return render(request, "search/results/gsx_notfound.html")
-
-        orders = device.order_set.all()
-        return render(request, "orders/list.html", locals())
-
-    if what == "warranty":
-        # Update wty info if been here before
-        try:
-            device = Device.objects.get(sn__exact=query)
-            device.update_gsx_details()
-        except Exception:
-            try:
-                device = Device.from_gsx(query)
-            except Exception as e:
-                return render(request, error_template, {'message': e})
-
-        results.append(device)
-
-        # maybe it's a device we've already replaced...
-        try:
-            soi = ServiceOrderItem.objects.get(sn__iexact=query)
-            results[0].repeat_service = soi.order
-        except ServiceOrderItem.DoesNotExist:
-            pass
-
-    if what == "parts":
-        # looking for parts
-        if param == "partNumber":
-            # ... with a part number
-            part = gsxws.Part(partNumber=query)
-
-            try:
-                partinfo = part.lookup()
-            except gsxws.GsxError, e:
-                return render(request, error_template, {'message': e})
-
-            product = Product.from_gsx(partinfo)
-            cache.set(query, product)
-            results.append(product)
-
-        if param == "serialNumber":
-            # ... with a serial number
-            try:
-                results = device.get_parts()
-                data['device'] = device
-            except Exception as e:
-                return render(request, error_template, {'message': e})
-
-        if param == "productName":
-            product = gsxws.Product(productName=query)
-            parts = product.parts()
-            for p in parts:
-                results.append(Product.from_gsx(p))
-
-    if what == "repairs":
-        # Looking for GSX repairs
-        if param == "serialNumber":
-            # ... with a serial number
-            try:
-                device = gsxws.Product(query)
-                #results = device.repairs()
-                # @TODO: move the encoding hack to py-gsxws
-                for i, p in enumerate(device.repairs()):
-                    d = {'purchaseOrderNumber': p.purchaseOrderNumber}
-                    d['repairConfirmationNumber'] = p.repairConfirmationNumber
-                    d['createdOn'] = p.createdOn
-                    d['customerName'] = p.customerName.encode('utf-8')
-                    d['repairStatus'] = p.repairStatus
-                    results.append(d)
-            except gsxws.GsxError, e:
-                return render(request, "search/results/gsx_notfound.html")
-
-        elif param == "dispatchId":
-            # ... with a repair confirmation number
-            repair = gsxws.Repair(number=query)
-            try:
-                results = repair.lookup()
-            except gsxws.GsxError as message:
-                return render(request, error_template, locals())
-
-    return render(request, "devices/search_gsx_%s.html" % what, locals())
-
-
-def search_gsx(request, what, param, query):
-    """
-    The first phase of a GSX search
-    """
-    title = _(u'Search results for "%s"') % query
-
-    try:
-        act = request.session.get("gsx_account")
-        act = None
-        if act is None:
-            GsxAccount.default(user=request.user)
-        else:
-            act.connect(request.user)
-    except gsxws.GsxError as message:
-        return render(request, "devices/search_gsx_error.html", locals())
-
-    if request.is_ajax():
-        if what == "parts":
-            try:
-                dev = Device.from_gsx(query)
-                products = dev.get_parts()
-                return render(request, "devices/parts.html", locals())
-            except gsxws.GsxError as message:
-                return render(request, "search/results/gsx_error.html", locals())
-
-        return get_gsx_search_results(request, what, param, query)
-
-    return render(request, "devices/search_gsx.html", locals())
-
-
-def search(request):
-    """
-    Searching for devices from the main navbar
-    """
-    query = request.GET.get("q", '').strip()
-    request.session['search_query'] = query
-
-    query = query.upper()
-    valid_arg = gsxws.validate(query)
-
-    if valid_arg in ('serialNumber', 'alternateDeviceId',):
-        return redirect(search_gsx, "warranty", valid_arg, query)
-
-    devices = Device.objects.filter(
-        Q(sn__icontains=query) | Q(description__icontains=query)
-    )
-
-    title = _(u'Devices matching "%s"') % query
-
-    return render(request, "devices/search.html", locals())
-
-
 def find(request):
     """
     Searching for device from devices/find
@@ -348,16 +187,9 @@ def find(request):
                 results = results.filter(created_at__range=[fdata['date_start'],
                                          fdata['date_end']])
 
-    paginator = Paginator(results, 100)
     page = request.GET.get("page")
-
-    try:
-        devices = paginator.page(page)
-    except PageNotAnInteger:
-        devices = paginator.page(1)
-    except EmptyPage:
-        devices = paginator.page(paginator.num_pages)
-
+    devices = paginate(results, page, 100)
+    
     return render(request, "devices/find.html", locals())
 
 

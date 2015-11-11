@@ -10,7 +10,8 @@ from django.forms.models import modelform_factory
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from servo.lib.utils import paginate
 
 from servo.models.note import Note
 from servo.models.order import Order
@@ -29,6 +30,7 @@ def prepare_view(request, group='all'):
     title = _("Customers")
 
     customer_list = []
+    search_hint = "customers"
     all_customers = Customer.objects.all().order_by('name')
     customer_count = all_customers.count()
 
@@ -53,15 +55,7 @@ def prepare_view(request, group='all'):
             title = g.name
 
     page = request.GET.get('page')
-    paginator = Paginator(customer_list, 40)
-
-    try:
-        customers = paginator.page(page)
-    except PageNotAnInteger:
-        customers = paginator.page(1)
-    except EmptyPage:
-        customers = paginator.page(paginator.num_pages)
-
+    customers = paginate(customer_list, page, 40)
     groups = CustomerGroup.objects.all()
 
     return locals()
@@ -80,8 +74,8 @@ def index(request, group='all'):
 
 @permission_required("servo.change_order")
 def add_order(request, customer_id, order_id):
-    order = Order.objects.get(pk=order_id)
-    customer = Customer.objects.get(pk=customer_id)
+    order = get_object_or_404(Order, pk=order_id)
+    customer = get_object_or_404(Customer, pk=customer_id)
     order.customer = customer
     order.save()
 
@@ -95,19 +89,14 @@ def add_order(request, customer_id, order_id):
 
 def notes(request, pk, note_id=None):
     from servo.forms.note import NoteForm
-    customer = Customer.objects.get(pk=pk)
+    customer = get_object_or_404(Customer, pk=pk)
     form = NoteForm(initial={'recipient': customer.name})
 
     return render(request, "notes/form.html", {'form': form})
 
 
 def view(request, pk, group='all'):
-    try:
-        c = Customer.objects.get(pk=pk)
-    except Customer.DoesNotExist:
-        messages.error(request, _('Customer not found'))
-        return redirect(index)
-
+    c = get_object_or_404(Customer, pk=pk)
     data = prepare_view(request, group)
 
     data['title'] = c.name
@@ -150,7 +139,7 @@ def edit_group(request, group='all'):
 
 @permission_required("servo.change_customer")
 def delete_group(request, group):
-    group = CustomerGroup.objects.get(slug=group)
+    group = get_object_or_404(CustomerGroup, slug=group)
 
     if request.method == "POST":
         group.delete()
@@ -178,7 +167,7 @@ def edit(request, pk=None, parent_id=None, group='all'):
         form = CustomerForm(initial={'name': name})
 
     if pk is not None:
-        customer = Customer.objects.get(pk=pk)
+        customer = get_object_or_404(Customer, pk=pk)
         form = CustomerForm(instance=customer)
 
     if parent_id is not None:
@@ -233,7 +222,7 @@ def edit(request, pk=None, parent_id=None, group='all'):
 @permission_required("servo.delete_customer")
 def delete(request, pk=None, group='all'):
 
-    customer = Customer.objects.get(pk=pk)
+    customer = get_object_or_404(Customer, pk=pk)
 
     if request.method == "POST":
         customer.delete()
@@ -254,7 +243,7 @@ def merge(request, pk, target=None):
     - invoices
     Deletes the source customer
     """
-    customer = Customer.objects.get(pk=pk)
+    customer = get_object_or_404(Customer, pk=pk)
     title = _('Merge %s with') % customer.name
 
     if request.method == 'POST':
@@ -281,7 +270,7 @@ def move(request, pk, new_parent=None):
     """
     Moves a customer under another customer
     """
-    customer = Customer.objects.get(pk=pk)
+    customer = get_object_or_404(Customer, pk=pk)
 
     if new_parent is not None:
         if int(new_parent) == 0:
@@ -302,28 +291,6 @@ def move(request, pk, new_parent=None):
         return redirect(customer)
 
     return render(request, "customers/move.html", locals())
-
-
-def search(request):
-    """
-    Searches for customers from "spotlight"
-    """
-    query = request.GET.get("q")
-    kind = request.GET.get('kind')
-    request.session['search_query'] = query
-
-    customers = Customer.objects.filter(
-        Q(fullname__icontains=query) | Q(email__icontains=query) | Q(phone__contains=query)
-    )
-
-    if kind == 'company':
-        customers = customers.filter(is_company=True)
-
-    if kind == 'contact':
-        customers = customers.filter(is_company=False)
-
-    title = _('%d results for "%s"') % (customers.count(), query)
-    return render(request, "customers/search.html", locals())
 
 
 def filter(request):
@@ -380,14 +347,7 @@ def find(request):
     title = _('Search for customers')
 
     page = request.GET.get('page')
-    paginator = Paginator(results, 50)
-
-    try:
-        customers = paginator.page(page)
-    except PageNotAnInteger:
-        customers = paginator.page(1)
-    except EmptyPage:
-        customers = paginator.page(paginator.num_pages)
+    customers = paginate(results, page, 50)
 
     return render(request, "customers/find.html", locals())
 
@@ -430,7 +390,9 @@ def create_message(request, pk):
 
 
 def upload(request, group='all'):
-
+    """
+    Uploads customer data in CSV format
+    """
     action = request.path
     form = CustomerUploadForm()
 

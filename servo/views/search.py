@@ -6,225 +6,283 @@ import gsxws
 from django.db.models import Q
 from django.core.cache import cache
 from django.shortcuts import render, redirect
-from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 from django.http import QueryDict, HttpResponseRedirect
 
-from servo.models.note import Note
-from servo.models.wiki import Article
-from servo.models.device import Device
-from servo.models.product import Product
-from servo.models.common import GsxAccount
-from servo.models.purchases import PurchaseOrder
-from servo.models.order import Order, ServiceOrderItem
+from servo.lib.utils import paginate
+from servo.models import (Note, Device, Product, 
+                         GsxAccount, PurchaseOrder, Order,
+                         ServiceOrderItem, Customer, ProductCategory,)
 
 
-def results_redirect(view, data):
-    q = QueryDict('', mutable=True)
-    q['q'] = data['query']
-    query_str = q.urlencode()
-    url = reverse(view, args=[data['what']])
-    return HttpResponseRedirect("%s?%s" % (url, query_str))
-
-
-def prepare_result_view(request):
-
-    query = request.GET.get('q')
-
-    data = {'title': _('Search results for "%s"' % query)}
-
-    data['gsx_type'] = gsxws.validate(query.upper())
-    data['query'] = query
-    data['tag_id'] = None
-    data['cat_id'] = None  # Product category
-    data['group'] = 'all'  # customer group
-
-    return data, query
-
-
-def list_gsx(request, what="warranty"):
-    data, query = prepare_result_view(request)
-    data['what'] = what
-    return render(request, "search/results/gsx.html", data)
-
-
-def search_gsx(request, what, arg, value):
-    if request.is_ajax():
-
-        if what == "parts" and value != "None":
-            results = []
-            GsxAccount.default(user=request.user)
-
-            try:
-                product = gsxws.Product(productName=value)
-                parts = product.parts()
-                for p in parts:
-                    results.append(Product.from_gsx(p))
-            except gsxws.GsxError, e:
-                data = {'message': e}
-                return render(request, "search/results/gsx_error.html", data)
-
-            data = {'results': results}
-
-        return render(request, "search/results/gsx_%s.html" % what, data)
-
-    data = {arg: value}
-    return render(request, "search/gsx_results.html", data)
-
-
-def view_gsx_results(request, what="warranty"):
+def search_gsx(request, what, param, query):
     """
-    Searches for something from GSX. Defaults to warranty lookup.
-    GSX search strings are always UPPERCASE.
+    The first phase of a GSX search. Sets up the GSX connection.
     """
-    results = list()
-    data, query = prepare_result_view(request)
-    query = query.upper()
-
-    error_template = "search/results/gsx_error.html"
-
-    if data['gsx_type'] == "dispatchId":
-        what = "repairs"
-
-    if data['gsx_type'] == "partNumber":
-        what = "parts"
-
-    data['what'] = what
-    gsx_type = data['gsx_type']
+    title = _(u'Search results for "%s"') % query
 
     try:
-        if request.session.get("current_queue"):
-            queue = request.session['current_queue']
-            GsxAccount.default(request.user, queue)
+        act = request.session.get("gsx_account")
+        act = None
+        if act is None:
+            GsxAccount.default(user=request.user)
         else:
-            GsxAccount.default(request.user)
-    except gsxws.GsxError, e:
-        error = {'message': e}
-        return render(request, error_template, error)
+            act.connect(request.user)
+    except gsxws.GsxError as message:
+        return render(request, "devices/search_gsx_error.html", locals())
 
-    if gsx_type == "serialNumber" or "alternateDeviceId":
+    if request.is_ajax():
+        return get_gsx_search_results(request, what, param, query)
+
+    return render(request, "devices/search_gsx.html", locals())
+
+
+def get_gsx_search_results(request, what, param, query):
+    """
+    The second phase of a GSX search.
+    There should be an active GSX session open at this stage.
+    """
+    data    = {}
+    results = []
+    query   = query.upper()
+    device  = Device(sn=query)
+    error_template = "search/results/gsx_error.html"
+
+    # @TODO: this isn't a GSX search. Move it somewhere else.
+    if what == "orders":
         try:
-            device = Device.objects.get(sn=query)
-        except Device.DoesNotExist:
-            device = Device(sn=query)
+            if param == 'serialNumber':
+                device = Device.objects.get(sn__exact=query)
+            if param == 'alternateDeviceId':
+                device = Device.objects.get(imei__exact=query)
+        except (Device.DoesNotExist, ValueError,):
+            return render(request, "search/results/gsx_notfound.html")
+
+        orders = device.order_set.all()
+        return render(request, "orders/list.html", locals())
 
     if what == "warranty":
-        if cache.get(query):
-            result = cache.get(query)
-        else:
+        # Update wty info if been here before
+        try:
+            device = Device.objects.get(sn__exact=query)
+            device.update_gsx_details()
+        except Exception:
             try:
-                result = Device.from_gsx(query)
-            except gsxws.GsxError, e:
-                error = {'message': e}
-                return render(request, error_template, error)
+                device = Device.from_gsx(query)
+            except Exception as e:
+                return render(request, error_template, {'message': e})
 
-        if re.match(r'iPhone', result.description):
-            result.activation = device.get_activation()
+        results.append(device)
 
-        results.append(result)
+        # maybe it's a device we've already replaced...
+        try:
+            soi = ServiceOrderItem.objects.get(sn__iexact=query)
+            results[0].repeat_service = soi.order
+        except ServiceOrderItem.DoesNotExist:
+            pass
 
     if what == "parts":
         # looking for parts
-        if gsx_type == "partNumber":
+        if param == "partNumber":
             # ... with a part number
             part = gsxws.Part(partNumber=query)
 
             try:
                 partinfo = part.lookup()
-            except gsxws.GsxError, e:
-                error = {'message': e}
-                return render(request, error_template, error)
+            except gsxws.GsxError as e:
+                return render(request, error_template, {'message': e})
 
             product = Product.from_gsx(partinfo)
             cache.set(query, product)
             results.append(product)
-        else:
-            # ... with a serial number
+
+        if param == "serialNumber":
             try:
-                results = device.get_parts()
-                data['device'] = device
-            except Exception, e:
-                error = {'message': e}
-                return render(request, error_template, error)
+                dev = Device.from_gsx(query)
+                products = dev.get_parts()
+                return render(request, "devices/parts.html", locals())
+            except gsxws.GsxError as message:
+                return render(request, "search/results/gsx_error.html", locals())
+
+        if param == "productName":
+            product = gsxws.Product(productName=query)
+            parts = product.parts()
+            for p in parts:
+                results.append(Product.from_gsx(p))
 
     if what == "repairs":
         # Looking for GSX repairs
-        if gsx_type == "serialNumber":
+        if param == "serialNumber":
             # ... with a serial number
             try:
                 device = gsxws.Product(query)
-                results = device.repairs()
-            except gsxws.GsxError, e:
+                #results = device.repairs()
+                # @TODO: move the encoding hack to py-gsxws
+                for i, p in enumerate(device.repairs()):
+                    d = {'purchaseOrderNumber': p.purchaseOrderNumber}
+                    d['repairConfirmationNumber'] = p.repairConfirmationNumber
+                    d['createdOn'] = p.createdOn
+                    d['customerName'] = p.customerName.encode('utf-8')
+                    d['repairStatus'] = p.repairStatus
+                    results.append(d)
+            except gsxws.GsxError as e:
                 return render(request, "search/results/gsx_notfound.html")
 
-        elif gsx_type == "dispatchId":
+        elif param == "dispatchId":
             # ... with a repair confirmation number
             repair = gsxws.Repair(number=query)
             try:
                 results = repair.lookup()
-            except gsxws.GsxError, e:
-                error = {'message': e}
-                return render(request, error_template, error)
+            except gsxws.GsxError as message:
+                return render(request, error_template, locals())
 
-    if what == "repair_details":
-        repair = gsxws.Repair(number=query)
-        results = repair.details()
-        return render(request, "search/results/gsx_repair_details.html", results)
-
-    # Cache the results for quicker access later
-    cache.set('%s-%s' % (what, query), results)
-    data['results'] = results
-
-    return render(request, "search/results/gsx_%s.html" % what, data)
+    return render(request, "devices/search_gsx_%s.html" % what, locals())
 
 
-def list_products(request):
-    data, query = prepare_result_view(request)
-    data['products'] = Product.objects.filter(
-        Q(code__icontains=query) | Q(title__icontains=query)
+
+def products(request):
+    """
+    Searches our local inventory
+    """
+    query = request.GET.get("q")
+    request.session['search_query'] = query
+
+    results = Product.objects.filter(
+        Q(code__icontains=query) | Q(title__icontains=query) | Q(eee_code__icontains=query)
     )
 
-    return render(request, "search/results/products.html", data)
+    page = request.GET.get("page")
+    products = paginate(results, page, 50)
+
+    title = _(u'Search results for "%s"') % query
+    group = ProductCategory(title=_('All'), slug='all')
+
+    return render(request, 'products/search.html', locals())
 
 
-def list_notes(request):
-    data, query = prepare_result_view(request)
-    data['notes'] = Note.objects.filter(body__icontains=query)
-    return render(request, "search/results/notes.html", data)
+def orders(request):
+    """
+    Searches local service orders
+    """
+    query = request.GET.get("q")
+
+    if not query or len(query) < 3:
+        messages.error(request, _('Search query is too short'))
+        return redirect(list_orders)
+
+    request.session['search_query'] = query
+
+    # Redirect Order ID:s to the order
+    try:
+        order = Order.objects.get(code__iexact=query)
+        return redirect(order)
+    except Order.DoesNotExist:
+        pass
+
+    orders = Order.objects.filter(
+        Q(code=query) | Q(devices__sn__contains=query) |
+        Q(customer__fullname__icontains=query) |
+        Q(customer__phone__contains=query) |
+        Q(repair__confirmation=query) |
+        Q(repair__reference=query)
+    )
+
+    data = {
+        'title': _('Orders'),
+        'subtitle': _(u'%d results for "%s"') % (orders.count(), query)
+    }
+
+    page = request.GET.get('page')
+    data['orders'] = paginate(orders.distinct(), page, 100)
+
+    return render(request, "orders/index.html", data)
+
+
+def customers(request):
+    """
+    Searches for customers from "spotlight"
+    """
+    query = request.GET.get("q")
+    kind = request.GET.get('kind')
+    request.session['search_query'] = query
+
+    customers = Customer.objects.filter(
+        Q(fullname__icontains=query) | Q(email__icontains=query) | Q(phone__contains=query)
+    )
+
+    if kind == 'company':
+        customers = customers.filter(is_company=True)
+
+    if kind == 'contact':
+        customers = customers.filter(is_company=False)
+
+    title = _('%d results for "%s"') % (customers.count(), query)
+
+    return render(request, "customers/search.html", locals())
+
+
+def devices(request):
+    """
+    Searching for devices from the main navbar
+    """
+    query = request.GET.get("q", '').strip()
+    request.session['search_query'] = query
+
+    query = query.upper()
+    valid_arg = gsxws.validate(query)
+
+    if valid_arg in ('serialNumber', 'alternateDeviceId',):
+        return redirect(search_gsx, "warranty", valid_arg, query)
+
+    devices = Device.objects.filter(
+        Q(sn__icontains=query) | Q(description__icontains=query)
+    )
+
+    title = _(u'Devices matching "%s"') % query
+
+    return render(request, "devices/search.html", locals())
+
+
+def notes(request):
+    """
+    Searches for local notes
+    """
+    query = request.GET.get("q")
+    request.session['search_query'] = query
+
+    results = Note.objects.filter(body__icontains=query).order_by('-created_at')
+    title = _(u'%d search results for "%s"') % (results.count(), query,)
+    notes = paginate(results, request.GET.get('page'), 10)
+
+    return render(request, "notes/search.html", locals())
 
 
 def spotlight(request):
     """
     Searches for anything and redirects to the "closest" result view.
     GSX searches are done separately.
+
+    To give good results, we must first "classify" the search query.
+    Some strings are easy to classify:
+    - serial numbers, repair confirmations, part numbers
+    Others, not so much:
+    - customer names, notes
     """
-    data, query = prepare_result_view(request)
-    data['what'] = "warranty"
+    hint = request.GET.get('hint')
 
-    if Order.objects.filter(customer__name__icontains=query).exists():
-        return list_orders(request)
+    if hint == 'orders':
+        return orders(request)
 
-    if data['gsx_type'] == "serialNumber":
-        try:
-            device = Device.objects.get(sn=query)
-            return redirect(device)
-        except Device.DoesNotExist:
-            return results_redirect("search-gsx", data)
+    if hint == 'customers':
+        return customers(request)
 
-    data['parts'] = ServiceOrderItem.objects.filter(sn__icontains=query)
+    if hint == 'devices':
+        return devices(request)
 
-    if gsxws.validate(query, "dispatchId"):
-        try:
-            po = PurchaseOrder.objects.get(confirmation=query)
-            data['orders'] = [po.sales_order]
-        except PurchaseOrder.DoesNotExist:
-            pass
+    if hint == 'notes':
+        return notes(request)
 
-    data['products'] = Product.objects.filter(
-        Q(code__icontains=query) | Q(title__icontains=query)
-    )
-
-    data['articles'] = Article.objects.filter(content__contains=query)
-
-    return render(request, "search/spotlight.html", data)
+    if hint == 'products':
+        return products(request)

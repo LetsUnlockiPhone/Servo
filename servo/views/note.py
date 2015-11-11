@@ -81,6 +81,7 @@ def prep_list_view(request, kind):
 
     data['kind'] = kind
     data['notes'] = notes
+    data['search_hint'] = "notes"
     data['inbox_count'] = Note.objects.filter(order=None).count()
 
     return data
@@ -329,27 +330,6 @@ def view_note(request, kind, pk):
         return render(request, "notes/view_escalation.html", data)
     else:
         return render(request, "notes/view_note.html", data)
-
-
-def search(request):
-    query = request.GET.get("q")
-    request.session['search_query'] = query
-
-    results = Note.objects.filter(body__icontains=query).order_by('-created_at')
-    title = _(u'%d search results for "%s"') % (results.count(), query,)
-
-    paginator = Paginator(results, 10)
-
-    page = request.GET.get("page")
-
-    try:
-        notes = paginator.page(page)
-    except PageNotAnInteger:
-        notes = paginator.page(1)
-    except EmptyPage:
-        notes = paginator.page(paginator.num_pages)
-
-    return render(request, "notes/search.html", locals())
 
 
 def find(request):

@@ -4,7 +4,6 @@ from django.conf.urls import patterns, url
 from django.views.decorators.cache import cache_page
 
 from servo.views.order import create
-from servo.views.device import get_gsx_search_results
 from servo.views.diagnostics import diagnostics, select_test, run_test
 
 
@@ -12,7 +11,6 @@ urlpatterns = patterns(
     "servo.views.device",
     url(r'^$', 'index', name="devices-list"),
 
-    url(r'^search/$', 'search'),
     url(r'^find/$', "find", name="devices-find"),
     url(r'^add/$', "edit_device", name="devices-add"),
 
@@ -26,14 +24,6 @@ urlpatterns = patterns(
         name="devices-update_gsx_details"),
     url(r'^(?P<pk>\d+)/orders/(?P<order_id>\d+)/queue/(?P<queue_id>\d+)/parts/$',
         "parts", name="devices-parts"),
-
-    url(r'^search/gsx/(?P<what>\w+)/(?P<param>\w+)/(?P<query>[~\w\s,\-\(\)/\.]+)/$',
-        "search_gsx",
-        name="devices-search_gsx"),
-
-    url(r'^search/gsx/(?P<what>\w+)/(?P<param>\w+)/(?P<query>[~\w\s,\-\(\)/\.]+)/$',
-        cache_page(60*15)(get_gsx_search_results),
-        name="devices-get_gsx_search_results"),
 
     url(r'^choose/order/(\d+)/$', 'choose', name="devices-choose"),
     url(r'^upload/$', 'upload_devices', name="devices-upload_devices"),
@@ -58,5 +48,4 @@ urlpatterns = patterns(
         "delete_device",
         name="devices-delete_device"),
 
-    url(r'^search$', 'search', name="devices-search"),
 )

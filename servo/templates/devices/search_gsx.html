@@ -3,39 +3,38 @@
 
 {% block second_column %}
 {% block tabs %}
-    <ul class="nav nav-tabs" id="gsx-tabs">
-    {% if param == 'serialNumber' or param == 'alternateDeviceId' %}
-        <li><a href="{% url 'devices-search_gsx' 'warranty' param query  %}">{% trans "Device" %}</a></li>
-    {% else %}
-        <li class="disabled"><a href="#">{% trans "Device" %}</a></li>
-    {% endif %}
-    {% if param == 'serialNumber' or param == 'alternateDeviceId' %}
-      <li><a href="{% url 'devices-search_gsx' 'orders' param query  %}">{% trans "Orders" %}</a></li>
-    {% else %}
-      <li class="disabled"><a href="#">{% trans "Orders" %}</a></li>
-    {% endif %}
-    {% if param == 'serialNumber' or param == 'partNumber' %}
-        <li><a href="{% url 'devices-search_gsx' 'parts' param query %}">{% trans "Parts" %}</a></li>
-    {% else %}
-        <li class="disabled"><a href="#">{% trans "Parts" %}</a></li>
-    {% endif %}
-    {% if param == 'serialNumber' or param == 'dispatchId' %}
-        <li><a href="{% url 'devices-search_gsx' 'repairs' param query %}">{% trans "Repairs" %}</a></li>
-    {% else %}
-        <li class="disabled"><a href="#">{% trans "Repairs" %}</a></li>
-    {% endif %}
-    </ul>
+<ul class="nav nav-tabs" id="gsx-tabs">
+{% if param == 'serialNumber' or param == 'alternateDeviceId' %}
+  <li><a href="{% url 'search-search_gsx' 'warranty' param query  %}">{% trans "Device" %}</a></li>
+{% else %}
+  <li class="disabled"><a href="#">{% trans "Device" %}</a></li>
+{% endif %}
+{% if param == 'serialNumber' or param == 'alternateDeviceId' %}
+  <li><a href="{% url 'search-search_gsx' 'orders' param query  %}">{% trans "Orders" %}</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">{% trans "Orders" %}</a></li>
+  {% endif %}
+  {% if param == 'serialNumber' or param == 'partNumber' %}
+  <li><a href="{% url 'search-search_gsx' 'parts' param query %}">{% trans "Parts" %}</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">{% trans "Parts" %}</a></li>
+  {% endif %}
+  {% if param == 'serialNumber' or param == 'dispatchId' %}
+  <li><a href="{% url 'search-search_gsx' 'repairs' param query %}">{% trans "Repairs" %}</a></li>
+  {% else %}
+  <li class="disabled"><a href="#">{% trans "Repairs" %}</a></li>
+  {% endif %}
+</ul>
 {% endblock tabs %}
 
 {% block results %}
-    {% include "devices/search_gsx_results.html" %}
+  {% include "devices/search_gsx_results.html" %}
 {% endblock results %}
-
 {% endblock second_column %}
 
 {% block media %}
 <script type="text/javascript">
-    var loc = location.pathname + location.search;
-    $('#gsx-tabs>li>a[href="'+loc+'"]').parent().addClass('active');
+  var loc = location.pathname + location.search;
+  $('#gsx-tabs>li>a[href="'+loc+'"]').parent().addClass('active');
 </script>
 {% endblock media %}

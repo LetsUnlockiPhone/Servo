@@ -14,7 +14,7 @@ from django.forms.models import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from servo.lib.utils import paginate
 
 from servo.models import (Attachment, TaggedItem,
                           Product, ProductCategory,
@@ -28,6 +28,7 @@ def prep_list_view(request, group='all'):
     Prepares the product list view
     """
     title = _("Products")
+    search_hint = "products"
     all_products = Product.objects.all()
     categories = ProductCategory.objects.all()
 
@@ -71,14 +72,7 @@ def prep_list_view(request, group='all'):
 
     title += u" / %s" % group.title
     page = request.GET.get("page")
-    paginator = Paginator(all_products.distinct(), 25)
-
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
+    products = paginate(all_products.distinct(), page, 25)
 
     return locals()
 
@@ -318,31 +312,6 @@ def delete_product(request, pk, group):
 
     action = request.path
     return render(request, 'products/remove.html', locals())
-
-
-def search(request):
-
-    query = request.GET.get("q")
-    request.session['search_query'] = query
-
-    results = Product.objects.filter(
-        Q(code__icontains=query) | Q(title__icontains=query) | Q(eee_code__icontains=query)
-    )
-
-    paginator = Paginator(results, 100)
-    page = request.GET.get("page")
-
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
-
-    title = _(u'Search results for "%s"') % query
-    group = ProductCategory(title=_('All'), slug='all')
-
-    return render(request, 'products/search.html', locals())
 
 
 def view_product(request, pk=None, code=None, group=None):

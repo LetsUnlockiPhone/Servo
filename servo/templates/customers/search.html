@@ -12,9 +12,9 @@
 {% block first_column %}
 <ul class="nav nav-list">
   <li class="nav-header">{% trans "Show" %}</li>
-  <li{% if not kind %} class="active"{% endif %}><a href="{% url 'customers-search' %}?q={{ query }}">{% trans "All" %}</a></li>
-  <li{% if kind == 'company' %} class="active"{% endif %}><a href="{% url 'customers-search' %}?q={{ query }}&amp;kind=company">{% trans "Companies" %}</a></li>
-  <li{% if kind == 'contact' %} class="active"{% endif %}><a href="{% url 'customers-search' %}?q={{ query }}&amp;kind=contact">{% trans "People" %}</a></li>
+  <li{% if not kind %} class="active"{% endif %}><a href="{% url 'search-customers' %}?q={{ query }}">{% trans "All" %}</a></li>
+  <li{% if kind == 'company' %} class="active"{% endif %}><a href="{% url 'search-customers' %}?q={{ query }}&amp;kind=company">{% trans "Companies" %}</a></li>
+  <li{% if kind == 'contact' %} class="active"{% endif %}><a href="{% url 'search-customers' %}?q={{ query }}&amp;kind=contact">{% trans "People" %}</a></li>
 </ul>
 {% endblock first_column %}
 

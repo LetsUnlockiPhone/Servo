@@ -40,8 +40,9 @@
               <li class="{% active request '^stats' %}"><a href="{% url 'stats-index' %}"><i class="halflings stats white"></i> {% trans "Statistics" %}</a></li>
             </ul>
             <div class="nav-collapse collapse">
-              <form class="navbar-search pull-right" method="get" action="{{ request|search_url }}">
+              <form class="navbar-search pull-right" method="get" action="{% url 'search-spotlight' %}">
                 <input type="text" class="search-query" name="q" placeholder="{% trans "Search" %}" autocomplete="off" value="{{ request.session.search_query }}" id="toolbar-search" autofocus/>
+                <input type="hidden" name="hint" value="{{ search_hint|default:'orders' }}"/>
               </form>
             </div>
           </div>

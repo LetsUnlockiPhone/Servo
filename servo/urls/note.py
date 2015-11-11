@@ -5,7 +5,6 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns(
     "servo.views.note",
     url(r'^$', 'list_notes', name="notes-list_notes"),
-    url(r'^search/$', 'search', name="notes-search"),
     url(r'^find/$', 'find', name="notes-find"),
 
     url(r'^templates/$', 'templates'),

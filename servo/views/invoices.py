@@ -7,8 +7,8 @@ from django.utils.translation import ugettext as _
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from servo.lib.utils import paginate
 from servo.forms.invoices import *
 from servo.models import Order, Invoice, Payment, PurchaseOrder
 
@@ -57,24 +57,16 @@ def invoices(request):
             if fdata.get('service_order'):
                 invoices = invoices.filter(order__code__exact=fdata['service_order'])
 
-    page = request.GET.get('page')
     data['total'] = invoices.aggregate(Sum('total_net'))
     data['total_paid'] = invoices.exclude(paid_at=None).aggregate(Sum('total_net'))
     pos = PurchaseOrder.objects.filter(created_at__range=[start_date, end_date])
     data['total_purchases'] = pos.aggregate(Sum('total'))
 
-    paginator = Paginator(invoices, 50)
-
-    try:
-        invoices = paginator.page(page)
-    except PageNotAnInteger:
-        invoices = paginator.page(1)
-    except EmptyPage:
-        invoices = paginator.page(paginator.num_pages)
-
+    page = request.GET.get('page')
     data['form'] = form
     data['invoices'] = invoices
-
+    data['invoices'] = paginate(invoices, page, 50)
+    
     return render(request, "invoices/index.html", data)
 
 
