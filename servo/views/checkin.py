@@ -26,6 +26,38 @@ from servo.forms import (SerialNumberForm, AppleSerialNumberForm,
                          QuestionForm, AttachmentForm, StatusCheckForm,)
 
 
+def find_device(request):
+    device = Device(sn=request.GET['sn'])
+    device.description = _('Other Device')
+    device_form = DeviceForm(instance=device)
+
+    try:
+        apple_sn_validator(device.sn)
+    except Exception as e: # not an Apple serial number
+        return render(request, "checkin/device_form.html", locals())
+
+    try:
+        device = get_device(request, device.sn)
+        device_form = DeviceForm(instance=device)
+    except GsxError as e:
+        error = e
+
+    return render(request, "checkin/device_form.html", locals())
+
+
+def find_customer(request, phone):
+    if not request.user.is_authenticated():
+        return
+
+    results = []
+
+    for c in Customer.objects.filter(phone=phone):
+        title = '%s - %s' % (c.phone, c.name)
+        results.append({'id': c.pk, 'name': c.name, 'title': title})
+
+    return json_response(results)
+
+
 def init_locale(request):
     lc = settings.INSTALL_LOCALE.split('.')
     locale.setlocale(locale.LC_TIME, lc)
@@ -80,7 +112,6 @@ def get_device(request, sn):
 
 
 def reset_session(request):
-
     # initialize some basic vars
     if not request.user.is_authenticated():
         request.session.flush()
@@ -367,38 +398,10 @@ def index(request):
         # Checklists probably not configured
         pass
 
-    phone = request.GET.get('phone')
-
-    if phone:
-
-        if not request.user.is_authenticated():
-            return
-
-        results = []
-
-        for c in Customer.objects.filter(phone=phone):
-            title = '%s - %s' % (c.phone, c.name)
-            results.append({'id': c.pk, 'name': c.name, 'title': title})
-
-        return json_response(results)
+    if request.GET.get('phone'):
+        return find_customer(request, request.GET['phone'])
 
     if request.GET.get('sn'):
-
-        device = Device(sn=request.GET['sn'])
-        device.description = _('Other Device')
-        device_form = DeviceForm(instance=device)
-
-        try:
-            apple_sn_validator(device.sn)
-        except Exception as e: # not an Apple serial number
-            return render(request, "checkin/device_form.html", locals())
-
-        try:
-            device = get_device(request, device.sn)
-            device_form = DeviceForm(instance=device)
-        except GsxError as e:
-            error = e
-
-        return render(request, "checkin/device_form.html", locals())
+        return find_device(request)
 
     return render(request, "checkin/newindex.html", locals())
