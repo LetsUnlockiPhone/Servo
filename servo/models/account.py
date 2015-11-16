@@ -35,7 +35,6 @@ class TechieManager(UserManager):
 
 
 class User(AbstractUser):
-
     customer = TreeForeignKey(
         Customer,
         null=True,
@@ -58,7 +57,7 @@ class User(AbstractUser):
         related_name='+',
         on_delete=models.PROTECT,
         verbose_name=_('Current Location'),
-        help_text=_(u'Orders you create will be registered to this location.')
+        help_text=_('Orders you create will be registered to this location.')
     )
     queues = models.ManyToManyField(Queue, blank=True, verbose_name=_('queues'))
     LOCALES = (
@@ -277,7 +276,6 @@ class User(AbstractUser):
 
 
 class UserGroup(Group):
-
     def members_as_list(self):
         pass
 

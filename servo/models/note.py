@@ -349,9 +349,7 @@ class Note(MPTTModel):
         return r.exclude(status='FAILED').exists()
 
     def send_mail(self, user):
-        """
-        Sends this note as an email
-        """
+        """Sends this note as an email"""
         mailto = self.mailto()
 
         # Only send the same note once

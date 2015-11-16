@@ -33,9 +33,6 @@ def search_gsx(request, what, param, query):
     except gsxws.GsxError as message:
         return render(request, "devices/search_gsx_error.html", locals())
 
-    if request.is_ajax():
-        return get_gsx_search_results(request, what, param, query)
-
     return render(request, "devices/search_gsx.html", locals())
 
 

@@ -13,12 +13,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from reportlab.lib.units import mm
 from reportlab.graphics.shapes import Drawing
 from reportlab.graphics.barcode import createBarcodeDrawing
 
+from servo.lib.utils import paginate
 from servo.models import Order, Template, Tag, Customer, Note, Attachment, Escalation
 from servo.forms import NoteForm, NoteSearchForm, EscalationForm
 
@@ -70,14 +70,7 @@ def prep_list_view(request, kind):
         all_notes = Note.objects.all().exclude(escalation=None)
 
     page = request.GET.get("page")
-    paginator = Paginator(all_notes, 20)
-
-    try:
-        notes = paginator.page(page)
-    except PageNotAnInteger:
-        notes = paginator.page(1)
-    except EmptyPage:
-        notes = paginator.page(paginator.num_pages)
+    notes = paginate(all_notes, page, 20)
 
     data['kind'] = kind
     data['notes'] = notes
@@ -352,17 +345,10 @@ def find(request):
 
         results = results.order_by('-created_at')
 
-    paginator = Paginator(results, 10)
-    page = request.GET.get("page")
-
-    try:
-        notes = paginator.page(page)
-    except PageNotAnInteger:
-        notes = paginator.page(1)
-    except EmptyPage:
-        notes = paginator.page(paginator.num_pages)
-
     title = _('Message search')
+    notes = paginate(requlets, page, 10)
+    page = request.GET.get("page")
+    
     return render(request, "notes/find.html", locals())
 
 

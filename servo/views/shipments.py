@@ -6,11 +6,11 @@ from decimal import *
 from django.utils import timezone
 from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.forms.models import inlineformset_factory
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render, redirect, get_object_or_404
 
+from servo.lib.utils import paginate
 from servo.models import GsxAccount, ServicePart, Shipment, PurchaseOrderItem
 from servo.forms.product import PurchaseOrderItemForm, IncomingSearchForm
 from servo.forms.returns import *
@@ -19,7 +19,7 @@ from servo.forms.returns import *
 def prep_counts():
     incoming = PurchaseOrderItem.objects.filter(received_at=None)
     incoming = incoming.exclude(purchase_order__submitted_at=None).count()
-    pending_return = ''
+
     returns = Shipment.objects.exclude(dispatched_at=None).count()
     return locals()
 
@@ -78,20 +78,10 @@ def prep_list_view(request):
             inventory = PurchaseOrderItem.objects.filter(purchase_order__sales_order__code=service_order)
 
     page = request.GET.get("page")
-    data['count'] = inventory.count()
     inventory = inventory.order_by('-id')
-
-    paginator = Paginator(inventory, 200)
+    data['count'] = inventory.count()
+    data['inventory'] = paginate(inventory, page, 200)
     data['title'] = _(u"%d incoming products") % data['count']
-
-    try:
-        inventory = paginator.page(page)
-    except PageNotAnInteger:
-        inventory = paginator.page(1)
-    except EmptyPage:
-        inventory = paginator.page(paginator.num_pages)
-
-    data['inventory'] = inventory
 
     return data
 
@@ -124,7 +114,7 @@ def view_incoming(request, pk):
     Shows an incoming part
     """
     next = False
-    item = PurchaseOrderItem.objects.get(pk=pk)
+    item = get_object_or_404(PurchaseOrderItem, pk=pk)
 
     data = prep_list_view(request)
 
@@ -189,28 +179,21 @@ def list_bulk_returns(request):
     returns = Shipment.objects.exclude(dispatched_at=None).annotate(num_parts=Count('servicepart'))
 
     page = request.GET.get("page")
-    paginator = Paginator(returns, 50)
-
-    try:
-        returns = paginator.page(page)
-    except PageNotAnInteger:
-        returns = paginator.page(1)
-    except EmptyPage:
-        returns = paginator.page(paginator.num_pages)
-
+    returns = paginate(returns, page, 50)
     counts = prep_counts()
+
     return render(request, "shipments/list_bulk_returns.html", locals())
 
 
 def view_packing_list(request, pk):
-    shipment = Shipment.objects.get(pk=pk)
+    shipment = get_object_or_404(Shipment, pk=pk)
     pdf = shipment.packing_list.read()
     return HttpResponse(pdf, content_type="application/pdf")
 
 
 def view_bulk_return(request, pk):
     title = _("View bulk return")
-    shipment = Shipment.objects.get(pk=pk)
+    shipment = get_object_or_404(Shipment, pk=pk)
     return render(request, "shipments/view_bulk_return.html", locals())
 
 
@@ -275,13 +258,13 @@ def remove_from_return(request, pk, part_pk):
     """
     Removes a part from a bulk return
     """
-    shipment = Shipment.objects.get(pk=pk)
-    part = ServicePart.objects.get(pk=part_pk)
+    shipment = get_object_or_404(Shipment, pk=pk)
+    part = get_object_or_404(ServicePart, pk=part_pk)
 
     try:
         shipment.toggle_part(part)
         messages.success(request, _(u"Part %s removed from bulk return") % part.part_number)
-    except Exception, e:
+    except Exception as e:
         messages.error(request, e)
 
     return redirect(edit_bulk_return)
@@ -294,8 +277,8 @@ def add_to_return(request, pk, part=None):
     data = {'action': request.path}
 
     if pk and part:
-        shipment = Shipment.objects.get(pk=pk)
-        part = ServicePart.objects.get(pk=part)
+        shipment = get_object_or_404(Shipment, pk=pk)
+        part = get_object_or_404(ServicePart, pk=part)
         shipment.servicepart_set.add(part)
         messages.success(request, _(u"Part %s added to return") % part.part_number)
 
@@ -315,9 +298,9 @@ def update_part(request, part, return_type):
     """
     Update part status to GSX
     """
+    part = get_object_or_404(ServicePart, pk=part)
     return_type = int(return_type)
-    part = ServicePart.objects.get(pk=part)
-
+    
     msg     = ""
     form    = ""
     title   = ""

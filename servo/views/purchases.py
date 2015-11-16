@@ -9,10 +9,9 @@ from django.utils.translation import ugettext as _
 
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 from django.contrib import messages
 
+from servo.lib.utils import paginate
 from servo.models.order import ServiceOrderItem
 from servo.models import (Order, Product, GsxAccount, 
                           PurchaseOrder, PurchaseOrderItem,)
@@ -58,14 +57,7 @@ def list_pos(request):
                 all_orders = all_orders.filter(created_by=created_by)
 
     page = request.GET.get("page")
-    paginator = Paginator(all_orders, 50)
-
-    try:
-        orders = paginator.page(page)
-    except PageNotAnInteger:
-        orders = paginator.page(1)
-    except EmptyPage:
-        orders = paginator.page(paginator.num_pages)
+    orders = paginate(all_orders, page, 50)
 
     data['orders'] = orders
     data['form']   = form
