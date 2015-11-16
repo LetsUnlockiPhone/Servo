@@ -22,12 +22,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 from django.core.cache import cache
 
 from servo import defaults
+from servo.lib.utils import empty
+from servo.exceptions import ConfigurationError
 from servo.validators import file_upload_validator
 
 
@@ -522,6 +524,9 @@ class Configuration(models.Model):
 
     @classmethod
     def get_default_sender(cls, user):
+        """
+        Returns the sender address to use for notifications
+        """
         conf = cls.conf()
         sender = conf.get('default_sender')
 
@@ -560,6 +565,18 @@ class Configuration(models.Model):
     @classmethod
     def smtp_ssl(cls):
         return cls.true('smtp_ssl')
+
+    @classmethod
+    def get_smtp_server(cls):
+        host, port = cls.conf('smtp_host'), 25
+
+        if empty(host):
+            raise ConfigurationError('SMTP server not configured')
+
+        if len(host.split(':')) == 2:
+            return host.split(':')
+
+        return host, port
 
     @classmethod
     def get_imap_server(cls):

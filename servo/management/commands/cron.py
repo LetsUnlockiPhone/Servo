@@ -5,6 +5,7 @@ from datetime import date, timedelta
 
 from django.conf import settings
 from django.core.files import File
+from django.core.mail import send_mail
 from django.utils.translation import ugettext as _
 
 from django.core.management.base import BaseCommand
@@ -18,12 +19,14 @@ from servo.models import Inventory, Order, PurchaseOrder, User
 
 
 def send_table(sender, recipient, subject, table, send_empty=False):
-    from django.core.mail import send_mail
-    if not send_empty and not table.has_body():
+    if send_empty is False and table.has_body() is False:
         return
 
     config = Configuration.conf()
-    settings.EMAIL_HOST = config.get('smtp_host')
+    host, port = Configuration.get_smtp_server()
+
+    settings.EMAIL_HOST = host
+    settings.EMAIL_PORT = int(port)
     settings.EMAIL_USE_TLS = config.get('smtp_ssl')
     settings.EMAIL_HOST_USER = config.get('smtp_user')
     settings.EMAIL_HOST_PASSWORD = config.get('smtp_password')
@@ -34,13 +37,17 @@ def send_table(sender, recipient, subject, table, send_empty=False):
 class Command(BaseCommand):
     help = "Runs Servo's periodic commands"
 
-    def update_invoices(self):
+    def __init__(self, *args, **kwargs):
+        super(Command, self).__init__(*args, **kwargs)
         uid = Configuration.conf('imap_act')
-        user = User.objects.get(pk=uid)
+        self.mail_user = User.objects.get(pk=uid)
+        self.mail_recipient = Configuration.notify_email_address()
+        self.mail_sender = Configuration.get_default_sender(self.mail_user)
 
+    def update_invoices(self):
         for a in GsxAccount.objects.all():
             try:
-                a.default(user)
+                a.default(self.mail_user)
                 lookup = gsxws.Lookup(shipTo=a.ship_to, invoiceDate=date.today())
                 invoices = lookup.invoices()
                 for i in invoices:
@@ -59,47 +66,36 @@ class Command(BaseCommand):
         """
         Reports on cases that have been red for a day
         """
-        conf = Configuration.conf()
-
-        try:
-            sender = conf['default_sender']
-        except KeyError:
-            raise ValueError('Default sender address not defined')
-
         now = timezone.now()
         limit = now - timedelta(days=1)
 
         for l in Location.objects.filter(enabled=True):
             table = CsvTable()
-            table.addheader(['Order', 'Assigned To', 'Status', 'Days red'])
+            subject = _(u"Repairs aging beyond limits at %s") % l.title
+            table.addheader(['ORDER', 'ASSIGNED_TO', 'STATUS', 'DAYS_RED'])
 
             # "Aging" repairs are ones that have been red for at least a day
-            orders = Order.objects.filter(
-                location=l,
-                state__lt=Order.STATE_CLOSED,
-                status_limit_yellow__lt=limit
-            )
+            orders = Order.objects.filter(location=l,
+                                          state__lt=Order.STATE_CLOSED,
+                                          status_limit_yellow__lt=limit)
 
             for o in orders:
-                username = o.get_user_name() or _("Unassigned")
+                username = o.get_user_name() or _("Nobody")
                 status_title = o.get_status_name() or _("No Status")
                 days = (now - o.status_limit_yellow).days
                 table.addrow([o.code, username, status_title, days])
 
-            subject = _(u"Repairs aging beyond limits at %s") % l.title
-
             if Configuration.notify_location():
-                send_table(sender, l.email, subject, table)
-            if Configuration.notify_email_address():
-                send_table(sender, conf['notify_address'], subject, table)
+                recipient = l.manager.email if l.manager else l.email
+                send_table(self.mail_sender, recipient, subject, table)
+            if self.mail_recipient:
+                send_table(self.mail_sender, self.mail_recipient, subject, table)
 
     def notify_stock_limits(self):
-        conf = Configuration.conf()
-
-        try:
-            sender = conf['default_sender']
-        except KeyError:
-            raise ValueError('Default sender address not defined')
+        """
+        Notifies the correct parties of inventory items stocking status
+        """
+        subject = _(u"Products stocked below limit")
 
         for l in Location.objects.filter(enabled=True):
             out_of_stock = Inventory.objects.filter(
@@ -108,18 +104,16 @@ class Command(BaseCommand):
             )
 
             table = CsvTable()
-            table.addheader(['Product', 'Minimum', 'Stocked'])
+            table.addheader(['PRODUCT', 'MINIMUM', 'STOCKED'])
 
             for i in out_of_stock:
                 table.addrow([i.product.code, i.amount_minimum, i.amount_stocked])
 
-            subject = _(u"Products stocked below limit")
-
             if Configuration.notify_location():
-                email = l.manager.email if l.manager else l.email
-                send_table(sender, email, subject, table)
-            if Configuration.notify_email_address():
-                send_table(sender, conf['notify_address'], subject, table)
+                recipient = l.manager.email if l.manager else l.email
+                send_table(self.mail_sender, recipient, subject, table)
+            if self.mail_recipient:
+                send_table(self.mail_sender, self.mail_recipient, subject, table)
 
     def update_counts(self):
         now = timezone.now()
@@ -134,5 +128,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         #self.update_invoices()
         self.update_counts()
-        self.notify_aging_repairs()
+        #self.notify_aging_repairs()
         self.notify_stock_limits()

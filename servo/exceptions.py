@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-class ServoException(Exception):
-    """docstring for ServoException"""
+
+class ConfigurationError(Exception):
     def __init__(self, arg):
-        super(ServoException, self).__init__()
-        self.arg = arg
-        
+        super(ConfigurationError, self).__init__(arg)
