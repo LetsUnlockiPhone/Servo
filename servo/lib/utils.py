@@ -2,9 +2,8 @@
 
 import json
 import subprocess
-from django.db.models import Model
-from django.core.cache import cache
 from django.http import HttpResponse
+from django.core.cache import cache
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 

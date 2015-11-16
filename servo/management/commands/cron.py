@@ -128,5 +128,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         #self.update_invoices()
         self.update_counts()
-        #self.notify_aging_repairs()
+        self.notify_aging_repairs()
         self.notify_stock_limits()
