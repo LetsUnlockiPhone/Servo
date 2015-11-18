@@ -430,6 +430,9 @@ class Order(models.Model):
         pass
 
     def set_location(self, new_location, user):
+        """
+        Moves order to new location
+        """
         # move the products too
         for soi in self.serviceorderitem_set.all():
             product = soi.product

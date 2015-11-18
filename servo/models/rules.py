@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import json
 from django.db import models
 from django.core.cache import cache
 
@@ -12,6 +13,13 @@ from django.utils.translation import ugettext_lazy as _
 from servo.models import Event, Queue
 
 
+class RuleManager:
+
+    def all(self):
+        f = open('local_rules.json', 'r')
+        return json.loads(f.read())
+
+
 class ServoModel(models.Model):
     class Meta:
         abstract = True
@@ -19,6 +27,9 @@ class ServoModel(models.Model):
 
 
 class Rule(ServoModel):
+
+    objects = RuleManager()
+
     description = models.CharField(max_length=128, default=_('New Rule'))
     MATCH_CHOICES = (
         ('ANY', _('Any')),

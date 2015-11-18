@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.cache import cache
 
 from servo.lib.utils import empty
+from servo.exceptions import ConfigurationError
 from servo.models import Configuration, User, Order, Note, Template
 
 
@@ -163,7 +164,7 @@ def check_mail():
     uid = Configuration.conf('imap_act')
 
     if empty(uid):
-        raise ValueError('Incoming message user not configured')
+        raise ConfigurationError('Incoming message user not configured')
 
     counter = 0
     user = User.objects.get(pk=uid)

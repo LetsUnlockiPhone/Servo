@@ -54,9 +54,10 @@ def prepare_view(request, group='all'):
             customer_list = all_customers.filter(groups=g)
             title = g.name
 
+    groups = CustomerGroup.objects.all()
+
     page = request.GET.get('page')
     customers = paginate(customer_list, page, 40)
-    groups = CustomerGroup.objects.all()
 
     return locals()
 
@@ -283,7 +284,7 @@ def move(request, pk, new_parent=None):
 
         try:
             customer.move_to(new_parent)
-            customer.save()  # To update fullname
+            customer.save() # To update fullname
             messages.success(request, msg)
         except Exception as e:
             messages.error(request, e)

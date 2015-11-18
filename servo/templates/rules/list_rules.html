@@ -11,6 +11,7 @@
     <ul class="nav nav-pills nav-stacked">
       <li class="nav-header">{% trans "Rules" %}</li>
     {% for o in object_list %}
+      <li>{{ o }}</li>
       <li class="{% active_url request o.get_admin_url %}"><a href="{{ o.get_admin_url }}">{{ o.get_name }}</a></li>
     {% endfor %}
     </ul>
