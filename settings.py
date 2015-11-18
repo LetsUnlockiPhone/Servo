@@ -14,7 +14,7 @@ MESSAGE_TAGS = {
 }
 
 BASE_DIR = os.path.dirname(__file__)
-APP_DIR = os.path.join(BASE_DIR, 'servo')
+APP_DIR  = os.path.join(BASE_DIR, 'servo')
 
 ADMINS = (
     ('ServoApp Support', 'support@servoapp.com'),
@@ -217,13 +217,13 @@ REST_FRAMEWORK = {
 
 ENABLE_RULES = False
 TIMEZONE = 'Europe/Helsinki'
-BACKUP_DIR = '/opt/servo/backups'
+BACKUP_DIR  = os.path.join(BASE_DIR, 'backups')
 
 GSX_CERT = 'uploads/settings/gsx_cert.pem'
-GSX_KEY = 'uploads/settings/gsx_key.pem'
+GSX_KEY  = 'uploads/settings/gsx_key.pem'
 
 os.environ['GSX_CERT'] = GSX_CERT
-os.environ['GSX_KEY'] = GSX_KEY
+os.environ['GSX_KEY']  = GSX_KEY
 
 CELERYBEAT_SCHEDULE = {
     'check_mail': {
