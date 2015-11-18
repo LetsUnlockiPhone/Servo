@@ -6,6 +6,7 @@ from datetime import date, timedelta
 from django.conf import settings
 from django.core.files import File
 from django.core.mail import send_mail
+from django.core.validators import validate_email
 from django.utils.translation import ugettext as _
 
 from django.core.management.base import BaseCommand
@@ -20,6 +21,12 @@ from servo.models import Inventory, Order, PurchaseOrder, User
 
 def send_table(sender, recipient, subject, table, send_empty=False):
     if send_empty is False and table.has_body() is False:
+        return
+
+    try:
+        validate_email(sender)
+        validate_email(recipient)
+    except Exception:
         return
 
     config = Configuration.conf()
