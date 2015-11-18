@@ -184,4 +184,4 @@ def check_mail():
     server.close()
     server.logout()
 
-    return '%d/%d messages processed' % counter
+    return '%d messages processed' % counter
