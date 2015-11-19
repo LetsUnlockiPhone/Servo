@@ -123,6 +123,37 @@ def upload_gsx_parts(request, group=None):
 
 
 @permission_required("servo.change_product")
+def get_inventory_report(request):
+    """
+    Returns stocked amount of products at each location
+    """
+    from django.db import connection
+    cursor = connection.cursor()
+    location_map = {}
+
+    for l in Location.objects.filter(enabled=True):
+         location_map[l.pk] = l.title
+
+    query = """SELECT p.id, p.code, l.id, i.amount_stocked 
+    FROM servo_product p, servo_inventory i, servo_location l
+    WHERE p.id = i.product_id AND l.id = i.location_id
+    ORDER BY p.id ASC;"""
+    cursor.execute(query)
+
+    response = HttpResponse(content_type="text/plain; charset=utf-8")
+    filename = 'servo_inventory_report.txt'
+    #response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+    header = ['ID', 'CODE'] + location_map.values()
+    response.write("\t".join(header) + "\n")
+
+    for k in cursor.fetchall():
+        response.write(k)
+        #response.write("\t".join(row) + "\n")
+
+    return response
+
+
+@permission_required("servo.change_product")
 def download_products(request, group="all"):
     filename = "products"
 
@@ -230,7 +261,7 @@ def edit_product(request, pk=None, code=None, group='all'):
         form = ProductForm(instance=product)
 
     if not group == 'all':
-        cat = ProductCategory.objects.get(slug=group)
+        cat = get_object_or_404(ProductCategory, slug=group)
         initial = {'categories': [cat]}
         data['group'] = cat
 
@@ -240,13 +271,11 @@ def edit_product(request, pk=None, code=None, group='all'):
         product = cache.get(code)
 
     form = ProductForm(instance=product, initial=initial)
-    InventoryFormset = inlineformset_factory(
-        Product,
-        Inventory,
-        extra=1,
-        max_num=1,
-        exclude=[]
-    )
+    InventoryFormset = inlineformset_factory(Product,
+                                             Inventory,
+                                             extra=1,
+                                             max_num=1,
+                                             exclude=[])
 
     formset = InventoryFormset(
         instance=product,
@@ -297,7 +326,6 @@ def edit_product(request, pk=None, code=None, group='all'):
 @permission_required("servo.delete_product")
 def delete_product(request, pk, group):
     from django.db.models import ProtectedError
-
     product = get_object_or_404(Product, pk=pk)
 
     if request.method == 'POST':
@@ -320,7 +348,7 @@ def view_product(request, pk=None, code=None, group=None):
     inventory = Inventory.objects.none()
 
     try:
-        product = Product.objects.get(pk=pk)
+        product = get_object_or_404(Product, pk=pk)
         inventory = Inventory.objects.filter(product=product)
     except Product.DoesNotExist:
         product = cache.get(code)
@@ -373,7 +401,6 @@ def delete_category(request, slug):
     if request.method == "POST":
         category.delete()
         messages.success(request, _("Category deleted"))
-
         return redirect(list_products)
 
     data = {'category': category}
