@@ -15,6 +15,10 @@ class Command(BaseCommand):
         s = settings.DATABASES['default']
         db, user, pw = s['NAME'], s['USER'], s['PASSWORD']
         fname  = datetime.now().strftime('%Y%m%d_%H%M') + '.pgdump'
+        
+        if not os.path.exists(settings.BACKUP_DIR):
+            os.mkdir(settings.BACKUP_DIR)
+
         path = os.path.join(settings.BACKUP_DIR, fname)
         os.putenv('PGPASSWORD', pw)
         subprocess.call(['pg_dump', '-Fc',  db, '-U', user, '-f', path])
