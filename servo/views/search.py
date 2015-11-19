@@ -5,6 +5,7 @@ import gsxws
 
 from django.db.models import Q
 from django.core.cache import cache
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
@@ -167,7 +168,7 @@ def orders(request):
 
     if not query or len(query) < 3:
         messages.error(request, _('Search query is too short'))
-        return redirect(list_orders)
+        return redirect(reverse('orders-index'))
 
     request.session['search_query'] = query
 
