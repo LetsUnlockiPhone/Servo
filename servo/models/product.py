@@ -523,6 +523,9 @@ class Product(AbstractBaseProduct):
         return self.pk or Product.objects.get(code=self.code).pk
 
     def update_photo(self):
+        """
+        Updates this product image with the GSX part image
+        """
         if self.component_code and not self.photo:
             try:
                 part = parts.Part(partNumber=self.code)
@@ -605,19 +608,19 @@ class Inventory(models.Model):
 
     amount_minimum = models.PositiveIntegerField(
         default=0,
-        verbose_name=_("minimum amount")
+        verbose_name=_("Minimum amount")
     )
     amount_reserved = models.PositiveIntegerField(
         default=0,
-        verbose_name=_("reserved amount")
+        verbose_name=_("Reserved amount")
     )
     amount_stocked = models.IntegerField(
         default=0,
-        verbose_name=_("stocked amount"),
+        verbose_name=_("Stocked amount"),
     )
     amount_ordered = models.PositiveIntegerField(
         default=0,
-        verbose_name=_("ordered amount")
+        verbose_name=_("Ordered amount")
     )
 
     def move(self, new_location, amount=1):

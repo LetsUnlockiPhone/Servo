@@ -6,11 +6,19 @@ urlpatterns = patterns(
     "servo.views.product",
 
     url(r'^tags/$', "tags", name="products-tags"),
-    url(r'^all/$', "list_products", {'group': 'all'}, name="products-list_products"),
-    url(r'^download/$', "download_products", name="products-download"),
-    url(r'^upload/$', "upload_products", name="products-upload_products"),
-    url(r'^upload/parts/$', "upload_gsx_parts", name="products-upload_gsx_parts"),
-    url(r'^update_price/(\d+)/$', "update_price", name="products-update_price"),
+    url(r'^all/$', "list_products", {'group': 'all'},
+        name="products-list_products"),
+    url(r'^download/$', "download_products",
+        name="products-download"),
+    url(r'^inventory_report/$', "get_inventory_report", 
+        name="products-get_inventory_report"),
+
+    url(r'^upload/$', "upload_products",
+        name="products-upload_products"),
+    url(r'^upload/parts/$', "upload_gsx_parts",
+        name="products-upload_gsx_parts"),
+    url(r'^update_price/(\d+)/$', "update_price",
+        name="products-update_price"),
 
     url(r'^all/(?P<pk>\d+)/$', "view_product", {'group': 'all'}, 
         name="products-view_product"),
@@ -18,7 +26,8 @@ urlpatterns = patterns(
         name="products-view_product"),
 
     # Editing product categories
-    url(r'^categories/create/$', "edit_category", name="products-create_category"),
+    url(r'^categories/create/$', "edit_category",
+        name="products-create_category"),
     url(r'^categories/(?P<slug>[\w\-]+)/edit/$', "edit_category",
         name="products-edit_category"),
     url(r'^categories/(?P<slug>[\w\-]+)/delete/$', "delete_category",
@@ -28,7 +37,8 @@ urlpatterns = patterns(
 
     # Editing products
     url(r'^create/$', "edit_product", name="products-create"),
-    url(r'^(?P<group>[\w\-]+)/create/$', "edit_product", name="products-create"),
+    url(r'^(?P<group>[\w\-]+)/create/$', "edit_product",
+        name="products-create"),
     url(r'^(?P<group>[\w\-/]*)/(?P<pk>\d+)/edit/$', "edit_product",
         name="products-edit_product"),
     url(r'^(?P<group>[\w\-/]*)/(?P<pk>\d+)/delete/$', "delete_product",
@@ -49,5 +59,6 @@ urlpatterns = patterns(
         "get_info",
         name="products-get_info"),
 
-    url(r'^(?P<group>[\w\-]+)/$', "list_products", name="products-list_products"),
+    url(r'^(?P<group>[\w\-]+)/$', "list_products",
+        name="products-list_products"),
 )
