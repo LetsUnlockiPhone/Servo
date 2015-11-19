@@ -8,18 +8,18 @@ from django.db import IntegrityError
 from django.contrib import messages
 from django.core.cache import cache
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.forms.models import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
+from django.shortcuts import render, redirect, get_object_or_404
 
 from servo.lib.utils import paginate
 
 from servo.models import (Attachment, TaggedItem,
                           Product, ProductCategory,
                           Inventory, Location, inventory_totals,
-                          GsxAccount)
+                          GsxAccount,)
 from servo.forms.product import ProductForm, CategoryForm, ProductSearchForm
 
 
@@ -129,7 +129,7 @@ def download_products(request, group="all"):
     if group == "all":
         products = Product.objects.all()
     else:
-        category = ProductCategory.objects.get(slug=group)
+        category = get_object_or_404(ProductCategory, slug=group)
         products = category.get_products()
         filename = group
 
@@ -226,7 +226,7 @@ def edit_product(request, pk=None, code=None, group='all'):
     data = prep_list_view(request, group)
 
     if pk is not None:
-        product = Product.objects.get(pk=pk)
+        product = get_object_or_404(Product, pk=pk)
         form = ProductForm(instance=product)
 
     if not group == 'all':
@@ -298,7 +298,7 @@ def edit_product(request, pk=None, code=None, group='all'):
 def delete_product(request, pk, group):
     from django.db.models import ProtectedError
 
-    product = Product.objects.get(pk=pk)
+    product = get_object_or_404(Product, pk=pk)
 
     if request.method == 'POST':
         try:
@@ -341,11 +341,11 @@ def edit_category(request, slug=None, parent_slug=None):
     category = ProductCategory()
 
     if slug is not None:
-        category = ProductCategory.objects.get(slug=slug)
+        category = get_object_or_404(ProductCategory, slug=slug)
         form = CategoryForm(instance=category)
 
     if parent_slug is not None:
-        parent = ProductCategory.objects.get(slug=parent_slug)
+        parent = get_object_or_404(ProductCategory, slug=parent_slug)
         form = CategoryForm(initial={'parent': parent.pk})
 
     if request.method == "POST":
@@ -368,7 +368,7 @@ def edit_category(request, slug=None, parent_slug=None):
 @permission_required("servo.delete_productcategory")
 def delete_category(request, slug):
 
-    category = ProductCategory.objects.get(slug=slug)
+    category = get_object_or_404(ProductCategory, slug=slug)
 
     if request.method == "POST":
         category.delete()
@@ -415,7 +415,7 @@ def get_info(request, location, code):
 
 
 def update_price(request, pk):
-    product = Product.objects.get(pk=pk)
+    product = get_object_or_404(Product, pk=pk)
     try:
         GsxAccount.default(request.user)
         product.update_price()
