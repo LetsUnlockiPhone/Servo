@@ -284,3 +284,6 @@ def spotlight(request):
 
     if hint == 'products':
         return products(request)
+
+    messages.error(request, _('No search query provided'))
+    return redirect(reverse('orders-index'))
