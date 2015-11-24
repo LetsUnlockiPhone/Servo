@@ -204,6 +204,7 @@ EMAIL_HOST = 'mail.servoapp.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_HOST_USER = ''
 EMAIL_USE_TLS = True
+EMAIL_SUBJECT_PREFIX = '[Servo] '
 SERVER_EMAIL = 'servo@' + socket.gethostname()
 
 DEFAULT_FROM_EMAIL = 'support@servoapp.com' 
