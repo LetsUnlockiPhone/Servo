@@ -80,9 +80,8 @@ End-user documentation for the system is available [here](https://docs.servoapp.
 
 FAQ
 ===
-- Q: Why use Django?
+- **Q: Why use Django?**
 - A: Because it works. Django also has the best documentation of any framework I've seen (especially coming from PHP and Zend Framework)
-----
-- Q: Why is Servo open-source?
+- **Q: Why is Servo open-source?**
 - A: Because it's a mission-critical application and open-sourcing it means that companies will always have access to it.
-----
+
