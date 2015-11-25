@@ -14,8 +14,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from servo.lib.utils import paginate
-
+from servo.lib.utils import paginate, send_csv
 from servo.models import (Attachment, TaggedItem,
                           Product, ProductCategory,
                           Inventory, Location, inventory_totals,
@@ -134,10 +133,13 @@ def get_inventory_report(request):
     for l in Location.objects.filter(enabled=True):
          location_map[l.pk] = l.title
 
+    # @TODO this should be rewritten as a pivot query
+    # but this will have to do for now. This is still much
+    # faster than using the ORM.
     query = """SELECT p.id, p.code, l.id, i.amount_stocked 
     FROM servo_product p, servo_inventory i, servo_location l
     WHERE p.id = i.product_id AND l.id = i.location_id
-    ORDER BY p.id ASC;"""
+    ORDER BY p.id ASC"""
     cursor.execute(query)
 
     response = HttpResponse(content_type="text/plain; charset=utf-8")
@@ -145,17 +147,27 @@ def get_inventory_report(request):
     #response['Content-Disposition'] = 'attachment; filename="%s"' % filename
     header = ['ID', 'CODE'] + location_map.values()
     response.write("\t".join(header) + "\n")
+    results = []
+    inventory = {}
 
     for k in cursor.fetchall():
         response.write(k)
-        #response.write("\t".join(row) + "\n")
+        #inventory[k[0]] = 
+        row = {'id': k[0], 'code': k[1]}
+
+    for r in results:
+        pass #response.write("\t".join(r) + "\n")
 
     return response
 
 
 @permission_required("servo.change_product")
 def download_products(request, group="all"):
+    """
+    Downloads entire product DB or just ones belonging to a group
+    """
     filename = "products"
+    data = u"ID\tCODE\tTITLE\tPURCHASE_PRICE\tSALES_PRICE\tSTOCKED\n"
 
     if group == "all":
         products = Product.objects.all()
@@ -164,20 +176,15 @@ def download_products(request, group="all"):
         products = category.get_products()
         filename = group
 
-    response = HttpResponse(content_type="text/plain; charset=utf-8")
-    response['Content-Disposition'] = 'attachment; filename="%s.txt"' % filename
-
-    response.write(u"ID\tCODE\tTITLE\tPURCHASE_PRICE\tSALES_PRICE\tSTOCKED\n")
-
+    # @FIXME: Add total stocked amount to product
+    # currently the last column is a placeholder for stock counts in inventory uploads
     for p in products:
-        row = u"%s\t%s\t%s\t%s\t%s\t%s\n" % (p.pk,
-                                             p.code,
-                                             p.title,
-                                             p.price_purchase_stock,
-                                             p.price_sales_stock, 0)
-        response.write(row)
+        row = [unicode(i) for i in (p.pk, p.code, p.title, 
+                                    p.price_purchase_stock,
+                                    p.price_sales_stock, 0)]
+        data += "\t".join(row) + "\n"
 
-    return response
+    return send_csv(data, filename)
 
 
 @permission_required("servo.change_product")
@@ -192,7 +199,6 @@ def upload_products(request, group=None):
 
     if request.method == "POST":
         form = ProductUploadForm(request.POST, request.FILES)
-
         if form.is_valid():
             string = u''
             category = form.cleaned_data['category']
@@ -250,7 +256,9 @@ def upload_products(request, group=None):
 
 @permission_required("servo.change_product")
 def edit_product(request, pk=None, code=None, group='all'):
-
+    """
+    Edits a Product! :-)
+    """
     initial = {}
     product = Product()
 
@@ -359,6 +367,22 @@ def view_product(request, pk=None, code=None, group=None):
     data['inventory'] = inventory
     data['title'] = '%s - %s' % (product.code, product.title)
 
+    # Collect data for Sales/Purchases/Invoices tabs
+    results_per_page = 50
+    page = request.GET.get('page')
+
+    sales = product.serviceorderitem_set.all().select_related('order')
+    sales = sales.order_by('-id')
+    data['sales'] = paginate(sales, page, results_per_page)
+
+    purchases = product.purchaseorderitem_set.all().select_related('purchase_order')
+    purchases = purchases.order_by('-id')
+    data['purchases'] = paginate(purchases, page, results_per_page)
+
+    invoices = product.invoiceitem_set.all().select_related('invoice')
+    invoices = invoices.order_by('-id')
+    data['invoices'] = paginate(invoices, page, results_per_page)
+
     return render(request, "products/view.html", data)
 
 
@@ -382,7 +406,8 @@ def edit_category(request, slug=None, parent_slug=None):
             try:
                 category = form.save()
             except IntegrityError:
-                messages.error(request, _(u'Category %s already exists') % category.title)
+                error = _(u'Category %s already exists') % category.title
+                messages.error(request, error)
                 return redirect(list_products)
             messages.success(request, _(u"Category %s saved") % category.title)
             return redirect(category)
