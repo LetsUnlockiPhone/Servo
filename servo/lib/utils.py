@@ -23,11 +23,22 @@ def paginate(queryset, page, count=10):
 
     return results
 
+def text_response(data):
+    return HttpResponse(data, content_type="text/plain; charset=utf-8")
+    
 def csv_response(data):
     """
     Shortcut for sending a CSV response
     """
     return HttpResponse(data, content_type='text/csv')
+
+def send_csv(data, filename):
+    """
+    Shortcut for sending CSV data as a file
+    """
+    response = text_response(data)
+    response['Content-Disposition'] = 'attachment; filename="%s.txt"' % filename
+    return response
 
 def json_response(data):
     """
