@@ -166,5 +166,6 @@ class HttpProvider:
             'to'        : number
         })
 
-        f = urllib.urlopen("%s?%s" % (conf['sms_http_url'], params), context=_create_unverified_context())
+        f = urllib.urlopen("%s?%s" % (conf['sms_http_url'], params),
+                           context=_create_unverified_context())
         return f.read()

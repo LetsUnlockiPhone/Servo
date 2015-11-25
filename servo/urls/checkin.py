@@ -16,5 +16,4 @@ urlpatterns = patterns(
     url(r'^checkin/print/(\w+)/$', print_confirmation, name='checkin-print'),
     url(r'^thanks/(\w+)/$', thanks, name='checkin-thanks'),
     url(r'^terms/$', terms, name='checkin-terms'),
-
 )

@@ -11,6 +11,7 @@ class StatsManager:
     def _result(self, args):
         result = []
         self.cursor.execute(self.sql, args)
+        
         for k, v in self.cursor.fetchall():
             if isinstance(v, decimal.Decimal):
                 v = float(v)
