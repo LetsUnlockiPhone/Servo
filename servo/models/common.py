@@ -462,6 +462,19 @@ class Location(models.Model):
         verbose_name=_('Enabled')
     )
 
+    checkin = models.BooleanField(
+        default=True,
+        verbose_name=_('Use for check-in')
+    )
+
+    @classmethod
+    def get_checkin_list(cls):
+        results = []
+        for l in cls.objects.filter(checkin=True):
+            results.append({'pk': l.pk, 'name': l.title})
+
+        return results
+
     def get_shipto_choices(self):
         return self.gsx_accounts.values_list('ship_to', 'ship_to')
 

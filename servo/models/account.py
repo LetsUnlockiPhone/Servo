@@ -150,13 +150,6 @@ class User(AbstractUser):
     techies = TechieManager()
     active  = ActiveManager()
 
-    def get_location_list(self):
-        results = []
-        for l in self.locations.all():
-            results.append({'pk': l.pk, 'name': l.title})
-
-        return results
-
     @classmethod
     def serialize(cls, queryset):
         results = []
