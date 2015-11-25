@@ -152,7 +152,7 @@ def prepare_calendar_view(request, pk, view, start_date):
     """
     Prepares a calendar detail view for other views to use
     """
-    calendar = Calendar.objects.get(user=request.user, pk=pk)
+    calendar = get_object_or_404(Calendar, pk=pk)
 
     if start_date is not None:
         year, month, day = start_date.split("-")
@@ -223,13 +223,12 @@ def print_calendar(request, pk, view, start_date):
 def view_calendar(request, pk, view, start_date=None):
     data = prepare_calendar_view(request, pk, view, start_date)
     data['base_url'] = reverse(view_calendar, args=[pk, view])
-
     return render(request, "accounts/view_calendar.html", data)
 
 
 @permission_required("servo.delete_calendar")
 def delete_calendar(request, pk):
-    calendar = Calendar.objects.get(pk=pk)
+    calendar = get_object_or_404(Calendar, pk=pk)
 
     if calendar.user != request.user:
         messages.error(request, _("Users can only delete their own calendars!"))
@@ -252,8 +251,11 @@ def edit_calendar(request, pk=None, view="week"):
     from servo.models.calendar import CalendarForm
     calendar = Calendar(user=request.user)
 
-    if pk is not None:
-        calendar = Calendar.objects.get(pk=pk)
+    if pk:
+        calendar = get_object_or_404(Calendar, pk=pk)
+        if not calendar.user == request.user:
+            messages.error(request, _('You can only edit your own calendar'))
+            return redirect(calendars)
 
     if request.method == "POST":
         form = CalendarForm(request.POST, instance=calendar)
@@ -276,11 +278,11 @@ def edit_calendar(request, pk=None, view="week"):
 def edit_calendar_event(request, cal_pk, pk=None):
     from servo.models.calendar import CalendarEventForm
 
-    calendar = Calendar.objects.get(pk=cal_pk)
+    calendar = get_object_or_404(Calendar, pk=cal_pk)
     event = CalendarEvent(calendar=calendar)
 
     if pk:
-        event = CalendarEvent.objects.get(pk=pk)
+        event = get_object_or_404(CalendarEvent, pk=pk)
     else:
         event.save()
         messages.success(request, _(u'Calendar event created'))
@@ -305,17 +307,16 @@ def edit_calendar_event(request, cal_pk, pk=None):
 
 @permission_required("servo.change_calendar")
 def finish_calendar_event(request, cal_pk, pk):
-    event = CalendarEvent.objects.get(pk=pk)
+    event = get_object_or_404(get_object_or_404, pk=pk)
     event.set_finished()
     messages.success(request, _(u'Calendar event updated'))
-
     return redirect(view_calendar, cal_pk, 'week')
 
 
 def delete_calendar_event(request, cal_pk, pk):
-    event = CalendarEvent.objects.get(pk=pk)
+    event = get_object_or_404(CalendarEvent, pk=pk)
 
-    if event.user != request.user:
+    if event.calendar.user != request.user:
         messages.error(request, _(u'Users can only delete their own events!'))
         return redirect(calendars)
 
