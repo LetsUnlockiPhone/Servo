@@ -11,9 +11,10 @@ from django.contrib import messages
 from django.core.cache import cache
 
 from django.utils import translation
-from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
+from django.views.decorators.cache import never_cache
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.exceptions import ValidationError, PermissionDenied
 
 from servo.lib.utils import json_response
 from servo.views.order import put_on_paper
@@ -47,7 +48,7 @@ def find_device(request):
 
 def find_customer(request, phone):
     if not request.user.is_authenticated():
-        return
+        raise PermissionDenied
 
     results = []
 
@@ -111,7 +112,7 @@ def get_device(request, sn):
     return device
 
 
-def reset_session(request):
+def init_session(request):
     # initialize some basic vars
     if not request.user.is_authenticated():
         request.session.flush()
@@ -119,34 +120,41 @@ def reset_session(request):
     # initialize locale
     init_locale(request)
 
-    request.session['checkin_device'] = None
+    request.session['checkin_device']   = None
     request.session['checkin_customer'] = None
+
+    user = User.get_checkin_user()
+    location = user.location
 
     if not request.session.get('company_name'):
         request.session['company_name'] = Configuration.conf('company_name')
 
     if request.user.is_authenticated():
 
-        if request.GET.get('u'):
-            user = User.objects.get(pk=request.GET['u'])
-        else:
-            user = request.user
+        # these are our fallback defaults
+        user = request.user
+        location = user.location
 
-        if request.GET.get('l'):
-            location = Location.objects.get(pk=request.GET['l'])
-        else:
-            location = user.location
+        try:
+            location_id = request.GET['l']
+        except KeyError:
+            # not given - try session, then default to user's location
+            location_id = request.session.get('checkin_location', location.pk)
+        finally:
+            location = get_object_or_404(Location, pk=location_id)
+
+        try:
+            user_id = request.GET['u']
+        except KeyError:
+            # not given - default to session, then auth user
+            user_id = request.session.get('checkin_user', user.pk)
+        
+        user = get_object_or_404(User, pk=user_id)
+        request.session['checkin_locations'] = Location.get_checkin_list()
 
         checkin_users = User.get_checkin_group()
-        request.session['checkin_users'] = User.get_checkin_group_list()
-        request.session['checkin_locations'] = request.user.get_location_list()
-
         queryset = checkin_users.filter(location=location)
         request.session['checkin_users'] = User.serialize(queryset)
-
-    else:
-        user = User.get_checkin_user()
-        location = user.location
     
     request.session['checkin_user'] = user.pk
     request.session['checkin_location'] = location.pk
@@ -155,7 +163,7 @@ def reset_session(request):
 
 
 def reset(request):
-    reset_session(request)
+    init_session(request)
     return redirect(index)
 
 
@@ -184,7 +192,7 @@ def get_customer(request):
     Returns the selected customer data
     """
     if not request.user.is_authenticated():
-        return
+        raise PermissionDenied
 
     if not request.GET.get('c'):
         return
@@ -192,14 +200,13 @@ def get_customer(request):
     customer = get_object_or_404(Customer, pk=request.GET['c'])
     request.session['checkin_customer'] = customer.pk
 
-    fdata = {'fname': customer.firstname}
-    fdata['lname'] = customer.lastname
-    fdata['email'] = customer.email
+    fdata = {'fname': customer.firstname, 'lname': customer.lastname}
     fdata['city'] = customer.city
+    fdata['email'] = customer.email
     fdata['phone'] = customer.phone
     fdata['country'] = customer.country
-    fdata['address'] = customer.street_address
     fdata['postal_code'] = customer.zip_code
+    fdata['address'] = customer.street_address
 
     return json_response(fdata)
 
@@ -241,13 +248,19 @@ def terms(request):
     return render(request, 'checkin/terms.html', locals())
 
 
+@never_cache
 def index(request):
-    """The checkin page
-
+    """
+    The checkin page
     @FIXME: would be nice to break this into smaller chunks...
     """
+
+    request.session.set_test_cookie()
+    if not request.session.test_cookie_worked():
+        return
+
     if request.method == 'GET':
-        reset_session(request)
+        init_session(request)
         
     title = _('Service Order Check-In')
 
@@ -283,15 +296,15 @@ def index(request):
 
         if device_form.is_valid() and issue_form.is_valid() and customer_form.is_valid():
 
-            user = User.objects.get(pk=request.session['checkin_user'])
+            user = get_object_or_404(User, pk=request.session['checkin_user'])
 
             idata = issue_form.cleaned_data
             ddata = device_form.cleaned_data
             cdata = customer_form.cleaned_data
-
             customer_id = request.session.get('checkin_customer')
+
             if customer_id:
-                customer = Customer.objects.get(pk=customer_id)
+                customer = get_object_or_404(Customer, pk=customer_id)
             else:
                 customer = Customer()
 
