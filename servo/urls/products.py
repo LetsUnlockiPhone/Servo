@@ -8,7 +8,7 @@ urlpatterns = patterns(
     url(r'^tags/$', "tags", name="products-tags"),
     url(r'^all/$', "list_products", {'group': 'all'},
         name="products-list_products"),
-    url(r'^download/$', "download_products",
+    url(r'^(?P<group>[\w\-/]*)/download/$', "download_products",
         name="products-download"),
     url(r'^inventory_report/$', "get_inventory_report", 
         name="products-get_inventory_report"),

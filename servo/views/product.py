@@ -126,20 +126,21 @@ def get_inventory_report(request):
     """
     Returns stocked amount of products at each location
     """
+    import re
     from django.db import connection
     cursor = connection.cursor()
     location_map = {}
 
     for l in Location.objects.filter(enabled=True):
-         location_map[l.pk] = l.title
+         location_map[str(l.pk)] = l.title
 
     # @TODO this should be rewritten as a pivot query
     # but this will have to do for now. This is still much
     # faster than using the ORM.
     query = """SELECT p.id, p.code, l.id, i.amount_stocked 
     FROM servo_product p, servo_inventory i, servo_location l
-    WHERE p.id = i.product_id AND l.id = i.location_id
-    ORDER BY p.id ASC"""
+        WHERE p.id = i.product_id AND l.id = i.location_id
+        ORDER BY p.id ASC"""
     cursor.execute(query)
 
     response = HttpResponse(content_type="text/plain; charset=utf-8")
@@ -147,16 +148,28 @@ def get_inventory_report(request):
     #response['Content-Disposition'] = 'attachment; filename="%s"' % filename
     header = ['ID', 'CODE'] + location_map.values()
     response.write("\t".join(header) + "\n")
-    results = []
-    inventory = {}
+    inventory, codemap = {}, {}
 
     for k in cursor.fetchall():
-        response.write(k)
-        #inventory[k[0]] = 
-        row = {'id': k[0], 'code': k[1]}
+        product_id = unicode(k[0])
+        codemap[product_id] = k[1] # map product IDs to product codes
+        inv_slot = {k[2]: k[3]}
 
-    for r in results:
-        pass #response.write("\t".join(r) + "\n")
+        try:
+            inventory[product_id].append(inv_slot)
+        except KeyError:
+            inventory[product_id] = [inv_slot]
+
+    for k, v in inventory.iteritems():
+        inventory_cols = []
+        for i, x in location_map.iteritems():
+            for p in v:
+                amount = p.get(i, '0') # fill empty inventory slots with zeros
+                inventory_cols.append(amount)
+
+        code = unicode(codemap[k])
+        row = [k, code] + inventory_cols
+        response.write("\t".join(row) + "\n")
 
     return response
 
@@ -230,7 +243,8 @@ def upload_products(request, group=None):
 
                 product, created = Product.objects.get_or_create(code=cols[1])
 
-                product.title = cols[2].strip(' "').replace('""', '"') # Remove Excel escapes
+                # Remove Excel escapes
+                product.title = cols[2].strip(' "').replace('""', '"')
                 product.price_purchase_stock = cols[3].replace(',', '.')
                 product.price_sales_stock = cols[4].replace(',', '.')
                 product.save()

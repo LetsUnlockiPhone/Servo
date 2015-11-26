@@ -26,15 +26,15 @@
     <i class="icon-cog"></i> <span class="caret"></span>
   </a>
   <ul class="dropdown-menu">
-    {% if group.pk and perms.servo.add_product %}
+  {% if group.pk and perms.servo.add_product %}
     <li><a href="{% url 'products-edit_category' group.slug %}" data-modal="#modal">{% trans "Edit Category" %}</a></li>
     <li><a href="{% url 'products-delete_category' group.slug %}" data-modal="#modal">{% trans "Delete Category" %}</a></li>
-    {% else %}
+  {% else %}
     <li class="disabled"><a href="#">{% trans "Edit Category" %}</a></li>
     <li class="disabled"><a href="#">{% trans "Delete Category" %}</a></li>
-    {% endif %}
+  {% endif %}
     <li class="divider"></li>
-    <li><a href="{% url 'products-download' %}">{% trans "Download Products" %}</a></li>
+    <li><a href="{% url 'products-download' group.slug %}">{% trans "Download Products" %}</a></li>
     <li class="disabled"><a href="{% url 'products-get_inventory_report' %}">{% trans "Download Inventory Report" %}</a></li>
     <li><a href="{% url 'products-upload_products' %}" data-modal="#modal">{% trans "Upload Products" %}</a></li>
     <li><a href="{% url 'products-upload_gsx_parts' %}" data-modal="#modal">{% trans "Upload Parts Database" %}</a></li>
