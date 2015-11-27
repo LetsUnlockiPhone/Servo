@@ -269,8 +269,8 @@ def render_template(request, order_id=None):
 
 
 def templates(request, template_id=None):
-    if template_id is not None:
-        tpl = Template.objects.get(pk=template_id)
+    if template_id:
+        tpl = get_object_or_404(Template, pk=template_id)
         content = tpl.content
         if request.session.get('current_order_id'):
             tpl = template.Template(content)
