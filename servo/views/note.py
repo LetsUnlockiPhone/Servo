@@ -346,9 +346,8 @@ def find(request):
         results = results.order_by('-created_at')
 
     title = _('Message search')
-    notes = paginate(request, page, 10)
-    page = request.GET.get("page")
-    
+    notes = paginate(request, request.GET.get('page'), 10)
+
     return render(request, "notes/find.html", locals())
 
 
