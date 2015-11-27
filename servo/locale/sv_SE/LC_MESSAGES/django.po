@@ -92,13 +92,12 @@ msgid "Company Name"
 msgstr "Företag"
 
 #: forms/admin.py:245
-#, fuzzy
 msgid "Company Logo"
-msgstr "Företag"
+msgstr "Företagslogga"
 
 #: forms/admin.py:247
 msgid "Company-wide logo to use in print templates"
-msgstr ""
+msgstr "Koncerngemensamma logotyp ska användas i utskriftsmallar"
 
 #: forms/admin.py:252
 msgid "Terms of Service"
@@ -382,7 +381,7 @@ msgstr "Efternamn"
 
 #: forms/checkin.py:131
 msgid "Company (optional)"
-msgstr "Företag"
+msgstr "Företag (tillval)"
 
 #: forms/checkin.py:139
 msgid "Phone number"
@@ -507,9 +506,8 @@ msgid "Address contains"
 msgstr "Adress innehåller"
 
 #: forms/customer.py:57
-#, fuzzy
 msgid "Checked in between"
-msgstr "Mottagen av"
+msgstr "Incheckad mellan"
 
 #: forms/customer.py:73
 msgid "Please specify at least one parameter"
@@ -539,7 +537,7 @@ msgstr "Mottagen av"
 #: forms/devices.py:34
 #, fuzzy
 msgid "Serial number contains"
-msgstr "Serienummer eller IMEI"
+msgstr "Serienummer innehåller"
 
 #: forms/devices.py:42 forms/product.py:25
 msgid "Description contains"
@@ -645,7 +643,7 @@ msgstr "Mottagen av"
 
 #: forms/orders.py:91 forms/product.py:34 forms/product.py:172
 msgid "Location is"
-msgstr ""
+msgstr "Platsen är"
 
 #: forms/orders.py:101
 msgid "Queue is"
@@ -689,12 +687,11 @@ msgstr ""
 
 #: forms/orders.py:131
 msgid "Color"
-msgstr ""
+msgstr "Färg"
 
 #: forms/product.py:21
-#, fuzzy
 msgid "Code contains"
-msgstr "Kundsnamn"
+msgstr "Koden innehåller"
 
 #: forms/product.py:29
 msgid "Device model is"
@@ -958,9 +955,8 @@ msgid "Select which language you want to use Servo in."
 msgstr ""
 
 #: models/account.py:85 models/common.py:417
-#, fuzzy
 msgid "Time zone"
-msgstr "Telefon"
+msgstr "Tidszon"
 
 #: models/account.py:86
 msgid "Your current timezone"
@@ -972,11 +968,11 @@ msgstr ""
 
 #: models/account.py:91
 msgid "Estonia"
-msgstr ""
+msgstr "Estland"
 
 #: models/account.py:92
 msgid "Finland"
-msgstr ""
+msgstr "Danmark"
 
 #: models/account.py:93
 msgid "United States"
@@ -988,7 +984,7 @@ msgstr ""
 
 #: models/account.py:95
 msgid "Sweden"
-msgstr ""
+msgstr "Sverige"
 
 #: models/account.py:101
 msgid "region"
@@ -1977,7 +1973,7 @@ msgstr ""
 
 #: models/product.py:121 models/product.py:149
 msgid "Purchase price"
-msgstr ""
+msgstr "Köppris"
 
 #: models/product.py:134 models/product.py:161
 msgid "Net price"
@@ -1989,7 +1985,7 @@ msgstr ""
 
 #: models/product.py:141 models/product.py:168
 msgid "Sales price"
-msgstr ""
+msgstr "Försäljningspris"
 
 #: models/product.py:142 models/product.py:169
 msgid "Purchase price + margin % + shipping + VAT %"
@@ -2000,14 +1996,13 @@ msgid "Is serialized"
 msgstr ""
 
 #: models/product.py:175
-#, fuzzy
 msgid "Product has a serial number"
-msgstr "Produkter och tjänster"
+msgstr "Produkten har ett serienummer"
 
 #: models/product.py:189
 #, fuzzy
 msgid "Warranty (months)"
-msgstr "Garanti"
+msgstr "Garanti (månader)"
 
 #: models/product.py:195
 msgid "Shelf code"
@@ -2026,7 +2021,7 @@ msgstr "1/3: Enhetsinformation"
 
 #: models/product.py:221
 msgid "Shipping"
-msgstr ""
+msgstr "Frakt"
 
 #: models/product.py:229
 msgid "Component group"
@@ -2040,15 +2035,15 @@ msgstr "Bifoga fil"
 
 #: models/product.py:237
 msgid "Module"
-msgstr ""
+msgstr "Modul"
 
 #: models/product.py:238
 msgid "Replacement"
-msgstr ""
+msgstr "Ersättning"
 
 #: models/product.py:239
 msgid "Service"
-msgstr ""
+msgstr "Service"
 
 #: models/product.py:240
 msgid "Service Contract"
@@ -2110,13 +2105,13 @@ msgstr ""
 
 #: models/purchases.py:53
 msgid "Supplier"
-msgstr ""
+msgstr "Leverantör"
 
 #: models/purchases.py:58 models/shipments.py:65
 #: templates/shipments/edit_bulk_return.html:28
 #: templates/shipments/view_bulk_return.html:6
 msgid "Carrier"
-msgstr ""
+msgstr "Bärare"
 
 #: models/purchases.py:63 models/shipments.py:43
 #: templates/shipments/list_bulk_returns.html:10
@@ -2139,7 +2134,7 @@ msgstr ""
 #: models/purchases.py:197 templates/products/receive_item.html:36
 #: templates/purchases/edit_po.html:35 templates/purchases/view_po.html:34
 msgid "Purchase Price"
-msgstr ""
+msgstr "Köppris"
 
 #: models/purchases.py:198
 msgid "Purchase price without taxes"
