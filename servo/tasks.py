@@ -34,7 +34,8 @@ def get_rules():
 
 @shared_task
 def apply_rules(event):
-    """Applies configured rules
+    """
+    Applies configured rules
 
     event is the Event object that was triggered
     """
@@ -50,6 +51,8 @@ def apply_rules(event):
             if isinstance(r['data'], dict):
                 tpl_id = r['data']['template']
                 r['data'] = Template.objects.get(pk=tpl_id).render(order)
+            else:
+                r['data'] = Template(content=r['data']).render(order)
 
             if r['action'] == "set_queue":
                 order.set_queue(r['data'], user)
