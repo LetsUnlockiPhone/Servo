@@ -20,6 +20,9 @@ urlpatterns = patterns(
     url(r'^(?P<device>\d+)/diags/(?P<test_id>\d+)/run/$', run_test, 
         name="devices-run_test"),
 
+    url(r'^(?P<pk>\d+)/repairs/$', 'search_gsx_repairs',
+        name="devices-search_gsx_repairs"),
+    
     url(r'^(?P<pk>\d+)/update_gsx_details/$', "update_gsx_details", 
         name="devices-update_gsx_details"),
     url(r'^(?P<pk>\d+)/orders/(?P<order_id>\d+)/queue/(?P<queue_id>\d+)/parts/$',

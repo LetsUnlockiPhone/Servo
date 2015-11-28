@@ -45,6 +45,9 @@ def model_from_slug(product_line, model=None):
 
 
 def prep_list_view(request, product_line=None, model=None):
+    """
+    Prepares the basic device list view
+    """
     title = _('Devices')
     search_hint = "devices"
     all_devices = Device.objects.all()
@@ -75,12 +78,12 @@ def prep_detail_view(request, pk, product_line=None, model=None):
     if pk is None:
         device = Device()
     else:
-        device = Device.objects.get(pk=pk)
+        device = get_object_or_404(Device, pk=pk)
 
     data = prep_list_view(request, product_line, model)
 
     data['device'] = device
-    data['title'] = device.description
+    data['title']  = device.description
 
     return data
 
@@ -98,7 +101,7 @@ def index(request, product_line=None, model=None):
 
 
 def delete_device(request, product_line, model, pk):
-    dev = Device.objects.get(pk=pk)
+    dev = get_object_or_404(Device, pk=pk)
 
     if request.method == 'POST':
         from django.db.models import ProtectedError
@@ -132,7 +135,7 @@ def edit_device(request, pk=None, product_line=None, model=None):
         device.description = model_from_slug(product_line, model)
 
     if pk is not None:
-        device = Device.objects.get(pk=pk)
+        device = get_object_or_404(Device, pk=pk)
 
     form = DeviceForm(instance=device)
 
@@ -202,7 +205,7 @@ def parts(request, pk, order_id, queue_id):
     """
     from decimal import InvalidOperation
     
-    device = Device.objects.get(pk=pk)
+    device = get_object_or_404(Device, pk=pk)
     order = device.order_set.get(pk=order_id)
 
     try:
@@ -343,3 +346,17 @@ def update_gsx_details(request, pk):
 def get_info(request, pk):
     device = get_object_or_404(Device, pk=pk)
     return render(request, "devices/get_info.html", locals())
+
+
+def search_gsx_repairs(request, pk):
+    """
+    Performs async GSX search for this device's GSX repairs
+    """
+    device = get_object_or_404(Device, pk=pk)
+    
+    try:
+        GsxAccount.default(request.user)
+        results = device.get_gsx_repairs()
+        return render(request, "devices/search_gsx_repairs.html", results)
+    except gsxws.GsxError as message:
+        return render(request, "search/results/gsx_error.html", locals())

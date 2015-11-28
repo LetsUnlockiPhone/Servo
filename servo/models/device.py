@@ -480,8 +480,11 @@ class Device(models.Model):
                                                     self.pk])
 
     def get_purchase_country(self):
-        # Return device's purchase country, can be 2-letter code (from checkin) or
-        # full country name (from GSX)
+        """
+        Returns device's purchase country
+        can be 2-letter code (from checkin) or
+        full country name (from GSX)
+        """
         from django_countries import countries
 
         if len(self.purchase_country) > 2:
@@ -501,6 +504,23 @@ class Device(models.Model):
         diags = diagnostics.Diagnostics(self.sn)
         diags.shipTo = request.user.location.gsx_shipto
         return diags.fetch_suites()
+
+    def get_gsx_repairs(self):
+        """
+        Returns this device's GSX repairs, if any
+        """
+        device = gsxws.Product(self.get_sn())
+        results = []
+
+        for i, p in enumerate(device.repairs()):
+            d = {'purchaseOrderNumber': p.purchaseOrderNumber}
+            d['repairConfirmationNumber'] = p.repairConfirmationNumber
+            d['createdOn'] = p.createdOn
+            d['customerName'] = p.customerName.encode('utf-8')
+            d['repairStatus'] = p.repairStatus
+            results.append(d)
+            
+        return results
 
     def __unicode__(self):
         return '%s (%s)' % (self.description, self.sn)
