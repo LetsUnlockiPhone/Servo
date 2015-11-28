@@ -89,9 +89,9 @@ class Repair(models.Model):
     Proxies service order data between our internal
     service orders and GSX repairs
     """
-    order = models.ForeignKey(Order, editable=False, on_delete=models.PROTECT)
+    order  = models.ForeignKey(Order, editable=False, on_delete=models.PROTECT)
     device = models.ForeignKey(Device, editable=False, on_delete=models.PROTECT)
-    parts = models.ManyToManyField(ServiceOrderItem, through=ServicePart)
+    parts  = models.ManyToManyField(ServiceOrderItem, through=ServicePart)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     created_by = models.ForeignKey(
@@ -506,6 +506,9 @@ class Repair(models.Model):
             self.status = new_status
             self.save()
             self.order.notify("repair_status_changed", self.status, user)
+
+    def get_status(self):
+        return self.status if len(self.status) else _('No status')
 
     def update_status(self, user):
         repair = self.get_gsx_repair()

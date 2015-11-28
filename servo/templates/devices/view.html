@@ -56,17 +56,36 @@
       </ul>
     </div>
     <div class="pull-right">
-      {% if perms.servo.change_device %}
+    {% if perms.servo.change_device %}
       <a href="edit/" class="btn">{% trans "Edit" %}</a>
-      {% endif %}
+    {% endif %}
     </div>
   </div>
   <div class="tab-pane" id="tab2">
     {% include "orders/list.html" with orders=device.order_set.all %}
+    <hr/>
+    <h4>{% trans "Local GSX repairs" %}</h4>
+    <table class="table">
+      <tbody>
+      {% for r in device.repair_set.all %}
+        <tr>
+          <td>{{ r.confirmation }}</td>
+          <td>{{ r.created_at|date }}</td>
+          <td>{{ r.created_by }}</td>
+          <td>{{ r.get_status }}</td>
+          <td><a href="{% url 'repairs-delete_repair' r.pk %}" class="btn btn-default" data-modal="modal" title="{% trans "Delete repair" %}"><i class="icon-trash"></i></a></td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">{% trans "No local GSX repairs found" %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
   </div>
   {% if device.is_apple_device %}
   <div class="tab-pane" id="tab3">
-    <div id="gsx-container" data-source="{% url 'search-search_gsx' what='repairs' param='serialNumber' query=device.sn %}">
+    <div id="gsx-container" data-source="{% url 'devices-search_gsx_repairs' pk=device.pk %}">
       <div class="progress active">
         <div class="bar" style="width:100%;" data-progress="0"></div>
       </div>
