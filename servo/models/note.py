@@ -231,7 +231,9 @@ class Note(MPTTModel):
         return ' '.join(classes)
 
     def find_parent(self, txt):
-        """Finds the parent of this note"""
+        """
+        Finds the parent of this note
+        """
         cookie = re.search(r'\(SRO#([\w/]+)\)', txt)
 
         if not cookie:
@@ -250,7 +252,9 @@ class Note(MPTTModel):
 
     @classmethod
     def from_email(cls, msg, user):
-        """Creates a new Note from an email message"""
+        """
+        Creates a new Note from an email message
+        """
         sender = decode_header(msg['From'])
         detected = chardet.detect(sender[0][0]).get('encoding')
         sender = [i[0].decode(i[1] or detected) for i in sender]
@@ -276,7 +280,9 @@ class Note(MPTTModel):
                 payload = part.get_payload(decode=True)
                 note.body = unicode(payload, str(charset), "ignore")
                 if s == "html":
-                    note.body = html2text.html2text(note.body)
+                    h = html2text.HTML2Text()
+                    h.ignore_images = True
+                    note.body = h.handle(note.body)
             else:
                 note.save()
                 if part.get_filename():
