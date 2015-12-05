@@ -50,8 +50,7 @@ def settings(request):
 
             return redirect(settings)
         else:
-            print("Error in user settings: %s" % form.errors)
-            messages.error(request, _("Error in user details"))
+            messages.error(request, _("Error in profile data"))
 
     return render(request, "accounts/settings.html", locals())
 

@@ -280,6 +280,9 @@ class Repair(models.Model):
         return self.confirmation or _("New GSX Repair")
 
     def set_parts(self, parts):
+        """
+        Resets this Repair's part listing
+        """
         ServicePart.objects.filter(repair=self).delete()
         for p in parts:
             part = ServicePart.from_soi(self, p)

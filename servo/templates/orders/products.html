@@ -25,7 +25,7 @@
         <strong><a href="{% url 'products-get_info' item.code order.location.pk %}" data-modal="#modal">{{ product.code }}</a></strong><br/>
         <div>{{ item.title }}</div>
         {% if item.sn or item.kbb_sn %}
-        <p><small class="muted">{% trans "Serial Number" %}: {{ item.sn }}{% if item.kbb_sn %}, KBB: {{ item.kbb_sn }}{% endif %}</small></p>
+        <p><small class="muted">{% trans "Serial Number" %}: {{ item.sn|default:"-" }}{% if item.kbb_sn %}, KBB: {{ item.kbb_sn }}{% endif %}</small></p>
         {% endif %}
         {% if product.is_apple_part %}
         {% for repair in order.get_repairs %}
@@ -57,11 +57,11 @@
       <td style="width:125px">
         {% if order.is_editable %}
         <div class="btn-group">
-          {% if item.should_report %}
+        {% if item.should_report %}
           <a href="{% url 'orders-report_product' pk=order.id item_id=item.id %}" title="Toggle report flag" class="btn btn-small btn-success nofollow active" data-toggle="button"><i class="icon-ok"></i></a>
-          {% else %}
+        {% else %}
           <a href="{% url 'orders-report_product' pk=order.id item_id=item.id %}" title="Toggle report flag" class="btn btn-small btn-success nofollow" data-toggle="button"><i class="icon-ok icon-white"></i></a>
-          {% endif %}
+        {% endif %}
         </div>
         <div class="btn-group">
           <a href="{% url 'orders-edit_product' pk=order.id item_id=item.id %}" class="btn btn-small" title="{% trans "Edit" %}" data-modal="#modal"><i class="icon-pencil"></i></a>
@@ -95,7 +95,7 @@
 {% endwith %}
 <p class="clearfix">
   <hr/>
-  {% if order.serviceorderitem_set.count %}
+{% if order.serviceorderitem_set.count %}
   <h3 class="pull-right">{% trans "Order Total" %}: <a href="#" class="tt" title="{{ order.net_total|currency }}">{{ order.gross_total|currency }}</a></h3>
-  {% endif %}
+{% endif %}
 </p>

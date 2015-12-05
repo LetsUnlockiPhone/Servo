@@ -29,22 +29,18 @@ class ProfileForm(BaseModelForm):
             'queues': forms.CheckboxSelectMultiple
         }
         
-    password1 = forms.CharField(
-        widget=forms.PasswordInput,
-        required=False,
-        label=_("Password")
-    )
-    password2 = forms.CharField(
-        widget=forms.PasswordInput,
-        required=False,
-        label=_("Confirmation")
-    )
+    password1 = forms.CharField(widget=forms.PasswordInput,
+                                required=False,
+                                label=_("Password"))
+    password2 = forms.CharField(widget=forms.PasswordInput,
+                                required=False,
+                                label=_("Confirmation"))
 
     def clean(self):
         cd = super(ProfileForm, self).clean()
 
         if cd.get('gsx_password') == "":
-            del cd['gsx_password']
+            del(cd['gsx_password'])
 
         cd['tech_id'] = cd['tech_id'].upper()
 
@@ -55,9 +51,13 @@ class ProfileForm(BaseModelForm):
         return cd
 
     def clean_photo(self):
+        MAX_FILESIZE = 1*1024*1024 # 1 MB
+        from django.template.defaultfilters import filesizeformat
         photo = self.cleaned_data.get('photo')
-        if photo and photo.size > 1*1024*1024:
-            raise forms.ValidationError(_('File size of photo is too large'))
+        if photo and photo.size > MAX_FILESIZE:
+            size = filesizeformat(MAX_FILESIZE)
+            error = _('Profile picture should be no larger than %s') % size
+            raise forms.ValidationError(error)
 
         return photo
 

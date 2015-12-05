@@ -1,4 +1,4 @@
-django
+django==1.8.7
 django-mptt
 django-countries
 django-bootstrap3
@@ -16,6 +16,7 @@ pyBarcode
 celery
 chardet
 html2text
+python-magic
 -e git+git://github.com/filipp/py-gsxws.git#egg=gsxws
 --allow-external pil
 --allow-unverified pil
