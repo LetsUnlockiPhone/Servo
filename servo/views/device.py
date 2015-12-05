@@ -356,7 +356,7 @@ def search_gsx_repairs(request, pk):
     
     try:
         GsxAccount.default(request.user)
-        results = device.get_gsx_repairs()
+        results = {'results': device.get_gsx_repairs()}
         return render(request, "devices/search_gsx_repairs.html", results)
     except gsxws.GsxError as message:
         return render(request, "search/results/gsx_error.html", locals())
