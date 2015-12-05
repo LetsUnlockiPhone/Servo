@@ -8,20 +8,19 @@ from django_countries import countries
 from django.utils.translation import ugettext as _
 
 from servo.models import User, Repair, Template
-from servo.forms import BaseForm, AutocompleteTextarea, DateTimePickerInput, ChoiceField
+from servo.forms import (BaseForm, AutocompleteTextarea, DateTimePickerInput,
+                        ChoiceField,)
 
 
 class ImportForm(BaseForm):
-    confirmation = forms.CharField(
-        min_length=8,
-        max_length=15,
-        label=_('Confirmation')
-    )
+    confirmation = forms.CharField(min_length=8,
+                                   max_length=15,
+                                   label=_('Confirmation'))
 
 
 class GsxCustomerForm(BaseForm):
     firstName = forms.CharField(max_length=100, label=_('First name'))
-    lastName = forms.CharField(max_length=100, label=_('Last name'))
+    lastName  = forms.CharField(max_length=100, label=_('Last name'))
     emailAddress = forms.CharField(max_length=100, label=_('Email'))
     primaryPhone = forms.CharField(max_length=100, label=_('Phone'))
     addressLine1 = forms.CharField(max_length=100, label=_('Address'))
@@ -60,7 +59,7 @@ class GsxRepairForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         from servo.lib.utils import empty
         super(GsxRepairForm, self).__init__(*args, **kwargs)
-        repair = kwargs['instance']
+        repair = self.instance
         techs = User.techies.filter(location=repair.order.location)
         c = [(u.tech_id, u.get_full_name()) for u in techs]
         c.insert(0, ('', '-------------------',))
@@ -69,18 +68,18 @@ class GsxRepairForm(forms.ModelForm):
                                                    label=_('Technician'))
         self.fields['parts'].initial = repair.order.get_parts()
 
-        if not repair.can_mark_complete:
+        if repair.can_mark_complete is False:
             del(self.fields['mark_complete'])
             del(self.fields['replacement_sn'])
 
         choices = Template.templates()
-        for f in ('notes', 'symptom', 'diagnosis'):
+        for f in ('notes', 'symptom', 'diagnosis',):
             self.fields[f].widget = AutocompleteTextarea(choices=choices)
-
+        
         symptom_codes = self.instance.get_symptom_code_choices()
         self.fields['symptom_code'] = forms.ChoiceField(choices=symptom_codes,
                                                         label=_('Symptom group'))
-
+        
         if empty(self.instance.symptom_code):
             # default to the first choice
             self.instance.symptom_code = symptom_codes[0][0]
@@ -88,19 +87,23 @@ class GsxRepairForm(forms.ModelForm):
         issue_codes = self.instance.get_issue_code_choices()
         self.fields['issue_code'] = forms.ChoiceField(choices=issue_codes,
                                                       label=_('Issue code'))
-
+        
     def clean(self, *args, **kwargs):
         cd = super(GsxRepairForm, self).clean(*args, **kwargs)
         if self.instance.has_serialized_parts():
             if cd.get('mark_complete') and not cd.get('replacement_sn'):
-                raise forms.ValidationError(_('Replacement serial number must be set'))
+                error = _('Replacement serial number must be set when completing repair.')
+                raise forms.ValidationError(error)
 
         return cd
 
     def clean_attachment(self):
-        MAX_FILESIZE = 10485760 # 10MB
+        MAX_FILESIZE = 10*1024*1024 # 10MB
         from django.template.defaultfilters import filesizeformat
-        f = self.cleaned_data['attachment']
-        if f and f._size > MAX_FILESIZE:
-            error = _('Attachment should be no larger than %s') % filesizeformat(MAX_FILESIZE)
+        f = self.cleaned_data.get('attachment')
+        if f and f.size > MAX_FILESIZE:
+            size = filesizeformat(MAX_FILESIZE)
+            error = _('Attachment should be no larger than %s') % size
             raise forms.ValidationError(error)
+
+        return f

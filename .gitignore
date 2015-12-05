@@ -8,6 +8,8 @@ uploads/devices/*
 uploads/return_labels/*
 uploads/settings/*
 uploads/products/*
+uploads/repairs/*
+uploads/templates/*
 backups/*
 local_settings.py
 local_rules.json

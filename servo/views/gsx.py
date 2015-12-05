@@ -213,7 +213,7 @@ def edit_repair(request, order_id, repair_id):
     """
     Edits existing (non-submitted) GSX repair
     """
-    order = get_object_or_404(Order, pk=order_id)
+    order  = get_object_or_404(Order, pk=order_id)
     repair = get_object_or_404(Repair, pk=repair_id)
 
     if request.GET.get('c'):
@@ -257,7 +257,8 @@ def save_repair(request, context):
     customer = context['customer']
 
     if len(repair.component_data):
-        component_form = GsxComponentForm(request.POST, components=repair.component_data)
+        component_form = GsxComponentForm(request.POST,
+                                          components=repair.component_data)
         if component_form.is_valid():
             repair.component_data = component_form.json_data
         else:
@@ -269,11 +270,10 @@ def save_repair(request, context):
     if customer_form.is_valid():
         context['customer_data'] = customer_form.cleaned_data
         if repair_form.is_valid():
-            parts = repair_form.cleaned_data['parts']
+            repair = repair_form.save(commit=False)
+            repair.set_parts(repair_form.cleaned_data['parts'])
             repair.save()
-            repair.set_parts(parts)
         else:
-            logging.debug(repair_form.errors)
             raise ValueError(repair_form.errors)
     else:
         raise ValueError(_("Invalid customer info"))
