@@ -8,6 +8,11 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
+def file_type(buf):
+    import magic
+    return magic.from_buffer(buf, mime=True)
+
+
 def paginate(queryset, page, count=10):
     """
     Shortcut for paginating a queryset
