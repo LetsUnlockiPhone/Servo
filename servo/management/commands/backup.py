@@ -4,8 +4,9 @@ import os
 import csv
 import shutil
 import subprocess
-from datetime import date
+from datetime import datetime
 from django.db import connection
+from django.conf import settings
 
 from django.core.management.base import BaseCommand
 
@@ -25,12 +26,20 @@ class Command(BaseCommand):
     help = 'Export this servo database in a portable format'
     
     def handle(self, *args, **options):
-        backupdir = 'backups/%s' % date.today().isoformat()
-        os.mkdir(backupdir)
+        # creates a folder, then dumps different portable tables as separate
+        # files to it, then compresses the folder and deletes it
+        if not os.path.exists(settings.BACKUP_DIR):
+            os.mkdir(settings.BACKUP_DIR)
 
-        cursor = connection.cursor()        
+        dirname = datetime.now().strftime('%Y%m%d-%H%M')
+        backupdir = os.path.join(settings.BACKUP_DIR, dirname)
         
+        if not os.path.exists(backupdir):
+            os.mkdir(backupdir)
+
         path = os.path.join(backupdir, 'notes.csv')
+
+        cursor = connection.cursor()
         cursor.execute("""SELECT id, order_id, created_by_id, created_at, body 
             FROM servo_note""")
         header = ['ID', 'ORDER_ID', 'USER_ID', 'CREATED_AT', 'NOTE']
