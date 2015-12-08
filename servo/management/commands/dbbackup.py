@@ -14,7 +14,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         db  = settings.DATABASES['default']
         fn = '%s_%s.pgdump' % (db['NAME'], strftime('%Y%m%d_%H%I'))
+        if not os.path.exists(settings.BACKUP_DIR):
+            os.mkdir(settings.BACKUP_DIR)
         fn = os.path.join(settings.BACKUP_DIR, fn)
-
-        subprocess.call(['/Applications/Postgres.app/Contents/Versions/9.3/bin/pg_dump', '-Fc', db['NAME'], '-U', db['USER'], 
-             '-f' , fn], env={'PGPASSWORD': db['PASSWORD']})
+        env = {'PATH': os.getenv('PATH'), 'PGPASSWORD': db['PASSWORD']}
+        subprocess.call(['pg_dump', '-Fc', db['NAME'], '-U',
+                        db['USER'], '-f' , fn], env=env)
