@@ -129,11 +129,6 @@ INSTALLED_APPS = (
 AUTH_USER_MODEL = 'servo.User'
 AUTH_PROFILE_MODULE = 'servo.UserProfile'
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -194,9 +189,10 @@ LOGIN_EXEMPT_URLS = [
     'api/devices/'
 ]
 
-IGNORABLE_404_URLS = (
-    re.compile(r'favicon\.ico$'),
-)
+# 404 URLs that should be ignored
+IGNORABLE_404_URLS = [
+    re.compile(r'favicon\.ico')
+]
 
 TEST_RUNNER = 'servo.tests.NoDbTestRunner'
 
