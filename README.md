@@ -53,9 +53,9 @@ For testing, you can run Servo without any extra setup:
 
 If you want to run rules, set ENABLE_RULES = True and start the worker task:
 
-    $ celery -A servo worker -B -l info -s /tmp/celerybeat-schedule
+	$ celery -A servo worker -B -l info -s /tmp/celerybeat-schedule
 
-Then fire up your browser and got to http://localhost:8080/
+Then fire up your browser and got to [http://localhost:8000/](http://localhost:8000/)
 
 
 The VMWare Image
@@ -65,12 +65,15 @@ You can also download a preconfigured VMWare image [here](http://files.servoapp.
 
 Updating
 ========
-First, back up your database, then:
+First, back up your database:
 
-	$ git pull origin master
-	$ ./manage.py migrate --no-initial-data
+	$ ./manage.py backupdb
 
-After which you should restart your Servo instance.
+then:
+
+	$ ./manage.py selfupdate
+
+After which you should restart your Servo instance. The method depends on how it's deployed.
 
 
 Documentation
