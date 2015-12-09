@@ -326,6 +326,9 @@ def view_note(request, kind, pk):
 
 
 def find(request):
+    """
+    Notes advanced search
+    """
     form = NoteSearchForm(request.GET)
     results = Note.objects.none()
 
@@ -346,7 +349,7 @@ def find(request):
         results = results.order_by('-created_at')
 
     title = _('Message search')
-    notes = paginate(request, request.GET.get('page'), 10)
+    notes = paginate(results, request.GET.get('page'), 10)
 
     return render(request, "notes/find.html", locals())
 
