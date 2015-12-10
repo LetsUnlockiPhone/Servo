@@ -167,7 +167,12 @@ class QueueForm(BaseModelForm):
     def clean_order_template(self):
         from servo.lib.utils import file_type
         tpl = self.cleaned_data.get('order_template')
+
+        if tpl is None: # file was not uploaded
+            return
+
         ftype = file_type(tpl.file.read())
+        
         if ftype != 'text/html':
             raise forms.ValidationError(_('Print tempates must be in HTML format'))
 
