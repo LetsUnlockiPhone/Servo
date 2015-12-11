@@ -19,19 +19,17 @@ from reportlab.graphics.shapes import Drawing
 from reportlab.graphics.barcode import createBarcodeDrawing
 
 from servo.lib.utils import paginate
-from servo.models import Order, Template, Tag, Customer, Note, Attachment, Escalation
+from servo.models import (Order, Template, Tag, Customer, Note, 
+                         Attachment, Escalation,)
 from servo.forms import NoteForm, NoteSearchForm, EscalationForm
 
 
 class BarcodeDrawing(Drawing):
     def __init__(self, text_value, *args, **kwargs):
-        barcode = createBarcodeDrawing(
-            "Code128",
-            value=text_value.encode("utf-8"),
-            barHeight=10*mm,
-            width=80*mm
-        )
-
+        barcode = createBarcodeDrawing("Code128",
+                                       value=text_value.encode("utf-8"),
+                                       barHeight=10*mm,
+                                       width=80*mm)
         Drawing.__init__(self, barcode.width, barcode.height, *args, **kwargs)
         self.add(barcode, name="barcode")
 
@@ -96,7 +94,7 @@ def copy(request, pk):
 
     new_note.labels = note.labels.all()
 
-    for a in note.attachments.all():
+    for a in note.attachments.all(): # also copy the attachments
         a.pk = None
         a.content_object = new_note
         a.save()
@@ -106,9 +104,11 @@ def copy(request, pk):
 
 
 @permission_required('servo.change_note')
-def edit(request, pk=None, order_id=None, parent=None, recipient=None, customer=None):
+def edit(request, pk=None, order_id=None, parent=None, recipient=None,
+         customer=None):
     """
     Edits a note
+    @FIXME: Should split this up into smaller pieces
     """
     to = []
     order = None
@@ -187,7 +187,8 @@ def edit(request, pk=None, order_id=None, parent=None, recipient=None, customer=
     if note.escalation:
         contexts = json.loads(note.escalation.contexts)
 
-    escalation_form = EscalationForm(prefix='escalation', instance=note.escalation)
+    escalation_form = EscalationForm(prefix='escalation',
+                                     instance=note.escalation)
 
     if request.method == "POST":
         escalation_form = EscalationForm(request.POST,

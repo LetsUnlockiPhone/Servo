@@ -211,7 +211,7 @@ def close(request, pk):
 
         return redirect(order)
 
-    data = {'order': order, 'action': request.path}
+    data = {'order': order, 'action': reverse(close, args=[pk])}
     return render(request, "orders/close.html", data)
 
 

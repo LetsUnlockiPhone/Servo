@@ -190,6 +190,9 @@ class Repair(models.Model):
     issue_code = models.CharField(max_length=7, default='')
 
     def get_symptom_code_choices(self):
+        """
+        Returns the possible symptom codes for the current serial number
+        """
         # @fixme: what if it's someone else ordering the part?
         self.gsx_account.connect(self.created_by)
         ckey = 'symptom_codes-%s' % self.device.sn
@@ -197,6 +200,9 @@ class Repair(models.Model):
         return cache_getset(ckey, si.fetch)
 
     def get_issue_code_choices(self):
+        """
+        Returns the possible issue codes for the current symptom code
+        """
         # @fixme: what if it's someone else ordering the part?
         self.gsx_account.connect(self.created_by)
         ckey = 'issue_codes-%s' % self.symptom_code

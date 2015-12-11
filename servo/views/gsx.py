@@ -135,6 +135,7 @@ def remove_part(request, repair, part):
 
 def delete_repair(request, repair_id):
     repair = get_object_or_404(Repair, pk=repair_id)
+    
     if repair.submitted_at:
         messages.error(request, _('Submitted repairs cannot be deleted'))
         return redirect(repair.order)
@@ -216,7 +217,7 @@ def edit_repair(request, order_id, repair_id):
     order  = get_object_or_404(Order, pk=order_id)
     repair = get_object_or_404(Repair, pk=repair_id)
 
-    if request.GET.get('c'):
+    if request.GET.get('c'): # looking up issue code for symptom
         repair.symptom_code = request.GET['c']
         repair.save()
         choices = repair.get_issue_code_choices()

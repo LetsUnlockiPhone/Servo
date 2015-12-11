@@ -264,6 +264,7 @@ class ServicePart(models.Model):
         part.returnOrderNumber = self.return_order
         if self.box_number > 0:
             part.boxNumber = self.box_number
+            
         return part
 
     def needs_comptia_code(self):
