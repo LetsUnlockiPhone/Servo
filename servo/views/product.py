@@ -19,7 +19,8 @@ from servo.models import (Attachment, TaggedItem,
                           Product, ProductCategory,
                           Inventory, Location, inventory_totals,
                           GsxAccount,)
-from servo.forms.product import ProductForm, CategoryForm, ProductSearchForm
+from servo.forms.product import (ProductForm, CategoryForm, ProductSearchForm,
+                                 UploadPricesForm,)
 
 
 def prep_list_view(request, group='all'):
@@ -481,6 +482,9 @@ def get_info(request, location, code):
 
 
 def update_price(request, pk):
+    """
+    Updates the price info from GSX
+    """
     product = get_object_or_404(Product, pk=pk)
     try:
         GsxAccount.default(request.user)
@@ -490,3 +494,55 @@ def update_price(request, pk):
         messages.error(request, _('Failed to update price from GSX'))
 
     return redirect(product)
+
+
+def upload_prices(request):
+    """
+    Uploads new price data from Excel file
+    """
+    form = UploadPricesForm()
+    action = request.path
+    title = _('Upload new price data')
+
+    if request.method == 'POST':
+        form = UploadPricesForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            import django_excel as excel
+            import pyexcel.ext.xls # import it to handle xls file
+            import pyexcel.ext.xlsx # import it to handle xlsx file
+
+            counter, errors = 0, 0
+            datafile = form.cleaned_data['datafile']
+            sheet = datafile.get_sheet()
+            del(sheet.row[0]) # skip header row
+
+            for row in sheet:
+                if not len(row[0]):
+                    continue # skip empty rows
+
+                try:
+                    product = Product.objects.get(code=row[0])
+                except Product.DoesNotExist:
+                    if form.cleaned_data.get('create_new'):
+                        product = Product(code=row[0])
+                    else:
+                        error = _('Error on row %d - product %s not found') % (counter+1, row[0])
+                        messages.error(request, error)
+                        return redirect(list_products)
+                
+                product.title = row[1]
+                product.description = row[2]
+                product.price_sales_exchange = row[3]
+
+                if form.cleaned_data.get('set_fixed'):
+                    product.fixed_price = True
+
+                product.save()
+                counter += 1
+
+            msg = _('Price info of %d products uploaded successfully') % counter
+            messages.success(request, msg)
+            return redirect(list_products)
+
+    return render(request, "products/upload_prices.html", locals())

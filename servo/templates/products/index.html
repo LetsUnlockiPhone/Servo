@@ -36,6 +36,8 @@
     <li class="divider"></li>
     <li><a href="{% url 'products-download' group.slug %}">{% trans "Download Products" %}</a></li>
     <li><a href="{% url 'products-get_inventory_report' %}">{% trans "Download Inventory Report" %}</a></li>
+    <li class="divider"></li>
+    <li><a href="{% url 'products-upload_prices' %}" data-modal="#modal">{% trans "Upload Prices" %}</a></li>
     <li><a href="{% url 'products-upload_products' %}" data-modal="#modal">{% trans "Upload Products" %}</a></li>
     <li><a href="{% url 'products-upload_gsx_parts' %}" data-modal="#modal">{% trans "Upload Parts Database" %}</a></li>
   </ul>

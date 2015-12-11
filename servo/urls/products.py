@@ -17,6 +17,8 @@ urlpatterns = patterns(
         name="products-upload_products"),
     url(r'^upload/parts/$', "upload_gsx_parts",
         name="products-upload_gsx_parts"),
+    url(r'^upload/prices/$', "upload_prices",
+        name="products-upload_prices"),
     url(r'^update_price/(\d+)/$', "update_price",
         name="products-update_price"),
 

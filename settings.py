@@ -158,6 +158,9 @@ LOGGING = {
     }
 }
 
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler",)
+
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 TEMPLATE_CONTEXT_PROCESSORS = (

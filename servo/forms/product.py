@@ -12,14 +12,8 @@ from servo.forms.base import BaseModelForm, DatepickerInput, TextInput
 
 
 class ProductSearchForm(forms.Form):
-    title = forms.CharField(
-        required=False,
-        label=_('Name contains')
-    )
-    code = forms.CharField(
-        required=False,
-        label=_('Code contains')
-    )
+    title = forms.CharField(required=False, label=_('Name contains'))
+    code = forms.CharField(required=False, label=_('Code contains'))
     description = forms.CharField(
         required=False,
         label=_('Description contains')
@@ -213,13 +207,23 @@ class ReserveProductForm(forms.Form):
     """
     Form for reserving products for a given SO
     """
-    inventory = forms.ModelChoiceField(
-        queryset=Inventory.objects.none(),
-        label=_('Inventory')
-    )
+    inventory = forms.ModelChoiceField(queryset=Inventory.objects.none(),
+                                       label=_('Inventory'))
 
     def __init__(self, order, *args, **kwargs):
         super(ReserveProductForm, self).__init__(*args, **kwargs)
         inventory = Inventory.objects.filter(location=order.location,
                                              product__in=order.products.all())
         self.fields['inventory'].queryset = inventory
+
+
+class UploadPricesForm(forms.Form):
+    datafile = forms.FileField(label=_('Price data in Excel format (.xlsx)'),
+                               help_text=_('This will also update products with fixed prices'))
+    create_new = forms.BooleanField(label=_('Create new products'),
+                                    required=False,
+                                    initial=True,
+                                    help_text=_('Create products if not found'))
+    set_fixed = forms.BooleanField(label=_('Set fixed price'),
+                                   required=False,
+                                   help_text=_('Mark all uploaded products as having a fixed price'))
