@@ -68,9 +68,11 @@
       {% if perms.servo.change_customer %}
         <li><a href="{% url 'customers-move_customer' pk=customer.pk %}" data-modal="#modal">{% trans "Move Customer" %}</a></li>
         <li><a href="{% url 'customers-merge_customer' pk=customer.pk %}" data-modal="#modal">{% trans "Merge Customer" %}</a></li>
+        <li><a href="{% url 'devices-upload_devices' %}?c={{ customer.pk|safe }}" data-modal="#modal">{% trans "Upload Devices" %}</a></li>
       {% else %}
         <li><a href="#" class="disabled">{% trans "Move Customer" %}</a></li>
         <li><a href="#" class="disabled">{% trans "Merge Customer" %}</a></li>
+        <li><a href="#" class="disabled">{% trans "Upload Devices" %}</a></li>
       {% endif %}
         <li class="divider"></li>
       {% if perms.servo.delete_customer %}

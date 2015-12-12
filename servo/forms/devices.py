@@ -57,12 +57,18 @@ class DeviceForm(forms.ModelForm):
 
 
 class DeviceUploadForm(forms.Form):
-    datafile = forms.FileField()
-    customer = forms.ModelChoiceField(
-        queryset=Customer.objects.all(),
-        required=False
+    datafile = forms.FileField(
+        help_text=_('Device data in Excel format (.xls or .xlsx)')
     )
-    do_warranty_check = forms.BooleanField(required=False, initial=True)
+    customer = forms.IntegerField(
+        required=False,
+        widget=forms.HiddenInput,
+    )
+    do_warranty_check = forms.BooleanField(
+        required=False,
+        initial=True,
+        help_text=_('Perform warranty check on uploaded serial numbers')
+    )
 
 
 class DiagnosticsForm(forms.Form):
