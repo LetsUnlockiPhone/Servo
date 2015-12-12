@@ -13,7 +13,8 @@ from django.template.defaultfilters import slugify
 from django.views.decorators.cache import cache_page
 
 from servo.lib.utils import paginate
-from servo.models import Device, Order, Product, GsxAccount, ServiceOrderItem
+from servo.models import (Device, Order, Product, GsxAccount,
+                         ServiceOrderItem, Customer,)
 from servo.forms.devices import DeviceForm, DeviceUploadForm, DeviceSearchForm
 
 
@@ -279,20 +280,34 @@ def upload_devices(request):
     """
     gsx_account = None
     form = DeviceUploadForm()
+    title = _('Upload devices')
+
+    if request.GET.get('c'):
+        customer = Customer.objects.get(pk=request.GET['c'])
+        title = _('Upload devices for %s') % customer.name
+        form.fields['customer'].initial = request.GET['c']
 
     if request.method == "POST":
         form = DeviceUploadForm(request.POST, request.FILES)
 
         if form.is_valid():
-            i = 0
-            df = form.cleaned_data['datafile'].read()
+            import django_excel as excel
+            import pyexcel.ext.xls # import it to handle xls file
+            import pyexcel.ext.xlsx # import it to handle xlsx file
+
+            counter, errors = 0, 0
+            datafile = form.cleaned_data['datafile']
+            sheet = datafile.get_sheet()
+
+            if sheet.row[0][0] == 'SN':
+                del(sheet.row[0]) # skip header row
 
             if form.cleaned_data.get('do_warranty_check'):
                 gsx_account = GsxAccount.default(request.user)
 
-            for l in df.split("\r"):
-                l = l.decode("latin-1").encode("utf-8")
-                row = l.strip().split("\t")
+            for row in sheet:
+                if not len(row[0]):
+                    continue # skip empty rows
 
                 if gsx_account:
                     try:
@@ -303,25 +318,23 @@ def upload_devices(request):
                 else:
                     device = Device.objects.get_or_create(sn=row[0])[0]
 
-                try:
-                    device.username = row[1]
-                    device.password = row[2]
-                    device.notes = row[3]
-                except IndexError:
-                    pass
+                device.username = row[1]
+                device.password = row[2]
+                device.notes = row[3]
 
                 device.save()
-                i += 1
+                counter += 1
 
                 if form.cleaned_data.get("customer"):
-                    customer = form.cleaned_data['customer']
+                    cid = form.cleaned_data['customer']
+                    customer = Customer.objects.get(pk=cid)
                     customer.devices.add(device)
 
-            messages.success(request, _("%d devices imported") % i)
+            messages.success(request, _("%d devices imported") % counter)
 
             return redirect(index)
 
-    data = {'form': form, 'action': request.path}
+    data = {'form': form, 'action': request.path, 'title': title}
     return render(request, "devices/upload_devices.html", data)
 
 
