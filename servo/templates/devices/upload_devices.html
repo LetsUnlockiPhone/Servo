@@ -1,9 +1,7 @@
 {% extends "modal.html" %}
 {% load i18n %}
 
-{% block header %}
-{% trans "Upload devices" %}
-{% endblock header %}
+{% block header %}{{ title }}{% endblock header %}
 
 {% block body %}
 <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
@@ -11,3 +9,8 @@
   {% include "form_snippet.html" %}
 </form>
 {% endblock body %}
+
+{% block footer %}
+    <a class="btn btn-default" href="{{ STATIC_URL }}/examples/upload_devices.xlsx">{% trans "Download example" %}</a>
+    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+{% endblock footer %}
