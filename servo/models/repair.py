@@ -68,7 +68,7 @@ class ChecklistItem(models.Model):
 
     def __unicode__(self):
         return self.title
-        
+
     class Meta:
         app_label = "servo"
 
@@ -177,7 +177,7 @@ class Repair(models.Model):
 
     component_data = models.TextField(default='', editable=False)
     consumer_law = models.NullBooleanField(
-        default=None, 
+        default=None,
         help_text=_('Repair is eligible for consumer law coverage')
     )
     acplus = models.NullBooleanField(
@@ -189,6 +189,9 @@ class Repair(models.Model):
     symptom_code = models.CharField(max_length=7, default='')
     issue_code = models.CharField(max_length=7, default='')
 
+    def is_submitted(self):
+        return self.submitted_at is not None
+        
     def get_symptom_code_choices(self):
         """
         Returns the possible symptom codes for the current serial number
@@ -263,7 +266,7 @@ class Repair(models.Model):
         po.sales_order = self.order
         po.save()
         return po
-        
+
     def warranty_status(self):
         """
         Gets warranty status for this device and these parts
@@ -323,7 +326,7 @@ class Repair(models.Model):
             except Product.DoesNotExist:
                 p = Product.from_gsx(new_part.lookup())
                 p.save()
-            
+
             oi = self.order.add_product(p, 1, self.created_by)
 
         oi.comptia_code = part.comptiaCode or ''
@@ -335,7 +338,7 @@ class Repair(models.Model):
 
         sp.order(self.created_by)
         sp.save()
-        
+
     def submit(self, customer_data):
         """
         Creates a new GSX repair and all the documentation that goes along with it
@@ -346,7 +349,7 @@ class Repair(models.Model):
         if not self.order.queue:
             raise ValueError(_("Order has not been assigned to a queue"))
 
-        
+
         repair_data = self.to_gsx()
 
         if self.repair_type == "CA":
@@ -611,7 +614,7 @@ class Repair(models.Model):
             'RPR.COM.036': Repair for Unit $1 is already marked as complete.
             'RPR.COM.019': This repair cannot be updated.
             'RPR.LKP.16': This Repair Cannot be Updated.Repair is not Open.
-            'RPR.COM.136': Repair $1 cannot be marked complete as the Warranty 
+            'RPR.COM.136': Repair $1 cannot be marked complete as the Warranty
             Claims Certification Form status is either Declined or Hold.
             'ENT.UPL.022': 'Confirmation # $1 does not exist.'
             """
@@ -626,7 +629,7 @@ class Repair(models.Model):
                 'RPR.COM.136',
                 'ENT.UPL.022',
             )
-            
+
             if e.code not in errorlist:
                 raise e
 

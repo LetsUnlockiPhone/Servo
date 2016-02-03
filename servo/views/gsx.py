@@ -64,7 +64,7 @@ def import_repair(request, order_pk, device_pk):
 
     return render(request, "repairs/import_repair.html", locals())
 
-    
+
 @permission_required("servo.change_order")
 def return_label(request, repair, part):
     """
@@ -134,9 +134,12 @@ def remove_part(request, repair, part):
 
 
 def delete_repair(request, repair_id):
+    """
+    Deletes this unsubmitted GSX repair
+    """
     repair = get_object_or_404(Repair, pk=repair_id)
-    
-    if repair.submitted_at:
+
+    if repair.is_submitted():
         messages.error(request, _('Submitted repairs cannot be deleted'))
         return redirect(repair.order)
 
@@ -193,7 +196,7 @@ def prep_edit_view(request, repair, order=None, device=None):
 
     if not order.customer:
         raise ValueError(_("Cannot create GSX repair without valid customer data"))
-    
+
     customer = order.customer.gsx_address(request.user.location)
     customer_form = GsxCustomerForm(initial=customer)
 
@@ -292,7 +295,7 @@ def create_repair(request, order_id, device_id, type):
     """
     from datetime import timedelta
     from django.utils import timezone
-    
+
     order = get_object_or_404(Order, pk=order_id)
     device = order.devices.get(pk=device_id)
 
@@ -328,7 +331,7 @@ def repair_details(request, confirmation):
     except Exception as e:
         data = {'error': e}
         return render(request, "snippets/error_modal.html", data)
-    
+
     data = {'repair': repair}
 
     if request.method == "POST":

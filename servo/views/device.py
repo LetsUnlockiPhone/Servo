@@ -162,6 +162,8 @@ def edit_device(request, pk=None, product_line=None, model=None):
 
 def view_device(request, pk, product_line=None, model=None):
     data = prep_detail_view(request, pk, product_line, model)
+    data['repairs'] = data['device'].repair_set.all()
+    data['orders'] = data['device'].order_set.all()
     return render(request, "devices/view.html", data)
 
 
@@ -193,7 +195,7 @@ def find(request):
 
     page = request.GET.get("page")
     devices = paginate(results, page, 100)
-    
+
     return render(request, "devices/find.html", locals())
 
 
@@ -205,7 +207,7 @@ def parts(request, pk, order_id, queue_id):
     and the Location's corresponding GSX account
     """
     from decimal import InvalidOperation
-    
+
     device = get_object_or_404(Device, pk=pk)
     order = device.order_set.get(pk=order_id)
 
@@ -366,7 +368,7 @@ def search_gsx_repairs(request, pk):
     Performs async GSX search for this device's GSX repairs
     """
     device = get_object_or_404(Device, pk=pk)
-    
+
     try:
         GsxAccount.default(request.user)
         results = {'results': device.get_gsx_repairs()}

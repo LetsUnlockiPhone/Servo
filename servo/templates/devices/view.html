@@ -21,9 +21,9 @@
   {% else %}
     <a href="#" class="btn btn-primary disabled"><i class="icon-share-alt icon-white"></i> {% trans "Use in current order" %}</a>
   {% endif %}
-    {% if device.pk %}
+  {% if device.pk %}
     <a href="{% url 'devices-create_order' device.pk %}" class="btn"><i class="icon-plus"></i> {% trans "Create Service Order" %}</a>
-    {% endif %}
+  {% endif %}
     <div class="btn-group">
       <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="icon-cog"></i> <span class="caret"></span>
@@ -62,12 +62,22 @@
     </div>
   </div>
   <div class="tab-pane" id="tab2">
-    {% include "orders/list.html" with orders=device.order_set.all %}
+    {% include "orders/list.html" %}
+  </div>
+  {% if device.is_apple_device %}
+  <div class="tab-pane" id="tab3">
+    <h4>{% trans "Submitted GSX repairs" %}</h4>
+    <div id="gsx-container" data-source="{% url 'devices-search_gsx_repairs' pk=device.pk %}">
+      <div class="progress active">
+        <div class="bar" style="width:100%;" data-progress="0"></div>
+      </div>
+      <p class="text-center muted">{% trans "Fetching repairs..." %}</p>
+    </div>
     <hr/>
     <h4>{% trans "Local GSX repairs" %}</h4>
     <table class="table">
       <tbody>
-      {% for r in device.repair_set.all %}
+      {% for r in repairs %}
         <tr>
           <td>{{ r.confirmation }}</td>
           <td>{{ r.created_at|date }}</td>
@@ -77,20 +87,11 @@
         </tr>
       {% empty %}
         <tr>
-          <td colspan="4">{% trans "No local GSX repairs found" %}</td>
+          <td colspan="5">{% trans "No local GSX repairs found" %}</td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
-  </div>
-  {% if device.is_apple_device %}
-  <div class="tab-pane" id="tab3">
-    <div id="gsx-container" data-source="{% url 'devices-search_gsx_repairs' pk=device.pk %}">
-      <div class="progress active">
-        <div class="bar" style="width:100%;" data-progress="0"></div>
-      </div>
-      <p class="text-center muted">{% trans "Fetching repairs..." %}</p>
-    </div>
   </div>
   {% endif %}
 </div>
