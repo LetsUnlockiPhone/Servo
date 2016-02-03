@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns(
-    "servo.views.diagnostics",
-    url(r'^fetch_url/$', 'fetch_dc_url', name="diagnostics-fetch_url"),
-)
+from servo.views.diagnostics import *
+
+urlpatterns = [
+    url(r'^fetch_url/$', fetch_dc_url, name="diagnostics-fetch_url"),
+]

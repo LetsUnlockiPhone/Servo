@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.views.generic import RedirectView, TemplateView
 from servo.views import account, files, gsx
 
-urlpatterns = patterns(
-    '',
+from servo.views.error import report
+from servo.views.note import show_barcode
+from servo.views.events import acknowledge
+from servo.views.tags import clear
+from servo.views.queue import statuses
+
+urlpatterns = [
     url(r'^$', RedirectView.as_view(url="orders/", permanent=False), name="home"),
 
     url(r'^checkin/', include('servo.urls.checkin')),
@@ -21,9 +26,9 @@ urlpatterns = patterns(
     url(r'^sales/', include('servo.urls.sales')),
     url(r'^diagnostics/', include('servo.urls.diagnostics')),
 
-    url(r'^queues/(\d+)/statuses/$', 'servo.views.queue.statuses'),
+    url(r'^queues/(\d+)/statuses/$', statuses),
 
-    url(r'^barcode/([\w\-]+)/$', 'servo.views.note.show_barcode',
+    url(r'^barcode/([\w\-]+)/$', show_barcode,
         name='barcodes-view'),
     url(r'^files/(?P<pk>\d+)/view/$', files.view_file, name="files-view_file"),
     url(r'^files/(?P<path>.+)/$', files.get_file, name="files-get_file"),
@@ -41,14 +46,12 @@ urlpatterns = patterns(
     url(r'^returns/part/(?P<part_id>\d+)/register_return/$', gsx.register_return,
         name='parts-register_return'),
 
-    url(r'^events/(\d+)/ack/', 'servo.views.events.acknowledge',
-        name="events-ack_event"),
-    url(r'^tags/(\d+)/clear/', 'servo.views.tags.clear', name="tags-clear"),
+    url(r'^events/(\d+)/ack/', acknowledge, name="events-ack_event"),
+    url(r'^tags/(\d+)/clear/', clear, name="tags-clear"),
 
-    (r'^api/', include('servo.urls.api')),
-    (r'^kaboom/$', 'servo.views.error.report'),
-    
+    url(r'^api/', include('servo.urls.api')),
+    url(r'^kaboom/$', report),
+
     url(r'^home/', include('servo.urls.account')),
     url(r'^search/', include('servo.urls.search')),
-
-)
+]

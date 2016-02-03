@@ -64,7 +64,7 @@ def edit_gsx_account(request, pk=None):
                     act.test()
                     messages.success(request, _(u'%s saved') % act.title)
                     return redirect(list_gsx_accounts)
-                except gsxws.GsxError, e:
+                except gsxws.GsxError as e:
                     messages.warning(request, e)
             except IntegrityError:
                 transaction.rollback()
@@ -506,7 +506,7 @@ def edit_user(request, pk=None):
             messages.error(request, _("Error in user profile data"))
 
     object_list = User.objects.filter(is_visible=True)
-    
+
     if request.GET.get('l'):
         object_list = object_list.filter(locations__pk=request.GET['l'])
 

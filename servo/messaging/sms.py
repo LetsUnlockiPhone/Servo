@@ -20,7 +20,7 @@ class BaseSMSProvider:
 
         if len(recipient) < 8:
             recipient = '372' + recipient
-        
+
         recipient = re.sub(r'[\+\s\-]', '', recipient)
         self.recipient = recipient.lstrip('+')
         self.note = note
@@ -49,7 +49,7 @@ class SMSJazzProvider:
     def  __init__(self, recipient, note, msg):
         if len(recipient) < 8:
             recipient = '372' + recipient
-        
+
         recipient = re.sub(r'[\+\s\-]', '', recipient)
         self.recipient = recipient.lstrip('+')
         self.note = note
