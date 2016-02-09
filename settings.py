@@ -79,13 +79,6 @@ STATICFILES_FINDERS = (
     #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.filesystem.Loader',
-)
-
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -105,11 +98,25 @@ SESSION_SERIALIZER = 'servo.lib.utils.SessionSerializer'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(APP_DIR, 'templates'),
-    os.path.join(BASE_DIR, 'uploads'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'DIRS': (
+            os.path.join(APP_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'uploads'),
+        ),
+        'OPTIONS': {
+            'context_processors': (
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.static',
+                'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
+                'django.contrib.messages.context_processors.messages',
+            ),
+        }
+    },
+]
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -162,15 +169,6 @@ FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler",)
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.static",
-    "django.core.context_processors.request",
-    "django.core.context_processors.i18n",
-    "django.contrib.messages.context_processors.messages",
-)
-
 EXEMPT_URLS = []
 
 LOGIN_URL   = '/login/'
