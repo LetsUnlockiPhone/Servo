@@ -144,7 +144,7 @@ class Event(BaseItem):
 
     def save(self, *args, **kwargs):
         saved = super(Event, self).save(*args, **kwargs)
-        
+
         if settings.ENABLE_RULES is True:
             from servo.tasks import apply_rules
             apply_rules.delay(self)
@@ -773,7 +773,7 @@ class Attachment(BaseItem):
         if ext in DENIED_EXTENSIONS:
             raise ValueError(_(u'%s is not of an allowed file type') % filename)
 
-        super(Attachment, self).save(*args, **kwargs)
+        return super(Attachment, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return os.path.basename(self.content.name)
@@ -786,7 +786,6 @@ class Attachment(BaseItem):
 
     def get_absolute_url(self):
         return reverse("files-view_file", args=[self.pk])
-        return "/files/%d/view" % self.pk
 
     class Meta:
         app_label = "servo"
