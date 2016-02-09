@@ -100,7 +100,7 @@ class ServicePart(models.Model):
         max_length=128,
         editable=False
     )
-    
+
     shipment = models.ForeignKey(Shipment, null=True)
     box_number = models.PositiveIntegerField(null=True)
     return_label = models.FileField(
@@ -262,9 +262,10 @@ class ServicePart(models.Model):
         """
         part = gsxws.ServicePart(self.part_number)
         part.returnOrderNumber = self.return_order
+
         if self.box_number > 0:
             part.boxNumber = self.box_number
-            
+
         return part
 
     def needs_comptia_code(self):
@@ -280,6 +281,7 @@ class ServicePart(models.Model):
         """
         ol = gsxws.RepairOrderLine()
         ol.partNumber = self.part_number
+        ol.consignmentFlag = False # @TODO: Put this in the GUI
 
         oi = self.order_item
         ol.abused = oi.is_abused
