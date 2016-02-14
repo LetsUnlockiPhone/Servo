@@ -187,7 +187,7 @@ def data(request, query):
         if what == "location":
             for i in locations.all():
                 data = stats.statuses_per_location(
-                    timescale, 
+                    timescale,
                     i.pk,
                     status,
                     start_date,
@@ -317,15 +317,17 @@ def statuses(request):
 
 
 def repairs(request):
+    """
+    Repair stats
+    """
     title = _('Repair statistics')
     form = NewStatsForm(initial={
-        'location': [request.user.location],
-        'queue': request.user.queues.all()
+        'location'  : [request.user.location],
+        'queue'     : request.user.queues.all()
     })
 
-    if request.GET.get('location'):
+    if request.GET.get('location'): # form was submitted
         results = []
-        form = NewStatsForm(request.GET)
         totals = {
             'created'      : 0,
             'assigned'     : 0,
@@ -334,50 +336,51 @@ def repairs(request):
             'tmp_orders'   : [],
             'turnaround'   : timedelta(),
         }
-
+        form = NewStatsForm(request.GET)
+        
         if not form.is_valid():
             return render(request, "stats/newstats.html", locals())
 
         cdata = form.cleaned_data
         date_range = (cdata['start_date'], cdata['end_date'])
 
-        for u in User.active.filter(location=cdata['location']):
-            r = {'name': u.get_full_name()}
+        for u in User.active.filter(location__in=cdata['location']):
+            r = {'name': u.get_full_name(), 'created': 0, 'assigned': 0}
 
             # Look at invoices first because that data may be different from
-            # assignment info (tech A startx, tech B finishes)
+            # assignment info (tech A starts, tech B finishes)
             dispatched = u.invoice_set.filter(
-                order__queue=cdata['queue'],
-                order__location=cdata['location'],
+                order__queue__in=cdata['queue'],
+                order__location__in=cdata['location'],
                 created_at__range=date_range
             )
 
             if len(cdata.get('label')):
-                dispatched = dispatched.filter(order__tags=cdata['label'])
+                dispatched = dispatched.filter(order__tags__in=cdata['label'])
 
             # Count each case's dispatch only once
             r['dispatched'] = dispatched.values('order_id').distinct().count()
 
             created = u.created_orders.filter(
-                queue=cdata['queue'],
-                location=cdata['location'],
+                queue__in=cdata['queue'],
+                location__in=cdata['location'],
                 created_at__range=date_range
             )
 
             if len(cdata.get('label')):
-                created = created.filter(tags=cdata['label'])
+                created = created.filter(tags__in=cdata['label'])
 
             r['created'] = created.count()
             totals['created'] += r['created'] # add amount to totals
 
             assigned = u.order_set.filter(
-                queue=cdata['queue'],
-                location=cdata['location'],
+                queue__in=cdata['queue'],
+                location__in=cdata['location'],
                 started_at__range=date_range
             )
 
             if len(cdata.get('label')):
-                assigned = assigned.filter(tags=cdata['label'])
+                assigned = assigned.filter(tags__in=cdata['label'])
 
             r['assigned'] = assigned.count()
 
@@ -385,13 +388,13 @@ def repairs(request):
                 continue # ... only continue with actual techs
 
             repairs = u.created_repairs.filter(
-                order__queue=cdata['queue'],
-                order__location=cdata['location'],
+                order__queue__in=cdata['queue'],
+                order__location__in=cdata['location'],
                 submitted_at__range=date_range
             )
 
             if len(cdata.get('label')):
-                repairs = repairs.filter(order__tags=cdata['label'])
+                repairs = repairs.filter(order__tags__in=cdata['label'])
 
             # Only count each case's GSX repair once
             r['repairs'] = repairs.values('order_id').distinct().count()
@@ -406,7 +409,7 @@ def repairs(request):
             # calculate turnaround time of dispatched cases
             for o in dispatched:
                 totals['tmp_orders'].append(o.order)
-                for s in o.order.orderstatus_set.filter(status=cdata['status']):
+                for s in o.order.orderstatus_set.filter(status__in=cdata['status']):
                     if s.finished_at is None:
                         s.finished_at = s.order.closed_at or timezone.now()
 
