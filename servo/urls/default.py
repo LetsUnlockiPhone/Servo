@@ -28,8 +28,7 @@ urlpatterns = [
 
     url(r'^queues/(\d+)/statuses/$', statuses),
 
-    url(r'^barcode/([\w\-]+)/$', show_barcode,
-        name='barcodes-view'),
+    url(r'^barcode/([\w\-]+)/$', show_barcode, name='barcodes-view'),
     url(r'^files/(?P<pk>\d+)/view/$', files.view_file, name="files-view_file"),
     url(r'^files/(?P<path>.+)/$', files.get_file, name="files-get_file"),
 
