@@ -216,8 +216,8 @@ ENABLE_RULES = False
 TIMEZONE = 'Europe/Helsinki'
 BACKUP_DIR  = os.path.join(BASE_DIR, 'backups')
 
-GSX_CERT = 'uploads/settings/gsx_cert.pem'
-GSX_KEY  = 'uploads/settings/gsx_key.pem'
+GSX_CERT = os.path.join(BASE_DIR, 'uploads/settings/gsx_cert.pem')
+GSX_KEY  = os.path.join(BASE_DIR, 'uploads/settings/gsx_key.pem')
 
 os.environ['GSX_CERT'] = GSX_CERT
 os.environ['GSX_KEY']  = GSX_KEY
