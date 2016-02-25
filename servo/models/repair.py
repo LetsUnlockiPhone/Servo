@@ -84,6 +84,14 @@ class ChecklistItemValue(models.Model):
         app_label = "servo"
 
 
+class ActiveManager(models.Manager):
+    """
+    GSX repairs that have been submitted, and not marked complete
+    """
+    def active(self, **kwargs):
+        return self.filter(completed_at=None, **kwargs).exclude(submitted_at=None)
+
+
 class Repair(models.Model):
     """
     Proxies service order data between our internal
@@ -188,10 +196,11 @@ class Repair(models.Model):
 
     symptom_code = models.CharField(max_length=7, default='')
     issue_code = models.CharField(max_length=7, default='')
+    active = ActiveManager()
 
     def is_submitted(self):
         return self.submitted_at is not None
-        
+
     def get_symptom_code_choices(self):
         """
         Returns the possible symptom codes for the current serial number
