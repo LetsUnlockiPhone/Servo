@@ -196,6 +196,7 @@ class Repair(models.Model):
 
     symptom_code = models.CharField(max_length=7, default='')
     issue_code = models.CharField(max_length=7, default='')
+    objects = models.Manager()
     active = ActiveManager()
 
     def is_submitted(self):
