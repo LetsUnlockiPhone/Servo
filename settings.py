@@ -88,7 +88,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'servo.lib.middleware.LoginRequiredMiddleware',
     'servo.lib.middleware.TimezoneMiddleware',
-    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    #'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
