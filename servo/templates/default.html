@@ -169,7 +169,7 @@
         <li><i class="icon-home"></i> <a href="{% url 'accounts-list_orders' %}">{{ request.user.get_full_name }}</a> <span class="divider">/</span></li>
         {% block crumbs %}{% endblock crumbs %}
       </ul>
-      <small class="copyright pull-right muted">&copy; {% now "Y" %} First Party Software | <a href="https://docs.servoapp.com/terms/" target="_blank">{% trans "Terms" %}</a></small>
+      <small class="copyright pull-right muted">&copy; {% now "Y" %} First Party Software</small>
     </div>
   </div>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
