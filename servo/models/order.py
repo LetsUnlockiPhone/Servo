@@ -135,12 +135,12 @@ class Order(models.Model):
     )
 
     state = models.IntegerField(default=STATE_QUEUED, choices=STATES)
-    
+
     status_name = models.CharField(max_length=128, default="")
     status_started_at = models.DateTimeField(null=True)
     status_limit_green = models.DateTimeField(null=True)  # turn yellow after this
     status_limit_yellow = models.DateTimeField(null=True) # turn red after this
-    
+
     api_fields = ('status_name', 'status_description',)
 
     def get_issues(self):
@@ -159,7 +159,7 @@ class Order(models.Model):
 
     def add_tag(self, tag, user):
         from servo.tasks import apply_rules
-        
+
         if not isinstance(tag, Tag):
             tag = Tag.objects.get(pk=tag)
 
@@ -252,7 +252,7 @@ class Order(models.Model):
         """
         sn = sn.upper()
         device = Device.objects.filter(sn=sn).first()
-        
+
         if device is None:
             device = Device.from_gsx(sn)
             device.save()
@@ -345,6 +345,9 @@ class Order(models.Model):
             return False
 
     def close(self, user):
+        """
+        Closes this service order
+        """
         self.notify("close_order", _(u"Order %s closed") % self.code, user)
         self.closed_by = user
         self.closed_at = timezone.now()
@@ -352,8 +355,13 @@ class Order(models.Model):
         self.save()
 
         if Configuration.autocomplete_repairs():
-            for r in self.repair_set.filter(completed_at=None):
-                r.close(user)
+            for r in self.repair_set.active():
+                try:
+                    r.close(user)
+                except Exception as e:
+                    # notify the creator of the GSX repair instead of just erroring out
+                    e = self.notify("gsx_error", e, user)
+                    e.notify_users.add(r.created_by)
 
         if self.queue and self.queue.status_closed:
             self.set_status(self.queue.status_closed, user)
@@ -474,6 +482,8 @@ class Order(models.Model):
                 new_status = self.queue.status_products_received
                 self.set_status(new_status, user)
 
+        return e
+
     def set_status(self, new_status, user):
         """
         Sets status of this order to new_status
@@ -484,7 +494,7 @@ class Order(models.Model):
 
         if self.queue is None:
             raise ValueError(_('Order must belong to a queue to set status'))
-            
+
         if isinstance(new_status, QueueStatus):
             status = new_status
         else:
@@ -531,7 +541,7 @@ class Order(models.Model):
         else:
             if int(queue_id) == 0:
                 return self.unset_queue(user)
-                
+
             queue = Queue.objects.get(pk=queue_id)
 
         self.queue = queue
@@ -781,7 +791,7 @@ class Order(models.Model):
 
         if self.location_id is None:
             self.location = location
-            
+
         if self.checkin_location is None:
             self.checkin_location = location
 
@@ -963,7 +973,7 @@ class ServiceOrderItem(AbstractOrderItem):
         Reserve this SOI for the inventory at this location
         """
         location = self.order.location
-        inventory, created = Inventory.objects.get_or_create(location=location, 
+        inventory, created = Inventory.objects.get_or_create(location=location,
                                                              product=self.product)
         inventory.amount_reserved += self.amount
         inventory.save()
