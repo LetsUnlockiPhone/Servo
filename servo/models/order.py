@@ -367,6 +367,9 @@ class Order(models.Model):
             self.set_status(self.queue.status_closed, user)
 
     def reopen(self, user):
+        """
+        Re-opens this service order
+        """
         self.state = Order.STATE_OPEN
         self.closed_at = None
         self.save()

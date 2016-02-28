@@ -89,7 +89,7 @@ class ActiveManager(models.Manager):
     GSX repairs that have been submitted, and not marked complete
     """
     use_for_related_fields = True
-    
+
     def active(self, **kwargs):
         return self.filter(completed_at=None, **kwargs).exclude(submitted_at=None)
 
@@ -198,8 +198,7 @@ class Repair(models.Model):
 
     symptom_code = models.CharField(max_length=7, default='')
     issue_code = models.CharField(max_length=7, default='')
-    objects = models.Manager()
-    active = ActiveManager()
+    objects = ActiveManager()
 
     def is_submitted(self):
         return self.submitted_at is not None
