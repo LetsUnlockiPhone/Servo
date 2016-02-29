@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
 
+from servo.models import GsxAccount
 from servo.models.shipments import Shipment
 from servo.models.order import ServiceOrderItem
 from servo.models.purchases import PurchaseOrder, PurchaseOrderItem
@@ -19,15 +20,23 @@ def symptom_modifiers():
 
 def symptom_codes(group):
     """
-    Return symptom codes for component group
+    Return CompTIA symptom codes for component group
     """
     if group == '':
         return
 
-    data = yaml.load(open("servo/fixtures/comptia.yaml", "r"))
-    symptoms = data[group]['symptoms']
-    srted = sorted(symptoms)
-    codes = [(k, "%s - %s " % (k, symptoms[k])) for k in srted]
+    symptoms = {}
+
+    try:
+        act = GsxAccount.fallback()
+        codes = gsxws.comptia.fetch()[group]
+        for k, v in codes:
+            symptoms[k] = v
+    except gsxws.GsxError as e:
+        data = yaml.load(open("servo/fixtures/comptia.yaml", "r"))
+        symptoms = data[group]['symptoms']
+
+    codes = [(k, "%s - %s " % (k, symptoms[k])) for k in sorted(symptoms)]
     return codes
 
 
@@ -344,8 +353,11 @@ class ServicePart(models.Model):
         return repair.update_kgb_sn(self.order_item.sn)
 
     def can_update_sn(self):
+        """
+        Can update SN to GSX only if SN defined
+        """
         soi = self.order_item
-        return not soi.sn == ''
+        return soi.sn != ''
 
     def update_sn(self):
         # CTS parts not eligible for SN update

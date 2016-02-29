@@ -53,11 +53,15 @@ class FieldsForm(forms.Form):
 
 
 class OrderItemForm(forms.ModelForm):
+    """
+    Form for editing a product added to a service order
+    """
     class Meta:
         model = ServiceOrderItem
         fields = ('title', 'amount', 'price_category',
-                  'price', 'sn', 'kbb_sn', 'imei', 'should_report',
-                  'comptia_code', 'comptia_modifier',)
+                  'price', 'sn', 'kbb_sn',
+                  'imei', 'should_report', 'comptia_code',
+                  'comptia_modifier',)
         widgets = {
             'amount': forms.TextInput(attrs={'class': 'input-mini'}),
             'price': forms.TextInput(attrs={'class': 'input-mini'})
@@ -70,10 +74,12 @@ class OrderItemForm(forms.ModelForm):
             product = self.instance.product
             if product.can_order_from_gsx():
                 CODES = symptom_codes(product.component_code)
-                self.fields['comptia_code'] = forms.ChoiceField(choices=CODES)
+                self.fields['comptia_code'] = forms.ChoiceField(choices=CODES,
+                                                                label=_('Symptom code'))
                 self.fields['comptia_modifier'] = forms.ChoiceField(
                     choices=gsxws.MODIFIERS,
-                    initial="B"
+                    initial="B",
+                    label=_('Symptom modifier')
                 )
 
 

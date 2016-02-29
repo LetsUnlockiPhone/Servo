@@ -932,13 +932,13 @@ class ServiceOrderItem(AbstractOrderItem):
         blank=True,
         default="",
         max_length=4,
-        verbose_name=_("symptom code")
+        verbose_name=_("Symptom code")
     )
     comptia_modifier = models.CharField(
         blank=True,
         default="",
         max_length=1,
-        verbose_name=_("symptom modifier")
+        verbose_name=_("Symptom modifier")
     )
 
     def can_create_device(self):

@@ -85,13 +85,13 @@ class ChecklistItemValue(models.Model):
 
 
 class ActiveManager(models.Manager):
-    """
-    GSX repairs that have been submitted, and not marked complete
-    """
     use_for_related_fields = True
-
-    def active(self, **kwargs):
-        return self.filter(completed_at=None, **kwargs).exclude(submitted_at=None)
+    
+    def active(self):
+        """
+        GSX repairs that have been submitted, and not marked complete
+        """
+        return self.filter(completed_at=None).exclude(submitted_at=None)
 
 
 class Repair(models.Model):
