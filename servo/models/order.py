@@ -348,12 +348,6 @@ class Order(models.Model):
         """
         Closes this service order
         """
-        self.notify("close_order", _(u"Order %s closed") % self.code, user)
-        self.closed_by = user
-        self.closed_at = timezone.now()
-        self.state = self.STATE_CLOSED
-        self.save()
-
         if Configuration.autocomplete_repairs():
             for r in self.repair_set.active():
                 try:
@@ -366,6 +360,12 @@ class Order(models.Model):
         if self.queue and self.queue.status_closed:
             self.set_status(self.queue.status_closed, user)
 
+        self.notify("close_order", _(u"Order %s closed") % self.code, user)
+        self.closed_by = user
+        self.closed_at = timezone.now()
+        self.state = self.STATE_CLOSED
+        self.save()
+
     def reopen(self, user):
         """
         Re-opens this service order
@@ -373,6 +373,7 @@ class Order(models.Model):
         self.state = Order.STATE_OPEN
         self.closed_at = None
         self.save()
+        
         msg = _("Order %s reopened") % self.code
         self.notify("reopen", msg, user)
         return msg

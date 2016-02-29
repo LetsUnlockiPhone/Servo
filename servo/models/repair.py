@@ -86,7 +86,7 @@ class ChecklistItemValue(models.Model):
 
 class ActiveManager(models.Manager):
     use_for_related_fields = True
-    
+
     def active(self):
         """
         GSX repairs that have been submitted, and not marked complete
@@ -585,19 +585,6 @@ class Repair(models.Model):
         except IndexError:
             pass
 
-    def complete(self, user):
-        """
-        Marks this repair as being complete
-        """
-        self.completed_at = timezone.now()
-        self.completed_by = user
-        self.save()
-
-        queue = self.order.queue
-        if queue.status_repair_completed:
-            status = queue.status_repair_completed
-            self.order.set_status(status, user)
-
     def get_sn_update_parts(self):
         """
         Returns parts eligible for SN update
@@ -606,7 +593,7 @@ class Repair(models.Model):
 
     def close(self, user):
         """
-        Marks this GSX repair as complete
+        Mark the GSX repair as complete
         """
         self.connect_gsx(user)
         repair = self.get_gsx_repair()
@@ -646,8 +633,23 @@ class Repair(models.Model):
 
         status = repair.status()
         self.set_status(status.repairStatus, user)
-
         self.complete(user)
+
+    def complete(self, user):
+        """
+        Mark our local copy of this GSX repair as complete
+        """
+        self.completed_at = timezone.now()
+        self.completed_by = user
+        self.save()
+
+        msg = _('GSX repair %s marked complete') % self.confirmation
+        self.order.notify('gsx_repair_complete', msg, user)
+
+        queue = self.order.queue
+        if queue.status_repair_completed:
+            status = queue.status_repair_completed
+            self.order.set_status(status, user)
 
     def duplicate(self, user):
         """
@@ -673,8 +675,11 @@ class Repair(models.Model):
 
     def get_absolute_url(self):
         if self.submitted_at is None:
-            return reverse('repairs-edit_repair', args=[self.order.pk, self.pk])
-        return reverse('repairs-view_repair', args=[self.order.pk, self.pk])
+            url = 'repairs-edit_repair'
+        else:
+            url = 'repairs-view_repair'
+
+        return reverse(url, args=[self.order.pk, self.pk])
 
     def __unicode__(self):
         if self.pk is not None:
