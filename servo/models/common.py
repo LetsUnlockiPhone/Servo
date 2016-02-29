@@ -182,17 +182,24 @@ class GsxAccount(models.Model):
     sold_to = models.CharField(max_length=10, verbose_name=_("Sold-To"))
     ship_to = models.CharField(max_length=10, verbose_name=_("Ship-To"))
 
+    user_id = models.CharField(
+        blank=True,
+        default='',
+        max_length=128,
+        verbose_name=_("User ID")
+    )
+
     region = models.CharField(
         max_length=3,
         choices=gsxws.GSX_REGIONS,
         verbose_name=_("Region")
     )
 
-    user_id = models.CharField(
-        blank=True,
-        default='',
-        max_length=128,
-        verbose_name=_("User ID")
+    timezone = models.CharField(
+        max_length=4,
+        default='CEST',
+        verbose_name=_('Timezone'),
+        choices=gsxws.GSX_TIMEZONES
     )
 
     environment = models.CharField(
@@ -237,6 +244,18 @@ class GsxAccount(models.Model):
         except Exception as e:
             act = GsxAccount.get_default_account()
 
+        return act
+
+    @classmethod
+    def fallback(cls):
+        """
+        Connect to fallback GSX account
+        """
+        act = cls.get_default_account()
+        gsxws.connect(user_id=act.user_id,
+                      sold_to=act.sold_to,
+                      timezone=act.timezone,
+                      environment=act.environment,)
         return act
 
     @classmethod
