@@ -664,12 +664,7 @@ def edit_product(request, pk, item_id):
     Edits a product added to an order
     """
     order = Order.objects.get(pk=pk)
-
-    try:
-        item = ServiceOrderItem.objects.get(pk=item_id)
-    except ServiceOrderItem.DoesNotExist:
-        messages.error(request, _('Product not found in order'))
-        return redirect(order)
+    item = get_object_or_404(ServiceOrderItem, pk=item_id)
 
     if not item.kbb_sn and item.product.part_type == "REPLACEMENT":
         try:
