@@ -637,8 +637,8 @@ class Article(models.Model):
     product_model = ArrayField(models.CharField(max_length=128),
                                null=True,
                                editable=False)
-    read_by = ArrayField(models.IntegerField(), null=True)
-    flagged_by = ArrayField(models.IntegerField(), null=True)
+    read_by = ArrayField(models.IntegerField(), default=[])
+    flagged_by = ArrayField(models.IntegerField(), default=[])
 
     def get_creation_date(self):
         return self.date_created
@@ -651,7 +651,35 @@ class Article(models.Model):
 
     def get_title(self):
         return self.title
-        
+
+    def get_read_title(self, user):
+        if user.pk in self.read_by:
+            return _('Mark as unread')
+
+        return _('Mark as read')
+
+    def get_flagged_title(self, user):
+        if user.pk in self.flagged_by:
+            return _('Mark as unflagged')
+
+        return _('Mark as flagged')
+
+    def toggle_read(self, user):
+        if user.pk in self.read_by:
+            self.read_by.remove(user.pk)
+        else:
+            self.read_by = self.read_by + [user.pk]
+
+        return self.save()
+
+    def toggle_flagged(self, user):
+        if user.pk in self.flagged_by:
+            self.flagged_by.remove(user.pk)
+        else:
+            self.flagged_by = self.flagged_by + [user.pk]
+
+        return self.save()
+
     @classmethod
     def from_gsx(cls, article):
         """

@@ -59,8 +59,7 @@ def prep_list_view(request, kind):
     all_notes = Note.objects.all().order_by("-created_at")
 
     if kind == "articles":
-        all_notes = Article.objects.all()
-        #all_notes = all_notes.filter(order=None).order_by("is_read", "-created_at")
+        all_notes = Article.objects.all().order_by('-date_created')
     if kind == "inbox":
         all_notes = all_notes.filter(order=None).order_by("is_read", "-created_at")
     if kind == "sent":
@@ -287,7 +286,18 @@ def templates(request, template_id=None):
     return render(request, 'notes/templates.html', {'templates': templates})
 
 
-def toggle_flag(request, pk, flag):
+def toggle_flag(request, kind, pk, flag):
+    if kind == 'articles':
+        note = get_object_or_404(Article, pk=pk)
+        if flag == 'flagged':
+            note.toggle_flagged(request.user)
+            return HttpResponse(note.get_flagged_title(request.user))
+        if flag == 'read':
+            note.toggle_read(request.user)
+            return HttpResponse(note.get_read_title(request.user))
+
+        return HttpResponse(getattr(note, 'get_%s_title' % flag)())
+
     field = 'is_%s' % flag
     note = get_object_or_404(Note, pk=pk)
     attr = getattr(note, field)
@@ -318,12 +328,15 @@ def list_notes(request, kind="inbox"):
 
 
 def view_note(request, kind, pk):
+    data = prep_list_view(request, kind)
+
     if kind == 'articles':
         note = get_object_or_404(Article, pk=pk)
+        data['read_title'] = note.get_read_title(request.user)
+        data['flagged_title'] = note.get_flagged_title(request.user)
     else:
         note = get_object_or_404(Note, pk=pk)
 
-    data = prep_list_view(request, kind)
     data['title'] = note.get_title()
     data['note'] = note
 
