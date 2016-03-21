@@ -421,3 +421,30 @@ def repairs(request):
             totals['turnaround'] = ServoTimeDelta(totals['turnaround']/totals['dispatched'])
 
     return render(request, "stats/newstats.html", locals())
+
+
+def devices(request):
+    data = prep_view(request)
+    data['form'] = DeviceStatsForm()
+    start_date = data['initial']['start_date']
+    end_date = data['initial']['end_date']
+
+    if request.method == 'POST':
+        form = DeviceStatsForm(request.POST)
+        if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+
+    cursor  = connection.cursor()
+    query = '''SELECT d.description device, count(o) AS orders, count(r) AS repairs 
+        FROM servo_device d, servo_order o, servo_repair r, servo_orderdevice od 
+        WHERE d.id = od.device_id 
+            AND o.id = od.order_id 
+            AND r.order_id = o.id
+            AND (o.created_at, o.created_at) OVERLAPS (%s, %s)
+        GROUP BY d.description''';
+    cursor.execute(query, [start_date, end_date])
+    data['results'] = cursor.fetchall()
+    data['title'] = _('Device statistics')
+
+    return render(request, "stats/devices.html", data)

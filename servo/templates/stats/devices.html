@@ -1,0 +1,40 @@
+{% extends "stats/index.html" %}
+{% load i18n %}
+
+{% block tabs %}
+    <li><a href="{% url 'stats-index' %}">{% trans "Technicians" %}</a></li>
+    <li><a href="{% url 'stats-locations' %}">{% trans "Locations" %}</a></li>
+    <li><a href="{% url 'stats-queues' %}">{% trans "Queues" %}</a></li>
+    <li><a href="{% url 'stats-repairs' %}">{% trans "Repairs" %}</a></li>
+    <li><a href="{% url 'stats-statuses' %}">{% trans "Statuses" %}</a></li>
+    <li><a href="{% url 'stats-sales' %}">{% trans "Sales" %}</a></li>
+    <li  class="active"><a href="{% url 'stats-devices' %}">{% trans "Devices" %}</a></li>
+{% endblock tabs %}
+
+{% block stats %}
+    <h2>{% trans "Device statistics" %}</h2>
+    <p>{% trans "Shows the number of orders and GSX repairs created for each device model within the given timeframe." %}</p>
+    <hr/>
+    <table class="table sortable">
+        <thead>
+            <tr>
+                <th>{% trans "Device" %}</th>
+                <th>{% trans "Service Orders" %}</th>
+                <th>{% trans "GSX Repairs" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r in results %}
+            <tr>
+                <td>{{ r.0 }}</td>
+                <td>{{ r.1 }}</td>
+                <td>{{ r.2 }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3" class="empty muted">{% trans "No results found" %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock stats %}

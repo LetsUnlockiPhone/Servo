@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^statuses/$', statuses, name="stats-statuses"),
     url(r'^data/(?P<query>[\w/\-]+)/$', data, name="stats-data"),
     url(r'^repairs/$', repairs, name="stats-repairs"),
+    url(r'^devices/$', devices, name="stats-devices"),
 ]
