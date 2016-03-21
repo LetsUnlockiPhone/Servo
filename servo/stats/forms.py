@@ -96,3 +96,14 @@ class NewStatsForm(forms.Form):
         widget=DatepickerInput(attrs={'class': "input-small"}),
         initial=default_end_date
     )
+
+
+class DeviceStatsForm(forms.Form):
+    start_date = forms.DateField(
+        widget=DatepickerInput(attrs={'class': "input-small"}),
+        initial=default_start_date
+    )
+    end_date = forms.DateField(
+        widget=DatepickerInput(attrs={'class': "input-small"}),
+        initial=default_end_date
+    )

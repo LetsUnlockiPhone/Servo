@@ -24,6 +24,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 from django.template.defaultfilters import truncatechars
 from django.db.models.signals import pre_delete, post_save
+from django.contrib.postgres.fields import ArrayField
 
 from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
@@ -144,6 +145,18 @@ class Note(MPTTModel):
         tpl = template.Template(tpl)
         return tpl.render(template.Context(ctx))
 
+    def get_sender(self):
+        return self.sender
+
+    def get_creation_date(self):
+        return self.created_at
+
+    def get_body(self):
+        return self.body
+
+    def get_title(self):
+        return self.subject
+
     def render_subject(self, ctx):
         """
         Renders this Markdown body
@@ -162,7 +175,7 @@ class Note(MPTTModel):
         note.parent = self
         note.order = self.order
         note.escalation = self.escalation
-        
+
     def zip_attachments(self):
         pass
 
@@ -325,7 +338,7 @@ class Note(MPTTModel):
     def mailto(self):
         """
         Returns the email recipients of this note
-        Don't use validate_email because addresses may also be in 
+        Don't use validate_email because addresses may also be in
         Name <email> format (replies to emails)
         """
         to = []
@@ -395,7 +408,7 @@ class Note(MPTTModel):
 
         for f in self.attachments.all():
             msg.attach_file(f.content.path)
-        
+
         msg.send()
 
         for r in recipients:
@@ -458,9 +471,9 @@ class Note(MPTTModel):
 
         if not sms_gw:
             raise ValueError(_("SMS gateway not configured"))
-        
+
         msg = Message(note=self, recipient=number, created_by=user, body=self.body)
-        
+
         if sms_gw == 'hqsms':
             from servo.messaging.sms import HQSMSProvider
             HQSMSProvider(number, self, msg).send()
@@ -523,7 +536,7 @@ class Note(MPTTModel):
 
         self.save()
 
-        if len(messages) < 1:   
+        if len(messages) < 1:
             messages = [_('Note saved')]
 
         return ', '.join([force_text(m) for m in messages])
@@ -575,7 +588,7 @@ class Message(models.Model):
         default=METHODS[0][0]
     )
     error = models.TextField()
-    
+
     def send(self):
         result = None
         self.recipient = self.recipient.strip()
@@ -600,6 +613,69 @@ class Message(models.Model):
         unique_together = ('note', 'recipient')
 
 
+class Article(models.Model):
+    """
+    GSX Communications article or a bit of local news
+    """
+    created_by = models.ForeignKey(User, null=True)
+    gsx_id = models.CharField(max_length=20, default='', editable=False)
+    date_created = models.DateField(editable=False)
+    date_published = models.DateField(null=True)
+    title = models.TextField(default=_('New Article'))
+    summary = models.TextField(default='')
+    content = models.TextField(default='')
+    PRIORITY_CHOICES = (
+        ('HIGH',    _('High')),
+        ('MEDIUM',  _('Medium')),
+        ('LOW',     _('Low')),
+    )
+    priority = models.CharField(max_length=128,
+        choices=PRIORITY_CHOICES,
+        default=PRIORITY_CHOICES[0][0]
+    )
+    url = models.URLField(default='')
+    product_model = ArrayField(models.CharField(max_length=128),
+                               null=True,
+                               editable=False)
+    read_by = ArrayField(models.IntegerField(), null=True)
+    flagged_by = ArrayField(models.IntegerField(), null=True)
+
+    def get_creation_date(self):
+        return self.date_created
+
+    def get_sender(self):
+        return self.created_by or 'GSX'
+
+    def get_body(self):
+        return self.title
+
+    def get_title(self):
+        return self.title
+        
+    @classmethod
+    def from_gsx(cls, article):
+        """
+        Create a local Article from a GSX comms article
+        """
+        from datetime import date
+        from servo.lib.utils import unescape
+        aid = article.articleID
+
+        if cls.objects.filter(gsx_id=aid):
+            raise ValueError('Article %s already exists' % aid)
+
+        a = Article(gsx_id=aid, priority=article.priority)
+        a.date_created = article.createdDate
+        a.date_published = date.today()
+        a.title = unescape(article.articleTitle)
+        a.summary = unescape(article.articleSummary)
+
+        return a
+
+    class Meta:
+        app_label = "servo"
+
+
 @receiver(pre_delete, sender=Note)
 def clean_files(sender, instance, **kwargs):
     instance.attachments.all().delete()
@@ -614,4 +690,3 @@ def note_saved(sender, instance, created, **kwargs):
         if user is not order.user:
             msg = truncatechars(instance.body, 75)
             order.notify("note_added", msg, user)
-
