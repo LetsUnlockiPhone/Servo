@@ -309,7 +309,7 @@ def warranty(request):
     try:
         GsxAccount.default(request.user)
     except Exception as e:
-        return error('Cannot connect to GSX (check user name and password)')
+        return error('Cannot connect to GSX (check username and password)')
 
     try:
         result = Device.from_gsx(sn, cached=False)

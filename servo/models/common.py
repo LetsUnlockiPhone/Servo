@@ -223,9 +223,11 @@ class GsxAccount(models.Model):
     def get_shipto_choices(cls):
         return cls.objects.values_list('ship_to', 'ship_to')
 
-
     @classmethod
     def get_default_account(cls):
+        """
+        Returns the default GSX account without connecting to it
+        """
         from servo.lib.utils import empty
         act_pk = Configuration.conf('gsx_account')
 

@@ -631,7 +631,7 @@ def device_from_product(request, pk, item_id):
 
     try:
         GsxAccount.default(request.user, order.queue)
-        device = Device.from_gsx(soi.sn)
+        device = Device.from_gsx(soi.sn, user=request.user)
         device.save()
         event = order.add_device(device, request.user)
         messages.success(request, event)
