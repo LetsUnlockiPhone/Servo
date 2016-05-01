@@ -230,3 +230,10 @@ CELERYBEAT_SCHEDULE = {
 }
 
 from local_settings import *
+
+CACHES['comptia'] = {
+    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+    'LOCATION': '127.0.0.1:11211',
+    'TIMEOUT': 60*60*24,
+    'KEY_PREFIX': 'comptia_'
+}

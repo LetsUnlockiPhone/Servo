@@ -21,6 +21,7 @@ from servo.models import (Note, Device, Product,
 def search_gsx(request, what, param, query):
     """
     The first phase of a GSX search. Sets up the GSX connection.
+    @TODO: Should this be in Device.from_gsx()?
     """
     title = _(u'Search results for "%s"') % query
 
@@ -62,13 +63,13 @@ def get_gsx_search_results(request, what, param, query):
         return render(request, "orders/list.html", locals())
 
     if what == "warranty":
-        # Update wty info if been here before
+        # Update wty info if device has been serviced before
         try:
             device = Device.objects.get(sn__exact=query)
             device.update_gsx_details()
         except Exception:
             try:
-                device = Device.from_gsx(query)
+                device = Device.from_gsx(query, user=request.user)
             except Exception as e:
                 return render(request, error_template, {'message': e})
 
@@ -117,11 +118,11 @@ def get_gsx_search_results(request, what, param, query):
             try:
                 device = gsxws.Product(query)
                 #results = device.repairs()
-                # @TODO: move the encoding hack to py-gsxws
                 for i, p in enumerate(device.repairs()):
                     d = {'purchaseOrderNumber': p.purchaseOrderNumber}
                     d['repairConfirmationNumber'] = p.repairConfirmationNumber
                     d['createdOn'] = p.createdOn
+                    # @TODO: move the encoding hack to py-gsxws
                     d['customerName'] = p.customerName.encode('utf-8')
                     d['repairStatus'] = p.repairStatus
                     results.append(d)

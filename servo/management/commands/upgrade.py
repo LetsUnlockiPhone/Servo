@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from django.core.cache import caches
+import subprocess
 from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
 
-    help = "Clears this install's caches"
+    help = "Upgrade requirements"
 
     def handle(self, *args, **options):
-        for c in caches.all():
-            c.clear()
-
-        exit(0)
+        subprocess.call(['pip', 'install', '-U', '-r', 'requirements.pip'])

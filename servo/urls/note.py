@@ -19,7 +19,7 @@ urlpatterns = [
         name="notes-create_to_customer"),
     url(r'^(?P<pk>\d+)/toggle/tag/(?P<tag_id>\d+)/$', toggle_tag,
         name="notes-toggle_tag"),
-    url(r'^(?P<pk>\d+)/toggle/(?P<flag>[a-z]+)/$', toggle_flag,
+    url(r'^(?P<kind>\w+)?/(?P<pk>\d+)/toggle_(?P<flag>[a-z]+)/$', toggle_flag,
         name="notes-toggle_flag"),
     url(r'^(?P<parent>\d+)/reply/$', edit, name="notes-reply"),
     url(r'^(?P<pk>\d+)/edit/$', edit, name="notes-edit"),

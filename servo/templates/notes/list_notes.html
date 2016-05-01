@@ -35,6 +35,7 @@
     <ul class="nav nav-list">
       <li class="nav-header">{% trans "Messages" %}</li>
       <li class="{% active request "inbox" %}"><a href="{% url 'notes-list_notes' kind="inbox" %}">{% trans "Inbox" %} <span class="badge pull-right">{{ inbox_count|safe }}</span></a></li>
+      <li class="{% active request "articles" %}"><a href="{% url 'notes-list_notes' kind="articles" %}">{% trans "Articles" %}</a></li>
       <li class="{% active request "flagged" %}"><a href="{% url 'notes-list_notes' kind="flagged" %}">{% trans "Flagged" %}</a></li>
       <li class="{% active request "sent" %}"><a href="{% url 'notes-list_notes' kind="sent" %}">{% trans "Sent" %}</a></li>
       <!--<li class="{% active request "escalations" %}"><a href="{% url 'notes-list_notes' kind="escalations" %}">{% trans "Escalations" %}</a></li>//-->
@@ -48,9 +49,9 @@
       {% for note in notes %}
       <li class="{% active request 'notes' kind note.pk 'view' %}">
         <a href="{% url 'notes-view_note' kind note.pk %}">
-          <strong>{{ note.sender }}</strong><span class="pull-right">{{ note.created_at|date:"SHORT_DATE_FORMAT" }}</span>
+          <strong>{{ note.get_sender }}</strong><span class="pull-right">{{ note.get_creation_date|date:"SHORT_DATE_FORMAT" }}</span>
           <br/>
-          <small>{{ note.body|truncatechars:30 }}</small>
+          <small>{{ note.get_body|truncatechars:30 }}</small>
         </a>
       </li>
     {% empty %}

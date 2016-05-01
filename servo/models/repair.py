@@ -285,7 +285,8 @@ class Repair(models.Model):
         self.connect_gsx(self.created_by)
         product = gsxws.Product(self.device.sn)
         parts = [(p.code, p.comptia_code,) for p in self.order.get_parts()]
-        return product.warranty(parts, self.get_received_date())
+        return product.warranty(parts, self.get_received_date(),
+                                ship_to=self.gsx_account.ship_to)
 
     def is_open(self):
         return self.completed_at is None
@@ -518,7 +519,7 @@ class Repair(models.Model):
         User can also be different from the one who initially created the repair.
         """
         account = user or self.created_by
-        self.gsx_account.connect(account)
+        return self.gsx_account.connect(account)
 
     def set_status(self, new_status, user):
         """

@@ -1,0 +1,33 @@
+{% extends "notes/list_notes.html" %}
+{% load servo_tags %}
+{% load i18n %}
+
+{% block note_buttons %}
+    <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="icon-flag"></i> <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'notes-toggle_flag' 'articles' note.pk 'read' %}" class="nofollow">{{ read_title }}</a></li>
+            <li><a href="{% url 'notes-toggle_flag' 'articles' note.pk 'flagged' %}" class="nofollow">{{ flagged_title }}</a></li>
+        </ul>
+    </div>
+{% endblock note_buttons %}
+
+{% block view_message %}
+    <div class="message-header">
+        <p>{% trans "From" %}: {{ note.get_sender }}</p>
+        <p>{% trans "Priority" %}: {{ note.priority }}</p>
+        <p>{% trans "Created" %}: {{ note.date_created }}</p>
+        <p>{% trans "Subject" %}: {{ note.get_title }}</p>
+    </div>
+    <hr/>
+    {{ note.summary|markdown }}
+    {{ note.content|markdown }}
+    <div class="form-actions">
+        <div class="pull-right">
+            <a href="#" class="btn btn-default">{% trans "Reload" %}</a>
+            <a href="#" class="btn btn-default">{% trans "Acknowledge" %}</a>
+        </div>
+    </div>
+{% endblock view_message %}

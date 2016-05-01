@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import html2text
 import subprocess
 from django.http import HttpResponse
 from django.core.cache import cache
@@ -107,3 +108,19 @@ class SessionSerializer:
 
     def loads(self, data):
         return json.loads(data, cls=DjangoJSONEncoder)
+
+
+def unescape(s):
+    import HTMLParser
+    html_parser = HTMLParser.HTMLParser()
+    return html_parser.unescape(s)
+
+
+def html_to_text(s, ignore_images=False):
+    h = html2text.HTML2Text()
+    h.ignore_images = ignore_images
+    return h.handle(s)
+
+
+def gsx_to_text(s):
+    return html_to_text(unescape(s))

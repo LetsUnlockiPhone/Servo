@@ -289,7 +289,7 @@ class Device(models.Model):
         return gsxws.Product(self.sn)
 
     @classmethod
-    def from_gsx(cls, sn, device=None, cached=True):
+    def from_gsx(cls, sn, device=None, cached=True, user=None):
         """
         Initialize new Device with warranty info from GSX
         Or update existing one
@@ -308,7 +308,14 @@ class Device(models.Model):
             raise ValueError(_(u"Invalid input for warranty check: %s") % sn)
 
         product = gsxws.Product(sn)
-        wty     = product.warranty()
+
+        if user and user.location:
+            ship_to = user.location.gsx_shipto
+        else:
+            gsx_act = GsxAccount.get_default_account()
+            ship_to = gsx_act.ship_to
+
+        wty     = product.warranty(ship_to=gsx_act.ship_to)
         model   = product.model()
 
         if device is None:
@@ -440,6 +447,10 @@ class Device(models.Model):
         return diags.fetch()
 
     def get_warranty(self):
+        """
+        Returns latest warranty info from GSX without
+        updating the Device record
+        """
         return gsxws.Product(self.sn).warranty()
 
     def get_repairs(self):

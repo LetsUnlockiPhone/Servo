@@ -6,6 +6,7 @@ import gsxws
 from django.db import models
 from django.utils import timezone
 from django.core.files import File
+from django.core.cache import caches
 from django.utils.translation import ugettext_lazy as _
 
 from servo.models import GsxAccount
@@ -18,21 +19,39 @@ def symptom_modifiers():
     return gsxws.MODIFIERS
 
 
+def get_remote_symptom_codes(group):
+    """
+    Remote lookup for symptom codes
+    """
+    symptoms = {}
+    cache = caches['comptia']
+    # First, try to load from global cache (updated every 24h)
+    data = cache.get('codes') or {}
+
+    if not data:
+        # ... then try to fetch from GSX
+        GsxAccount.fallback()
+        data = gsxws.comptia.fetch()
+        cache.set('codes', data)
+
+    for k, v in data.get(group):
+        symptoms[k] = v
+
+    return symptoms
+
+
 def symptom_codes(group):
     """
-    Return CompTIA symptom codes for component group
+    Returns CompTIA symptom codes for component group
     """
     if group == '':
         return
 
-    symptoms = {}
-
     try:
-        act = GsxAccount.fallback()
-        codes = gsxws.comptia.fetch()[group]
-        for k, v in codes:
-            symptoms[k] = v
-    except gsxws.GsxError as e:
+        symptoms = get_remote_symptom_codes(group)
+    except Exception as e:
+        # ... finally fall back to local static data
+        # @FIXME: How do we keep this up to date?
         data = yaml.load(open("servo/fixtures/comptia.yaml", "r"))
         symptoms = data[group]['symptoms']
 

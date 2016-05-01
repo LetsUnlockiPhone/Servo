@@ -7,6 +7,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.contenttypes.fields import GenericRelation
 
 from django.dispatch import receiver
@@ -1111,9 +1112,16 @@ class OrderDevice(models.Model):
     order = models.ForeignKey(Order)
     device = models.ForeignKey(Device)
     should_report = models.BooleanField(default=True)
+    repeat_service = models.BooleanField(default=False)
+    repair_strategies = ArrayField(models.CharField(max_length=100),
+                                   help_text='Available repair strategies from GSX',
+                                   null=True)
 
     def is_repeat_service(self):
-        from django.utils import timezone
+        """
+        Returns true if this is a repeat (< 30 days from last) service
+        for this device
+        """
         created_at = self.order.created_at
         tlimit = timezone.now() - timedelta(days=30)
         orders = Order.objects.filter(orderdevice__device=self.device,

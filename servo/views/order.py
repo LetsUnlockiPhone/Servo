@@ -631,7 +631,7 @@ def device_from_product(request, pk, item_id):
 
     try:
         GsxAccount.default(request.user, order.queue)
-        device = Device.from_gsx(soi.sn)
+        device = Device.from_gsx(soi.sn, user=request.user)
         device.save()
         event = order.add_device(device, request.user)
         messages.success(request, event)
@@ -664,7 +664,7 @@ def edit_product(request, pk, item_id):
     Edits a product added to an order
     """
     order = Order.objects.get(pk=pk)
-    item = ServiceOrderItem.objects.get(pk=item_id)
+    item = get_object_or_404(ServiceOrderItem, pk=item_id)
 
     if not item.kbb_sn and item.product.part_type == "REPLACEMENT":
         try:
