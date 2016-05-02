@@ -315,7 +315,7 @@ class Device(models.Model):
             gsx_act = GsxAccount.get_default_account()
             ship_to = gsx_act.ship_to
 
-        wty     = product.warranty(ship_to=gsx_act.ship_to)
+        wty     = product.warranty(ship_to=ship_to)
         model   = product.model()
 
         if device is None:
