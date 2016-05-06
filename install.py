@@ -13,6 +13,7 @@ fh = open('local_settings.py', 'w')
 
 print("** Creating local configuration file **")
 args = {}
+args['dbadmin']    = raw_input('DB admin username [pgsql]: ') or 'pgsql'
 args['secret_key'] = os.urandom(32).encode('base-64').strip()
 args['install_locale'] = raw_input('1/10 Locale [sv_SE.UTF-8]: ') or 'sv_SE.UTF-8'
 default_country = args['install_locale'].split('_')[0]
@@ -32,8 +33,8 @@ template = Template(raw)
 
 s = template.substitute(**args)
 
-call(['createuser', args['dbuser'], '-U', 'pgsql'])
-call(['createdb', args['dbname'], '-O', args['dbuser'], '-U', 'pgsql'])
+call(['createuser', args['dbuser'], '-U', args['dbadmin']])
+call(['createdb', args['dbname'], '-O', args['dbuser'], '-U', args['dbadmin']])
 
 fh.write(s)
 fh.close()
@@ -41,8 +42,8 @@ fh.close()
 loc = {}
 
 print("** Setting up database tables **")
-call(['./manage.py', 'migrate', '--no-initial-data'])
-call(['psql', '-c', 'ALTER SEQUENCE servo_order_id_seq RESTART WITH 12345'])
+call(['./manage.py', 'migrate'])
+call(['psql', '-c', 'ALTER SEQUENCE servo_order_id_seq RESTART WITH 12345', args['dbname'], args['dbuser']])
 
 print("** Creating Super User **")
 call(['./manage.py', 'createsuperuser'])
