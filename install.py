@@ -2,11 +2,14 @@
 
 import os
 import socket
+import django
 import requests
 from string import Template
 from subprocess import call
 
 default_hostname = socket.gethostname()
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+
 tpl_url = 'https://gist.githubusercontent.com/filipp/cba2ffecd0d5790f7245/raw/'
 
 fh = open('local_settings.py', 'w')
@@ -39,8 +42,6 @@ call(['createdb', args['dbname'], '-O', args['dbuser'], '-U', args['dbadmin']])
 fh.write(s)
 fh.close()
 
-loc = {}
-
 print("** Setting up database tables **")
 call(['./manage.py', 'migrate'])
 call(['psql', '-c', 'ALTER SEQUENCE servo_order_id_seq RESTART WITH 12345', args['dbname'], args['dbuser']])
@@ -48,6 +49,8 @@ call(['psql', '-c', 'ALTER SEQUENCE servo_order_id_seq RESTART WITH 12345', args
 print("** Creating Super User **")
 call(['./manage.py', 'createsuperuser'])
 
+loc = {}
+django.setup() # To avoid django.core.exceptions.AppRegistryNotReady: Apps aren't loaded yet.
 print("** Creating initial Service Location **")
 loc['title']    = raw_input('1/6 Name [PretendCo Inc]: ') or 'PretendCo Inc'
 loc['email']    = raw_input('2/6 Email [service@pretendo.com]: ') or 'service@pretendo.com'
