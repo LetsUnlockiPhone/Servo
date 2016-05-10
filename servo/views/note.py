@@ -287,6 +287,9 @@ def templates(request, template_id=None):
 
 
 def toggle_flag(request, kind, pk, flag):
+    """
+    Toggles a flag of a note (read/unread, flagged/not, reported/not)
+    """
     if kind == 'articles':
         note = get_object_or_404(Article, pk=pk)
         if flag == 'flagged':
@@ -295,8 +298,6 @@ def toggle_flag(request, kind, pk, flag):
         if flag == 'read':
             note.toggle_read(request.user)
             return HttpResponse(note.get_read_title(request.user))
-
-        return HttpResponse(getattr(note, 'get_%s_title' % flag)())
 
     field = 'is_%s' % flag
     note = get_object_or_404(Note, pk=pk)
